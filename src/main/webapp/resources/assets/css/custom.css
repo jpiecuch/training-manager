@@ -1,0 +1,24 @@
+div.equipments-info {
+    margin-bottom: 10px; 
+    border: #57b5e3 solid 1px;
+}
+
+div.equipments-info span {
+    color: #08c; 
+    font-size: 14px; 
+    font-weight: bold;
+}
+
+div.equipments-info div {
+    margin-left: 5px; 
+    margin-top: 2px; 
+    margin-bottom: 3px;
+}
+
+h4.equipments-title {
+    margin-bottom: 0px;
+}
+
+.float-right {
+    float: right;
+}

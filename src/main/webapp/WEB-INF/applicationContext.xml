@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+    <context:annotation-config />
+    <context:component-scan base-package="pl.jakubpiecuch.trainingmanager.*" />
+    
+    <mvc:annotation-driven />
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+    
+    <mvc:interceptors>  
+        <mvc:interceptor>  
+            <mvc:mapping path="/**"/>  
+            <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">  
+                <property name="paramName" value="lang" />  
+            </bean>  
+        </mvc:interceptor>  
+    </mvc:interceptors>  
+    
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames" value="classpath:web" />
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
+ 
+    <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <property name="paramName" value="lang" />
+    </bean>
+ 
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="pl"/>
+    </bean>
+    
+    <bean id="dictionaryService" class="pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryDBService">
+        <property name="daos">
+            <map>
+                <entry key="bars"  value-ref="barsDao"/>
+                <entry key="benches" value-ref="benchesDao"/>
+                <entry key="dumbbells" value-ref="dumbbellsDao"/>
+                <entry key="loads" value-ref="loadsDao"/>
+                <entry key="necks" value-ref="necksDao"/>
+                <entry key="press" value-ref="pressDao"/>
+                <entry key="stands" value-ref="standsDao"/>
+            </map>
+        </property>
+    </bean>
+
+</beans>

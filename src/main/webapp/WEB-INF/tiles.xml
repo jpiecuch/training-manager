@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+ 
+    <definition name="baseLayout" template="/WEB-INF/jsp/secure/layout/layout.jsp">
+        <put-attribute name="start" value="/WEB-INF/jsp/secure/layout/start.jsp" />
+        <put-attribute name="header" value="/WEB-INF/jsp/secure/layout/header.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/jsp/secure/layout/menu.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="end" value="/WEB-INF/jsp/secure/layout/end.jsp" />
+    </definition>
+    
+    <definition name="index" extends="baseLayout">
+        <put-attribute name="body" value="/WEB-INF/jsp/secure/index.jsp" />
+    </definition>
+    
+    <definition name="equipment/list" extends="baseLayout">
+        <put-attribute name="body" value="/WEB-INF/jsp/secure/equipment/list.jsp" />
+    </definition>
+    
+    <definition name="exercises/details" extends="baseLayout">
+        <put-attribute name="body" value="/WEB-INF/jsp/secure/exercises/details.jsp" />
+    </definition>
+    
+    <definition name="exercises/new" extends="baseLayout">
+        <put-attribute name="body" value="/WEB-INF/jsp/secure/exercises/new.jsp" />
+    </definition>
+    
+    <definition name="exercises/list" extends="baseLayout">
+        <put-attribute name="body" value="/WEB-INF/jsp/secure/exercises/list.jsp" />
+    </definition>
+    
+    <definition name="exercises/preview" extends="baseLayout">
+        <put-attribute name="body" value="/WEB-INF/jsp/secure/exercises/preview.jsp" />
+    </definition>
+    
+    <definition name="plan/calendar" extends="baseLayout">
+        <put-attribute name="body" value="/WEB-INF/jsp/secure/plan/calendar.jsp" />
+    </definition>
+    
+    <definition name="plan/day" extends="baseLayout">
+        <put-attribute name="body" value="/WEB-INF/jsp/secure/plan/day.jsp" />
+    </definition>
+    
+    <definition name="login" template="/WEB-INF/jsp/login.jsp">
+    </definition>
+    
+    <definition name="logout" template="/WEB-INF/jsp/login.jsp">
+    </definition>
+   
+</tiles-definitions>
