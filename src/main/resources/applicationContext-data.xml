@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+    
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+          <property name="location" value="classpath:jdbc.properties"/>
+    </bean>
+    
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="pl.jakubpiecuch.trainingmanager.domain"/>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    
+    <bean id="coreDao" class="pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl"/>
+    
+    <bean id="barsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.BarsDaoImpl"/>
+    
+    <bean id="benchesDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.BenchesDaoImpl"/>
+    
+    <bean id="dumbbellsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.DumbbellsDaoImpl"/>
+    
+    <bean id="loadsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.LoadsDaoImpl"/>
+    
+    <bean id="necksDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.NecksDaoImpl"/>
+    
+    <bean id="pressDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.PressDaoImpl"/>
+    
+    <bean id="standsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.StandsDaoImpl"/>
+    
+    <bean id="exerciseDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.ExercisesDaoImpl"/>
+    
+    <bean id="usersDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.UsersDaoImpl"/>
+    
+    <bean id="dayExercisesDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.DayExercisesDaoImpl"/>
+    
+    <bean id="calendarsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.CalendarsDaoImpl"/>
+    
+</beans>

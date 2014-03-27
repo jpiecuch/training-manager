@@ -5,11 +5,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
-import pl.jakubpiecuch.trainingmanager.dao.dictionaries.EquipmentDao;
-import pl.jakubpiecuch.trainingmanager.dao.dictionaries.ExercisesDao;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Equipment;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Exercises;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Exercises.PartyMusclesEnum;
+import pl.jakubpiecuch.trainingmanager.dao.EquipmentDao;
+import pl.jakubpiecuch.trainingmanager.dao.ExercisesDao;
+import pl.jakubpiecuch.trainingmanager.domain.Equipment;
+import pl.jakubpiecuch.trainingmanager.domain.Exercises;
+import pl.jakubpiecuch.trainingmanager.domain.Exercises.PartyMusclesEnum;
 
 @Service
 public class DictionaryDBService implements DictionaryService {

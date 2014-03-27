@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
-import pl.jakubpiecuch.trainingmanager.dao.plans.DayExercisesDao;
-import pl.jakubpiecuch.trainingmanager.domain.plans.DayExercises;
+import pl.jakubpiecuch.trainingmanager.dao.DayExercisesDao;
+import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
 
 @Service
 public class DayExerciseService implements DayService {

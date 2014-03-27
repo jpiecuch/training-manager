@@ -1,7 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.calendar;
 
 import java.util.List;
-import pl.jakubpiecuch.trainingmanager.domain.plans.Calendars;
+import pl.jakubpiecuch.trainingmanager.domain.Calendars;
 
 public interface CalendarService {
     

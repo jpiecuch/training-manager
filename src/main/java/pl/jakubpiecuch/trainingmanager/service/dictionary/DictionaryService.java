@@ -1,9 +1,9 @@
 package pl.jakubpiecuch.trainingmanager.service.dictionary;
 
 import java.util.List;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Equipment;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Exercises;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Exercises.PartyMusclesEnum;
+import pl.jakubpiecuch.trainingmanager.domain.Equipment;
+import pl.jakubpiecuch.trainingmanager.domain.Exercises;
+import pl.jakubpiecuch.trainingmanager.domain.Exercises.PartyMusclesEnum;
 
 public interface DictionaryService {
 

@@ -9,11 +9,11 @@ import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
-import pl.jakubpiecuch.trainingmanager.dao.plans.CalendarsDao;
-import pl.jakubpiecuch.trainingmanager.dao.plans.DayExercisesDao;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Exercises;
-import pl.jakubpiecuch.trainingmanager.domain.plans.Calendars;
-import pl.jakubpiecuch.trainingmanager.domain.plans.DayExercises;
+import pl.jakubpiecuch.trainingmanager.dao.CalendarsDao;
+import pl.jakubpiecuch.trainingmanager.dao.DayExercisesDao;
+import pl.jakubpiecuch.trainingmanager.domain.Exercises;
+import pl.jakubpiecuch.trainingmanager.domain.Calendars;
+import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
 
 @Service
 public class FullCallendarService implements CalendarService {

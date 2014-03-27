@@ -2,7 +2,7 @@ package pl.jakubpiecuch.trainingmanager.service.day;
 
 import java.util.Date;
 import java.util.List;
-import pl.jakubpiecuch.trainingmanager.domain.plans.DayExercises;
+import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
 
 public interface DayService {
     List<DayExercises> getDay(Long id, Date date);

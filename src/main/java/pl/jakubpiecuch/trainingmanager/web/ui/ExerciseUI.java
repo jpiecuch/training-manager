@@ -5,8 +5,8 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Locale;
 import org.springframework.context.MessageSource;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Exercises;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Exercises.PartyMusclesEnum;
+import pl.jakubpiecuch.trainingmanager.domain.Exercises;
+import pl.jakubpiecuch.trainingmanager.domain.Exercises.PartyMusclesEnum;
 
 
 public class ExerciseUI {

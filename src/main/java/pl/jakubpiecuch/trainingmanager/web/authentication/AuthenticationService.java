@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.jakubpiecuch.trainingmanager.dao.administration.UsersDao;
-import pl.jakubpiecuch.trainingmanager.domain.administration.Users;
+import pl.jakubpiecuch.trainingmanager.dao.UsersDao;
+import pl.jakubpiecuch.trainingmanager.domain.Users;
 
 @Service
 @Transactional(readOnly = true)

@@ -8,16 +8,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import org.springframework.context.MessageSource;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Bars;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Benches;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Dumbbells;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Exercises;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Loads;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Necks;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Press;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Stands;
-import pl.jakubpiecuch.trainingmanager.domain.plans.Calendars;
-import pl.jakubpiecuch.trainingmanager.domain.plans.DayExercises;
+import pl.jakubpiecuch.trainingmanager.domain.Bars;
+import pl.jakubpiecuch.trainingmanager.domain.Benches;
+import pl.jakubpiecuch.trainingmanager.domain.Dumbbells;
+import pl.jakubpiecuch.trainingmanager.domain.Exercises;
+import pl.jakubpiecuch.trainingmanager.domain.Loads;
+import pl.jakubpiecuch.trainingmanager.domain.Necks;
+import pl.jakubpiecuch.trainingmanager.domain.Press;
+import pl.jakubpiecuch.trainingmanager.domain.Stands;
+import pl.jakubpiecuch.trainingmanager.domain.Calendars;
+import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
 
 
 public class DayExerciseUI implements Serializable {

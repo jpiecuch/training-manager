@@ -3,13 +3,13 @@ package pl.jakubpiecuch.trainingmanager.service.dictionary;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Bars;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Benches;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Dumbbells;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Loads;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Necks;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Press;
-import pl.jakubpiecuch.trainingmanager.domain.dictionaries.Stands;
+import pl.jakubpiecuch.trainingmanager.domain.Bars;
+import pl.jakubpiecuch.trainingmanager.domain.Benches;
+import pl.jakubpiecuch.trainingmanager.domain.Dumbbells;
+import pl.jakubpiecuch.trainingmanager.domain.Loads;
+import pl.jakubpiecuch.trainingmanager.domain.Necks;
+import pl.jakubpiecuch.trainingmanager.domain.Press;
+import pl.jakubpiecuch.trainingmanager.domain.Stands;
 
 public class EquipmentSet implements Serializable {
     
