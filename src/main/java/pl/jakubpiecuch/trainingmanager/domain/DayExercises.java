@@ -14,14 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import pl.jakubpiecuch.trainingmanager.domain.Bars;
-import pl.jakubpiecuch.trainingmanager.domain.Benches;
-import pl.jakubpiecuch.trainingmanager.domain.Dumbbells;
-import pl.jakubpiecuch.trainingmanager.domain.Exercises;
-import pl.jakubpiecuch.trainingmanager.domain.Loads;
-import pl.jakubpiecuch.trainingmanager.domain.Necks;
-import pl.jakubpiecuch.trainingmanager.domain.Press;
-import pl.jakubpiecuch.trainingmanager.domain.Stands;
 
 @Entity
 @Table(name = "day_exercises")

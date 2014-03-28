@@ -25,13 +25,6 @@ CREATE SEQUENCE dumbbells_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-CREATE SEQUENCE equipment_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
 	
 CREATE SEQUENCE exercises_id_seq
     START WITH 1
@@ -96,7 +89,7 @@ CREATE SEQUENCE exercise_benches_id_seq
     NO MAXVALUE
     CACHE 1;
 
-CREATE SEQUENCE exercise_dumbbell_id_seq
+CREATE SEQUENCE exercise_dumbbells_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -131,21 +124,28 @@ CREATE SEQUENCE exercise_stands_id_seq
     NO MAXVALUE
     CACHE 1;
 
+CREATE SEQUENCE day_exercises_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 CREATE TABLE users (
     id bigint NOT NULL,
-    name character varying(15) NOT NULL,
+    name character varying(15) DEFAULT nextval('users_id_seq'::regclass) NOT NULL,
     password character varying(255) NOT NULL,
     salt character varying(10) NOT NULL,
     first_name character varying(15) NOT NULL,
     last_name character varying(15) NOT NULL,
-    created timestamp without time zone DEFAULT now() NOT NULL,
+    created timestamp without time zone NOT NULL,
     updated timestamp without time zone NOT NULL,
     version integer NOT NULL,
     CONSTRAINT users_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE exercises (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('exercises_id_seq'::regclass) NOT NULL,
     name character varying(100) NOT NULL,
     movie_url character varying(255),
     description character varying,
@@ -154,7 +154,7 @@ CREATE TABLE exercises (
 );
 
 CREATE TABLE calendars (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('calendars_id_seq'::regclass) NOT NULL,
     name character varying(50) NOT NULL,
     "user" bigint NOT NULL,
     CONSTRAINT calendars_pkey PRIMARY KEY (id),
@@ -164,7 +164,7 @@ CREATE TABLE calendars (
 );
 
 CREATE TABLE units (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('units_id_seq'::regclass) NOT NULL,
     name character varying(10) NOT NULL,
     description character varying(255),
     short_name character varying(5) NOT NULL,
@@ -172,7 +172,7 @@ CREATE TABLE units (
 );
 
 CREATE TABLE bars (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('bars_id_seq'::regclass) NOT NULL,
     handles_no integer NOT NULL,
     length_of double precision NOT NULL,
     length_of_unit bigint NOT NULL,
@@ -188,7 +188,7 @@ CREATE TABLE bars (
 );
 
 CREATE TABLE benches (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('benches_id_seq'::regclass) NOT NULL,
     length_of double precision NOT NULL,
     length_of_unit bigint NOT NULL,
     height double precision NOT NULL,
@@ -204,7 +204,7 @@ CREATE TABLE benches (
 );
 
 CREATE TABLE dumbbells (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('dumbbells_id_seq'::regclass) NOT NULL,
     length_of double precision NOT NULL,
     length_of_unit bigint NOT NULL,
     weight double precision NOT NULL,
@@ -225,7 +225,7 @@ CREATE TABLE dumbbells (
 );
 
 CREATE TABLE press (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('press_id_seq'::regclass) NOT NULL,
     handles_no integer NOT NULL,
     strength double precision NOT NULL,
     strength_unit bigint NOT NULL,
@@ -236,7 +236,7 @@ CREATE TABLE press (
 );
 
 CREATE TABLE loads (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('loads_id_seq'::regclass) NOT NULL,
     weight double precision NOT NULL,
     hole_diameter double precision NOT NULL,
     weight_unit bigint NOT NULL,
@@ -251,7 +251,7 @@ CREATE TABLE loads (
 );
 
 CREATE TABLE necks (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('necks_id_seq'::regclass) NOT NULL,
     weight double precision NOT NULL,
     weight_unit bigint NOT NULL,
     diameter double precision NOT NULL,
@@ -273,7 +273,7 @@ CREATE TABLE necks (
 );
 
 CREATE TABLE stands (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('stands_id_seq'::regclass) NOT NULL,
     height_min double precision NOT NULL,
     height_min_unit bigint NOT NULL,
     height_max double precision NOT NULL,
@@ -289,7 +289,7 @@ CREATE TABLE stands (
 );
 
 CREATE TABLE day_exercises (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('day_exercises_id_seq'::regclass) NOT NULL,
     type bigint NOT NULL,
     date timestamp without time zone NOT NULL,
     calendar bigint NOT NULL,
@@ -307,7 +307,7 @@ CREATE TABLE day_exercises (
 );
 
 CREATE TABLE exercise_bars (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('exercise_bars_id_seq'::regclass) NOT NULL,
     equipment bigint NOT NULL,
     exercise bigint NOT NULL,
     CONSTRAINT exercise_bars_pkey PRIMARY KEY (id),
@@ -320,7 +320,7 @@ CREATE TABLE exercise_bars (
 );
 
 CREATE TABLE exercise_benches (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('exercise_benches_id_seq'::regclass) NOT NULL,
     exercise bigint NOT NULL,
     equipment bigint NOT NULL,
     CONSTRAINT exercise_benches_pkey PRIMARY KEY (id),
@@ -333,7 +333,7 @@ CREATE TABLE exercise_benches (
 );
 
 CREATE TABLE exercise_dumbbells (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('exercise_dumbbells_id_seq'::regclass) NOT NULL,
     exercise bigint NOT NULL,
     equipment bigint NOT NULL,
     CONSTRAINT exercise_dumbbells_pkey PRIMARY KEY (id),
@@ -346,7 +346,7 @@ CREATE TABLE exercise_dumbbells (
 );
 
 CREATE TABLE exercise_loads (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('exercise_loads_id_seq'::regclass) NOT NULL,
     exercise bigint NOT NULL,
     equipment bigint NOT NULL,
     CONSTRAINT exercise_loads_pkey PRIMARY KEY (id),
@@ -359,7 +359,7 @@ CREATE TABLE exercise_loads (
 );
 
 CREATE TABLE exercise_necks (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('exercise_necks_id_seq'::regclass) NOT NULL,
     exercise bigint NOT NULL,
     equipment bigint NOT NULL,
     CONSTRAINT exercise_necks_pkey PRIMARY KEY (id),
@@ -372,7 +372,7 @@ CREATE TABLE exercise_necks (
 );
 
 CREATE TABLE exercise_press (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('exercise_press_id_seq'::regclass) NOT NULL,
     exercise bigint NOT NULL,
     equipment bigint NOT NULL,
     CONSTRAINT exercise_press_pkey PRIMARY KEY (id),
@@ -385,7 +385,7 @@ CREATE TABLE exercise_press (
 );
 
 CREATE TABLE exercise_stands (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('exercise_stands_id_seq'::regclass) NOT NULL,
     exercise bigint NOT NULL,
     equipment bigint NOT NULL,
     CONSTRAINT exercise_stands_pkey PRIMARY KEY (id),
