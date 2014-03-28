@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration strict="true">
+    <appenders>
+        <appender type="Console" name="console">
+            <layout type="PatternLayout" pattern="%d %-5p %c - %m%n"/>
+        </appender>
+        <appender type="File" name="file" fileName="${sys:catalina.base}/logs/training.log">
+            <layout type="PatternLayout">
+                <pattern>%d %-5p %c - %m%n</pattern>
+            </layout>
+        </appender>
+    </appenders>
+
+    <loggers>
+        <root level="trace">
+            <appender-ref ref="file"/>
+            <appender-ref ref="console"/>
+        </root>
+    </loggers>
+</configuration>
