@@ -8,11 +8,6 @@ import pl.jakubpiecuch.trainingmanager.domain.Benches;
 public class BenchesDaoImpl extends CoreDaoImpl implements BenchesDao {
 
     @Override
-    public List<Benches> findByNotInList(List<Benches> list) {
-       return session().createQuery("SELECT b FROM Benches b LEFT JOIN FETCH b.heightUnit LEFT JOIN FETCH b.lengthOfUnit WHERE b NOT IN (:list)").setParameterList("list", list).list();
-    }
-
-    @Override
     public List<Benches> findAll() {
         return session().createQuery("SELECT b FROM Benches b LEFT JOIN FETCH b.heightUnit LEFT JOIN FETCH b.lengthOfUnit").list();
     }

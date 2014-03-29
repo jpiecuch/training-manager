@@ -1,8 +1,9 @@
 package pl.jakubpiecuch.trainingmanager.service.calendar;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
@@ -23,20 +24,19 @@ public class FullCallendarService implements CalendarService {
 
     @Override
     public  List<Event> getEvents(Long userId) {
-        List<DayExercises> dayExerciseList = dayExercisesDao.findByCalendarId(calendarsDao.findByUser(userId, null).getId());
-        if (dayExerciseList != null) {
-            List<Event> result = new ArrayList<Event>();
-            for (final DayExercises d : dayExerciseList) {
-                Event c = new Event();
-                c.setAllDay(Boolean.TRUE);
-                c.setId(d.getId());
-                c.setStart(DateFormatUtils.format(d.getDate(), CALENDAR_FORMAT_DATE));
-                c.setTitle(d.getExercise().getName());
-                result.add(c);
-            }
-            return result;
-        }
-        return null;
+        return Lists.newArrayList(Lists.transform(dayExercisesDao.findByUserId(userId), new Function<DayExercises, Event>() {
+
+            @Override
+            public Event apply(DayExercises d) {
+                Event e = new Event();
+                e.setAllDay(Boolean.TRUE);
+                e.setId(d.getId());
+                e.setStart(DateFormatUtils.format(d.getDate(), CALENDAR_FORMAT_DATE));
+                e.setTitle(d.getExercise().getName());
+                
+                return e;
+            } 
+        }));
     }
 
     @Override

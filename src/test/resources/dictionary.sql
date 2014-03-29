@@ -127,4 +127,4 @@ INSERT INTO press (id, handles_no, strength, strength_unit) VALUES (1, 4, 150, 1
 INSERT INTO stands (id, height_min, height_min_unit, height_max, height_max_unit, levels) VALUES (1, 80, 4, 137, 4, 7);
 INSERT INTO stands (id, height_min, height_min_unit, height_max, height_max_unit, levels) VALUES (2, 80, 4, 137, 4, 7);
 
-INSERT INTO calendars (id, name, "user") VALUES (1, 'Kalendarz - "TRUDNE POCZĄTKI"', 1);
+INSERT INTO calendars (id, name, "user") VALUES (1, 'Kalendarz', 1);

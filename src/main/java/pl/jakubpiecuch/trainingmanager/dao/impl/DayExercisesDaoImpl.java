@@ -30,9 +30,9 @@ public class DayExercisesDaoImpl extends CoreDaoImpl  implements DayExercisesDao
     }
 
     @Override
-    public List<DayExercises> findByCalendarId(Long calendarId) {
-        return session().createQuery("SELECT d FROM DayExercises d" + LEFT_JOIN_EXERCISE + "WHERE d.calendar.id = :calendarId ORDER BY d.date, d.position")
-                .setParameter("calendarId", calendarId).list();
+    public List<DayExercises> findByUserId(Long userId) {
+        return session().createQuery("SELECT d FROM DayExercises d" + LEFT_JOIN_EXERCISE + "WHERE d.calendar.user.id = :userId ORDER BY d.date, d.position")
+                .setParameter("userId", userId).list();
     }
 
     @Override
