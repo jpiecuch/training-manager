@@ -24,6 +24,6 @@ public class AuthenticationService implements UserDetailsService {
         if (daoUser == null) {
             throw new UsernameNotFoundException("User not exists");
         }
-        return new SecurityUser(daoUser.getId(), daoUser.getName(), daoUser.getPassword(), true, true, true, true, new ArrayList<GrantedAuthority>(), daoUser.getSalt(), daoUser.getFirstName() + " " + daoUser.getLastName());
+        return new SecurityUser(daoUser.getId(), daoUser.getName(), daoUser.getPassword(), true, true, true, true, new ArrayList<GrantedAuthority>(), daoUser.getSalt(), daoUser.getFullName(), daoUser.getCalendar().getId());
     }
 }

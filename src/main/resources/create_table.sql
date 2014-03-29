@@ -138,10 +138,14 @@ CREATE TABLE users (
     salt character varying(10) NOT NULL,
     first_name character varying(15) NOT NULL,
     last_name character varying(15) NOT NULL,
+    calendar bigint NOT NULL,
     created timestamp without time zone NOT NULL,
     updated timestamp without time zone NOT NULL,
     version integer NOT NULL,
-    CONSTRAINT users_pkey PRIMARY KEY (id)
+    CONSTRAINT users_pkey PRIMARY KEY (id),
+    CONSTRAINT users_calendar_fkey 
+        FOREIGN KEY (calendar) REFERENCES calendars(id) 
+        MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
 CREATE TABLE exercises (
@@ -156,11 +160,7 @@ CREATE TABLE exercises (
 CREATE TABLE calendars (
     id bigint DEFAULT nextval('calendars_id_seq'::regclass) NOT NULL,
     name character varying(50) NOT NULL,
-    "user" bigint NOT NULL,
     CONSTRAINT calendars_pkey PRIMARY KEY (id),
-    CONSTRAINT calendars_user_fkey 
-        FOREIGN KEY ("user") REFERENCES users(id) 
-        MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
 CREATE TABLE units (

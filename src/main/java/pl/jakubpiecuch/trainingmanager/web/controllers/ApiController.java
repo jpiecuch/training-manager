@@ -47,7 +47,7 @@ public class ApiController {
 
     @RequestMapping(value = "calendar/events", method = RequestMethod.GET)
     public @ResponseBody List<Event> calendarEvents() {
-        return calendarService.getEvents(AuthenticatedUserUtil.getAuthenticatedUserDetails().getId());
+        return calendarService.getEvents(AuthenticatedUserUtil.getUser());
     }
 
     @RequestMapping(value = "exercise/save", method = RequestMethod.POST)
@@ -57,12 +57,12 @@ public class ApiController {
     
     @RequestMapping(value = "exercise/{id}/progress", method = RequestMethod.GET)
     public @ResponseBody List<DayExerciseUI> exerciseProgress(@PathVariable final Long id, Locale locale) {
-        return DayExerciseUI.fromDayExerciseList(dayService.getProgress(AuthenticatedUserUtil.getAuthenticatedUserDetails().getId(), id), messageSource, locale);
+        return DayExerciseUI.fromDayExerciseList(dayService.getProgress(AuthenticatedUserUtil.getUser(), id), messageSource, locale);
     }
     
     @RequestMapping(value = "exercise/{date}", method = RequestMethod.GET)
     public @ResponseBody List<DayExerciseUI> dayExercises(@PathVariable Date date, Locale locale) {
-        return DayExerciseUI.fromDayExerciseList(dayService.getDay(AuthenticatedUserUtil.getAuthenticatedUserDetails().getId(), date), messageSource, locale);
+        return DayExerciseUI.fromDayExerciseList(dayService.getDay(AuthenticatedUserUtil.getUser(), date), messageSource, locale);
     }
 
     @RequestMapping(value = "dictionary/equipment", method = RequestMethod.GET)
@@ -87,7 +87,7 @@ public class ApiController {
     
     @RequestMapping(value = "calendar/event/create", method = RequestMethod.POST)
     public @ResponseBody Event createEvent(@RequestBody final Event event) throws Exception {
-        return calendarService.create(event, AuthenticatedUserUtil.getAuthenticatedUserDetails().getId());
+        return calendarService.create(event, AuthenticatedUserUtil.getUser());
     }
 
     @Autowired

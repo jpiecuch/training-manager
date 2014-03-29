@@ -3,6 +3,9 @@ package pl.jakubpiecuch.trainingmanager.domain;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +23,17 @@ public class Users extends pl.jakubpiecuch.trainingmanager.domain.Entity impleme
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "calendar")
+    private Calendars calendar;
+
+    public Users() {
+    }
+
+    public Users(Long id, Long calendarId) {
+        this.setId(id);
+        this.calendar = new Calendars(calendarId);
+    }
 
     public String getName() {
         return name;
@@ -60,7 +74,15 @@ public class Users extends pl.jakubpiecuch.trainingmanager.domain.Entity impleme
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
+
+    public Calendars getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(Calendars calendar) {
+        this.calendar = calendar;
+    }
+
     public String getFullName() {
         return String.format("%s %s", this.firstName, this.lastName);
     }

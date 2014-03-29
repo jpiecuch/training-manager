@@ -25,21 +25,16 @@ public class DayExercisesDaoImpl extends CoreDaoImpl  implements DayExercisesDao
     }
 
     @Override
-    public List<DayExercises> findAll() {
-        return session().createQuery("SELECT d FROM DayExercises d" + LEFT_JOIN_EXERCISE).list();
+    public List<DayExercises> findByCalendarId(Long calendarId) {
+        return session().createQuery("SELECT d FROM DayExercises d" + LEFT_JOIN_EXERCISE + "WHERE d.calendar.id = :calendarId ORDER BY d.date, d.position")
+                .setParameter("calendarId", calendarId).list();
     }
 
     @Override
-    public List<DayExercises> findByUserId(Long userId) {
-        return session().createQuery("SELECT d FROM DayExercises d" + LEFT_JOIN_EXERCISE + "WHERE d.calendar.user.id = :userId ORDER BY d.date, d.position")
-                .setParameter("userId", userId).list();
-    }
-
-    @Override
-    public List<DayExercises> findByUserIdAndDate(Long id, Date date) {
+    public List<DayExercises> findByCalendarIdAndDate(Long calendarId, Date date) {
         return session().createQuery("SELECT DISTINCT(d) FROM DayExercises d" + LEFT_JOIN_EXERCISE + LEFT_JOIN_BENCHES + LEFT_JOIN_DUMBBELLS + LEFT_JOIN_LOADS
-                + LEFT_JOIN_NECKS + LEFT_JOIN_STANDS + LEFT_JOIN_BARS + LEFT_JOIN_PRESS + "WHERE d.calendar.user.id = :userId AND d.date = :date ORDER BY d.position")
-                .setParameter("userId", id).setDate("date", date).list();
+                + LEFT_JOIN_NECKS + LEFT_JOIN_STANDS + LEFT_JOIN_BARS + LEFT_JOIN_PRESS + "WHERE d.calendar.id = :calendarId AND d.date = :date ORDER BY d.position")
+                .setParameter("calendarId", calendarId).setDate("date", date).list();
     }
 
     @Override
@@ -49,10 +44,10 @@ public class DayExercisesDaoImpl extends CoreDaoImpl  implements DayExercisesDao
     }
 
     @Override
-    public List<DayExercises> findByUserIdAndExerciseId(Long userId, Long exerciseId) {
+    public List<DayExercises> findByCalendarIdAndExerciseId(Long calendarId, Long exerciseId) {
         return session().createQuery("SELECT d FROM DayExercises d" + LEFT_JOIN_EXERCISE + LEFT_JOIN_BENCHES + LEFT_JOIN_DUMBBELLS + LEFT_JOIN_LOADS
-                + LEFT_JOIN_NECKS + LEFT_JOIN_STANDS + LEFT_JOIN_BARS + LEFT_JOIN_PRESS + "WHERE d.calendar.user.id = :userId AND d.exercise.id = :exerciseId ORDER BY d.date ASC")
-                .setParameter("userId", userId).setParameter("exerciseId", exerciseId).list();
+                + LEFT_JOIN_NECKS + LEFT_JOIN_STANDS + LEFT_JOIN_BARS + LEFT_JOIN_PRESS + "WHERE d.calendar.id = :calendarId AND d.exercise.id = :exerciseId ORDER BY d.date ASC")
+                .setParameter("calendarId", calendarId).setParameter("exerciseId", exerciseId).list();
           }
 
     @Override

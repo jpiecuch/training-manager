@@ -2,6 +2,7 @@ package pl.jakubpiecuch.trainingmanager.web.services;
 
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
+import pl.jakubpiecuch.trainingmanager.domain.Users;
 import pl.jakubpiecuch.trainingmanager.web.authentication.SecurityUser;
 
 public class AuthenticatedUserUtil {
@@ -17,5 +18,9 @@ public class AuthenticatedUserUtil {
 
     public static boolean isAuthenticated() {
         return !SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString().equals("anonymousUser");
+    }
+    
+    public static Users getUser() {
+        return new Users(getAuthenticatedUserDetails().getId(), getAuthenticatedUserDetails().getCalendarId());
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.jakubpiecuch.trainingmanager.dao.DayExercisesDao;
 import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
+import pl.jakubpiecuch.trainingmanager.domain.Users;
 
 @Service
 public class DayExerciseService implements DayService {
@@ -13,13 +14,13 @@ public class DayExerciseService implements DayService {
     private DayExercisesDao dayExercisesDao;
 
     @Override
-    public List<DayExercises> getDay(Long id, Date date) {
-        return dayExercisesDao.findByUserIdAndDate(id, date);
+    public List<DayExercises> getDay(Users user, Date date) {
+        return dayExercisesDao.findByCalendarIdAndDate(user.getCalendar().getId(), date);
     }
 
     @Override
-    public List<DayExercises> getProgress(Long userId, Long exerciseId) {
-        return dayExercisesDao.findByUserIdAndExerciseId(userId, exerciseId);
+    public List<DayExercises> getProgress(Users user, Long exerciseId) {
+        return dayExercisesDao.findByCalendarIdAndExerciseId(user.getCalendar().getId(), exerciseId);
     }
 
     @Override

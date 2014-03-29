@@ -1,4 +1,6 @@
-INSERT INTO users (id, name, password, salt, first_name, last_name, created, updated, version) VALUES (1, 'j.piecuch', 'dcc4cec778c00b632fba26da142d95d0b46a05e0a5f944a0484346c0656def67', 'jp88', 'Jakub', 'Piecuch', '2013-12-22 09:48:46.11', '2013-12-22 09:49:24.542', 1);
+INSERT INTO calendars (id, name) VALUES (1, 'Kalendarz');
+
+INSERT INTO users (id, name, password, salt, first_name, last_name, calendar, created, updated, version) VALUES (1, 'j.piecuch', 'dcc4cec778c00b632fba26da142d95d0b46a05e0a5f944a0484346c0656def67', 'jp88', 'Jakub', 'Piecuch', 1, '2013-12-22 09:48:46.11', '2013-12-22 09:49:24.542', 1);
 
 INSERT INTO units (id, name, description, short_name) VALUES (2, 'milimetr', '', 'mm');
 INSERT INTO units (id, name, description, short_name) VALUES (1, 'kilogram', '', 'kg');
@@ -126,5 +128,3 @@ INSERT INTO press (id, handles_no, strength, strength_unit) VALUES (1, 4, 150, 1
 
 INSERT INTO stands (id, height_min, height_min_unit, height_max, height_max_unit, levels) VALUES (1, 80, 4, 137, 4, 7);
 INSERT INTO stands (id, height_min, height_min_unit, height_max, height_max_unit, levels) VALUES (2, 80, 4, 137, 4, 7);
-
-INSERT INTO calendars (id, name, "user") VALUES (1, 'Kalendarz', 1);

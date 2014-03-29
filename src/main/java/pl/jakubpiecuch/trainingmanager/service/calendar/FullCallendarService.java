@@ -9,22 +9,21 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.jakubpiecuch.trainingmanager.dao.CalendarsDao;
 import pl.jakubpiecuch.trainingmanager.dao.DayExercisesDao;
-import pl.jakubpiecuch.trainingmanager.domain.Exercises;
 import pl.jakubpiecuch.trainingmanager.domain.Calendars;
+import pl.jakubpiecuch.trainingmanager.domain.Exercises;
 import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
+import pl.jakubpiecuch.trainingmanager.domain.Users;
 
 @Service
 public class FullCallendarService implements CalendarService {
     private final static String CALENDAR_FORMAT_DATE = "yyyy-MM-dd";
 
     private DayExercisesDao dayExercisesDao;
-    private CalendarsDao calendarsDao;
 
     @Override
-    public  List<Event> getEvents(Long userId) {
-        return Lists.newArrayList(Lists.transform(dayExercisesDao.findByUserId(userId), new Function<DayExercises, Event>() {
+    public  List<Event> getEvents(Users user) {
+        return Lists.newArrayList(Lists.transform(dayExercisesDao.findByCalendarId(user.getCalendar().getId()), new Function<DayExercises, Event>() {
 
             @Override
             public Event apply(DayExercises d) {
@@ -40,17 +39,12 @@ public class FullCallendarService implements CalendarService {
     }
 
     @Override
-    public Calendars getCalendar(String name) {
-        return calendarsDao.findByUser(null, name);
-    }
-
-    @Override
-    public Event create(Event event, Long userId) throws Exception {
+    public Event create(Event event, Users user) throws Exception {
         DayExercises d = new DayExercises();
         d.setDate(DateUtils.parseDate(event.getStart(), new String[] {CALENDAR_FORMAT_DATE}));
         d.setExercise(new Exercises(event.getId()));
-        d.setCalendar(calendarsDao.findByUser(userId, null));
-        d.setPosition(dayExercisesDao.countByUserIdAndDate(userId, d.getDate()).intValue() + 1);
+        d.setCalendar(new Calendars(user.getCalendar().getId()));
+        d.setPosition(dayExercisesDao.countByUserIdAndDate(user.getId(), d.getDate()).intValue() + 1);
         d.setConfirmed(false);
         DayExercises last = dayExercisesDao.findLastDayExercise(event.getId(), d.getDate());
         if (last != null) {
@@ -84,11 +78,6 @@ public class FullCallendarService implements CalendarService {
         DayExercises dayExercise = new DayExercises();
         dayExercise.setId(event.getId());
         dayExercisesDao.delete(dayExercise);
-    }
-
-    @Autowired
-    public void setCalendarsDao(CalendarsDao calendarsDao) {
-        this.calendarsDao = calendarsDao;
     }
 
     @Autowired

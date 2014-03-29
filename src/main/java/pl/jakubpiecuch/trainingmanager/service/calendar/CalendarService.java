@@ -1,13 +1,12 @@
 package pl.jakubpiecuch.trainingmanager.service.calendar;
 
 import java.util.List;
-import pl.jakubpiecuch.trainingmanager.domain.Calendars;
+import pl.jakubpiecuch.trainingmanager.domain.Users;
 
 public interface CalendarService {
     
-    Calendars getCalendar(String name);
-    Event create(Event event, Long userId) throws Exception;
-    List<Event> getEvents(Long userId);
+    Event create(Event event, Users user) throws Exception;
+    List<Event> getEvents(Users user);
     void move(Event event) throws Exception;
     void remove(Event event);  
 }

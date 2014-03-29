@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jakubpiecuch.trainingmanager.AbstractBaseTest;
+import pl.jakubpiecuch.trainingmanager.domain.Users;
 
 
 public class FullCalendarServiceTest extends AbstractBaseTest {
@@ -14,7 +15,7 @@ public class FullCalendarServiceTest extends AbstractBaseTest {
     
     @Test
     public void getEventsTest() {
-        List<Event> events = calendarService.getEvents(1l);
+        List<Event> events = calendarService.getEvents(new Users(1l, 1l));
         
         assertEquals(84, events.size());
     }

@@ -9,12 +9,14 @@ public class SecurityUser extends User {
     private Long id;
     private String salt;
     private String fullName;
+    private Long calendarId;
 
-    public SecurityUser(Long id, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<GrantedAuthority> authorities, String salt, String fullName) {
+    public SecurityUser(Long id, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<GrantedAuthority> authorities, String salt, String fullName, Long calendarId) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.salt = salt;
         this.fullName = fullName;
         this.id = id;
+        this.calendarId = calendarId;
     }
 
     public Long getId() {
@@ -39,6 +41,14 @@ public class SecurityUser extends User {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+    
+    public Long getCalendarId() {
+        return this.calendarId;
+    }
+
+    public void setCalendarId(Long calendarId) {
+        this.calendarId = calendarId;
     }
 
     @Override
