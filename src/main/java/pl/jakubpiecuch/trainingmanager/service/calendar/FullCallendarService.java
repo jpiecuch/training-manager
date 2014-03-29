@@ -8,7 +8,6 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.dao.CalendarsDao;
 import pl.jakubpiecuch.trainingmanager.dao.DayExercisesDao;
 import pl.jakubpiecuch.trainingmanager.domain.Exercises;
@@ -21,7 +20,6 @@ public class FullCallendarService implements CalendarService {
 
     private DayExercisesDao dayExercisesDao;
     private CalendarsDao calendarsDao;
-    private CoreDao coreDao;
 
     @Override
     public  List<Event> getEvents(Long userId) {
@@ -67,7 +65,7 @@ public class FullCallendarService implements CalendarService {
         } else {
             d.setSeries(DayExercises.DEFAULT_SERIES);
         }
-        coreDao.save(d);
+        dayExercisesDao.save(d);
         event.setId(d.getId());
         event.setAllDay(Boolean.TRUE);
         return event;
@@ -77,7 +75,7 @@ public class FullCallendarService implements CalendarService {
     public void move(Event event) throws Exception {
         DayExercises dayExercise = dayExercisesDao.findById(event.getId());
         dayExercise.setDate(new SimpleDateFormat(CALENDAR_FORMAT_DATE).parse(event.getStart()));
-        coreDao.save(dayExercise);
+        dayExercisesDao.save(dayExercise);
 
     }
 
@@ -85,17 +83,12 @@ public class FullCallendarService implements CalendarService {
     public void remove(Event event) {
         DayExercises dayExercise = new DayExercises();
         dayExercise.setId(event.getId());
-        coreDao.delete(dayExercise);
+        dayExercisesDao.delete(dayExercise);
     }
 
     @Autowired
     public void setCalendarsDao(CalendarsDao calendarsDao) {
         this.calendarsDao = calendarsDao;
-    }
-
-    @Autowired
-    public void setCoreDao(CoreDao coreDao) {
-        this.coreDao = coreDao;
     }
 
     @Autowired

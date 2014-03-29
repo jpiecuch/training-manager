@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.dao.DayExercisesDao;
 import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
 
@@ -12,7 +11,6 @@ import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
 public class DayExerciseService implements DayService {
 
     private DayExercisesDao dayExercisesDao;
-    private CoreDao coreDao;
 
     @Override
     public List<DayExercises> getDay(Long id, Date date) {
@@ -26,12 +24,7 @@ public class DayExerciseService implements DayService {
 
     @Override
     public void save(DayExercises dayExercises) {
-        coreDao.save(dayExercises);
-    }
-
-    @Autowired
-    public void setCoreDao(CoreDao coreDao) {
-        this.coreDao = coreDao;
+        dayExercisesDao.save(dayExercises);
     }
 
     @Autowired

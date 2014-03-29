@@ -2,11 +2,11 @@ package pl.jakubpiecuch.trainingmanager.dao.impl;
 
 import java.util.Date;
 import java.util.List;
-import pl.jakubpiecuch.trainingmanager.dao.hibernate.HibernateDaoSupport;
 import pl.jakubpiecuch.trainingmanager.dao.DayExercisesDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
 
-public class DayExercisesDaoImpl extends HibernateDaoSupport implements DayExercisesDao {
+public class DayExercisesDaoImpl extends CoreDaoImpl  implements DayExercisesDao {
 
     private static final String LEFT_JOIN_BENCHES = " LEFT JOIN FETCH d.benches bl LEFT JOIN FETCH bl.lengthOfUnit bllof LEFT JOIN FETCH bl.heightUnit blhu ";
     private static final String LEFT_JOIN_DUMBBELLS = " LEFT JOIN FETCH d.dumbbells dl LEFT JOIN FETCH dl.weightUnit dlwu LEFT JOIN FETCH dl.diameterUnit dldu LEFT JOIN FETCH dl.lengthOfUnit dllu ";

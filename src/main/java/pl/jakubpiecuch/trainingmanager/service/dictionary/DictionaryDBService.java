@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.dao.EquipmentDao;
 import pl.jakubpiecuch.trainingmanager.dao.ExercisesDao;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
@@ -15,7 +14,6 @@ import pl.jakubpiecuch.trainingmanager.domain.Exercises.PartyMusclesEnum;
 public class DictionaryDBService implements DictionaryService {
     
     private ExercisesDao exercisesDao;
-    private CoreDao coreDao;
     private Map<Equipment.Type, EquipmentDao> daos;
     
     @Override
@@ -30,7 +28,7 @@ public class DictionaryDBService implements DictionaryService {
 
     @Override
     public void saveExercise(Exercises exercise) {
-        coreDao.save(exercise);
+        exercisesDao.save(exercise);
     }
     
     @Override
@@ -40,7 +38,7 @@ public class DictionaryDBService implements DictionaryService {
     
     @Override
     public void saveEquipment(Equipment equipment) {
-        coreDao.save(equipment);
+        daos.get(equipment.getEquipmentType()).save(equipment);
     }
 
     @Override
@@ -63,11 +61,6 @@ public class DictionaryDBService implements DictionaryService {
 
     public void setDaos(Map<Equipment.Type, EquipmentDao> daos) {
         this.daos = daos;
-    }
-
-    @Autowired
-    public void setCoreDao(CoreDao coreDao) {
-        this.coreDao = coreDao;
     }
 
     @Autowired

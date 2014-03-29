@@ -1,12 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
 import java.util.List;
-import org.springframework.stereotype.Repository;
-import pl.jakubpiecuch.trainingmanager.dao.hibernate.HibernateDaoSupport;
 import pl.jakubpiecuch.trainingmanager.dao.BenchesDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Benches;
 
-public class BenchesDaoImpl extends HibernateDaoSupport implements BenchesDao {
+public class BenchesDaoImpl extends CoreDaoImpl implements BenchesDao {
 
     @Override
     public List<Benches> findByNotInList(List<Benches> list) {

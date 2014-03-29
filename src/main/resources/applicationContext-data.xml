@@ -27,28 +27,28 @@
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
     
-    <bean id="coreDao" class="pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl"/>
+    <bean id="coreDao" class="pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl" />
     
-    <bean id="barsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.BarsDaoImpl"/>
+    <bean id="barsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.BarsDaoImpl" parent="coreDao"/>
     
-    <bean id="benchesDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.BenchesDaoImpl"/>
+    <bean id="benchesDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.BenchesDaoImpl" parent="coreDao"/>
     
-    <bean id="dumbbellsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.DumbbellsDaoImpl"/>
+    <bean id="dumbbellsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.DumbbellsDaoImpl" parent="coreDao"/>
     
-    <bean id="loadsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.LoadsDaoImpl"/>
+    <bean id="loadsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.LoadsDaoImpl" parent="coreDao"/>
     
-    <bean id="necksDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.NecksDaoImpl"/>
+    <bean id="necksDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.NecksDaoImpl" parent="coreDao"/>
     
-    <bean id="pressDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.PressDaoImpl"/>
+    <bean id="pressDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.PressDaoImpl" parent="coreDao"/>
     
-    <bean id="standsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.StandsDaoImpl"/>
+    <bean id="standsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.StandsDaoImpl" parent="coreDao"/>
     
-    <bean id="exerciseDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.ExercisesDaoImpl"/>
+    <bean id="exerciseDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.ExercisesDaoImpl" parent="coreDao"/>
     
-    <bean id="usersDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.UsersDaoImpl"/>
+    <bean id="usersDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.UsersDaoImpl" parent="coreDao"/>
     
-    <bean id="dayExercisesDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.DayExercisesDaoImpl"/>
+    <bean id="dayExercisesDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.DayExercisesDaoImpl" parent="coreDao"/>
     
-    <bean id="calendarsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.CalendarsDaoImpl"/>
+    <bean id="calendarsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.CalendarsDaoImpl" parent="coreDao"/>
     
 </beans>

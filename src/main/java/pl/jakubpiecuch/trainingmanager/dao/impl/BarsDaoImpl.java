@@ -1,11 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
 import java.util.List;
-import pl.jakubpiecuch.trainingmanager.dao.hibernate.HibernateDaoSupport;
 import pl.jakubpiecuch.trainingmanager.dao.BarsDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Bars;
 
-public class BarsDaoImpl extends HibernateDaoSupport implements BarsDao {
+public class BarsDaoImpl extends CoreDaoImpl implements BarsDao {
 
     @Override
     public List<Bars> findByNotInList(List<Bars> list) {

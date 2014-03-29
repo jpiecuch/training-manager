@@ -1,11 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
 import java.util.List;
-import pl.jakubpiecuch.trainingmanager.dao.hibernate.HibernateDaoSupport;
 import pl.jakubpiecuch.trainingmanager.dao.NecksDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Necks;
 
-public class NecksDaoImpl extends HibernateDaoSupport implements NecksDao {
+public class NecksDaoImpl extends CoreDaoImpl  implements NecksDao {
 
     @Override
     public List<Necks> findByNotInList(List<Necks> list) {

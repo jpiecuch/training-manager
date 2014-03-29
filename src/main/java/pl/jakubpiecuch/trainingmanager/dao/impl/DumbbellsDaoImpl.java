@@ -1,12 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
 import java.util.List;
-import org.springframework.stereotype.Repository;
-import pl.jakubpiecuch.trainingmanager.dao.hibernate.HibernateDaoSupport;
 import pl.jakubpiecuch.trainingmanager.dao.DumbbellsDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Dumbbells;
 
-public class DumbbellsDaoImpl extends HibernateDaoSupport implements DumbbellsDao {
+public class DumbbellsDaoImpl extends CoreDaoImpl  implements DumbbellsDao {
 
     @Override
     public List<Dumbbells> findByNotInList(List<Dumbbells> list) {

@@ -35,7 +35,7 @@ public class ApiController {
     private MessageSource messageSource;
     
     @InitBinder
-    private void initBinder(WebDataBinder binder) {
+    protected void initBinder(WebDataBinder binder) {
        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }

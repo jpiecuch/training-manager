@@ -1,11 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
 import java.util.List;
-import pl.jakubpiecuch.trainingmanager.dao.hibernate.HibernateDaoSupport;
 import pl.jakubpiecuch.trainingmanager.dao.LoadsDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Loads;
 
-public class LoadsDaoImpl extends HibernateDaoSupport implements LoadsDao {
+public class LoadsDaoImpl extends CoreDaoImpl  implements LoadsDao {
 
     @Override
     public List<Loads> findByNotInList(List<Loads> list) {

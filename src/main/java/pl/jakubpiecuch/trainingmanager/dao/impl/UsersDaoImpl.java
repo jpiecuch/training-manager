@@ -1,10 +1,10 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
 import pl.jakubpiecuch.trainingmanager.dao.UsersDao;
-import pl.jakubpiecuch.trainingmanager.dao.hibernate.HibernateDaoSupport;
+import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Users;
 
-public class UsersDaoImpl extends HibernateDaoSupport implements UsersDao {
+public class UsersDaoImpl extends CoreDaoImpl implements UsersDao {
 
     @Override
     public Users findById(Long id) {

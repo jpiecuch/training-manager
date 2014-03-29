@@ -1,10 +1,10 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
-import pl.jakubpiecuch.trainingmanager.dao.hibernate.HibernateDaoSupport;
 import pl.jakubpiecuch.trainingmanager.dao.CalendarsDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Calendars;
 
-public class CalendarsDaoImpl extends HibernateDaoSupport implements CalendarsDao {
+public class CalendarsDaoImpl extends CoreDaoImpl  implements CalendarsDao {
 
     @Override
     public Calendars findByUser(Long id, String userName) {
