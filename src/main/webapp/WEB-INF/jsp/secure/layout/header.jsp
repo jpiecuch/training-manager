@@ -48,7 +48,7 @@
                     <li class="divider"></li>
                     <li><a href="javascript:;" id="trigger_fullscreen"><i class="fa fa-arrows"></i> Full Screen</a></li>
                     <li><a href="extra_lock.html"><i class="fa fa-lock"></i> Lock Screen</a></li>
-                    <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
+                    <li><a href="<c:url value="/j_spring_security_logout" />"><i class="fa fa-key"></i> Log Out</a></li>
                 </ul>
             </li>
         </ul>

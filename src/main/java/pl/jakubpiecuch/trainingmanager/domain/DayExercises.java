@@ -14,49 +14,28 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "day_exercises")
-public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity implements Serializable {
+public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.CommonEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     public static final String SERIES_DELIMITER = ";";
     public static final String DEFAULT_SERIES = "0;0;0";
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "type")
     private Exercises exercise;
-    @Column(name = "series")
     private String series;
-    @Column(name = "date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @Column(name = "position")
     private Integer position;
-    @Column(name = "confirmed")
     private Boolean confirmed;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "calendar")
     private Calendars calendar;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "exercise_benches", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     private Set<Benches> benches;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "exercise_dumbbells", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     private Set<Dumbbells> dumbbells;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "exercise_loads", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     private Set<Loads> loads;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "exercise_necks", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     private Set<Necks> necks;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "exercise_stands", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     private Set<Stands> stands;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "exercise_bars", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     private Set<Bars> bars;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "exercise_press", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     private Set<Press> press;
 
     public DayExercises(Long id) {
@@ -66,6 +45,8 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity 
     public DayExercises() {
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type")
     public Exercises getExercise() {
         return exercise;
     }
@@ -74,6 +55,7 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity 
         this.exercise = exercise;
     }
 
+    @Column(name = "series")
     public String getSeries() {
         return series;
     }
@@ -82,6 +64,8 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity 
         this.series = series;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "exercise_benches", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     public Set<Benches> getBenches() {
         return benches;
     }
@@ -90,6 +74,8 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity 
         this.benches = benches;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "exercise_dumbbells", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     public Set<Dumbbells> getDumbbells() {
         return dumbbells;
     }
@@ -98,6 +84,8 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity 
         this.dumbbells = dumbbells;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "exercise_loads", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     public Set<Loads> getLoads() {
         return loads;
     }
@@ -106,6 +94,8 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity 
         this.loads = loads;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "exercise_necks", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     public Set<Necks> getNecks() {
         return necks;
     }
@@ -114,6 +104,8 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity 
         this.necks = necks;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "exercise_stands", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     public Set<Stands> getStands() {
         return stands;
     }
@@ -122,6 +114,8 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity 
         this.stands = standsList;
     }
 
+    @Column(name = "date")
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getDate() {
         return date;
     }
@@ -130,6 +124,7 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity 
         this.date = date;
     }
 
+    @Column(name = "position")
     public Integer getPosition() {
         return position;
     }
@@ -138,6 +133,8 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity 
         this.position = position;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "calendar")
     public Calendars getCalendar() {
         return calendar;
     }
@@ -146,6 +143,8 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity 
         this.calendar = calendar;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "exercise_bars", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     public Set<Bars> getBars() {
         return bars;
     }
@@ -154,6 +153,7 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity 
         this.bars = bars;
     }
 
+    @Column(name = "confirmed")
     public Boolean getConfirmed() {
         return confirmed;
     }
@@ -162,6 +162,8 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity 
         this.confirmed = confirmed;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "exercise_press", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     public Set<Press> getPress() {
         return press;
     }
@@ -169,7 +171,8 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.Entity 
     public void setPress(Set<Press> press) {
         this.press = press;
     }
-    
+
+    @Transient
     public Double getTotalWeight() {
         Double result = 0.0;
         for (Dumbbells d : this.dumbbells) {

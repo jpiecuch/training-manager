@@ -13,7 +13,12 @@ public class UsersDaoImpl extends CoreDaoImpl implements UsersDao {
     
     @Override
     public Users findByName(String name) {
-        return (Users) session().createQuery("SELECT u FROM Users u WHERE u.name = :name").setString("name", name).uniqueResult();
+        return (Users) session().createQuery("SELECT u FROM Users u LEFT JOIN FETCH u.calendar WHERE u.name = :name").setString("name", name).uniqueResult();
+    }
+
+    @Override
+    public Users findByEmail(String email) {
+        return (Users) session().createQuery("SELECT u FROM Users u WHERE u.email = :email").setString("email", email).uniqueResult();
     }
     
 }

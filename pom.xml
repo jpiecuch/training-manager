@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pl.jakubpiecuch</groupId>
-    <artifactId>TRAINING-MANAGER-WEB</artifactId>
+    <artifactId>training-manager</artifactId>
     <version>${training.manager.version}</version>
     <packaging>war</packaging>
 
-    <name>TRAINING-MANAGER-WEB</name>
+    <name>training-manager</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

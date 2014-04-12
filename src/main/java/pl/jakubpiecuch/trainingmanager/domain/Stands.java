@@ -1,6 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,20 +9,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "stands")
-public class Stands extends Equipment implements Serializable {
+public class Stands extends Equipment {
 
-    private static final long serialVersionUID = 1L;
-    @Column(name = "height_min")
     private Double heightMin;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "height_min_unit")
     private Units heightMinUnit;
-    @Column(name = "height_max")
     private Double heightMax;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "height_max_unit")
     private Units heightMaxUnit;
-    @Column(name = "levels")
     private Integer levels;
 
     public Stands(Long id) {
@@ -33,6 +24,7 @@ public class Stands extends Equipment implements Serializable {
     public Stands() {
     }
 
+    @Column(name = "height_min")
     public Double getHeightMin() {
         return heightMin;
     }
@@ -41,6 +33,8 @@ public class Stands extends Equipment implements Serializable {
         this.heightMin = heightMin;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "height_min_unit")
     public Units getHeightMinUnit() {
         return heightMinUnit;
     }
@@ -49,6 +43,7 @@ public class Stands extends Equipment implements Serializable {
         this.heightMinUnit = heightMinUnit;
     }
 
+    @Column(name = "height_max")
     public Double getHeightMax() {
         return heightMax;
     }
@@ -57,6 +52,8 @@ public class Stands extends Equipment implements Serializable {
         this.heightMax = heightMax;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "height_max_unit")
     public Units getHeightMaxUnit() {
         return heightMaxUnit;
     }
@@ -65,6 +62,7 @@ public class Stands extends Equipment implements Serializable {
         this.heightMaxUnit = heightMaxUnit;
     }
 
+    @Column(name = "levels")
     public Integer getLevels() {
         return levels;
     }

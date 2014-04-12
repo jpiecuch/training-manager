@@ -9,7 +9,7 @@
     <!--<![endif]-->
     <head>
         <meta charset="utf-8"/>
-        <title>Metronic | Admin Dashboard Template</title>
+        <title><spring:message code="app.title"/></title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
         <meta content="" name="description"/>
@@ -27,153 +27,152 @@
         <link href="<c:url value="/resources/assets/css/themes/default.css"/>" rel="stylesheet" type="text/css" id="style_color"/>
         <link href="<c:url value="/resources/assets/css/pages/login.css"/>" rel="stylesheet" type="text/css"/>
         <link href="<c:url value="/resources/assets/css/custom.css"/>" rel="stylesheet" type="text/css"/>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/angular.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/checklist-model.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/app.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/directives.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/filters.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/services.js"/>" type="text/javascript" ></script>
+        
     </head>
-    <body class="login">
+    <body ng-app="training" class="login">
+        <script type="text/javascript">
+            training.controller("loginController", function($scope, $http) {
+                $scope.init = function() {
+                    $scope.activeView = 0;
+                };
+                
+                $scope.reset = function(isValid) {
+                    if (isValid) {
+				alert('our form is amazing');
+			} else {
+                            alert('gówno');
+                        }
+                    $http.post('<c:url value="/auth/reset?email="/>' + $scope.email).success(function(data) {
+                    });
+                };
+                
+                $scope.create = function() {
+                    $http.post('<c:url value="/auth/create"/>', $scope.user).success(function(data) {
+                    });
+                };
+            });
+        </script>
         <div class="logo"><a href="index.html"></a></div>
-        <div class="content">
-            <form class="login-form" method="POST" action="<c:url value="/j_spring_security_check"/>">
-                <h3 class="form-title">Login to your account</h3>
+        <div ng-controller="loginController" ng-init="init()" class="content">
+            <div ng-show="activeView === 0">
+                <form class="login-form" method="POST" action="<c:url value="/j_spring_security_check"/>">
+                <h3 class="form-title"><spring:message code="app.login.to.app"/></h3>
                 <div class="alert alert-danger display-hide">
                     <button class="close" data-close="alert"></button>
-                    <span>Enter any username and password.</span>
+                    <span><spring:message code="app.enter.username.and.password"/></span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Username</label>
-                    <div class="input-icon"><i class="fa fa-user"></i><input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="j_username"/></div>
+                    <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.name"/></label>
+                    <div class="input-icon"><i class="fa fa-user"></i><input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="<spring:message code="user.name"/>" name="j_username"/></div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Password</label>
-                    <div class="input-icon"><i class="fa fa-lock"></i><input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="j_password"/></div>
+                    <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.password"/></label>
+                    <div class="input-icon"><i class="fa fa-lock"></i><input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="<spring:message code="user.password"/>" name="j_password"/></div>
                 </div>
                 <div class="form-actions">
-                    <label class="checkbox"><input id="j_remember" name="_spring_security_remember_me" type="checkbox" value="1" /> Remember me </label>
-                    <button type="submit" class="btn green pull-right">Login <i class="m-icon-swapright m-icon-white"></i></button>
-                </div>
-                <div class="login-options">
-                    <h4>Or login with</h4>
-                    <ul class="social-icons">
-                        <li><a class="facebook" data-original-title="facebook" href="#"></a></li>
-                        <li><a class="twitter" data-original-title="Twitter" href="#"></a></li>
-                        <li><a class="googleplus" data-original-title="Goole Plus" href="#"></a></li>
-                        <li><a class="linkedin" data-original-title="Linkedin" href="#"></a></li>
-                    </ul>
+                    <label class="checkbox"><input id="j_remember" name="_spring_security_remember_me" type="checkbox" value="1" ng-uniform /> <spring:message code="user.remember.me"/> </label>
+                    <button type="submit" class="btn green pull-right"><spring:message code="user.login"/> <i class="m-icon-swapright m-icon-white"></i></button>
                 </div>
                 <div class="forget-password">
-                    <h4>Forgot your password ?</h4>
-                    <p>no worries, click <a href="javascript:;" id="forget-password">here</a> to reset your password.</p>
+                    <h4><spring:message code="user.forgot.password"/>?</h4>
+                    <p><spring:message code="user.click"/> <a href="" ng-click="activeView = 1" id="forget-password"><spring:message code="user.here"/></a> <spring:message code="user.to.reset.password"/>.</p>
                 </div>
-                <div class="create-account"><p>Don't have an account yet ?&nbsp;<a href="javascript:;" id="register-btn">Create an account</a></p></div>
+                <div class="create-account"><p><spring:message code="user.no.account"/>?&nbsp;<a href="" ng-click="activeView = 2" id="register-btn"><spring:message code="user.create.account"/></a></p></div>
             </form>
-            <form class="forget-form" action="index.html" method="post">
-                <h3>Forget Password ?</h3>
-                <p>Enter your e-mail address below to reset your password.</p>
+            </div>
+            <form name="resetForm" ng-submit="reset(resetForm.$valid)" ng-show="activeView === 1" novalidate>
+                <h3><spring:message code="user.forgot.password"/> ?</h3>
+                <p><spring:message code="user.enter.email.to.reset.password"/>.</p>
                 <div class="form-group">
                     <div class="input-icon">
                         <i class="fa fa-envelope"></i>
-                        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email"/>
+                        <input required class="form-control placeholder-no-fix" type="email" name="email" placeholder="<spring:message code="user.email"/>" ng-model="email"/>
                     </div>
+                    <p ng-show="resetForm.email.$invalid && !resetForm.email.$pristine" class="help-block"><spring:message code="user.email.required"/></p>
                 </div>
                 <div class="form-actions">
-                    <button type="button" id="back-btn" class="btn"><i class="m-icon-swapleft"></i> Back </button>
-                    <button type="submit" class="btn green pull-right">Submit <i class="m-icon-swapright m-icon-white"></i></button>
+                    <button ng-click="activeView = 0" type="button" id="back-btn" class="btn"><i class="m-icon-swapleft"></i> <spring:message code="user.back"/> </button>
+                    <button ng-disabled="resetForm.$invalid" type="submit" class="btn green pull-right"><spring:message code="user.send"/> <i class="m-icon-swapright m-icon-white"></i></button>
                 </div>
             </form>
-            <form class="register-form" action="index.html" method="post">
-                <h3>Sign Up</h3>
-                <p>Enter your personal details below:</p>
+            <form ng-show="activeView === 2" class="register-form" ng-submit="create()">
+                <h3><spring:message code="user.sign.up"/></h3>
+                <p><spring:message code="user.enter.personal.data.below"/>:</p>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Full Name</label>
+                    <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.firstName"/></label>
                     <div class="input-icon">
                         <i class="fa fa-font"></i>
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Full Name" name="fullname"/>
+                        <input class="form-control placeholder-no-fix" type="text" placeholder="<spring:message code="user.firstName"/>" ng-model="user.firstName"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Email</label>
+                    <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.lastName"/></label>
+                    <div class="input-icon">
+                        <i class="fa fa-font"></i>
+                        <input class="form-control placeholder-no-fix" type="text" placeholder="<spring:message code="user.lastName"/>" ng-model="user.lastName"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.email"/></label>
                     <div class="input-icon">
                         <i class="fa fa-envelope"></i>
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email"/>
+                        <input class="form-control placeholder-no-fix" type="text" placeholder="<spring:message code="user.email"/>" ng-model="user.email"/>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Address</label>
-                    <div class="input-icon">
-                        <i class="fa fa-check"></i>
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Address" name="address"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">City/Town</label>
-                    <div class="input-icon">
-                        <i class="fa fa-location-arrow"></i>
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="City/Town" name="city"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Country</label>
-                    <select name="country" id="select2_sample4" class="select2 form-control">
-                        <option value=""></option>                       
-                        <option value="PL">Poland</option>
-                    </select>
                 </div>
                 <p>Enter your account details below:</p>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Username</label>
+                    <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.name"/></label>
                     <div class="input-icon">
                         <i class="fa fa-user"></i>
-                        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username"/>
+                        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="<spring:message code="user.name"/>" ng-model="user.name"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Password</label>
+                    <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.password"/></label>
                     <div class="input-icon">
                         <i class="fa fa-lock"></i>
-                        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Password" name="password"/>
+                        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="<spring:message code="user.password"/>" ng-model="user.password"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Re-type Your Password</label>
+                    <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.rPassword"/></label>
                     <div class="controls">
                         <div class="input-icon">
                             <i class="fa fa-check"></i>
-                            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Re-type Your Password" name="rpassword"/>
+                            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="<spring:message code="user.rPassword"/>" ng-model="rPassword"/>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label><input type="checkbox" name="tnc"/> I agree to the <a href="#"> Terms of Service</a> and <a href="#"> Privacy Policy </a></label>
+                    <label><input type="checkbox" name="tnc" ng-uniform/> <spring:message code="app.i.agree.to"/> <a href="#"> <spring:message code="app.terms.of.service"/></a> <spring:message code="app.and"/> <a href="#"> <spring:message code="app.privacy.policy"/> </a></label>
                     <div id="register_tnc_error"></div>
                 </div>
                 <div class="form-actions">
-                    <button id="register-back-btn" type="button" class="btn"><i class="m-icon-swapleft"></i> Back </button>
-                    <button type="submit" id="register-submit-btn" class="btn green pull-right"> Sign Up <i class="m-icon-swapright m-icon-white"></i></button>
+                    <button id="register-back-btn" ng-click="activeView = 0" type="button" class="btn"><i class="m-icon-swapleft"></i> <spring:message code="user.back"/> </button>
+                    <button type="submit" id="register-submit-btn" class="btn green pull-right"> <spring:message code="user.sign.up"/> <i class="m-icon-swapright m-icon-white"></i></button>
                 </div>
             </form>
         </div>
         <div class="copyright">
-            2014 &copy; Metronic. Admin Dashboard Template.
+            2014 &copy; <spring:message code="app.title"/>.
         </div>
         <!--[if lt IE 9]>
-                <script src="assets/plugins/respond.min.js"></script>
-                <script src="assets/plugins/excanvas.min.js"></script> 
-                <![endif]-->
+            <script src="assets/plugins/respond.min.js"></script>
+            <script src="assets/plugins/excanvas.min.js"></script> 
+        <![endif]-->
         <script src="<c:url value="/resources/assets/plugins/jquery-1.10.2.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/assets/plugins/jquery-migrate-1.2.1.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/assets/plugins/bootstrap/js/bootstrap.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/assets/plugins/jquery.blockui.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/resources/assets/plugins/jquery.cokie.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/resources/assets/plugins/uniform/jquery.uniform.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/resources/assets/plugins/jquery-validation/dist/jquery.validate.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/assets/plugins/select2/select2.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/resources/assets/scripts/core/app.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/resources/assets/scripts/custom/login.js"/>" type="text/javascript"></script>
-        <script>
-            jQuery(document).ready(function() {
-                App.init();
-                Login.init();
-            });
-        </script>
+        <script src="<c:url value="/resources/assets/plugins/uniform/jquery.uniform.min.js"/>" type="text/javascript"></script>
     </body>
 </html>

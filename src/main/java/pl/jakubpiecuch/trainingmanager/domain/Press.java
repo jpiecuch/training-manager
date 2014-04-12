@@ -6,21 +6,13 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "press")
 public class Press extends Equipment {
-    private static final long serialVersionUID = 1L;
-    
-    @Column(name = "strength")
+
     private Double strength;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "strength_unit")
     private Units strengthUnit;
-    @Column(name = "handles_no")
     private Integer handlesNo;
 
     public Press() {
@@ -30,6 +22,7 @@ public class Press extends Equipment {
         super(id);
     }
 
+    @Column(name = "strength")
     public Double getStrength() {
         return strength;
     }
@@ -38,6 +31,8 @@ public class Press extends Equipment {
         this.strength = strength;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "strength_unit")
     public Units getStrengthUnit() {
         return strengthUnit;
     }
@@ -46,6 +41,7 @@ public class Press extends Equipment {
         this.strengthUnit = strengthUnit;
     }
 
+    @Column(name = "handles_no")
     public Integer getHandlesNo() {
         return handlesNo;
     }

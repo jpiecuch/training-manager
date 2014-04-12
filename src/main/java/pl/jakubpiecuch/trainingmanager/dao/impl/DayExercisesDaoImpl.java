@@ -38,9 +38,9 @@ public class DayExercisesDaoImpl extends CoreDaoImpl  implements DayExercisesDao
     }
 
     @Override
-    public Long countByUserIdAndDate(Long id, Date date) {
-        return (Long) session().createQuery("SELECT COUNT(DISTINCT d) FROM DayExercises d WHERE d.calendar.user.id = :userId AND d.date = :date")
-                .setParameter("userId", id).setDate("date", date).uniqueResult();
+    public Long countByCalendarIdAndDate(Long calendarId, Date date) {
+        return (Long) session().createQuery("SELECT COUNT(DISTINCT d) FROM DayExercises d WHERE d.calendar.id = :calendarId AND d.date = :date")
+                .setParameter("calendarId", calendarId).setDate("date", date).uniqueResult();
     }
 
     @Override

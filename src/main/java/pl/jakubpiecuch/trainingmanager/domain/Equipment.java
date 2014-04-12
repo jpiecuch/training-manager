@@ -1,10 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 @MappedSuperclass()
-public class Equipment extends Entity {
+public class Equipment extends CommonEntity {
     public enum Type {bars, benches, dumbbells, loads, necks, press, stands}
 
     public Equipment() {
@@ -15,6 +16,7 @@ public class Equipment extends Entity {
     }
     
     @JsonIgnore
+    @Transient
     public Type getEquipmentType() {
         if (this instanceof Bars) {
             return Type.bars;

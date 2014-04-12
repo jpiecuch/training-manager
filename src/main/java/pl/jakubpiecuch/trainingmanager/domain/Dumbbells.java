@@ -10,25 +10,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "dumbbells")
-public class Dumbbells extends Equipment implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    @Column(name = "length_of")
+public class Dumbbells extends Equipment {
+    
     private Double lengthOf;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "length_of_unit")
     private Units lengthOfUnit;
-    @Column(name = "weight")
     private Double weight;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "weight_unit")
     private Units weightUnit;
-    @Column(name = "diameter")
     private Double diameter;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "diameter_unit")
     private Units diameterUnit;
-    @Column(name = "connected_load")
     private Boolean connectedLoad;
 
     public Dumbbells() {
@@ -38,6 +27,7 @@ public class Dumbbells extends Equipment implements Serializable {
         super(id);
     }
 
+    @Column(name = "length_of")
     public Double getLengthOf() {
         return lengthOf;
     }
@@ -46,6 +36,8 @@ public class Dumbbells extends Equipment implements Serializable {
         this.lengthOf = lengthOf;
     }
 
+@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "length_of_unit")
     public Units getLengthOfUnit() {
         return lengthOfUnit;
     }
@@ -54,6 +46,7 @@ public class Dumbbells extends Equipment implements Serializable {
         this.lengthOfUnit = lengthOfUnit;
     }
 
+@Column(name = "weight")
     public Double getWeight() {
         return weight;
     }
@@ -62,6 +55,8 @@ public class Dumbbells extends Equipment implements Serializable {
         this.weight = weight;
     }
 
+@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "weight_unit")
     public Units getWeightUnit() {
         return weightUnit;
     }
@@ -70,6 +65,7 @@ public class Dumbbells extends Equipment implements Serializable {
         this.weightUnit = weightUnit;
     }
 
+@Column(name = "diameter")
     public Double getDiameter() {
         return diameter;
     }
@@ -78,6 +74,8 @@ public class Dumbbells extends Equipment implements Serializable {
         this.diameter = diameter;
     }
 
+@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "diameter_unit")
     public Units getDiameterUnit() {
         return diameterUnit;
     }
@@ -86,6 +84,7 @@ public class Dumbbells extends Equipment implements Serializable {
         this.diameterUnit = diameterUnit;
     }
 
+@Column(name = "connected_load")
     public Boolean getConnectedLoad() {
         return connectedLoad;
     }

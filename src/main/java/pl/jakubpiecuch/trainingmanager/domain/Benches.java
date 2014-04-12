@@ -18,21 +18,13 @@ public class Benches extends Equipment implements Serializable {
     public enum BenchesEnum {
         SIMPLE, OBLIQUE
     }
-    private static final long serialVersionUID = 1L;
-    @Column(name = "length_of")
+    
     private Double lengthOf;
-    @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "length_of_unit")
     private Units lengthOfUnit;
-    @Column(name = "height")
     private Double height;
-    @ManyToOne(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "height_unit")
     private Units heightUnit;
-    @Column(name = "type")
-    @Enumerated(EnumType.ORDINAL)
     private BenchesEnum type;
 
     public Benches() {
@@ -42,6 +34,7 @@ public class Benches extends Equipment implements Serializable {
         super(id);
     }
 
+    @Column(name = "length_of")
     public Double getLengthOf() {
         return lengthOf;
     }
@@ -50,6 +43,8 @@ public class Benches extends Equipment implements Serializable {
         this.lengthOf = lengthOf;
     }
 
+@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "length_of_unit")
     public Units getLengthOfUnit() {
         return lengthOfUnit;
     }
@@ -58,6 +53,7 @@ public class Benches extends Equipment implements Serializable {
         this.lengthOfUnit = lengthOfUnit;
     }
 
+@Column(name = "height")
     public Double getHeight() {
         return height;
     }
@@ -66,6 +62,8 @@ public class Benches extends Equipment implements Serializable {
         this.height = height;
     }
 
+@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "height_unit")
     public Units getHeightUnit() {
         return heightUnit;
     }
@@ -74,6 +72,8 @@ public class Benches extends Equipment implements Serializable {
         this.heightUnit = heightUnit;
     }
 
+@Column(name = "type")
+    @Enumerated(EnumType.ORDINAL)
     public BenchesEnum getType() {
         return type;
     }

@@ -1,34 +1,20 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "bars")
-public class Bars extends Equipment implements Serializable {
-    private static final long serialVersionUID = 1L;
-    
-    @Column(name = "length_of")
+public class Bars extends Equipment {
+
     private Double lengthOf;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "length_of_unit")
     private Units lengthOfUnit;
-    @Column(name = "strength")
     private Double strength;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "strength_unit")
     private Units strengthUnit;
-    @Column(name = "handles_no")
     private Integer handlesNo;
 
     public Bars() {
@@ -38,6 +24,7 @@ public class Bars extends Equipment implements Serializable {
         super(id);
     }
 
+    @Column(name = "length_of")
     public Double getLengthOf() {
         return lengthOf;
     }
@@ -46,6 +33,8 @@ public class Bars extends Equipment implements Serializable {
         this.lengthOf = lengthOf;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "length_of_unit")
     public Units getLengthOfUnit() {
         return lengthOfUnit;
     }
@@ -54,6 +43,7 @@ public class Bars extends Equipment implements Serializable {
         this.lengthOfUnit = lengthOfUnit;
     }
 
+    @Column(name = "strength")
     public Double getStrength() {
         return strength;
     }
@@ -62,6 +52,8 @@ public class Bars extends Equipment implements Serializable {
         this.strength = strength;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "strength_unit")
     public Units getStrengthUnit() {
         return strengthUnit;
     }
@@ -70,6 +62,7 @@ public class Bars extends Equipment implements Serializable {
         this.strengthUnit = strengthUnit;
     }
 
+    @Column(name = "handles_no")
     public Integer getHandlesNo() {
         return handlesNo;
     }
@@ -78,42 +71,8 @@ public class Bars extends Equipment implements Serializable {
         this.handlesNo = handlesNo;
     }
 
-    @JsonIgnore
-    public String getInfo() {
-        StringBuilder result = new StringBuilder();
-        if (this.strengthUnit != null) {
-            result.append("S: ").append(this.strength.toString()).append(" ").append(this.strengthUnit.getShortName()).append(", ");
-        }
-        if (this.lengthOfUnit != null) {
-            result.append("L: ").append(this.lengthOf.toString()).append(" ").append(this.lengthOfUnit.getShortName()).append(", ");
-        }
-        result.append("Uchwyty: ").append(this.handlesNo);
-        return result.toString();
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (super.getId() != null ? super.getId().hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Bars)) {
-            return false;
-        }
-        Bars other = (Bars) object;
-        if ((super.getId() == null && other.getId() != null) || (super.getId() != null && !super.getId().equals(other.getId()))) {
-            return false;
-        }
-        return true;
-    }
-
     @Override
     public String toString() {
-        return "Benches[ id=" + super.getId() + " ]";
+        return "Bars[ id=" + getId() + " ]";
     }
-
 }

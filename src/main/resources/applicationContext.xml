@@ -36,6 +36,8 @@
         <property name="defaultLocale" value="pl"/>
     </bean>
     
+    
+    
     <bean id="dictionaryService" class="pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryDBService">
         <property name="daos">
             <map>

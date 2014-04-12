@@ -44,7 +44,7 @@ public class FullCallendarService implements CalendarService {
         d.setDate(DateUtils.parseDate(event.getStart(), new String[] {CALENDAR_FORMAT_DATE}));
         d.setExercise(new Exercises(event.getId()));
         d.setCalendar(new Calendars(user.getCalendar().getId()));
-        d.setPosition(dayExercisesDao.countByUserIdAndDate(user.getId(), d.getDate()).intValue() + 1);
+        d.setPosition(dayExercisesDao.countByCalendarIdAndDate(user.getCalendar().getId(), d.getDate()).intValue() + 1);
         d.setConfirmed(false);
         DayExercises last = dayExercisesDao.findLastDayExercise(event.getId(), d.getDate());
         if (last != null) {

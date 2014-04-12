@@ -6,4 +6,5 @@ import pl.jakubpiecuch.trainingmanager.domain.Users;
 public interface UsersDao extends CoreDao {
     Users findById(Long id);
     Users findByName(String name);
+    Users findByEmail(String email);
 }

@@ -3,14 +3,12 @@ package pl.jakubpiecuch.trainingmanager.service.dictionary;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import pl.jakubpiecuch.trainingmanager.dao.EquipmentDao;
 import pl.jakubpiecuch.trainingmanager.dao.ExercisesDao;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.domain.Exercises;
 import pl.jakubpiecuch.trainingmanager.domain.Exercises.PartyMusclesEnum;
 
-@Service
 public class DictionaryDBService implements DictionaryService {
     
     private ExercisesDao exercisesDao;

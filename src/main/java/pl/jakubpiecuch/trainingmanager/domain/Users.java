@@ -3,29 +3,27 @@ package pl.jakubpiecuch.trainingmanager.domain;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "users")
-public class Users extends pl.jakubpiecuch.trainingmanager.domain.Entity implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Users extends CommonEntity {
+    public enum Status { ACTIVE, RESET_PASSWORD, EXPIRED, CREATED }
 
-    @Column(name = "name")
     private String name;
-    @Column(name = "password")
     private String password;
-    @Column(name = "salt")
+    private String email;
     private String salt;
-    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "last_name")
     private String lastName;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "calendar")
     private Calendars calendar;
+    private Status status;
 
     public Users() {
     }
@@ -35,6 +33,7 @@ public class Users extends pl.jakubpiecuch.trainingmanager.domain.Entity impleme
         this.calendar = new Calendars(calendarId);
     }
 
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -43,6 +42,7 @@ public class Users extends pl.jakubpiecuch.trainingmanager.domain.Entity impleme
         this.name = name;
     }
 
+    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -51,6 +51,7 @@ public class Users extends pl.jakubpiecuch.trainingmanager.domain.Entity impleme
         this.password = password;
     }
 
+    @Column(name = "salt")
     public String getSalt() {
         return salt;
     }
@@ -59,6 +60,7 @@ public class Users extends pl.jakubpiecuch.trainingmanager.domain.Entity impleme
         this.salt = salt;
     }
 
+    @Column(name = "first_name")
     public String getFirstName() {
         return firstName;
     }
@@ -67,6 +69,7 @@ public class Users extends pl.jakubpiecuch.trainingmanager.domain.Entity impleme
         this.firstName = firstName;
     }
 
+    @Column(name = "last_name")
     public String getLastName() {
         return lastName;
     }
@@ -75,6 +78,8 @@ public class Users extends pl.jakubpiecuch.trainingmanager.domain.Entity impleme
         this.lastName = lastName;
     }
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "calendar")
     public Calendars getCalendar() {
         return calendar;
     }
@@ -83,6 +88,26 @@ public class Users extends pl.jakubpiecuch.trainingmanager.domain.Entity impleme
         this.calendar = calendar;
     }
 
+    @Column(name = "status")
+    @Enumerated(EnumType.ORDINAL)
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Transient
     public String getFullName() {
         return String.format("%s %s", this.firstName, this.lastName);
     }

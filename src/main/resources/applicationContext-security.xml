@@ -16,19 +16,26 @@
         <intercept-url pattern="/logout.html" access="permitAll" />
         <intercept-url pattern="/denied.html" access="permitAll" />
         <intercept-url pattern="/failure.html" access="permitAll" />
-        <intercept-url pattern="/resources/**" access="permitAll" /> 
+        <intercept-url pattern="/resources/**" access="permitAll" />
+        <intercept-url pattern="/auth/**" access="permitAll" />
         <intercept-url pattern="/**" access="isAuthenticated()" />   
         <form-login login-page="/login.html" authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-handler-ref="authenticationFailureHandler" authentication-failure-url="/failure.html"/>
         <logout invalidate-session="true" logout-success-url="/logout.html"/>
         <remember-me key="e37f4b31-0c45-11dd-bd0b-0800200c9a66" token-validity-seconds="864000" />
         <access-denied-handler error-page="/denied.html"/>
     </http>
+    
+    <beans:bean id="localAuthenticationService" class="pl.jakubpiecuch.trainingmanager.web.authentication.LocalAuthenticationService">
+        <beans:property name="usersDao" ref="usersDao"/>
+        <beans:property name="calendarsDao" ref="calendarsDao"/>
+        <beans:property name="passwordEncoder" ref="shaPasswordEncoder"/>
+    </beans:bean>
+    
+    <beans:bean id="shaPasswordEncoder" class="pl.jakubpiecuch.trainingmanager.web.authentication.SHAPasswordEncoder">
+        <beans:property name="strength" value="256"/>
+    </beans:bean>
  
     <authentication-manager>
-        <authentication-provider user-service-ref="authenticationService">
-            <password-encoder hash="sha-256">
-                <salt-source user-property="salt" />
-            </password-encoder>
-        </authentication-provider>
+        <authentication-provider ref="localAuthenticationProvider"></authentication-provider>
     </authentication-manager>
 </beans:beans>

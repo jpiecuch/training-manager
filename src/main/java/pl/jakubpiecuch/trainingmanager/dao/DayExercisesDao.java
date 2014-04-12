@@ -9,7 +9,7 @@ public interface DayExercisesDao extends CoreDao {
     DayExercises findById(Long id);
     List<DayExercises> findByCalendarId(Long calendarId);
     List<DayExercises> findByCalendarIdAndDate(Long id, Date date);
-    Long countByUserIdAndDate(Long id, Date date);
+    Long countByCalendarIdAndDate(Long id, Date date);
     List<DayExercises> findByCalendarIdAndExerciseId(Long userId, Long exerciseId);
     DayExercises findLastDayExercise(Long id, Date date);
 }

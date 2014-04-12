@@ -7,10 +7,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "calendars")
-public class Calendars extends pl.jakubpiecuch.trainingmanager.domain.Entity implements Serializable {
+public class Calendars extends pl.jakubpiecuch.trainingmanager.domain.CommonEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "name")
+    
     private String name;
 
     public Calendars() {
@@ -20,6 +20,7 @@ public class Calendars extends pl.jakubpiecuch.trainingmanager.domain.Entity imp
         super(id);
     }
 
+    @Column(name = "name")
     public String getName() {
         return name;
     }

@@ -10,18 +10,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "loads")
-public class Loads extends Equipment implements Serializable {
+public class Loads extends Equipment {
 
-    private static final long serialVersionUID = 1L;
-    @Column(name = "weight")
     private Double weight;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "weight_unit")
     private Units weightUnit;
-    @Column(name = "hole_diameter")
     private Double holeDiameter;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "hole_diameter_unit")
     private Units holeDiameterUnit;
 
     public Loads() {
@@ -31,6 +24,7 @@ public class Loads extends Equipment implements Serializable {
         super(id);
     }
 
+    @Column(name = "weight")
     public Double getWeight() {
         return weight;
     }
@@ -39,6 +33,8 @@ public class Loads extends Equipment implements Serializable {
         this.weight = weight;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "weight_unit")
     public Units getWeightUnit() {
         return weightUnit;
     }
@@ -47,6 +43,7 @@ public class Loads extends Equipment implements Serializable {
         this.weightUnit = weightUnit;
     }
 
+    @Column(name = "hole_diameter")
     public Double getHoleDiameter() {
         return holeDiameter;
     }
@@ -55,6 +52,8 @@ public class Loads extends Equipment implements Serializable {
         this.holeDiameter = holeDiameter;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "hole_diameter_unit")
     public Units getHoleDiameterUnit() {
         return holeDiameterUnit;
     }
