@@ -1,3 +1,11 @@
+.progress-modal {
+    top: 30px;
+}
+
+.progress-modal .modal-dialog {
+    width: 920px !important;
+}
+
 div.equipments-info {
     margin-bottom: 10px; 
     border: #57b5e3 solid 1px;

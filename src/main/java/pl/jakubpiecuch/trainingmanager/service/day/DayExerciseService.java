@@ -14,12 +14,12 @@ public class DayExerciseService implements DayService {
     private DayExercisesDao dayExercisesDao;
 
     @Override
-    public List<DayExercises> getDay(Users user, Date date) {
+    public List<DayExercises> day(Users user, Date date) {
         return dayExercisesDao.findByCalendarIdAndDate(user.getCalendar().getId(), date);
     }
 
     @Override
-    public List<DayExercises> getProgress(Users user, Long exerciseId) {
+    public List<DayExercises> exerciseProgress(Users user, Long exerciseId) {
         return dayExercisesDao.findByCalendarIdAndExerciseId(user.getCalendar().getId(), exerciseId);
     }
 

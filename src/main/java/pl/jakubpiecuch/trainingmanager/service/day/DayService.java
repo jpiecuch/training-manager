@@ -6,8 +6,8 @@ import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
 import pl.jakubpiecuch.trainingmanager.domain.Users;
 
 public interface DayService {
-    List<DayExercises> getDay(Users user, Date date);
-    List<DayExercises> getProgress(Users user, Long exerciseId);
+    List<DayExercises> day(Users user, Date date);
+    List<DayExercises> exerciseProgress(Users user, Long exerciseId);
     void save(DayExercises dayExercises);
     
 }

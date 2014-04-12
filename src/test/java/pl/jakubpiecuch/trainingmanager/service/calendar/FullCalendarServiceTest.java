@@ -15,7 +15,7 @@ public class FullCalendarServiceTest extends AbstractBaseTest {
     
     @Test
     public void getEventsTest() {
-        List<Event> events = calendarService.getEvents(new Users(1l, 1l));
+        List<Event> events = calendarService.events(new Users(1l, 1l));
         
         assertEquals(84, events.size());
     }

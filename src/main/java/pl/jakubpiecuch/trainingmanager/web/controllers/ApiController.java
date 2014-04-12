@@ -47,7 +47,7 @@ public class ApiController {
 
     @RequestMapping(value = "calendar/events", method = RequestMethod.GET)
     public @ResponseBody List<Event> calendarEvents() {
-        return calendarService.getEvents(AuthenticatedUserUtil.getUser());
+        return calendarService.events(AuthenticatedUserUtil.getUser());
     }
 
     @RequestMapping(value = "exercise/save", method = RequestMethod.POST)
@@ -57,12 +57,12 @@ public class ApiController {
     
     @RequestMapping(value = "exercise/{id}/progress", method = RequestMethod.GET)
     public @ResponseBody List<DayExerciseUI> exerciseProgress(@PathVariable final Long id, Locale locale) {
-        return DayExerciseUI.fromDayExerciseList(dayService.getProgress(AuthenticatedUserUtil.getUser(), id), messageSource, locale);
+        return DayExerciseUI.fromDayExerciseList(dayService.exerciseProgress(AuthenticatedUserUtil.getUser(), id), messageSource, locale);
     }
     
     @RequestMapping(value = "exercise/{date}", method = RequestMethod.GET)
     public @ResponseBody List<DayExerciseUI> dayExercises(@PathVariable Date date, Locale locale) {
-        return DayExerciseUI.fromDayExerciseList(dayService.getDay(AuthenticatedUserUtil.getUser(), date), messageSource, locale);
+        return DayExerciseUI.fromDayExerciseList(dayService.day(AuthenticatedUserUtil.getUser(), date), messageSource, locale);
     }
 
     @RequestMapping(value = "dictionary/equipment", method = RequestMethod.GET)

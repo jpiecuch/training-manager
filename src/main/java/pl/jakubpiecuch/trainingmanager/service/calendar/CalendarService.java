@@ -6,7 +6,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Users;
 public interface CalendarService {
     
     Event create(Event event, Users user) throws Exception;
-    List<Event> getEvents(Users user);
+    List<Event> events(Users user);
     void move(Event event) throws Exception;
     void remove(Event event);  
 }

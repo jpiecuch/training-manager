@@ -22,18 +22,16 @@ public class FullCallendarService implements CalendarService {
     private DayExercisesDao dayExercisesDao;
 
     @Override
-    public  List<Event> getEvents(Users user) {
+    public  List<Event> events(Users user) {
         return Lists.newArrayList(Lists.transform(dayExercisesDao.findByCalendarId(user.getCalendar().getId()), new Function<DayExercises, Event>() {
-
             @Override
             public Event apply(DayExercises d) {
-                Event e = new Event();
-                e.setAllDay(Boolean.TRUE);
-                e.setId(d.getId());
-                e.setStart(DateFormatUtils.format(d.getDate(), CALENDAR_FORMAT_DATE));
-                e.setTitle(d.getExercise().getName());
-                
-                return e;
+                Event result = new Event();
+                result.setAllDay(Boolean.TRUE);
+                result.setId(d.getId());
+                result.setStart(DateFormatUtils.format(d.getDate(), CALENDAR_FORMAT_DATE));
+                result.setTitle(d.getExercise().getName());
+                return result;
             } 
         }));
     }
@@ -70,7 +68,6 @@ public class FullCallendarService implements CalendarService {
         DayExercises dayExercise = dayExercisesDao.findById(event.getId());
         dayExercise.setDate(new SimpleDateFormat(CALENDAR_FORMAT_DATE).parse(event.getStart()));
         dayExercisesDao.save(dayExercise);
-
     }
 
     @Override

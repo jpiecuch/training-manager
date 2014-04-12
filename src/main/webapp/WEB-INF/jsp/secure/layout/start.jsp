@@ -25,6 +25,7 @@
     <script src="<c:url value="/resources/assets/plugins/moment/moment-with-langs.min.js"/>"></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/angular.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/checklist-model.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/ui-bootstrap-tpls-0.10.0.min.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/app.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/directives.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/filters.js"/>" type="text/javascript" ></script>

@@ -3,8 +3,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <script src="<c:url value="/resources/assets/plugins/flot/jquery.flot-0.7.js"/>"></script>
 <script src="<c:url value="/resources/assets/plugins/flot/jquery.flot.time.min.js"/>"></script>
+<script src="<c:url value="/resources/assets/plugins/flot/jquery.flot.tooltip.min.js"/>"></script>
 <script type="text/javascript">
-        training.controller("recordsController", function($scope, $http, $sce, dayService) {
+        training.controller("recordsController", function($scope, $http, $sce, $modal, dayService) {
             var chartColors = ['#88bbc8', '#ed7a53', '#9FC569', '#bbdce3', '#9a3b1b', '#5a8022', '#2c7282'];
             
         $scope.link = function(src) {return $sce.trustAsResourceUrl(src);};
@@ -13,7 +14,6 @@
         $scope.deleteEquipment = { loads: [], bars: [], dumbbells: [], necks: [], stands: [], benches: [], press: [] };
         
         $scope.init = function() {
-            jQuery('#dialog').dialog({autoOpen: false, dialogClass: 'dialog'});
             $http.get("/TRAINING-MANAGER/api/exercise/${param.date}").success(function(data) {
                 $scope.date = ${param.date};
                 $scope.dayExercises = data;
@@ -73,15 +73,17 @@
         };
         
         $scope.empty = function(e) {
-            return e.loads.length === 0 && e.bars.length === 0 && 
-                    e.dumbbells.length === 0 && e.necks.length === 0 && 
-                    e.stands.length === 0 && e.benches.length === 0 &&
-                    e.press.length === 0;
+            return e.loads.length === 0 && e.bars.length === 0 && e.dumbbells.length === 0 && e.necks.length === 0 && e.stands.length === 0 && e.benches.length === 0 && e.press.length === 0;
         };
         
         $scope.progress = function(d) {
-            $http.get("/TRAINING-MANAGER/api/exercise/"+ d.exercise.id +"progress/").success(function(progressData) {
-                
+            $modal.open({
+              template: '<div class="modal-header"><button type="button" class="close" ng-click="ok()"></button><h4 class="modal-title"><spring:message code="exercise.progress"/></h4></div><div class="modal-body"><div class="progress-chart" style="height: 400px; width: 870px"></div></div>',
+              controller: ModalInstanceCtrl,
+              windowClass: 'progress-modal'
+            });
+            
+            $http.get("/TRAINING-MANAGER/api/exercise/"+ d.exercise.id +"/progress/").success(function(progressData) {
                 var chartLine = new Array();
                 var chartWeightLine = new Array();
                 for (var i = 0; i < progressData.length; i++) {
@@ -105,25 +107,25 @@
                     },
                     legend: { position: "se" },
                     yaxis: { },
-                    xaxis: { mode: "time", timeformat: "%d %b %y", minTickSize: [1, "day"], timezone: "Europe/Warsaw" },
+                    xaxis: { mode: "time", timeformat: "%d-%m-%Y", minTickSize: [1, "day"], timezone: "Europe/Warsaw" },
                     colors: chartColors,
                     shadowSize: 1,
                     tooltip: true,              
-                    tooltipOpts: { content: "%x: %y.0", dateFormat: "%d %b %y", shifts: { x: -30, y: -50 } }
+                    tooltipOpts: { content: "%x: %y.0", xDateFormat: "%d-%m-%Y", shifts: { x: -30, y: -50 } }
                 };
 
                 jQuery.plot(jQuery(".progress-chart"), [
                     {
                         label: "Postęp w ćwiczeniu (współczynnik)",
                         data: chartLine,
-                        lines: {fillColor: "#f2f7f9"},
-                        points: {fillColor: "#88bbc8"}
+                        lines: { fillColor: "#f2f7f9" },
+                        points: { fillColor: "#88bbc8" }
                     },
                     {
                         label: "Postęp w ćwiczeniu (waga)",
                         data: chartWeightLine,
-                        lines: {fillColor: "#fff8f2"},
-                        points: {fillColor: "#ed7a53"}
+                        lines: { fillColor: "#fff8f2" },
+                        points: { fillColor: "#ed7a53" }
                     }
                 ], options);  
                 
@@ -154,8 +156,14 @@
                 items.pop();
             }
         }
-        
     });
+    
+    var ModalInstanceCtrl = function ($scope, $modalInstance) {
+
+        $scope.ok = function () {
+          $modalInstance.close();
+        };
+};
 </script>
 
 <div ng-controller="recordsController" ng-init="init()">
@@ -311,13 +319,5 @@
             </div>
         </div>
         <a ng-hide="empty(addEquipment)" href="" class="btn btn-block btn-primary btn-sm" style="margin-top: 10px;" ng-click="add()"><i class="fa fa-plus" ></i> <spring:message code="add"/></a>
-    </div>
-    <div class="modal fade bs-modal-lg" id="dialog" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button><h4 class="modal-title"><spring:message code="exercise.progress"/></h4></div>
-                <div class="modal-body"><div class="progress-chart" style="height: 400px; width: 858px"></div></div>
-            </div>
-        </div>
     </div>
 </div>
