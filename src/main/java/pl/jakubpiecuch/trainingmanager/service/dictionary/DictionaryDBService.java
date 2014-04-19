@@ -7,7 +7,6 @@ import pl.jakubpiecuch.trainingmanager.dao.EquipmentDao;
 import pl.jakubpiecuch.trainingmanager.dao.ExercisesDao;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.domain.Exercises;
-import pl.jakubpiecuch.trainingmanager.domain.Exercises.PartyMusclesEnum;
 
 public class DictionaryDBService implements DictionaryService {
     
@@ -40,7 +39,7 @@ public class DictionaryDBService implements DictionaryService {
     }
 
     @Override
-    public List<Exercises> getPartyMusclesExercisesList(PartyMusclesEnum pms) {
+    public List<Exercises> getPartyMusclesExercisesList(Exercises.PartyMuscles pms) {
         return exercisesDao.findByPartyMuscles(pms);
     }
     

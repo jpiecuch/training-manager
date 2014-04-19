@@ -4,7 +4,7 @@ import java.util.List;
 import pl.jakubpiecuch.trainingmanager.dao.ExercisesDao;
 import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Exercises;
-import pl.jakubpiecuch.trainingmanager.domain.Exercises.PartyMusclesEnum;
+import pl.jakubpiecuch.trainingmanager.domain.Exercises.PartyMuscles;
 
 public class ExercisesDaoImpl extends CoreDaoImpl  implements ExercisesDao {
     
@@ -14,7 +14,7 @@ public class ExercisesDaoImpl extends CoreDaoImpl  implements ExercisesDao {
     }
 
     @Override
-    public List<Exercises> findByPartyMuscles(PartyMusclesEnum partyMuscles) {
+    public List<Exercises> findByPartyMuscles(PartyMuscles partyMuscles) {
         return session().createQuery("SELECT e FROM Exercises e WHERE e.partyMuscles = :partyMuscles").setParameter("partyMuscles", partyMuscles).list();
     }
 

@@ -10,15 +10,12 @@ import javax.persistence.Table;
 @Table(name = "exercises")
 public class Exercises extends CommonEntity {
 
-    public enum PartyMusclesEnum {
-
-        ABDOMINALS, BACKS, BICEPS_AND_FLEXORS, CHEST, FOREARMS, LEGS_AND_BUTTOCKS, SHOULDERS, TRICEPS_AND_RECTIFIERS
-    }
+    public enum PartyMuscles { ABDOMINALS, BACKS, BICEPS_AND_FLEXORS, CHEST, FOREARMS, LEGS_AND_BUTTOCKS, SHOULDERS, TRICEPS_AND_RECTIFIERS }
 
     private String name;
     private String movieUrl;
     private String description;
-    private PartyMusclesEnum partyMuscles;
+    private PartyMuscles partyMuscles;
 
     public Exercises(Long id) {
         super(id);
@@ -47,11 +44,11 @@ public class Exercises extends CommonEntity {
 
     @Column(name = "party_muscles")
     @Enumerated(EnumType.ORDINAL)
-    public PartyMusclesEnum getPartyMuscles() {
+    public PartyMuscles getPartyMuscles() {
         return partyMuscles;
     }
 
-    public void setPartyMuscles(PartyMusclesEnum partyMuscles) {
+    public void setPartyMuscles(PartyMuscles partyMuscles) {
         this.partyMuscles = partyMuscles;
     }
 

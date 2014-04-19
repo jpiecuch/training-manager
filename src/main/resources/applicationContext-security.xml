@@ -19,7 +19,7 @@
         <intercept-url pattern="/resources/**" access="permitAll" />
         <intercept-url pattern="/auth/**" access="permitAll" />
         <intercept-url pattern="/**" access="isAuthenticated()" />   
-        <form-login login-page="/login.html" authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-handler-ref="authenticationFailureHandler" authentication-failure-url="/failure.html"/>
+        <form-login login-page="/login.html" authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-url="/failure.html"/>
         <logout invalidate-session="true" logout-success-url="/logout.html"/>
         <remember-me key="e37f4b31-0c45-11dd-bd0b-0800200c9a66" token-validity-seconds="864000" />
         <access-denied-handler error-page="/denied.html"/>
@@ -31,11 +31,7 @@
         <beans:property name="passwordEncoder" ref="shaPasswordEncoder"/>
     </beans:bean>
     
-    <beans:bean id="shaPasswordEncoder" class="pl.jakubpiecuch.trainingmanager.web.authentication.SHAPasswordEncoder">
-        <beans:property name="strength" value="256"/>
-    </beans:bean>
+    <beans:bean id="shaPasswordEncoder" class="pl.jakubpiecuch.trainingmanager.web.authentication.SHAPasswordEncoder"><beans:property name="strength" value="256"/></beans:bean>
  
-    <authentication-manager>
-        <authentication-provider ref="localAuthenticationProvider"></authentication-provider>
-    </authentication-manager>
+    <authentication-manager><authentication-provider ref="localAuthenticationProvider"></authentication-provider></authentication-manager>
 </beans:beans>

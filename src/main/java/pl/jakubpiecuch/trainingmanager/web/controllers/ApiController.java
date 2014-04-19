@@ -74,6 +74,11 @@ public class ApiController {
     public @ResponseBody List<Equipment> equipment(@PathVariable Equipment.Type type) {
         return dictionaryService.getEquipments(type);
     }
+    
+    @RequestMapping(value = "dictionary/partymuscles", method = RequestMethod.GET)
+    public @ResponseBody Exercises.PartyMuscles[] partyMuscles() {
+        return Exercises.PartyMuscles.values();
+    }
 
     @RequestMapping(value = "calendar/event/move", method = RequestMethod.POST)
     public @ResponseBody void moveEvent(@RequestBody final Event event) throws Exception{

@@ -13,6 +13,7 @@
     <link href="<c:url value="/resources/assets/plugins/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet" type="text/css"/>
     <link href="<c:url value="/resources/assets/plugins/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet" type="text/css"/>
     <link href="<c:url value="/resources/assets/plugins/uniform/css/uniform.default.css"/>" rel="stylesheet" type="text/css"/>
+    <link href="<c:url value="/resources/assets/plugins/perfect-scrollbar/perfect-scrollbar-0.4.9.min.css"/>" rel="stylesheet" type="text/css"/>
     <link href="<c:url value="/resources/assets/css/style-metronic.css"/>" rel="stylesheet" type="text/css"/>
     <link href="<c:url value="/resources/assets/css/style.css"/>" rel="stylesheet" type="text/css"/>
     <link href="<c:url value="/resources/assets/css/style-responsive.css"/>" rel="stylesheet" type="text/css"/>
@@ -24,9 +25,12 @@
     <script src="<c:url value="/resources/assets/plugins/jquery-1.10.2.min.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/resources/assets/plugins/moment/moment-with-langs.min.js"/>"></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/angular.js"/>" type="text/javascript" ></script>
-    <script src="<c:url value="/resources/assets/scripts/angularjs/checklist-model.js"/>" type="text/javascript" ></script>
-    <script src="<c:url value="/resources/assets/scripts/angularjs/ui-bootstrap-tpls-0.10.0.min.js"/>" type="text/javascript" ></script>
-    <script src="<c:url value="/resources/assets/scripts/angularjs/app.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/modules/ui-bootstrap-tpls-0.10.0.min.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/modules/calendar.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/modules/perfect-scrollbar.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-dragdrop.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/modules/app.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/modules/checklist-model.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/directives.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/filters.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/services.js"/>" type="text/javascript" ></script>

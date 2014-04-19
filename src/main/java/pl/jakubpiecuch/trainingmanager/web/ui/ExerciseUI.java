@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Locale;
 import org.springframework.context.MessageSource;
 import pl.jakubpiecuch.trainingmanager.domain.Exercises;
-import pl.jakubpiecuch.trainingmanager.domain.Exercises.PartyMusclesEnum;
+import pl.jakubpiecuch.trainingmanager.domain.Exercises.PartyMuscles;
 
 
 public class ExerciseUI {
     private Long id;
-    private PartyMusclesEnum partyMuscles;
+    private PartyMuscles partyMuscles;
     private String partyMusclesMessage;
     private String movieURL;
     private String name;
@@ -62,11 +62,11 @@ public class ExerciseUI {
         this.name = name;
     }
 
-    public PartyMusclesEnum getPartyMuscles() {
+    public PartyMuscles getPartyMuscles() {
         return partyMuscles;
     }
 
-    public void setPartyMuscles(PartyMusclesEnum partyMuscles) {
+    public void setPartyMuscles(PartyMuscles partyMuscles) {
         this.partyMuscles = partyMuscles;
     }
 

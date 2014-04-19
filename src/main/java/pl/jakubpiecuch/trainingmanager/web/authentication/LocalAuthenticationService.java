@@ -23,7 +23,7 @@ public class LocalAuthenticationService implements AuthenticationService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users user = usersDao.findByName(username);
+        Users user = usersDao.findByUniques(null, username, null);
         if (user == null) {
             throw new UsernameNotFoundException("User not exists");
         }
@@ -32,7 +32,7 @@ public class LocalAuthenticationService implements AuthenticationService {
     
     @Override
     public ResetStatus resetPassword(String emial) {
-        Users user = usersDao.findByEmail(emial);
+        Users user = usersDao.findByUniques(null, null, emial);
         if (user != null) {
             user.setStatus(Users.Status.RESET_PASSWORD);
             usersDao.save(user);
@@ -51,6 +51,11 @@ public class LocalAuthenticationService implements AuthenticationService {
         user.setCalendar(calendar);
         usersDao.save(user);
         return true;
+    }
+
+    @Override
+    public boolean availability(String field, String value) {
+        return usersDao.findByUniques(null, "name".equals(field) ? value : null, "email".equals(field) ? value : null) == null;
     }
 
     @Autowired

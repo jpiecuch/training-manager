@@ -10,24 +10,8 @@ import pl.jakubpiecuch.trainingmanager.web.services.AuthenticatedUserUtil;
 @Controller
 public class LoginController {
 
-    @RequestMapping(value = "login.html", method = RequestMethod.GET)
+    @RequestMapping(value = {"login.html", "logout.html", "failure.html"}, method = RequestMethod.GET)
     public String login(Model map, HttpServletRequest request) {
-        if (!AuthenticatedUserUtil.isAuthenticated()) {
-            return "login";
-        }
-        return "redirect:index.html";
-    }
-
-    @RequestMapping(value = "logout.html", method = RequestMethod.GET)
-    public String logout(Model map, HttpServletRequest request) {
-        if (!AuthenticatedUserUtil.isAuthenticated()) {
-            return "login";
-        }
-        return "redirect:index.html";
-    }
-
-    @RequestMapping(value = "failure.html", method = RequestMethod.GET)
-    public String failure(Model map, HttpServletRequest request) {
         if (!AuthenticatedUserUtil.isAuthenticated()) {
             return "login";
         }

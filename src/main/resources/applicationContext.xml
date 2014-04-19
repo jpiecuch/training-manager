@@ -3,9 +3,11 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
     <context:annotation-config />
     <context:component-scan base-package="pl.jakubpiecuch.trainingmanager.*" />
@@ -22,6 +24,9 @@
         </mvc:interceptor>  
     </mvc:interceptors>  
     
+    <util:properties id="propertyConfigurer" location="classpath:dev.properties"/>
+    <context:property-placeholder properties-ref="propertyConfigurer" />
+    
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basenames" value="classpath:web" />
         <property name="defaultEncoding" value="UTF-8"/>
@@ -36,8 +41,6 @@
         <property name="defaultLocale" value="pl"/>
     </bean>
     
-    
-    
     <bean id="dictionaryService" class="pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryDBService">
         <property name="daos">
             <map>
@@ -50,6 +53,16 @@
                 <entry key="stands" value-ref="standsDao"/>
             </map>
         </property>
+    </bean>
+    
+    <bean id="userValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.UserValidator">
+        <property name="emailPattern" value="${user.email.pattern}"/>
+        <property name="maxNameLength" value="${user.name.maxLength}"/>
+        <property name="maxPasswordLength" value="${user.password.maxLength}"/>
+        <property name="minNameLength" value="${user.name.minLength}"/>
+        <property name="minPasswordLength" value="${user.password.minLength}"/>
+        <property name="namePattern" value="${user.name.pattern}"/>
+        <property name="passwordPattern" value="${user.password.pattern}"/>
     </bean>
 
 </beans>

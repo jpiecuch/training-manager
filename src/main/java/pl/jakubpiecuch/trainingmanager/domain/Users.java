@@ -24,6 +24,7 @@ public class Users extends CommonEntity {
     private String lastName;
     private Calendars calendar;
     private Status status;
+    private String rPassword;
 
     public Users() {
     }
@@ -110,5 +111,14 @@ public class Users extends CommonEntity {
     @Transient
     public String getFullName() {
         return String.format("%s %s", this.firstName, this.lastName);
+    }
+
+    @Transient
+    public String getrPassword() {
+        return rPassword;
+    }
+
+    public void setrPassword(String rPassword) {
+        this.rPassword = rPassword;
     }
 }
