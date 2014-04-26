@@ -144,6 +144,8 @@ CREATE TABLE users (
     salt character varying(10) NOT NULL,
     first_name character varying(15) NOT NULL,
     last_name character varying(15) NOT NULL,
+    email character varying(50) NOT NULL,
+    status integer NOT NULL,
     calendar bigint NOT NULL,
     created timestamp without time zone NOT NULL,
     updated timestamp without time zone NOT NULL,

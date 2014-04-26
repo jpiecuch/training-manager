@@ -7,7 +7,7 @@
     training.controller("exercisesController", function($scope, $http) {
 
         $scope.init = function() {
-            $http.get("/TRAINING-MANAGER/api/dictionary/exercises").success(function(data) {
+            $http.get('${pageContext.servletContext.contextPath}' + "api/dictionary/exercises").success(function(data) {
                 $scope.exercises = data;
             });
         };    

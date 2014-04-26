@@ -167,11 +167,11 @@
         $scope.deleteEquipment = { loads: [], bars: [], dumbbells: [], necks: [], stands: [], benches: [], press: [] };
         
         $scope.init = function() {
-            $http.get("/TRAINING-MANAGER/api/exercise/${param.date}").success(function(data) {
+            $http.get('${pageContext.servletContext.contextPath}' + "/api/exercise/${param.date}").success(function(data) {
                 $scope.date = ${param.date};
                 $scope.dayExercises = data;
                 $scope.tab = data[0];
-                $http.get("/TRAINING-MANAGER/api/dictionary/equipment").success(function(data) {
+                $http.get('${pageContext.servletContext.contextPath}' + "/api/dictionary/equipment").success(function(data) {
                     $scope.equipment = data;
                 });
             });
@@ -208,7 +208,7 @@
         };
         
         $scope.save = function(d) {
-            $http.post("/TRAINING-MANAGER/api/exercise/save", d).success(function() {});
+            $http.post('${pageContext.servletContext.contextPath}' + "/api/exercise/save", d).success(function() {});
         };
         
         $scope.confirm = function(d) {
@@ -236,7 +236,7 @@
               windowClass: 'progress-modal'
             });
             
-            $http.get("/TRAINING-MANAGER/api/exercise/"+ d.exercise.id +"/progress/").success(function(progressData) {
+            $http.get('${pageContext.servletContext.contextPath}' + "/api/exercise/"+ d.exercise.id +"/progress/").success(function(progressData) {
                 var chartLine = new Array();
                 var chartWeightLine = new Array();
                 for (var i = 0; i < progressData.length; i++) {
