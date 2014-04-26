@@ -10,6 +10,7 @@ import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.jakubpiecuch.trainingmanager.dao.DayExercisesDao;
+import pl.jakubpiecuch.trainingmanager.dao.ExercisesDao;
 import pl.jakubpiecuch.trainingmanager.domain.Calendars;
 import pl.jakubpiecuch.trainingmanager.domain.Exercises;
 import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
@@ -20,6 +21,7 @@ public class FullCallendarService implements CalendarService {
     private final static String CALENDAR_FORMAT_DATE = "yyyy-MM-dd";
 
     private DayExercisesDao dayExercisesDao;
+    private ExercisesDao exercisesDao;
 
     @Override
     public  List<Event> events(Users user) {
@@ -53,9 +55,9 @@ public class FullCallendarService implements CalendarService {
             d.setNecks(Sets.newHashSet(last.getNecks()));
             d.setStands(Sets.newHashSet(last.getStands()));
             d.setSeries(last.getSeries());
-            event.setTitle(last.getExercise().getName());
         } else {
             d.setSeries(DayExercises.DEFAULT_SERIES);
+            event.setTitle(exercisesDao.findById(event.getId()).getName());
         }
         dayExercisesDao.save(d);
         event.setId(d.getId());
@@ -80,5 +82,10 @@ public class FullCallendarService implements CalendarService {
     @Autowired
     public void setDayExercisesDao(DayExercisesDao dayExercisesDao) {
         this.dayExercisesDao = dayExercisesDao;
+    }
+
+    @Autowired
+    public void setExercisesDao(ExercisesDao exercisesDao) {
+        this.exercisesDao = exercisesDao;
     }
 }
