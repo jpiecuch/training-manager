@@ -14,12 +14,6 @@
 <script src="<c:url value="/resources/assets/plugins/jquery.cokie.min.js"/>" type="text/javascript"></script>
 <script src="<c:url value="/resources/assets/plugins/uniform/jquery.uniform.min.js"/>" type="text/javascript"></script>
 <script src="<c:url value="/resources/assets/plugins/jquery-numeric/jquery.numeric.js"/>" type="text/javascript"></script>
-<script src="<c:url value="/resources/assets/scripts/core/app.js"/>" type="text/javascript"></script>
-<script>
-    jQuery(document).ready(function() {    
-       App.init();
-    });
-</script>
 
 
 

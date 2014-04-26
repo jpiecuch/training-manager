@@ -131,6 +131,12 @@ CREATE SEQUENCE day_exercises_id_seq
     NO MAXVALUE
     CACHE 1;
 
+CREATE TABLE calendars (
+    id bigint DEFAULT nextval('calendars_id_seq'::regclass) NOT NULL,
+    name character varying(50) NOT NULL,
+    CONSTRAINT calendars_pkey PRIMARY KEY (id)
+);
+
 CREATE TABLE users (
     id bigint NOT NULL,
     name character varying(15) DEFAULT nextval('users_id_seq'::regclass) NOT NULL,
@@ -155,12 +161,6 @@ CREATE TABLE exercises (
     description character varying,
     party_muscles integer NOT NULL,
     CONSTRAINT exercises_pkey PRIMARY KEY (id)
-);
-
-CREATE TABLE calendars (
-    id bigint DEFAULT nextval('calendars_id_seq'::regclass) NOT NULL,
-    name character varying(50) NOT NULL,
-    CONSTRAINT calendars_pkey PRIMARY KEY (id),
 );
 
 CREATE TABLE units (

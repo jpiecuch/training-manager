@@ -40,7 +40,7 @@
     </context-param>
     <context-param>
         <param-name>webAppRootKey</param-name>
-        <param-value>training-manager</param-value>
+        <param-value>gym-home</param-value>
     </context-param>
     
     <listener>

@@ -28,7 +28,9 @@
         <link href="<c:url value="/resources/assets/css/custom.css"/>" rel="stylesheet" type="text/css"/>
     </head>
     <body ng-app="training" class="login">
-        <div class="logo"><a href="index.html"></a></div>
+        <div class="logo">
+            <img src="<c:url value="resources/assets/img/logo-big.png"/>" alt="">
+        </div>
         <div ng-controller="loginController" ng-init="init()" class="content">
             <div ng-show="activeView === 0">
                     <c:if test="${not empty sessionScope['SPRING_SECURITY_LAST_EXCEPTION']}">

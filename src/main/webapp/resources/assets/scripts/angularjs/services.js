@@ -13,6 +13,6 @@ training.service('dayService', function() {
         return result;
     };
 }).service('appInfo', function() {
-    this.contextPath = function() { return "/TRAINING-MANAGER"; };
+    this.contextPath = function() { return "/gym-home"; };
 });
 
