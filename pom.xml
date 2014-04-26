@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pl.jakubpiecuch</groupId>
-    <artifactId>training-manager</artifactId>
-    <version>${training.manager.version}</version>
+    <artifactId>gym-home</artifactId>
+    <version>0.0.1</version>
     <packaging>war</packaging>
 
-    <name>training-manager</name>
+    <name>gym-home</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,7 +16,6 @@
         <junit.version>4.11</junit.version>
         <hibernate.version>4.2.2.Final</hibernate.version>
         <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
-        <training.manager.version>0.0.1</training.manager.version>
         <postgresql.version>8.4-702.jdbc4</postgresql.version>
     </properties>
 

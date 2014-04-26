@@ -64,5 +64,4 @@
         <property name="namePattern" value="${user.name.pattern}"/>
         <property name="passwordPattern" value="${user.password.pattern}"/>
     </bean>
-
 </beans>
