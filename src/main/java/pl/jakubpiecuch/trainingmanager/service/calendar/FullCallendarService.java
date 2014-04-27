@@ -55,6 +55,7 @@ public class FullCallendarService implements CalendarService {
             d.setNecks(Sets.newHashSet(last.getNecks()));
             d.setStands(Sets.newHashSet(last.getStands()));
             d.setSeries(last.getSeries());
+            event.setTitle(last.getExercise().getName());
         } else {
             d.setSeries(DayExercises.DEFAULT_SERIES);
             event.setTitle(exercisesDao.findById(event.getId()).getName());

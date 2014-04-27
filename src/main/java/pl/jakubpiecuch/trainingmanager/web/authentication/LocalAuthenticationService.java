@@ -1,8 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.web.authentication;
 
 import com.springcryptoutils.core.cipher.symmetric.Base64EncodedCipherer;
+import com.springcryptoutils.core.cipher.symmetric.SymmetricEncryptionException;
 import java.util.ArrayList;
 import java.util.Locale;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,11 +24,12 @@ import pl.jakubpiecuch.trainingmanager.service.mail.EmailService;
 @Transactional
 public class LocalAuthenticationService implements AuthenticationService {
     
+    protected final static Logger log = LoggerFactory.getLogger(LocalAuthenticationService.class);
     private static final String IV = "AQIDBAUGAQI=";
     private static final String KEY = "Rs3xEA16I52XJpsWwkw4GrB8l6FiVGK/";
     private static final String VAL_SPLITTER = "/";
     private static final String FORMAT = "%s" + VAL_SPLITTER + "%s";
-
+    
     private UsersDao usersDao;
     private CalendarsDao calendarsDao;
     private PasswordEncoder passwordEncoder;
@@ -62,18 +66,22 @@ public class LocalAuthenticationService implements AuthenticationService {
         calendarsDao.save(calendar);
         user.setCalendar(calendar);
         usersDao.save(user);
-        emailService.sendEmail(new String[] { encrypter.encrypt(KEY, IV, String.format(FORMAT, user.getName(), user.getEmail())) }, locale, EmailService.Template.REGISTER, user.getEmail());
+        emailService.sendEmail(new Object[] { encrypter.encrypt(KEY, IV, String.format(FORMAT, user.getName(), user.getEmail())), user  }, locale, EmailService.Template.REGISTER, user.getEmail());
         return true;
     }
     
     @Override
     public boolean activate(String value) {
-        String[] decrypt = decrypter.encrypt(KEY, IV, value).split(VAL_SPLITTER);
-        Users user = usersDao.findByUniques(null, decrypt[0], decrypt[1]);
-        if (user != null && Users.Status.ACTIVE != user.getStatus()) {
-            user.setStatus(Users.Status.ACTIVE);
-            usersDao.save(user);
-            return true;
+        try {
+            String[] decrypt = decrypter.encrypt(KEY, IV, value).split(VAL_SPLITTER);
+            Users user = usersDao.findByUniques(null, decrypt[0], decrypt[1]);
+            if (user != null && Users.Status.ACTIVE != user.getStatus()) {
+                user.setStatus(Users.Status.ACTIVE);
+                usersDao.save(user);
+                return true;
+            }
+        } catch (SymmetricEncryptionException e) {
+            log.warn("Wrong activate value {}", value);
         }
         return false;
     }

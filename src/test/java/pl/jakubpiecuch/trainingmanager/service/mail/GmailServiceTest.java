@@ -4,6 +4,7 @@ import java.util.Locale;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jakubpiecuch.trainingmanager.AbstractBaseTest;
+import pl.jakubpiecuch.trainingmanager.domain.Users;
 
 
 public class GmailServiceTest extends AbstractBaseTest {
@@ -13,7 +14,9 @@ public class GmailServiceTest extends AbstractBaseTest {
     
     @Test
     public void sendEmailTest() {
-        String[] data = new String[] {"dshjdhsduhe"};
+        Users user = new Users();
+        user.setFirstName("Jan");
+        Object[] data = new Object[] {"dshjdhsduhe", user};
         emailService.sendEmail(data, Locale.ENGLISH, EmailService.Template.REGISTER, "jakub.piecuch@jakubpiecuch.pl");
     }
 }

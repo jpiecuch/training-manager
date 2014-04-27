@@ -200,11 +200,11 @@
                 };
                 
                 $scope.reset = function() {
-                    $http.post('<c:url value="/auth/reset?email="/>' + $scope.email).success(function(data) {});
+                    $http.post('<c:url value="/authentication/reset?email="/>' + $scope.email).success(function(data) {});
                 };
                 
                 $scope.create = function() {
-                    $http.post('<c:url value="/auth/create"/>', $scope.user).success(function(data) {
+                    $http.post('<c:url value="/authentication/create"/>', $scope.user).success(function(data) {
                     });
                 };
                 

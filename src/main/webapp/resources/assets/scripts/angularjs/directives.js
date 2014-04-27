@@ -39,7 +39,7 @@
     link: function (scope, elem, attrs, ctrl) {
       elem.on('blur', function (evt) {
         scope.$apply(function () {
-            async({ method: 'GET', url: appInfo.contextPath() + '/auth/availability/' + attrs.ngAvailability + '?value=' + elem.val()}).success(function(data) {
+            async({ method: 'GET', url: appInfo.contextPath() + '/authentication/availability/' + attrs.ngAvailability + '?value=' + elem.val()}).success(function(data) {
                 ctrl.$setValidity('availability', data === 'true' ? true : false);
             });
         });

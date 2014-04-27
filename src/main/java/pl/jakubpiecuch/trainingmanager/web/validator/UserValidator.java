@@ -1,6 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.web.validator;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -10,11 +11,9 @@ public class UserValidator implements Validator {
     
     private int maxNameLength;
     private int minNameLength;
-    private int minPasswordLength;
-    private int maxPasswordLength;
-    private String passwordPattern;
     private String namePattern;
     private String emailPattern;
+    private Validator passwordValidator;
     
     @Override
     public boolean supports(Class<?> clazz) {
@@ -28,18 +27,8 @@ public class UserValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "user.firstName.error");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "user.lastName.error");
         
-        if (StringUtils.isEmpty(user.getPassword())) {
-            errors.rejectValue("password", "user.password.empty.error");
-        } else if (!user.getPassword().matches(passwordPattern)) {
-            errors.rejectValue("password", "user.password.pattern.error");
-        } else if (!user.getPassword().equals(user.getrPassword())) {
-            errors.rejectValue("rPassword", "user.password.unique.error");
-        } else if (minPasswordLength > user.getPassword().length()) {
-            errors.rejectValue("name", "user.password.minLength.error");
-        } else if (maxPasswordLength < user.getPassword().length()) {
-            errors.rejectValue("name", "user.password.maxLength.error");
-        }
-        
+        passwordValidator.validate(user, errors);
+
         if (StringUtils.isEmpty(user.getEmail())) {
             errors.rejectValue("password", "user.email.empty.error");
         } else if (!user.getEmail().matches(emailPattern)) {
@@ -56,24 +45,17 @@ public class UserValidator implements Validator {
         }
     }
 
+    @Autowired
+    public void setPasswordValidator(Validator passwordValidator) {
+        this.passwordValidator = passwordValidator;
+    }
+
     public void setMaxNameLength(int maxNameLength) {
         this.maxNameLength = maxNameLength;
     }
 
     public void setMinNameLength(int minNameLength) {
         this.minNameLength = minNameLength;
-    }
-
-    public void setMinPasswordLength(int minPasswordLength) {
-        this.minPasswordLength = minPasswordLength;
-    }
-
-    public void setMaxPasswordLength(int maxPasswordLength) {
-        this.maxPasswordLength = maxPasswordLength;
-    }
-
-    public void setPasswordPattern(String passwordPattern) {
-        this.passwordPattern = passwordPattern;
     }
 
     public void setNamePattern(String namePattern) {

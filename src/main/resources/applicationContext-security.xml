@@ -17,7 +17,7 @@
         <intercept-url pattern="/denied.html" access="permitAll" />
         <intercept-url pattern="/failure.html" access="permitAll" />
         <intercept-url pattern="/resources/**" access="permitAll" />
-        <intercept-url pattern="/auth/**" access="permitAll" />
+        <intercept-url pattern="/authentication/**" access="permitAll" />
         <intercept-url pattern="/**" access="isAuthenticated()" />   
         <form-login login-page="/login.html" authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-url="/failure.html"/>
         <logout invalidate-session="true" logout-success-url="/logout.html"/>

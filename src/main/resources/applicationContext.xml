@@ -34,6 +34,12 @@
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="useCodeAsDefaultMessage" value="true"/>
     </bean>
+    
+    <bean id="emailMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames" value="classpath:email" />
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
  
     <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
         <property name="paramName" value="lang" />
@@ -57,14 +63,18 @@
         </property>
     </bean>
     
+    <bean id="passwordValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.PasswordValidator">
+        <property name="maxPasswordLength" value="${user.password.maxLength}"/>
+        <property name="minPasswordLength" value="${user.password.minLength}"/>
+        <property name="passwordPattern" value="${user.password.pattern}"/>
+    </bean>
+    
     <bean id="userValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.UserValidator">
         <property name="emailPattern" value="${user.email.pattern}"/>
         <property name="maxNameLength" value="${user.name.maxLength}"/>
-        <property name="maxPasswordLength" value="${user.password.maxLength}"/>
         <property name="minNameLength" value="${user.name.minLength}"/>
-        <property name="minPasswordLength" value="${user.password.minLength}"/>
         <property name="namePattern" value="${user.name.pattern}"/>
-        <property name="passwordPattern" value="${user.password.pattern}"/>
+        <property name="passwordValidator" ref="passwordValidator"/>
     </bean>
     
     <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean" >
@@ -94,7 +104,7 @@
     <bean id="emailService" class="pl.jakubpiecuch.trainingmanager.service.mail.GmailService">
         <property name="encoding" value="UTF-8"/>
         <property name="mailSender" ref="mailSender"/>
-        <property name="messageSource" ref="messageSource"/>
+        <property name="messageSource" ref="emailMessageSource"/>
         <property name="sender" value="${mail.user}"/>
         <property name="templateLocation" value="vm/%s.vm"/>
         <property name="velocityEngine" ref="velocityEngine"/>
