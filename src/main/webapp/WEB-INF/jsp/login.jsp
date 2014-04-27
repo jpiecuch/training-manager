@@ -37,6 +37,17 @@
                         <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope = "session" />
                         <div class="alert alert-danger alert-dismissable"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><spring:message code="user.login.incorrect"/></div>
                     </c:if>
+                    <c:if test="${not empty sessionScope['user.activated']}">
+                        <c:choose>
+                            <c:when test="${sessionScope['user.activated']}">
+                                <div class="alert alert-success alert-dismissable"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><spring:message code="user.activated"/></div>
+                            </c:when>
+                            <c:when test="${not sessionScope['user.activated']}">
+                                <div class="alert alert-warning alert-dismissable"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><spring:message code="user.not.activated"/></div>
+                            </c:when>
+                        </c:choose>
+                        <c:remove var="user.activated" scope = "session" />
+                    </c:if>
                     <form class="login-form" name="loginForm" method="POST" action="<c:url value="/j_spring_security_check"/>" novalidate>
                         <h3 class="form-title"><spring:message code="app.login.to.app"/></h3>
                         <div class="alert alert-danger display-hide">
@@ -144,7 +155,7 @@
                     <div class="controls">
                         <div class="input-icon">
                             <i class="fa fa-check"></i>
-                            <input name="rPassword" required class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="<spring:message code="user.rPassword"/>" ng-model="rPassword" repeat-password="password"/>
+                            <input name="rPassword" required class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="<spring:message code="user.rPassword"/>" ng-model="user.rPassword" repeat-password="password"/>
                         </div>
                         <p ng-show="createForm.rPassword.$invalid && !createForm.rPassword.$pristine">
                             <span ng-show="createForm.rPassword.$error.repeat" class="help-block"><spring:message code="user.password.unique.error"/></span><br/>

@@ -579,7 +579,7 @@
             }
 
             .footer  {
-            width: 100%;
+            width: 610px;
             background: #2f2f2f;
             }
             .footer td {
@@ -661,155 +661,52 @@
         <table class="body">
             <tr>
                 <td class="center" align="center" valign="top">
-                    <!-- BEGIN: Header -->
-                    <table class="header" align="center">
-                        <tr>
-                            <td class="center" align="center">
-                                <!-- BEGIN: Header Container -->
-                                <table class="container" align="center">
-                                    <tr>
-                                        <td >
-                                            <table class="row ">
-                                                <tr>
-                                                    <td class="wrapper vertical-middle">
-                                                        <!-- BEGIN: Logo -->
-                                                        <table class="six columns">
-                                                            <tr>
-                                                                <td class="vertical-middle">
-                                                                    <a href="index.html">
-                                                                    <img src="assets/img/logo.png" width="86" height="14" border="0" alt=""/>
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                        <!-- END: Logo -->
-                                                    </td>
-                                                    <td class="wrapper vertical-middle last">
-                                                        <!-- BEGIN: Social Icons -->
-                                                        <table class="six columns">
-                                                            <tr>
-                                                                <td>
-                                                                    <table class="wrapper social-icons" align="right">
-                                                                        <tr>
-                                                                            <td class="vertical-middle">
-                                                                                <a href="#">
-                                                                                <img src="assets/img/email/social_facebook.png"  alt="social icon"/>
-                                                                                </a>
-                                                                            </td>
-                                                                            <td class="vertical-middle">
-                                                                                <a href="#">
-                                                                                <img src="assets/img/email/social_twitter.png"  alt="social icon"/>
-                                                                                </a>
-                                                                            </td>
-                                                                            <td class="vertical-middle">
-                                                                                <a href="#">
-                                                                                <img src="assets/img/email/social_googleplus.png"  alt="social icon"/>
-                                                                                </a>
-                                                                            </td>
-                                                                            <td class="vertical-middle">
-                                                                                <a href="#">
-                                                                                <img src="assets/img/email/social_linkedin.png"  alt="social icon"/>
-                                                                                </a>
-                                                                            </td>
-                                                                            <td class="vertical-middle">
-                                                                                <a href="#">
-                                                                                <img src="assets/img/email/social_rss.png"  alt="social icon"/>
-                                                                                </a>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                        <!-- END: Social Icons -->
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <!-- END: Header Container -->
-                            </td>
-                        </tr>
-                    </table>
-                    <!-- END: Header -->
-                    <!-- BEGIN: Content -->
                     <table class="container content" align="center">
                         <tr>
                             <td>
                                 <table class="row note">
                                     <tr>
                                         <td class="wrapper last">
-                                            <h4>Thank you for joining the Metronic Community!</h4>
-                                            <p>
-                                                Please click the following URL to activate your account:
-                                            </p>
-                                            <!-- BEGIN: Note Panel -->
+                                            <h4>${messageSource.getMessage('mail.joinThanks', null, $locale)}</h4>
+                                            <p>${messageSource.getMessage('mail.clickLink', null, $locale)}:</p>
                                             <table class="twelve columns" style="margin-bottom: 10px">
                                                 <tr>
+                                                    #set ( $url = "http://www.gym-home.com/auth/activate/" + $data[0])
                                                     <td class="panel">
-                                                         
-                                                         <a href="https://www.keenthemes.com/signup/activate/">https://www.keenthemes.com/signup/activate/?code=1212</a>
+                                                         <a href="$url">$url</a>
                                                     </td>
                                                     <td class="expander"></td>
                                                 </tr>
                                             </table>
                                             <p>
-                                                 If clicking the URL above does not work, copy and paste the URL into a browser window.
+                                                 ${messageSource.getMessage('mail.clickLinkNotWork', null, $locale)}
                                             </p>
-                                            <!-- END: Note Panel -->
-                                        </td>
-                                    </tr>
-                                </table>
-                                <span class="devider"></span>
-                                <table class="row">
-                                    <tr>
-                                        <td class="wrapper last">
-                                            <!-- BEGIN: Disscount Content -->
-                                            <table class="twelve columns">
-                                                <tr>
-                                                    <td>
-                                                        <h4>70% Disscount!</h4>
-                                                        <p>
-                                                            Phasellus dictum sapien a neque luctus cursus. Pellentesque sem dolor, fringilla et pharetra vitae. Pellentesque sem dolor, fringilla et pharetra vitae
-                                                        </p>
-                                                        <img src="assets/img/email/article.png"  alt=""/>
-                                                    </td>
-                                                    <td class="expander"></td>
-                                                </tr>
-                                            </table>
-                                            <!-- END: Disscount Content -->
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                     </table>
-                    <!-- END: Content -->
-                    <!-- BEGIN: Footer -->
                     <table class="footer" align="center">
                         <tr>
                             <td class="center" align="center">
                                 <table class="container" align="center">
                                     <tr>
                                         <td>
-                                            <!-- BEGIN: Unsubscribet -->
                                             <table class="row">
                                                 <tr>
                                                     <td class="wrapper last">    
-                                                        <span style="font-size:12px;"><i>This ia a system generated email and reply is not required.</i></span>                   
+                                                        <span style="font-size:12px;"><i>${messageSource.getMessage('mail.autoGenerated', null, $locale)}.</i></span>                   
                                                     </td>
                                                 </tr>
                                             </table>
-                                            <!-- END: Unsubscribe -->
-                                            <!-- BEGIN: Footer Panel -->
                                             <table class="row">
                                                 <tr>
                                                     <td class="wrapper">
                                                         <table class="four columns">
                                                             <tr>
                                                                 <td class="vertical-middle">
-                                                                    &copy; Keenthemes 2013.
+                                                                    &copy; ${messageSource.getMessage('app.title', null, $locale)} 2014.
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -818,23 +715,21 @@
                                                         <table class="eight columns">
                                                             <tr>
                                                                 <td class="vertical-middle align-reverse">
-                                                                    <a href="#">About Us</a>&nbsp;
-                                                                    <a href="#">Privacy Policy</a>&nbsp;
-                                                                    <a href="#">Terms of Use</a>
+                                                                    <a href="#">${messageSource.getMessage('app.aboutUs', null, $locale)}</a>&nbsp;
+                                                                    <a href="#">${messageSource.getMessage('app.privacyPolicy', null, $locale)}</a>&nbsp;
+                                                                    <a href="#">${messageSource.getMessage('app.termsOfUse', null, $locale)}</a>
                                                                 </td>
                                                             </tr>
                                                         </table>
                                                     </td>
                                                 </tr>
                                             </table>
-                                            <!-- END: Footer Panel List -->
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                     </table>
-                    <!-- END: Footer -->
                 </td>
             </tr>
         </table>
