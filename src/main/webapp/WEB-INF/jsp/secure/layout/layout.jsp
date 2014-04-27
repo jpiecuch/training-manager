@@ -11,6 +11,9 @@
 <!--<![endif]-->
     <tiles:insertAttribute name="start" />
     <body ng-app="training" class="page-header-fixed">
+        <script>
+            training.constant('contextPath', '${pageContext.request.contextPath}');
+        </script>
         <tiles:insertAttribute name="header"/>
         <div class="clearfix"></div>
         <div class="page-container">

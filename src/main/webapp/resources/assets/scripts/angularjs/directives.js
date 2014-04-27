@@ -33,13 +33,13 @@
             });
         }
     };
-}).directive('ngAvailability', ['$http', 'appInfo', function (async, appInfo) {
+}).directive('ngAvailability', ['$http', 'contextPath', function (async, contextPath) {
   return {
     require: 'ngModel',
     link: function (scope, elem, attrs, ctrl) {
       elem.on('blur', function (evt) {
         scope.$apply(function () {
-            async({ method: 'GET', url: appInfo.contextPath() + '/authentication/availability/' + attrs.ngAvailability + '?value=' + elem.val()}).success(function(data) {
+            async({ method: 'GET', url: contextPath + '/authentication/availability/' + attrs.ngAvailability + '?value=' + elem.val()}).success(function(data) {
                 ctrl.$setValidity('availability', data === 'true' ? true : false);
             });
         });
