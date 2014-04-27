@@ -26,6 +26,7 @@
         <link href="<c:url value="/resources/assets/css/themes/default.css"/>" rel="stylesheet" type="text/css" id="style_color"/>
         <link href="<c:url value="/resources/assets/css/pages/login.css"/>" rel="stylesheet" type="text/css"/>
         <link href="<c:url value="/resources/assets/css/custom.css"/>" rel="stylesheet" type="text/css"/>
+        <link rel="icon" href="<c:url value="/resources/favicon.ico"/>" sizes="16x16 32x32 48x48 64x64" type="image/vnd.microsoft.icon">
     </head>
     <body ng-app="training" class="login">
         <div class="logo">

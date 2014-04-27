@@ -9,6 +9,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta content="" name="description"/>
     <meta content="Jakub Piecuch" name="author"/>
+    <link rel="icon" href="<c:url value="/resources/favicon.ico"/>" sizes="16x16 32x32 48x48 64x64" type="image/vnd.microsoft.icon">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
     <link href="<c:url value="/resources/assets/plugins/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet" type="text/css"/>
     <link href="<c:url value="/resources/assets/plugins/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet" type="text/css"/>
