@@ -49,12 +49,8 @@
                         </c:choose>
                         <c:remove var="user.activated" scope = "session" />
                     </c:if>
-                    <form class="login-form" name="loginForm" method="POST" action="<c:url value="/j_spring_security_check"/>" novalidate>
+                    <form class="login-form" name="loginForm" method="POST" action="<c:url value="/j_spring_security_check"/>" >
                         <h3 class="form-title"><spring:message code="app.login.to.app"/></h3>
-                        <div class="alert alert-danger display-hide">
-                            <button class="close" data-close="alert"></button>
-                            <span><spring:message code="app.enter.username.and.password"/></span>
-                        </div>
                         <div class="form-group">
                             <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.name"/></label>
                             <div class="input-icon"><i class="fa fa-user"></i><input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="<spring:message code="user.name"/>" name="j_username"/></div>
