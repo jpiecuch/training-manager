@@ -900,7 +900,7 @@ Error States
 .has-error .help-inline,
 .has-error .help-block,
 .has-error .control-label {
-  color: #b94a48;
+  color: #b94a48 !important;
 }
 
 .has-error .form-control {

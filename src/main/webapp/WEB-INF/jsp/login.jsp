@@ -49,30 +49,36 @@
                         </c:choose>
                         <c:remove var="user.activated" scope = "session" />
                     </c:if>
-                    <form class="login-form" name="loginForm" method="POST" action="<c:url value="/j_spring_security_check"/>" >
+                    <form class="login-form" name="loginForm" method="POST" action="<c:url value="/j_spring_security_check"/>" novalidate>
                         <h3 class="form-title"><spring:message code="app.login.to.app"/></h3>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="inputStatus(loginForm.j_username)">
                             <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.name"/></label>
-                            <div class="input-icon"><i class="fa fa-user"></i><input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="<spring:message code="user.name"/>" name="j_username"/></div>
+                            <div class="input-icon"><i class="fa fa-user"></i><input required class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="<spring:message code="user.name"/>" name="j_username" ng-model="loginUser.j_username"/></div>
+                            <p ng-show="inputValid(loginForm.j_username)" class="help-block">
+                                <span ng-show="loginForm.j_username.$error.required"><spring:message code="user.name.required.error"/></span>
+                            </p>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="inputStatus(loginForm.j_password)">
                             <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.password"/></label>
-                            <div class="input-icon"><i class="fa fa-lock"></i><input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="<spring:message code="user.password"/>" name="j_password"/></div>
+                            <div class="input-icon"><i class="fa fa-lock"></i><input required class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="<spring:message code="user.password"/>" name="j_password" ng-model="loginUser.j_password"/></div>
+                            <p ng-show="inputValid(loginForm.j_password)" class="help-block">
+                                <span ng-show="loginForm.j_password.$error.required"><spring:message code="user.password.required.error"/></span>
+                            </p>
                         </div>
                         <div class="form-actions">
                             <label class="checkbox"><input id="j_remember" name="_spring_security_remember_me" type="checkbox" value="1" /><label for="j_remember"><span></span></label> <spring:message code="user.remember.me"/> </label>
-                            <button type="submit" class="btn green pull-right"><spring:message code="user.login"/> <i class="m-icon-swapright m-icon-white"></i></button>
+                            <button ng-disabled="loginForm.$invalid" type="submit" class="btn green pull-right"><spring:message code="user.login"/> <i class="m-icon-swapright m-icon-white"></i></button>
                         </div>
                         <div class="forget-password">
-                            <h4><spring:message code="user.forgot.password"/>?</h4>
-                            <p><spring:message code="user.click"/> <a href="" ng-click="activeView = 1" id="forget-password"><spring:message code="user.here"/></a> <spring:message code="user.to.reset.password"/>.</p>
+                            <h4><spring:message code="user.forgot.password"/></h4>
+                            <p><spring:message code="user.click"/> <a href="" ng-click="activeView = 1" id="forget-password"><spring:message code="user.here"/></a> <spring:message code="user.to.reset.password"/></p>
                         </div>
-                        <div class="create-account"><p><spring:message code="user.no.account"/>?&nbsp;<a href="" ng-click="activeView = 2" id="register-btn"><spring:message code="user.create.account"/></a></p></div>
+                        <div class="create-account"><p><spring:message code="user.no.account"/>&nbsp;<a href="" ng-click="activeView = 2" id="register-btn"><spring:message code="user.create.account"/></a></p></div>
                     </form>
             </div>
             <form name="resetForm" ng-submit="reset()" ng-show="activeView === 1" novalidate>
-                <h3><spring:message code="user.forgot.password"/> ?</h3>
-                <p><spring:message code="user.enter.email.to.reset.password"/>.</p>
+                <h3><spring:message code="user.forgot.password"/> </h3>
+                <p><spring:message code="user.enter.email.to.reset.password"/></p>
                 <div class="form-group" ng-class="inputStatus(resetForm.email)">
                     <div class="input-icon">
                         <i class="fa fa-envelope"></i>
@@ -84,20 +90,20 @@
                     </p>
                 </div>
                 <div class="form-actions">
-                    <button ng-click="activeView = 0" type="button" id="back-btn" class="btn"><i class="m-icon-swapleft"></i> <spring:message code="user.back"/> </button>
-                    <button ng-disabled="resetForm.$invalid" type="submit" class="btn green pull-right"><spring:message code="user.send"/> <i class="m-icon-swapright m-icon-white"></i></button>
+                    <button ng-click="activeView = 0" type="button" id="back-btn" class="btn"><i class="m-icon-swapleft"></i> <spring:message code="back"/> </button>
+                    <button ng-disabled="resetForm.$invalid" type="submit" class="btn green pull-right"><spring:message code="send"/> <i class="m-icon-swapright m-icon-white"></i></button>
                 </div>
             </form>
                 <form ng-show="activeView === 2" class="register-form" name="createForm" ng-submit="create()" novalidate>
                 <h3><spring:message code="user.sign.up"/></h3>
-                <p><spring:message code="user.enter.personal.data.below"/>:</p>
+                <p><spring:message code="user.enter.personal.data.below"/></p>
                 <div class="form-group" ng-class="inputStatus(createForm.firstName)">
                     <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.firstName"/></label>
                     <div class="input-icon">
                         <i class="fa fa-font"></i>
                         <input name="firstName" required class="form-control placeholder-no-fix" type="text" placeholder="<spring:message code="user.firstName"/>" ng-model="user.firstName"/>
                     </div>
-                        <span ng-show="inputValid(createForm.firstName)" class="help-block"><spring:message code="user.firstName.required.error"/></span>
+                    <span ng-show="inputValid(createForm.firstName)" class="help-block"><spring:message code="user.firstName.required.error"/></span>
                 </div>
                 <div class="form-group" ng-class="inputStatus(createForm.lastName)">
                     <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.lastName"/></label>
@@ -119,7 +125,7 @@
                         <span ng-show="createForm.email.$error.availability" class="help-block"><spring:message code="user.email.availability.error"/></span>
                     </p>
                 </div>
-                <p><spring:message code="user.email.account.info"/>:</p>
+                <p><spring:message code="user.email.account.info"/></p>
                 <div class="form-group" ng-class="inputStatus(createForm.name)">
                     <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.name"/></label>
                     <div class="input-icon">
@@ -138,13 +144,15 @@
                     <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.password"/></label>
                     <div class="input-icon">
                         <i class="fa fa-lock"></i>
-                        <input ng-maxlength="<spring:eval expression="@propertyConfigurer.getProperty('user.password.maxLength')" />" ng-minlength="<spring:eval expression="@propertyConfigurer.getProperty('user.password.minLength')" />" ng-pattern="/<spring:eval expression="@propertyConfigurer.getProperty('user.password.pattern')" />/" name="password" required class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="<spring:message code="user.password"/>" ng-model="user.password"/>
+                        <spring:eval var="passwordMaxLength" expression="@propertyConfigurer.getProperty('user.password.maxLength')" />
+                        <spring:eval var="passwordMinLength" expression="@propertyConfigurer.getProperty('user.password.minLength')" />
+                        <input ng-maxlength="${passwordMaxLength}" ng-minlength="${passwordMinLength}" ng-pattern="/<spring:eval expression="@propertyConfigurer.getProperty('user.password.pattern')" />/" name="password" required class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="<spring:message code="user.password"/>" ng-model="user.password"/>
                     </div>
                     <p ng-show="inputValid(createForm.password)">
                         <span ng-show="createForm.password.$error.required" class="help-block"><spring:message code="user.password.required.error"/></span>
                         <span ng-show="createForm.password.$error.pattern" class="help-block"><spring:message code="user.password.pattern.error"/></span>
-                        <span ng-show="createForm.password.$error.minlength" class="help-block"><spring:message code="user.password.minLength.error"/></span>
-                        <span ng-show="createForm.password.$error.maxlength" class="help-block"><spring:message code="user.password.maxLength.error"/></span>
+                        <span ng-show="createForm.password.$error.minlength" class="help-block"><spring:message code="user.password.minLength.error" arguments="${passwordMinLength}"/></span>
+                        <span ng-show="createForm.password.$error.maxlength" class="help-block"><spring:message code="user.password.maxLength.error" arguments="${passwordMaxLength}"/></span>
                     </p>
                 </div>
                 <div class="form-group" ng-class="inputStatus(createForm.rPassword)">
@@ -155,7 +163,7 @@
                             <input name="rPassword" required class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="<spring:message code="user.rPassword"/>" ng-model="user.rPassword" repeat-password="password"/>
                         </div>
                         <p ng-show="createForm.rPassword.$invalid && !createForm.rPassword.$pristine">
-                            <span ng-show="createForm.rPassword.$error.repeat" class="help-block"><spring:message code="user.password.unique.error"/></span><br/>
+                            <span ng-show="createForm.rPassword.$error.repeat" class="help-block"><spring:message code="user.password.unique.error"/></span>
                             <span ng-show="createForm.rPassword.$error.required" class="help-block"><spring:message code="user.rPassword.required.error"/></span>
                         </p>
                     </div>
@@ -165,8 +173,8 @@
                     <span ng-show="createForm.tnc.$invalid && !createForm.tnc.$pristine" class="help-block"><spring:message code="user.tnc.required.error"/></span>
                 </div>
                 <div class="form-actions">
-                    <button id="register-back-btn" ng-click="activeView = 0" type="button" class="btn"><i class="m-icon-swapleft"></i> <spring:message code="user.back"/> </button>
-                    <button ng-disabled="createForm.$invalid" type="submit" id="register-submit-btn" class="btn green pull-right"> <spring:message code="user.sign.up"/> <i class="m-icon-swapright m-icon-white"></i></button>
+                    <button id="register-back-btn" ng-click="activeView = 0" type="button" class="btn"><i class="m-icon-swapleft"></i> <spring:message code="back"/> </button>
+                    <button ng-disabled="createForm.$invalid" type="submit" id="register-submit-btn" class="btn green pull-right"> <spring:message code="signUp"/> <i class="m-icon-swapright m-icon-white"></i></button>
                 </div>
             </form>
         </div>
@@ -206,6 +214,7 @@
                 };
                 
                 $scope.inputStatus = function(input) {
+                    console.log(input);
                     return $scope.inputValid(input) ? 'has-error' : input.$valid && !input.$pristine ? 'has-success' : '';
                 };
                 
