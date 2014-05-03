@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -11,18 +12,16 @@
 <!--<![endif]-->
     <tiles:insertAttribute name="start" />
     <body ng-app="training" class="page-header-fixed">
-        <script>
-            training.constant('contextPath', '${pageContext.request.contextPath}');
-        </script>
+        <script type="text/javascript">training.constant('contextPath', '${pageContext.request.contextPath}');</script>
         <tiles:insertAttribute name="header"/>
         <div class="clearfix"></div>
         <div class="page-container">
             <div class="page-sidebar-wrapper">
                 <div class="page-sidebar navbar-collapse collapse">
                     <ul class="page-sidebar-menu">
-                        <li class="sidebar-toggler-wrapper"><div class="sidebar-toggler hidden-phone"></div></li>
-                        <li class="start"><a href="<c:url value="/"/>"><i class="fa fa-home"></i><span class="title">Dashboard</span></a></li>
-                        <li class="active"><a href="<c:url value="/plan/calendar.html"/>"><i class="fa fa-calendar"></i><span class="title">Calendar</span></a></li> 
+                        <c:set var="fullContextPath" value="${pageContext.request.contextPath}/"/>
+                        <li class="start ${fn:endsWith(requestScope['javax.servlet.forward.request_uri'], '/index.html') or requestScope['javax.servlet.forward.request_uri'] eq fullContextPath  ? 'active' : ''}"><a href="<c:url value="/"/>"><i class="fa fa-home"></i><span class="title"><spring:message code="dashboard"/></span></a></li>
+                        <li class="${fn:endsWith(requestScope['javax.servlet.forward.request_uri'], '/plan/calendar.html') ? 'active' : ''}"><a href="<c:url value="/plan/calendar.html"/>"><i class="fa fa-calendar"></i><span class="title"><spring:message code="calendar.calendar"/></span></a></li> 
                     </ul>
                 </div>
             </div>

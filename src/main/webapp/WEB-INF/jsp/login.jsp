@@ -130,13 +130,15 @@
                     <label class="control-label visible-ie8 visible-ie9"><spring:message code="user.name"/></label>
                     <div class="input-icon">
                         <i class="fa fa-user"></i>
-                        <input ng-availability="name" ng-maxlength="<spring:eval expression="@propertyConfigurer.getProperty('user.name.maxLength')" />" ng-minlength="<spring:eval expression="@propertyConfigurer.getProperty('user.name.minLength')" />" ng-pattern="/<spring:eval expression="@propertyConfigurer.getProperty('user.name.pattern')" />/" name="name" required class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="<spring:message code="user.name"/>" ng-model="user.name"/>
+                        <spring:eval var="nameMaxLength" expression="@propertyConfigurer.getProperty('user.name.maxLength')" />
+                        <spring:eval var="nameMinLength" expression="@propertyConfigurer.getProperty('user.name.minLength')" />
+                        <input ng-availability="name" ng-maxlength="${nameMaxLength}" ng-minlength="${nameMinLength}" ng-pattern="/<spring:eval expression="@propertyConfigurer.getProperty('user.name.pattern')" />/" name="name" required class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="<spring:message code="user.name"/>" ng-model="user.name"/>
                     </div>
                     <p ng-show="inputValid(createForm.name)">
                         <span ng-show="createForm.name.$error.required" class="help-block"><spring:message code="user.name.required.error"/></span>
                         <span ng-show="createForm.name.$error.pattern" class="help-block"><spring:message code="user.name.pattern.error"/></span>
-                        <span ng-show="createForm.name.$error.minlength" class="help-block"><spring:message code="user.name.minLength.error"/></span>
-                        <span ng-show="createForm.name.$error.maxlength" class="help-block"><spring:message code="user.name.maxLength.error"/></span>
+                        <span ng-show="createForm.name.$error.minlength" class="help-block"><spring:message code="user.name.minLength.error" arguments="${nameMinLength}"/></span>
+                        <span ng-show="createForm.name.$error.maxlength" class="help-block"><spring:message code="user.name.maxLength.error" arguments="${nameMaxLength}"/></span>
                         <span ng-show="createForm.name.$error.availability" class="help-block"><spring:message code="user.name.availability.error"/></span>
                     </p>
                 </div>
@@ -187,7 +189,14 @@
         <![endif]-->
         <script src="<c:url value="/resources/assets/plugins/jquery-1.10.2.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/angular.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-cookies.js"/>" type="text/javascript" ></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/modules/app.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate-loader-url.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate-loader-static-files.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate-storage-local.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate-storage-cookie.min.js"/>" type="text/javascript" ></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/modules/checklist-model.js"/>" type="text/javascript" ></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/modules/ui-bootstrap-tpls-0.10.0.min.js"/>" type="text/javascript" ></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/modules/calendar.js"/>" type="text/javascript" ></script>

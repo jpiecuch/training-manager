@@ -26,12 +26,19 @@
     <script src="<c:url value="/resources/assets/plugins/jquery-1.10.2.min.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/resources/assets/plugins/moment/moment-with-langs.min.js"/>"></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/angular.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-cookies.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/modules/ui-bootstrap-tpls-0.10.0.min.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/modules/calendar.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/modules/perfect-scrollbar.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-dragdrop.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/modules/app.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/modules/checklist-model.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate.min.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate.min.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate-loader-url.min.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate-loader-static-files.min.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate-storage-local.min.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate-storage-cookie.min.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/directives.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/filters.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/services.js"/>" type="text/javascript" ></script>

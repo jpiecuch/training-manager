@@ -107,7 +107,7 @@
                             <div class="fa fa-arrow-down" style="position: absolute; font-size: 200px; color: #ffb848; left: 25%; opacity: 0.3;bottom: 100px;"></div>
                             <div ng-repeat="p in pm" class="portlet">
                                 <div class="portlet-title" style="margin-bottom: 0px;">
-                                    <div class="caption"><i class="fa fa-reorder"></i>{{p}}</div>
+                                    <div class="caption"><i class="fa fa-reorder"></i>{{p | translate }}</div>
                                     <div class="tools"><a ng-click="collapse($index)" ng-class="collapseStatus[$index] ? 'collapse' : 'expand'"></a></div>
                                 </div>
                                 <div class="portlet-body" collapse="collapseStatus[$index]">

@@ -1,10 +1,18 @@
 package pl.jakubpiecuch.trainingmanager.web.controllers;
 
+import java.io.File;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -33,11 +41,24 @@ public class ApiController {
     private DayService dayService;
     private DictionaryService dictionaryService;
     private MessageSource messageSource;
+    private String messageSourceFile;
     
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+    
+    @RequestMapping(value = "languages/{lang}", method = RequestMethod.GET)
+     public @ResponseBody Map<String, String> languages(@PathVariable String lang) throws ConfigurationException, URISyntaxException {
+        PropertiesConfiguration propertiesConfiguration = new PropertiesConfiguration(new File(getClass().getResource(String.format(messageSourceFile, lang)).toURI()));
+        Map<String, String> result = new HashMap<String, String>();
+        Iterator<String> keys = propertiesConfiguration.getKeys();
+        while (keys.hasNext()) {
+            String key = keys.next();
+            result.put(key, propertiesConfiguration.getString(key));
+        }
+        return result;
     }
 
     @RequestMapping(value = "dictionary/exercises", method = RequestMethod.GET)
@@ -113,5 +134,10 @@ public class ApiController {
     @Autowired
     public void setDayService(DayService dayService) {
         this.dayService = dayService;
-    } 
+    }
+
+    @Value("/web_%s.properties")
+    public void setMessageSourceFile(String messageSourceFile) {
+        this.messageSourceFile = messageSourceFile;
+    }
 }

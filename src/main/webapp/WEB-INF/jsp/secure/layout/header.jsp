@@ -11,7 +11,7 @@
                     <span class="username"><sec:authentication property="principal.fullName"/></span><i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="<c:url value="/j_spring_security_logout" />"><i class="fa fa-key"></i> Log Out</a></li>
+                    <li><a href="<c:url value="/j_spring_security_logout" />"><i class="fa fa-key"></i> <spring:message code="logout"/></a></li>
                 </ul>
             </li>
         </ul>
