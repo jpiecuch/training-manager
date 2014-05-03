@@ -158,7 +158,7 @@
 <script src="<c:url value="/resources/assets/plugins/flot/jquery.flot.time.min.js"/>"></script>
 <script src="<c:url value="/resources/assets/plugins/flot/jquery.flot.tooltip.min.js"/>"></script>
 <script type="text/javascript">
-        training.controller("recordsController", function($scope, $http, $sce, $modal, dayService) {
+        training.controller("recordsController", function($scope, $http, $sce, $modal, dayService, growl) {
             var chartColors = ['#88bbc8', '#ed7a53', '#9FC569', '#bbdce3', '#9a3b1b', '#5a8022', '#2c7282'];
             
         $scope.link = function(src) {return $sce.trustAsResourceUrl(src);};
@@ -179,7 +179,7 @@
         
         $scope.changeTab = function(d) {
             $scope.tab = d;
-            clear($scope.addEquipment.loads);
+            clear($scope.addEquipment);
             $scope.deleteEquipment = { loads: [], bars: [], dumbbells: [], necks: [], stands: [], benches: [], press: [] };
         };
         
@@ -209,13 +209,15 @@
             d.series[d.series.length] = {};
         };
         
-        $scope.save = function(d) {
-            $http.post('${pageContext.servletContext.contextPath}' + "/api/exercise/save", d).success(function() {});
+        $scope.save = function(d, message) {
+            $http.post('${pageContext.servletContext.contextPath}' + "/api/exercise/save", d).success(function() {
+                growl.addSuccessMessage(message === undefined ? "day.exercise.save" : message);
+            });
         };
         
         $scope.confirm = function(d) {
             d.confirmed = true;
-            $scope.save(d);
+            $scope.save(d, "day.exercise.confirm");
         };
         
         $scope.show = function(array, object) {
@@ -238,7 +240,7 @@
               windowClass: 'progress-modal'
             });
             
-            $http.get('${pageContext.servletContext.contextPath}' + "/api/exercise/"+ tab.exercise.id +"/progress/").success(function(progressData) {
+            $http.get('${pageContext.servletContext.contextPath}' + "/api/exercise/"+ d.exercise.id +"/progress/").success(function(progressData) {
                 var chartLine = new Array();
                 var chartWeightLine = new Array();
                 for (var i = 0; i < progressData.length; i++) {

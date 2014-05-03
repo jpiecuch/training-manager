@@ -16,6 +16,7 @@
         <tiles:insertAttribute name="header"/>
         <div class="clearfix"></div>
         <div class="page-container">
+            <div growl></div>
             <div class="page-sidebar-wrapper">
                 <div class="page-sidebar navbar-collapse collapse">
                     <ul class="page-sidebar-menu">

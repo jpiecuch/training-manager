@@ -190,6 +190,7 @@
         <script src="<c:url value="/resources/assets/plugins/jquery-1.10.2.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/angular.js"/>" type="text/javascript" ></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-cookies.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-sanitize.min.js"/>" type="text/javascript" ></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/modules/app.js"/>" type="text/javascript" ></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate.min.js"/>" type="text/javascript" ></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate.min.js"/>" type="text/javascript" ></script>
@@ -202,6 +203,7 @@
         <script src="<c:url value="/resources/assets/scripts/angularjs/modules/calendar.js"/>" type="text/javascript" ></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/modules/perfect-scrollbar.js"/>" type="text/javascript" ></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-dragdrop.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-growl.js"/>" type="text/javascript" ></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/directives.js"/>" type="text/javascript" ></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/filters.js"/>" type="text/javascript" ></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/services.js"/>" type="text/javascript" ></script>  
@@ -223,7 +225,6 @@
                 };
                 
                 $scope.inputStatus = function(input) {
-                    console.log(input);
                     return $scope.inputValid(input) ? 'has-error' : input.$valid && !input.$pristine ? 'has-success' : '';
                 };
                 
