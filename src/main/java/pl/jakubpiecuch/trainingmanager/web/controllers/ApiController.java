@@ -50,7 +50,7 @@ public class ApiController {
     }
     
     @RequestMapping(value = "languages/{lang}", method = RequestMethod.GET)
-     public @ResponseBody Map<String, String> languages(@PathVariable String lang) throws ConfigurationException, URISyntaxException {
+    public @ResponseBody Map<String, String> languages(@PathVariable String lang) throws ConfigurationException, URISyntaxException {
         PropertiesConfiguration propertiesConfiguration = new PropertiesConfiguration(new File(getClass().getResource(String.format(messageSourceFile, lang)).toURI()));
         Map<String, String> result = new HashMap<String, String>();
         Iterator<String> keys = propertiesConfiguration.getKeys();

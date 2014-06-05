@@ -23,6 +23,7 @@
                         <c:set var="fullContextPath" value="${pageContext.request.contextPath}/"/>
                         <li class="start ${fn:endsWith(requestScope['javax.servlet.forward.request_uri'], '/index.html') or requestScope['javax.servlet.forward.request_uri'] eq fullContextPath  ? 'active' : ''}"><a href="<c:url value="/"/>"><i class="fa fa-home"></i><span class="title"><spring:message code="dashboard"/></span></a></li>
                         <li class="${fn:endsWith(requestScope['javax.servlet.forward.request_uri'], '/plan/calendar.html') ? 'active' : ''}"><a href="<c:url value="/plan/calendar.html"/>"><i class="fa fa-calendar"></i><span class="title"><spring:message code="calendar.calendar"/></span></a></li> 
+                        <li class="${fn:endsWith(requestScope['javax.servlet.forward.request_uri'], '/dictionary/exercises.html') ? 'active' : ''}"><a href="<c:url value="/dictionary/exercises.html"/>"><i class="fa fa-calendar"></i><span class="title"><spring:message code="exercises"/></span></a></li> 
                     </ul>
                 </div>
             </div>

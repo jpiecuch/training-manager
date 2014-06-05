@@ -1,4 +1,5 @@
-var training = angular.module('training', ['ui.bootstrap', 'ui.calendar', 'ui.perfect.scrollbar', 'ngDragDrop', 'pascalprecht.translate', 'ngCookies', 'angular-growl'])
+var training = angular.module('training', ['ui.bootstrap', 'ui.calendar', 'ui.perfect.scrollbar', 'ngDragDrop', 
+    'pascalprecht.translate', 'ngCookies', 'angular-growl', 'ngTable'])
         .config(function($translateProvider, contextPath) {
             $translateProvider.useStaticFilesLoader({
                 prefix: contextPath + '/api/languages/',

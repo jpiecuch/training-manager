@@ -92,9 +92,12 @@
                     <div class="col-md-6">
                         <div class="portlet">
                             <div class="portlet-title"><div class="caption"><spring:message code="exercise.video"/></div></div>
-                            <div class="portlet-body">         
+                            <div class="portlet-body"> 
+                                {{tab.exercise.movieURL}}
+                                <object width="560" height="315">
                                 <param name="movie" value="{{tab.exercise.movieURL}}"/><param name="allowFullScreen" value="true"/><param name="allowscriptaccess" value="always"/>
                                 <embed ng-src="{{link(tab.exercise.movieURL)}}" type="application/x-shockwave-flash" class="center" height="315" width="100%" allowscriptaccess="always" allowfullscreen="true"/>
+                                </object>
                             </div>
                         </div>               
                     </div>
@@ -317,6 +320,6 @@
     var ModalInstanceCtrl = function ($scope, $modalInstance) {
         $scope.ok = function () {
           $modalInstance.close();
-        };
+    };
 };
 </script>

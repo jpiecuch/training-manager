@@ -208,6 +208,7 @@
         <script src="<c:url value="/resources/assets/scripts/angularjs/filters.js"/>" type="text/javascript" ></script>
         <script src="<c:url value="/resources/assets/scripts/angularjs/services.js"/>" type="text/javascript" ></script>  
         <script src="<c:url value="/resources/assets/plugins/bootstrap/js/bootstrap.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/ng-table.min.js"/>" type="text/javascript" ></script>
         <script type="text/javascript">
             training.constant('contextPath', '${pageContext.request.contextPath}');
             training.controller("loginController", function($scope, $http) {

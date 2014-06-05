@@ -100,7 +100,7 @@
         <div class="portlet-body light-grey">
             <div class="row" id="calendar-row">
                 <div class="col-md-3 col-sm-12" data-drag="true" data-jqyoui-options="uiConfig.eventBox" jqyoui-draggable>
-                    <h3 class="event-form-title"><spring:message code="calendar.exercises"/></h3>
+                    <h3 class="event-form-title"><spring:message code="exercises"/></h3>
                     <div id="external-events">            
                         <div>
                             <div class="fa fa-arrow-up" style="position: absolute; font-size: 200px; color: #ffb848; left: 25%; opacity: 0.3;top: 100px;"></div>

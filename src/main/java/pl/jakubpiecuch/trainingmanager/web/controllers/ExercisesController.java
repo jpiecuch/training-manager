@@ -10,7 +10,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Exercises.PartyMuscles;
 @Controller
 public class ExercisesController {
 
-    @RequestMapping(value = "exercises/list.html", method = RequestMethod.GET)
+    @RequestMapping(value = "dictionary/exercises.html", method = RequestMethod.GET)
     public String list(ModelMap map) {
         return "exercises/list";
     }
@@ -18,15 +18,5 @@ public class ExercisesController {
     @RequestMapping(value = "exercises/preview.html", method = RequestMethod.GET)
     public String preview(@RequestParam(value = "partyMuscles") PartyMuscles partyMuscles, ModelMap map) {
         return "exercises/preview";
-    }
-
-    @RequestMapping(value = "exercises/details.html", method = RequestMethod.GET)
-    public String details(@RequestParam(value = "id") Long id, ModelMap map) {
-        return "exercises/details";
-    }
-    
-    @RequestMapping(value = "exercises/new.html", method = RequestMethod.GET)
-    public String neww(ModelMap map) {
-        return "exercises/new";
     }
 }

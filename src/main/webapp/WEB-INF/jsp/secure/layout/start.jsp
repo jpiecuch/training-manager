@@ -23,6 +23,7 @@
     <link href="<c:url value="/resources/assets/css/pages/login.css"/>" rel="stylesheet" type="text/css"/>
     <link href="<c:url value="/resources/assets/css/custom.css"/>" rel="stylesheet" type="text/css"/>
     <link href="<c:url value="/resources/assets/css/angular-growl.min.css"/>" rel="stylesheet" type="text/css"/>
+    <link href="<c:url value="/resources/assets/css/ng-table.min.css"/>" rel="stylesheet" type="text/css"/>
     
     <script src="<c:url value="/resources/assets/plugins/jquery-1.10.2.min.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/resources/assets/plugins/moment/moment-with-langs.min.js"/>"></script>
@@ -42,6 +43,7 @@
     <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate-storage-local.min.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate-storage-cookie.min.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-growl.js"/>" type="text/javascript" ></script>
+    <script src="<c:url value="/resources/assets/scripts/angularjs/modules/ng-table.min.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/directives.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/filters.js"/>" type="text/javascript" ></script>
     <script src="<c:url value="/resources/assets/scripts/angularjs/services.js"/>" type="text/javascript" ></script>
