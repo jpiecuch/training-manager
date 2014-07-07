@@ -8,6 +8,22 @@
     <packaging>war</packaging>
 
     <name>gym-home</name>
+    
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <environment>prod</environment>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <activation><activeByDefault>true</activeByDefault></activation>
+            <properties>
+                <environment>dev</environment>
+            </properties>
+        </profile>
+    </profiles>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -201,12 +217,7 @@
             <version>1.4.7</version>
             <scope>provided</scope>
 	</dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-            <version>1.7</version>
-            <scope>provided</scope>
-        </dependency>
+       
         
         <dependency>
             <groupId>com.google.code.spring-crypto-utils</groupId>
@@ -217,6 +228,12 @@
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>
             <version>1.10</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

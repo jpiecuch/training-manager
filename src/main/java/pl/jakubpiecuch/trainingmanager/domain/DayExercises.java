@@ -37,6 +37,9 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.CommonE
     private Set<Stands> stands;
     private Set<Bars> bars;
     private Set<Press> press;
+    private Date created;
+    private Date updated;
+    private Long time;
 
     public DayExercises(Long id) {
         super(id);
@@ -64,7 +67,7 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.CommonE
         this.series = series;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "exercise_benches", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     public Set<Benches> getBenches() {
         return benches;
@@ -74,7 +77,7 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.CommonE
         this.benches = benches;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "exercise_dumbbells", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     public Set<Dumbbells> getDumbbells() {
         return dumbbells;
@@ -84,7 +87,7 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.CommonE
         this.dumbbells = dumbbells;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "exercise_loads", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     public Set<Loads> getLoads() {
         return loads;
@@ -94,7 +97,7 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.CommonE
         this.loads = loads;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "exercise_necks", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     public Set<Necks> getNecks() {
         return necks;
@@ -104,7 +107,7 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.CommonE
         this.necks = necks;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "exercise_stands", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     public Set<Stands> getStands() {
         return stands;
@@ -143,7 +146,7 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.CommonE
         this.calendar = calendar;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "exercise_bars", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     public Set<Bars> getBars() {
         return bars;
@@ -162,7 +165,7 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.CommonE
         this.confirmed = confirmed;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "exercise_press", joinColumns = @JoinColumn(name = "exercise"), inverseJoinColumns = @JoinColumn(name = "equipment"))
     public Set<Press> getPress() {
         return press;
@@ -170,6 +173,35 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.CommonE
 
     public void setPress(Set<Press> press) {
         this.press = press;
+    }
+
+    @Column(name = "created", insertable = false, nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    @Column(name = "updated", insertable = false, nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    @Column(name = "time")
+    public Long getTime() {
+        return time;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
     }
 
     @Transient
@@ -185,5 +217,20 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.CommonE
             result += n.getWeight();
         }
         return result;
+    }
+    
+    @Transient
+    public Long getHours() {
+        return (long) Math.floor(this.time / 3600000);
+    }
+    
+    @Transient
+    public Long getMinutes() {
+        return (long) Math.floor((this.time - getHours() * 3600000) / 60000);
+    }
+    
+    @Transient
+    public Long getSeconds() {
+        return (long) Math.floor((this.time - getHours() * 3600000 - getMinutes() * 60000) / 1000);
     }
 }

@@ -11,31 +11,21 @@
 <html lang="en" class="no-js">
 <!--<![endif]-->
     <tiles:insertAttribute name="start" />
-    <body ng-app="training" class="page-header-fixed">
+    <body ng-app="training" class="page-header-fixed page-quick-sidebar-over-content page-full-width">
         <script type="text/javascript">training.constant('contextPath', '${pageContext.request.contextPath}');</script>
         <tiles:insertAttribute name="header"/>
         <div class="clearfix"></div>
         <div class="page-container">
             <div growl></div>
-            <div class="page-sidebar-wrapper">
-                <div class="page-sidebar navbar-collapse collapse">
-                    <ul class="page-sidebar-menu">
-                        <c:set var="fullContextPath" value="${pageContext.request.contextPath}/"/>
-                        <li class="start ${fn:endsWith(requestScope['javax.servlet.forward.request_uri'], '/index.html') or requestScope['javax.servlet.forward.request_uri'] eq fullContextPath  ? 'active' : ''}"><a href="<c:url value="/"/>"><i class="fa fa-home"></i><span class="title"><spring:message code="dashboard"/></span></a></li>
-                        <li class="${fn:endsWith(requestScope['javax.servlet.forward.request_uri'], '/plan/calendar.html') ? 'active' : ''}"><a href="<c:url value="/plan/calendar.html"/>"><i class="fa fa-calendar"></i><span class="title"><spring:message code="calendar.calendar"/></span></a></li> 
-                        <li class="${fn:endsWith(requestScope['javax.servlet.forward.request_uri'], '/dictionary/exercises.html') ? 'active' : ''}"><a href="<c:url value="/dictionary/exercises.html"/>"><i class="fa fa-calendar"></i><span class="title"><spring:message code="exercises"/></span></a></li> 
-                    </ul>
-                </div>
-            </div>
             <div class="page-content-wrapper">
                 <div class="page-content">
                     <div class="row"><div class="col-md-12"><tiles:insertAttribute name="body"/></div></div>
                 </div>
             </div>
         </div>
-        <div class="footer">
-            <div class="footer-inner">2014 &copy; <spring:message code="app.title"/></div>
-            <div class="footer-tools"><span class="go-top"><i class="fa fa-angle-up"></i></span></div>
+        <div class="page-footer">
+            <div class="page-footer-inner">2014 &copy; <spring:message code="app.title"/></div>
+            <div class="page-footer-tools"><span class="go-top"><i class="fa fa-angle-up"></i></span></div>
         </div>
         <tiles:insertAttribute name="end"/>
     </body>

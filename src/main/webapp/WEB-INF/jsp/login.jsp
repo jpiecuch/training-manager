@@ -17,22 +17,22 @@
         <meta content="" name="description"/>
         <meta content="" name="author"/>
         <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
-        <link href="<c:url value="/resources/assets/plugins/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet" type="text/css"/>
-        <link href="<c:url value="/resources/assets/plugins/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet" type="text/css"/>
-        <link href="<c:url value="/resources/assets/css/style-metronic.css"/>" rel="stylesheet" type="text/css"/>
-        <link href="<c:url value="/resources/assets/css/style.css"/>" rel="stylesheet" type="text/css"/>
-        <link href="<c:url value="/resources/assets/css/style-responsive.css"/>" rel="stylesheet" type="text/css"/>
-        <link href="<c:url value="/resources/assets/css/plugins.css"/>" rel="stylesheet" type="text/css"/>
-        <link href="<c:url value="/resources/assets/css/themes/default.css"/>" rel="stylesheet" type="text/css" id="style_color"/>
-        <link href="<c:url value="/resources/assets/css/pages/login.css"/>" rel="stylesheet" type="text/css"/>
-        <link href="<c:url value="/resources/assets/css/custom.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="/resources/assets/global/plugins/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="/resources/assets/global/plugins/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="/resources/assets/admin/layout/css/layout.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="/resources/assets/admin/layout/css/themes/default.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="/resources/assets/global/css/plugins.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="/resources/assets/admin/pages/css/login-soft.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="/resources/css/custom.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="/resources/assets/global/css/plugins.css"/>" rel="stylesheet" type="text/css">
+        <link href="<c:url value="/resources/assets/global/css/components.css"/>" rel="stylesheet" type="text/css">
         <link rel="icon" href="<c:url value="/resources/favicon.ico"/>" sizes="16x16 32x32 48x48 64x64" type="image/vnd.microsoft.icon">
     </head>
-    <body ng-app="training" class="login">
+    <body ng-app="training" ng-controller="loginController" ng-init="init()" class="login" backstretch bgs="{{bgs}}">
         <div class="logo">
-            <img src="<c:url value="resources/assets/img/logo-big.png"/>" alt="">
+            <img src="<c:url value="resources/img/logo-big.png"/>" alt="">
         </div>
-        <div ng-controller="loginController" ng-init="init()" class="content">
+        <div class="content" >
             <div ng-show="activeView === 0">
                     <c:if test="${not empty sessionScope['SPRING_SECURITY_LAST_EXCEPTION']}">
                         <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope = "session" />
@@ -71,7 +71,7 @@
                         </div>
                         <div class="forget-password">
                             <h4><spring:message code="user.forgot.password"/></h4>
-                            <p><spring:message code="user.click"/> <a href="" ng-click="activeView = 1" id="forget-password"><spring:message code="user.here"/></a> <spring:message code="user.to.reset.password"/></p>
+                            <p><spring:message code="user.click"/> <a href="" ng-click="activeView = 1" id="forget-password-btn"><spring:message code="user.here"/></a> <spring:message code="user.to.reset.password"/></p>
                         </div>
                         <div class="create-account"><p><spring:message code="user.no.account"/>&nbsp;<a href="" ng-click="activeView = 2" id="register-btn"><spring:message code="user.create.account"/></a></p></div>
                     </form>
@@ -94,7 +94,7 @@
                     <button ng-disabled="resetForm.$invalid" type="submit" class="btn green pull-right"><spring:message code="send"/> <i class="m-icon-swapright m-icon-white"></i></button>
                 </div>
             </form>
-                <form ng-show="activeView === 2" class="register-form" name="createForm" ng-submit="create()" novalidate>
+                <form ng-show="activeView === 2" name="createForm" ng-submit="create()" novalidate>
                 <h3><spring:message code="user.sign.up"/></h3>
                 <p><spring:message code="user.enter.personal.data.below"/></p>
                 <div class="form-group" ng-class="inputStatus(createForm.firstName)">
@@ -187,33 +187,46 @@
             <script src="assets/plugins/respond.min.js"></script>
             <script src="assets/plugins/excanvas.min.js"></script> 
         <![endif]-->
-        <script src="<c:url value="/resources/assets/plugins/jquery-1.10.2.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/angular.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-cookies.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-sanitize.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/app.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate-loader-url.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate-loader-static-files.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate-storage-local.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-translate-storage-cookie.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/checklist-model.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/ui-bootstrap-tpls-0.10.0.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/calendar.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/perfect-scrollbar.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-dragdrop.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/angular-growl.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/directives.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/filters.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/services.js"/>" type="text/javascript" ></script>  
-        <script src="<c:url value="/resources/assets/plugins/bootstrap/js/bootstrap.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/resources/assets/scripts/angularjs/modules/ng-table.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/assets/global/plugins/jquery-1.11.0.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/plugins/jquery-backstretch/jquery.backstretch.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/angularjs/angular.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-cookies.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-sanitize.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-backstretch.js"/>" type="text/javascript" ></script>
+        
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate-loader-url.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate-loader-static-files.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate-storage-local.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate-storage-cookie.min.js"/>" type="text/javascript" ></script>
+        
+        <script src="<c:url value="/resources/js/angularjs/modules/ui-bootstrap-tpls-0.10.0.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/calendar.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/perfect-scrollbar.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-dragdrop.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-growl.js"/>" type="text/javascript" ></script>
+        
+        <script src="<c:url value="/resources/js/angularjs/modules/app.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/checklist-model.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/directives.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/filters.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/services.js"/>" type="text/javascript" ></script>  
+        <script src="<c:url value="/resources/assets/global/plugins/bootstrap/js/bootstrap.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/ng-table.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-youtube-embed.min.js"/>" type="text/javascript" ></script>
         <script type="text/javascript">
             training.constant('contextPath', '${pageContext.request.contextPath}');
             training.controller("loginController", function($scope, $http) {
                 $scope.init = function() {
                     $scope.activeView = 0;
+                    $http.get('<c:url value="resource/names/image/start-bg"/>').success(function(data) {
+                        var bgs = [];
+                        for(var i = 0; i < data.length; i++) {
+                            bgs.push('<c:url value="resource/content/start-bg/"/>' + data[i]);
+                        }
+                        $scope.bgs = bgs.join();
+                    });
                 };
                 
                 $scope.reset = function() {

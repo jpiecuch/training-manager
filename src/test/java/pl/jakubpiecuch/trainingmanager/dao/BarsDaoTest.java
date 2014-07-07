@@ -1,4 +1,3 @@
-
 package pl.jakubpiecuch.trainingmanager.dao;
 
 import org.junit.Test;

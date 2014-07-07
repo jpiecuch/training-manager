@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
@@ -12,27 +13,28 @@ import org.springframework.stereotype.Service;
 import pl.jakubpiecuch.trainingmanager.dao.DayExercisesDao;
 import pl.jakubpiecuch.trainingmanager.dao.ExercisesDao;
 import pl.jakubpiecuch.trainingmanager.domain.Calendars;
-import pl.jakubpiecuch.trainingmanager.domain.Exercises;
 import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
+import pl.jakubpiecuch.trainingmanager.domain.Exercises;
 import pl.jakubpiecuch.trainingmanager.domain.Users;
 
 @Service
 public class FullCallendarService implements CalendarService {
     private final static String CALENDAR_FORMAT_DATE = "yyyy-MM-dd";
+    private final static String EVENT_TITLE_FORMAT = "%s. %s";
 
     private DayExercisesDao dayExercisesDao;
     private ExercisesDao exercisesDao;
 
     @Override
-    public  List<Event> events(Users user) {
-        return Lists.newArrayList(Lists.transform(dayExercisesDao.findByCalendarId(user.getCalendar().getId()), new Function<DayExercises, Event>() {
+    public  List<Event> events(Users user, Date start, Date end) {
+        return Lists.newArrayList(Lists.transform(dayExercisesDao.findByCalendarId(user.getCalendar().getId(), start, end), new Function<DayExercises, Event>() {
             @Override
             public Event apply(DayExercises d) {
                 Event result = new Event();
                 result.setAllDay(Boolean.TRUE);
                 result.setId(d.getId());
                 result.setStart(DateFormatUtils.format(d.getDate(), CALENDAR_FORMAT_DATE));
-                result.setTitle(d.getExercise().getName());
+                result.setTitle(String.format(EVENT_TITLE_FORMAT, d.getPosition(), d.getExercise().getName()));
                 return result;
             } 
         }));
@@ -55,10 +57,10 @@ public class FullCallendarService implements CalendarService {
             d.setNecks(Sets.newHashSet(last.getNecks()));
             d.setStands(Sets.newHashSet(last.getStands()));
             d.setSeries(last.getSeries());
-            event.setTitle(last.getExercise().getName());
+            event.setTitle(String.format(EVENT_TITLE_FORMAT, d.getPosition(), last.getExercise().getName()));
         } else {
             d.setSeries(DayExercises.DEFAULT_SERIES);
-            event.setTitle(exercisesDao.findById(event.getId()).getName());
+            event.setTitle(String.format(EVENT_TITLE_FORMAT, d.getPosition(), exercisesDao.findById(event.getId()).getName()));
         }
         dayExercisesDao.save(d);
         event.setId(d.getId());
@@ -75,9 +77,18 @@ public class FullCallendarService implements CalendarService {
 
     @Override
     public void remove(Event event) {
-        DayExercises dayExercise = new DayExercises();
-        dayExercise.setId(event.getId());
+        DayExercises dayExercise = dayExercisesDao.findById(event.getId());
         dayExercisesDao.delete(dayExercise);
+        numeration(dayExercise.getCalendar().getId(), dayExercise.getDate());
+    }
+    
+    private void numeration(Long calendarId, Date date) {
+        List<DayExercises> exerciseses = dayExercisesDao.findByCalendarIdAndDate(calendarId, date);
+        int i = 1;
+        for (DayExercises d : exerciseses) {
+            d.setPosition(i++);
+            dayExercisesDao.save(d);
+        }
     }
 
     @Autowired

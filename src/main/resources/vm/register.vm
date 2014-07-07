@@ -673,12 +673,11 @@
                                 <table class="row note">
                                     <tr>
                                         <td class="wrapper last">
-                                            <h4>${messageSource.getMessage('mail.welcome', null, $locale)}, $data[1].firstName!</h4>
+                                            <h4>${messageSource.getMessage('mail.welcome', null, $locale)}, $data[1].firstName</h4>
                                             <p>${messageSource.getMessage('mail.joinThanks', null, $locale)}. ${messageSource.getMessage('mail.clickLink', null, $locale)}:</p>
                                             <table class="twelve columns" style="margin-bottom: 10px">
                                                 <tr>
-                                                    #set ( $url = "https://www.gym-home.com/authentication/activate/" + $data[0])
-                                                    <td class="panel"><a href="$url">$url</a></td>
+                                                    <td class="panel"><a href="https://www.gym-home.com/authentication/activate/$data[0]">https://www.gym-home.com/authentication/activate/$data[0]</a></td>
                                                     <td class="expander"></td>
                                                 </tr>
                                             </table>

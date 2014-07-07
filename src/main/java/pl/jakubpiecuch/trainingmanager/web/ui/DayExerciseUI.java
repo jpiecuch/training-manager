@@ -19,7 +19,6 @@ import pl.jakubpiecuch.trainingmanager.domain.Stands;
 import pl.jakubpiecuch.trainingmanager.domain.Calendars;
 import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
 
-
 public class DayExerciseUI implements Serializable {
     private Long id;
     private Date date;
@@ -36,6 +35,7 @@ public class DayExerciseUI implements Serializable {
     private List<Press> press;
     private Double totalWeight;
     private Boolean confirmed;
+    private Long time;
 
     public static DayExerciseUI fromDayExercise(final DayExercises d, MessageSource messageSource, Locale locale) {
         DayExerciseUI result = new DayExerciseUI();
@@ -59,6 +59,7 @@ public class DayExerciseUI implements Serializable {
         result.totalWeight = d.getTotalWeight();
         result.calendarId = d.getCalendar().getId();
         result.confirmed = d.getConfirmed();
+        result.time = d.getTime();
         return result;
     }
     
@@ -130,7 +131,11 @@ public class DayExerciseUI implements Serializable {
     public List<Press> getPress() {
         return press;
     }
-    
+
+    public Long getTime() {
+        return time;
+    }
+  
     public DayExercises toDayExercises() {
         DayExercises result = new DayExercises(this.id);
         result.setPosition(this.position);
@@ -153,6 +158,7 @@ public class DayExerciseUI implements Serializable {
         result.setPress(Sets.newHashSet(this.press));
         result.setCalendar(new Calendars(this.calendarId));
         result.setExercise(new Exercises(this.exercise.getId()));
+        result.setTime(this.time);
         return result;
     }
     

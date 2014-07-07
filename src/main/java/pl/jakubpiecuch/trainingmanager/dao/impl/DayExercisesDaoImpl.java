@@ -25,15 +25,15 @@ public class DayExercisesDaoImpl extends CoreDaoImpl  implements DayExercisesDao
     }
 
     @Override
-    public List<DayExercises> findByCalendarId(Long calendarId) {
-        return session().createQuery("SELECT d FROM DayExercises d" + LEFT_JOIN_EXERCISE + "WHERE d.calendar.id = :calendarId ORDER BY d.date, d.position")
-                .setParameter("calendarId", calendarId).list();
+    public List<DayExercises> findByCalendarId(Long calendarId, Date start, Date end) {
+        return session().createQuery("SELECT d FROM DayExercises d" + LEFT_JOIN_EXERCISE + "WHERE d.calendar.id = :calendarId AND d.date BETWEEN :start AND :end ORDER BY d.date, d.position")
+                .setParameter("calendarId", calendarId).setParameter("start", start).setParameter("end", end).list();
     }
 
     @Override
     public List<DayExercises> findByCalendarIdAndDate(Long calendarId, Date date) {
         return session().createQuery("SELECT DISTINCT(d) FROM DayExercises d" + LEFT_JOIN_EXERCISE + LEFT_JOIN_BENCHES + LEFT_JOIN_DUMBBELLS + LEFT_JOIN_LOADS
-                + LEFT_JOIN_NECKS + LEFT_JOIN_STANDS + LEFT_JOIN_BARS + LEFT_JOIN_PRESS + "WHERE d.calendar.id = :calendarId AND d.date = :date ORDER BY d.position")
+                + LEFT_JOIN_NECKS + LEFT_JOIN_STANDS + LEFT_JOIN_BARS + LEFT_JOIN_PRESS + "WHERE d.calendar.id = :calendarId AND d.date = :date ORDER BY d.position, d.updated desc, d.created desc")
                 .setParameter("calendarId", calendarId).setDate("date", date).list();
     }
 

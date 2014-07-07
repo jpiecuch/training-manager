@@ -25,7 +25,7 @@ public class GmailService implements EmailService {
 
     @Override
     @Async
-    public void sendEmail(final Object data, final Locale locale, final Template template, final String... recipients) {
+    public void sendEmail(final Object[] data, final Locale locale, final Template template, final String... recipients) {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {

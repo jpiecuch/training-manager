@@ -66,9 +66,9 @@ public class ApiController {
         return dictionaryService.getExercises();
     }
 
-    @RequestMapping(value = "calendar/events", method = RequestMethod.GET)
-    public @ResponseBody List<Event> calendarEvents() {
-        return calendarService.events(AuthenticatedUserUtil.getUser());
+    @RequestMapping(value = "calendar/events/start/{start}/end/{end}", method = RequestMethod.GET)
+    public @ResponseBody List<Event> calendarEvents(@PathVariable Date start, @PathVariable Date end) {
+        return calendarService.events(AuthenticatedUserUtil.getUser(), start, end);
     }
 
     @RequestMapping(value = "exercise/save", method = RequestMethod.POST)

@@ -8,5 +8,5 @@ public interface EmailService {
         REGISTER
     }
     
-    void sendEmail(Object data, Locale locale, Template template, String... recipients);
+    void sendEmail(Object[] data, Locale locale, Template template, String... recipients);
 }

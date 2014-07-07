@@ -26,7 +26,7 @@
         </mvc:interceptor>  
     </mvc:interceptors>  
     
-    <util:properties id="propertyConfigurer" location="classpath:dev.properties"/>
+    <util:properties id="propertyConfigurer" location="classpath:${env}.properties"/>
     <context:property-placeholder properties-ref="propertyConfigurer" />
     
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -108,6 +108,18 @@
         <property name="sender" value="${mail.user}"/>
         <property name="templateLocation" value="vm/%s.vm"/>
         <property name="velocityEngine" ref="velocityEngine"/>
+    </bean>
+    
+    <bean id="imageResource" class="pl.jakubpiecuch.trainingmanager.service.resource.image.ImageResource">
+        <property name="root" value="${resource.directory}/images/"/>
+    </bean>
+    
+    <bean id="resourceController" class="pl.jakubpiecuch.trainingmanager.web.controllers.ResourceController">
+        <property name="resourceServices">
+            <map>
+                <entry key="image" value-ref="imageResource"/>
+            </map>
+        </property>
     </bean>
     
     <crypt:b64SymmetricCipherer id="encrypter" mode="ENCRYPT"/>
