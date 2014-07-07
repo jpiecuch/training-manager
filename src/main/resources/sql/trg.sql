@@ -5,6 +5,6 @@ BEGIN
 END;
 $TimeStampEntry$ LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS day_exercises_stamp ON action;
+DROP TRIGGER IF EXISTS day_exercises_stamp ON day_exercises;
 CREATE TRIGGER day_exercises_stamp BEFORE UPDATE ON day_exercises
     FOR EACH ROW EXECUTE PROCEDURE TimeStampEntry();
