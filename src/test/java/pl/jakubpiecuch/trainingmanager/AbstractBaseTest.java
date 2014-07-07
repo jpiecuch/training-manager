@@ -9,6 +9,10 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @TransactionConfiguration(transactionManager="transactionManager")
 public abstract class AbstractBaseTest extends AbstractTransactionalJUnit4SpringContextTests {
     
+    static {
+        System.setProperty("env", "dev");
+    }
+    
     @Before
     public void setUp() throws Exception {
         executeSqlScript("truncate.sql", true);
