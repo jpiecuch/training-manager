@@ -26,7 +26,7 @@
         </mvc:interceptor>  
     </mvc:interceptors>  
     
-    <util:properties id="propertyConfigurer" location="classpath:${env}.properties"/>
+    <util:properties id="propertyConfigurer" location="classpath:${environment}.properties"/>
     <context:property-placeholder properties-ref="propertyConfigurer" />
     
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
