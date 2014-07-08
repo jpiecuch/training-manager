@@ -17,6 +17,6 @@ public class GmailServiceTest extends AbstractBaseTest {
         Users user = new Users();
         user.setFirstName("Jan");
         Object[] data = new Object[] {"dshjdhsduhe", user};
-        emailService.sendEmail(data, Locale.ENGLISH, EmailService.Template.REGISTER, "jakub.piecuch@jakubpiecuch.pl");
+        //emailService.sendEmail(data, Locale.ENGLISH, EmailService.Template.REGISTER, "jakub.piecuch@jakubpiecuch.pl");
     }
 }

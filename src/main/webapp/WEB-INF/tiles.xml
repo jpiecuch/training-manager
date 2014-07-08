@@ -45,6 +45,9 @@
     <definition name="login" template="/WEB-INF/jsp/login.jsp">
     </definition>
     
+    <definition name="connect/facebookConnect" template="/WEB-INF/jsp/login.jsp">
+    </definition>
+    
     <definition name="logout" template="/WEB-INF/jsp/login.jsp">
     </definition>
    

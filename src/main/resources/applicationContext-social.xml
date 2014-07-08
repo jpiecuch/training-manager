@@ -2,16 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-       http://www.springcryptoutils.com/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
     <bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
         <property name="connectionFactories">
             <list>
-                <bean class="org.springframework.social.twitter.connect.TwitterConnectionFactory">
-                    <constructor-arg value="${twitter.consumerKey}" />
-                    <constructor-arg value="${twitter.consumerSecret}" />               
-                </bean>
                 <bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
                     <constructor-arg value="${facebook.clientId}" />
                     <constructor-arg value="${facebook.clientSecret}" />                
@@ -33,6 +29,12 @@
     
     <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" factory-method="noOpText" />
     
-    <bean class="org.springframework.social.connect.web.ConnectController"></bean>
+    <bean id="signInAdapter" class="pl.jakubpiecuch.trainingmanager.web.authentication.SpringSecuritySignInAdapter"/>
+    
+    <bean class="org.springframework.social.connect.web.ProviderSignInController">
+        <constructor-arg ref="connectionFactoryLocator"/>
+        <constructor-arg ref="connectionRepository"/> 
+        <constructor-arg ref="signInAdapter"/> 
+    </bean>
 
 </beans>
