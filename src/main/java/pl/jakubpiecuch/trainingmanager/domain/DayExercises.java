@@ -18,7 +18,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "day_exercises")
-public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.CommonEntity implements Serializable {
+public class DayExercises extends VersionedEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     public static final String SERIES_DELIMITER = ";";
@@ -37,8 +37,6 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.CommonE
     private Set<Stands> stands;
     private Set<Bars> bars;
     private Set<Press> press;
-    private Date created;
-    private Date updated;
     private Long time;
 
     public DayExercises(Long id) {
@@ -173,26 +171,6 @@ public class DayExercises extends pl.jakubpiecuch.trainingmanager.domain.CommonE
 
     public void setPress(Set<Press> press) {
         this.press = press;
-    }
-
-    @Column(name = "created", insertable = false, nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    @Column(name = "updated", insertable = false, nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
     }
 
     @Column(name = "time")

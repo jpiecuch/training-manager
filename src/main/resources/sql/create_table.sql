@@ -133,22 +133,22 @@ CREATE SEQUENCE day_exercises_id_seq
 
 CREATE TABLE calendars (
     id bigint DEFAULT nextval('calendars_id_seq'::regclass) NOT NULL,
-    name character varying(50) NOT NULL,
+    name character varying(50),
     CONSTRAINT calendars_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE users (
-    id bigint NOT NULL,
+    id bigint DEFAULT nextval('users_id_seq'::regclass) NOT NULL,
     name character varying(15) DEFAULT nextval('users_id_seq'::regclass) NOT NULL,
     password character varying(255) NOT NULL,
-    salt character varying(10) NOT NULL,
+    salt character varying(50) NOT NULL,
     first_name character varying(15) NOT NULL,
     last_name character varying(15) NOT NULL,
     email character varying(50) NOT NULL,
     status integer NOT NULL,
     calendar bigint NOT NULL,
-    created timestamp without time zone NOT NULL,
-    updated timestamp without time zone NOT NULL,
+    created timestamp without time zone NOT NULL DEFAULT now(),
+    updated timestamp without time zone NOT NULL DEFAULT now(),
     version integer NOT NULL,
     CONSTRAINT users_pkey PRIMARY KEY (id),
     CONSTRAINT users_calendar_fkey 
@@ -301,6 +301,7 @@ CREATE TABLE day_exercises (
     created timestamp without time zone NOT NULL DEFAULT now(),
     updated timestamp without time zone NOT NULL DEFAULT now(),
     "time" bigint,
+    version integer NOT NULL,
     CONSTRAINT day_exercises_pkey PRIMARY KEY (id),
     CONSTRAINT exercises_calendar_fkey 
         FOREIGN KEY (calendar) REFERENCES calendars(id) 

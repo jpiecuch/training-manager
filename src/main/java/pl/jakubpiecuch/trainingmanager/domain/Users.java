@@ -1,6 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,7 +12,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "users")
-public class Users extends CommonEntity {
+public class Users extends VersionedEntity {
     public enum Status { ACTIVE, RESET_PASSWORD, EXPIRED, CREATED }
 
     private String name;
@@ -121,4 +120,6 @@ public class Users extends CommonEntity {
     public void setrPassword(String rPassword) {
         this.rPassword = rPassword;
     }
+    
+    
 }

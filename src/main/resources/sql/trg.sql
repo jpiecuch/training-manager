@@ -8,3 +8,7 @@ $TimeStampEntry$ LANGUAGE plpgsql;
 DROP TRIGGER IF EXISTS day_exercises_stamp ON day_exercises;
 CREATE TRIGGER day_exercises_stamp BEFORE UPDATE ON day_exercises
     FOR EACH ROW EXECUTE PROCEDURE TimeStampEntry();
+
+DROP TRIGGER IF EXISTS users_stamp ON users;
+CREATE TRIGGER users_stamp BEFORE UPDATE ON users
+    FOR EACH ROW EXECUTE PROCEDURE TimeStampEntry();
