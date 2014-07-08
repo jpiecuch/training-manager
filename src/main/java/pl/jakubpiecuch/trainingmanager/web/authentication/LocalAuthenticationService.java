@@ -8,10 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.keygen.KeyGenerators;
+import org.springframework.social.security.SocialUserDetails;
+import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakubpiecuch.trainingmanager.dao.CalendarsDao;
@@ -22,7 +25,7 @@ import pl.jakubpiecuch.trainingmanager.service.mail.EmailService;
 
 @Service
 @Transactional
-public class LocalAuthenticationService implements AuthenticationService {
+public class LocalAuthenticationService implements AuthenticationService, SocialUserDetailsService {
     
     protected final static Logger log = LoggerFactory.getLogger(LocalAuthenticationService.class);
     private static final String IV = "AQIDBAUGAQI=";
@@ -36,7 +39,12 @@ public class LocalAuthenticationService implements AuthenticationService {
     private EmailService emailService;
     private Base64EncodedCipherer encrypter;
     private Base64EncodedCipherer decrypter;
-
+    
+    @Override
+    public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException, DataAccessException {
+        return (SocialUserDetails) loadUserByUsername(userId);
+    }
+    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Users user = usersDao.findByUniques(null, username, null);

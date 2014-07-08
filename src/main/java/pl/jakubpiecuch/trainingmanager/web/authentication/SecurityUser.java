@@ -2,9 +2,9 @@ package pl.jakubpiecuch.trainingmanager.web.authentication;
 
 import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.social.security.SocialUser;
 
-public class SecurityUser extends User {
+public class SecurityUser extends SocialUser {
 
     private Long id;
     private String salt;

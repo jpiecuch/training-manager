@@ -69,6 +69,12 @@
                             <label class="checkbox"><input id="j_remember" name="_spring_security_remember_me" type="checkbox" value="1" /><label for="j_remember"><span></span></label> <spring:message code="user.remember.me"/> </label>
                             <button ng-disabled="loginForm.$invalid" type="submit" class="btn green pull-right"><spring:message code="user.login"/> <i class="m-icon-swapright m-icon-white"></i></button>
                         </div>
+                        <div class="login-options">
+			<h4><spring:message code="user.login.with"/> </h4>
+			<ul class="social-icons">
+                            <li ng-repeat="s in socials"><a class="{{s}}" data-original-title="{{s}}" href="#"></a></li>
+			</ul>
+                        </div>
                         <div class="forget-password">
                             <h4><spring:message code="user.forgot.password"/></h4>
                             <p><spring:message code="user.click"/> <a href="" ng-click="activeView = 1" id="forget-password-btn"><spring:message code="user.here"/></a> <spring:message code="user.to.reset.password"/></p>
@@ -227,6 +233,7 @@
                         }
                         $scope.bgs = bgs.join();
                     });
+                    $scope.socials = ['facebook', 'googleplus', 'twitter', 'linkedin'];
                 };
                 
                 $scope.reset = function() {
