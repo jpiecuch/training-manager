@@ -139,12 +139,12 @@ CREATE TABLE calendars (
 
 CREATE TABLE users (
     id bigint DEFAULT nextval('users_id_seq'::regclass) NOT NULL,
-    name character varying(15) DEFAULT nextval('users_id_seq'::regclass) NOT NULL,
+    name character varying(50) NOT NULL,
     password character varying(255) NOT NULL,
     salt character varying(50) NOT NULL,
     first_name character varying(15) NOT NULL,
     last_name character varying(15) NOT NULL,
-    email character varying(50) NOT NULL,
+    email character varying(50),
     status integer NOT NULL,
     calendar bigint NOT NULL,
     created timestamp without time zone NOT NULL DEFAULT now(),

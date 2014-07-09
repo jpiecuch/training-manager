@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import pl.jakubpiecuch.trainingmanager.domain.Users;
 import pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationService;
+import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 import pl.jakubpiecuch.trainingmanager.web.validator.UserValidator;
 
 @Controller
@@ -78,7 +80,7 @@ public class AuthenticationController {
     
     @RequestMapping(value = "socialsignup", method = RequestMethod.GET)
     public String socialSignUp(WebRequest request) {
-        localAuthenticationService.socialSignUp(request);
+        localAuthenticationService.socialSignUp(request, true);
         return "redirect:/";
     }
 

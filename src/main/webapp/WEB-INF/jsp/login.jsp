@@ -74,7 +74,7 @@
 			<h4><spring:message code="user.login.with"/> </h4>
 			<ul class="social-icons">
                             <li ng-repeat="s in socials">
-                                <a ng-click="socialSubmit(s)" class="{{s}}" data-original-title="{{s}}" ></a>
+                                <a href="" ng-click="socialSubmit(s)" class="{{s}}" data-original-title="{{s}}" ></a>
                                 <form id="{{s}}-form" action="<c:url value="/signin/facebook"/>" method="post"></form>
                             </li>
 			</ul>
@@ -229,14 +229,17 @@
             training.controller("loginController", function($scope, $http) {
                 $scope.init = function() {
                     $scope.activeView = 0;
-                    $http.get('<c:url value="resource/names/image/start-bg"/>').success(function(data) {
+                    $http.get('<c:url value="/resource/names/image/start-bg"/>').success(function(data) {
                         var bgs = [];
                         for(var i = 0; i < data.length; i++) {
-                            bgs.push('<c:url value="resource/content/start-bg/"/>' + data[i]);
+                            bgs.push('<c:url value="/resource/content/start-bg/"/>' + data[i]);
                         }
                         $scope.bgs = bgs.join();
                     });
-                    $scope.socials = ['facebook', 'googleplus', 'twitter', 'linkedin'];
+                    
+                    $http.get('<c:url value="/api/dictionary/social"/>').success(function(data) {
+                        $scope.socials = data;
+                    });               
                 };
                 
                 $scope.reset = function() {

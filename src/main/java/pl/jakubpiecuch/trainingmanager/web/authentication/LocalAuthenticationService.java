@@ -26,6 +26,7 @@ import pl.jakubpiecuch.trainingmanager.dao.UsersDao;
 import pl.jakubpiecuch.trainingmanager.domain.Calendars;
 import pl.jakubpiecuch.trainingmanager.domain.Users;
 import pl.jakubpiecuch.trainingmanager.service.mail.EmailService;
+import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 @Service
 @Transactional
@@ -56,7 +57,7 @@ public class LocalAuthenticationService implements AuthenticationService, Social
         if (user == null || Users.Status.ACTIVE != user.getStatus()) {
             throw new UsernameNotFoundException("User not exists");
         }
-        return new SecurityUser(user.getId(), user.getName(), user.getPassword(), true, true, true, true, new ArrayList<GrantedAuthority>(), user.getSalt(), user.getFullName(), user.getCalendar().getId());
+        return details(user);
     }
     
     @Override
@@ -84,7 +85,7 @@ public class LocalAuthenticationService implements AuthenticationService, Social
     }
 
     @Override
-    public boolean socialSignUp(WebRequest request) {
+    public void socialSignUp(WebRequest request, boolean authenticate) {
         
         Connection<?> connection = ProviderSignInUtils.getConnection(request);
         UserProfile profile = connection.fetchUserProfile();
@@ -105,7 +106,9 @@ public class LocalAuthenticationService implements AuthenticationService, Social
         usersDao.save(user);
         
         ProviderSignInUtils.handlePostSignUp(user.getName(), request);
-        return true;
+        if (authenticate) {
+            WebUtil.authenticate(details(user));
+        }
     }
     
     @Override
@@ -122,6 +125,10 @@ public class LocalAuthenticationService implements AuthenticationService, Social
             log.warn("Wrong activate value {}", value);
         }
         return false;
+    }
+    
+    private UserDetails details(Users user) {
+        return new SecurityUser(user.getId(), user.getName(), user.getPassword(), true, true, true, true, new ArrayList<GrantedAuthority>(), user.getSalt(), user.getFullName(), user.getCalendar().getId());
     }
 
     @Override

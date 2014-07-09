@@ -32,7 +32,6 @@ public class WebUtil {
 
     public static void authenticate(UserDetails userDetails) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
-
         AbstractAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
         securityContext.setAuthentication(auth);
         auth.setDetails(userDetails);
