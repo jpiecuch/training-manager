@@ -2,6 +2,11 @@ package pl.jakubpiecuch.trainingmanager.web.util;
 
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.ArrayUtils;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerMapping;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
@@ -15,7 +20,7 @@ public class WebUtil {
         AntPathMatcher apm = new AntPathMatcher();
         return apm.extractPathWithinPattern(bestMatchPattern, path);
     }
-    
+
     public static ResourceService.Type resolveResourceType(String extension) {
         for (ResourceService.Type t : ResourceService.Type.values()) {
             if (ArrayUtils.contains(t.extensions, extension)) {
@@ -23,5 +28,13 @@ public class WebUtil {
             }
         }
         return null;
+    }
+
+    public static void authenticate(UserDetails userDetails) {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+
+        AbstractAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+        securityContext.setAuthentication(auth);
+        auth.setDetails(userDetails);
     }
 }

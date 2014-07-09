@@ -120,6 +120,4 @@ public class Users extends VersionedEntity {
     public void setrPassword(String rPassword) {
         this.rPassword = rPassword;
     }
-    
-    
 }

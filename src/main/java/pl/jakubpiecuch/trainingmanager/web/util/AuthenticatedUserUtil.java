@@ -1,4 +1,4 @@
-package pl.jakubpiecuch.trainingmanager.web.services;
+package pl.jakubpiecuch.trainingmanager.web.util;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import pl.jakubpiecuch.trainingmanager.domain.Users;

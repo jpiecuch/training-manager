@@ -69,10 +69,14 @@
                             <label class="checkbox"><input id="j_remember" name="_spring_security_remember_me" type="checkbox" value="1" /><label for="j_remember"><span></span></label> <spring:message code="user.remember.me"/> </label>
                             <button ng-disabled="loginForm.$invalid" type="submit" class="btn green pull-right"><spring:message code="user.login"/> <i class="m-icon-swapright m-icon-white"></i></button>
                         </div>
+                    </form>
                         <div class="login-options">
 			<h4><spring:message code="user.login.with"/> </h4>
 			<ul class="social-icons">
-                            <li ng-repeat="s in socials"><a class="{{s}}" data-original-title="{{s}}" href="#"></a></li>
+                            <li ng-repeat="s in socials">
+                                <a ng-click="socialSubmit(s)" class="{{s}}" data-original-title="{{s}}" ></a>
+                                <form id="{{s}}-form" action="<c:url value="/signin/facebook"/>" method="post"></form>
+                            </li>
 			</ul>
                         </div>
                         <div class="forget-password">
@@ -80,7 +84,6 @@
                             <p><spring:message code="user.click"/> <a href="" ng-click="activeView = 1" id="forget-password-btn"><spring:message code="user.here"/></a> <spring:message code="user.to.reset.password"/></p>
                         </div>
                         <div class="create-account"><p><spring:message code="user.no.account"/>&nbsp;<a href="" ng-click="activeView = 2" id="register-btn"><spring:message code="user.create.account"/></a></p></div>
-                    </form>
             </div>
             <form name="resetForm" ng-submit="reset()" ng-show="activeView === 1" novalidate>
                 <h3><spring:message code="user.forgot.password"/> </h3>
@@ -251,6 +254,14 @@
                 
                 $scope.inputValid = function(input) {
                     return input.$invalid && !input.$pristine;
+                };
+                
+                $scope.socialSignIn = function(social) {
+                    $http.post('<c:url value="/signin/"/>' + social);
+                };
+                
+                $scope.socialSubmit = function(s) {
+                    document.getElementById(s + '-form').submit();
                 };
             });
         </script>

@@ -30,7 +30,8 @@ import pl.jakubpiecuch.trainingmanager.service.calendar.Event;
 import pl.jakubpiecuch.trainingmanager.service.day.DayService;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryService;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.EquipmentSet;
-import pl.jakubpiecuch.trainingmanager.web.services.AuthenticatedUserUtil;
+import pl.jakubpiecuch.trainingmanager.web.authentication.SpringSecuritySignInAdapter;
+import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 import pl.jakubpiecuch.trainingmanager.web.ui.DayExerciseUI;
 
 @Controller
@@ -64,6 +65,11 @@ public class ApiController {
     @RequestMapping(value = "dictionary/exercises", method = RequestMethod.GET)
     public @ResponseBody List<Exercises> exercises() {
         return dictionaryService.getExercises();
+    }
+    
+    @RequestMapping(value = "dictionary/social", method = RequestMethod.GET)
+    public @ResponseBody SpringSecuritySignInAdapter.Social[] socials() {
+        return SpringSecuritySignInAdapter.Social.values();
     }
 
     @RequestMapping(value = "calendar/events/start/{start}/end/{end}", method = RequestMethod.GET)

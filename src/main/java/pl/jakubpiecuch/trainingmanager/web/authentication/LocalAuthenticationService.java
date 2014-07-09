@@ -13,10 +13,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.keygen.KeyGenerators;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.UserProfile;
+import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.WebRequest;
 import pl.jakubpiecuch.trainingmanager.dao.CalendarsDao;
 import pl.jakubpiecuch.trainingmanager.dao.UsersDao;
 import pl.jakubpiecuch.trainingmanager.domain.Calendars;
@@ -32,6 +36,7 @@ public class LocalAuthenticationService implements AuthenticationService, Social
     private static final String KEY = "Rs3xEA16I52XJpsWwkw4GrB8l6FiVGK/";
     private static final String VAL_SPLITTER = "/";
     private static final String FORMAT = "%s" + VAL_SPLITTER + "%s";
+    private static final String OAUTH_PASSWORD = "oauth";
     
     private UsersDao usersDao;
     private CalendarsDao calendarsDao;
@@ -75,6 +80,31 @@ public class LocalAuthenticationService implements AuthenticationService, Social
         user.setCalendar(calendar);
         usersDao.save(user);
         emailService.sendEmail(new Object[] { encrypter.encrypt(KEY, IV, String.format(FORMAT, user.getName(), user.getEmail())), user  }, locale, EmailService.Template.REGISTER, user.getEmail());
+        return true;
+    }
+
+    @Override
+    public boolean socialSignUp(WebRequest request) {
+        
+        Connection<?> connection = ProviderSignInUtils.getConnection(request);
+        UserProfile profile = connection.fetchUserProfile();
+        
+        Users user = new Users();
+        user.setEmail(profile.getEmail());
+        user.setFirstName(profile.getFirstName());
+        user.setLastName(profile.getLastName());
+        user.setName(connection.getKey().getProviderUserId());
+        user.setStatus(Users.Status.ACTIVE);
+        user.setSalt(KeyGenerators.string().generateKey());
+        user.setPassword(OAUTH_PASSWORD);
+        
+        Calendars calendar = new Calendars();
+        calendarsDao.save(calendar);
+        
+        user.setCalendar(calendar);
+        usersDao.save(user);
+        
+        ProviderSignInUtils.handlePostSignUp(user.getName(), request);
         return true;
     }
     

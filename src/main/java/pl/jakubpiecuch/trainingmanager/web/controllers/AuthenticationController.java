@@ -3,7 +3,11 @@ package pl.jakubpiecuch.trainingmanager.web.controllers;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
 import pl.jakubpiecuch.trainingmanager.domain.Users;
 import pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationService;
 import pl.jakubpiecuch.trainingmanager.web.validator.UserValidator;
@@ -21,6 +26,8 @@ import pl.jakubpiecuch.trainingmanager.web.validator.UserValidator;
 @Controller
 @RequestMapping(value = "/authentication")
 public class AuthenticationController {
+    
+    protected final static Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
     
     private AuthenticationService localAuthenticationService;
     private UserValidator userValidator;
@@ -67,6 +74,12 @@ public class AuthenticationController {
     public String login(@PathVariable String code, HttpServletRequest request) {
         request.getSession().setAttribute("user.activated", localAuthenticationService.activate(code));
         return "redirect:/login.html";
+    }
+    
+    @RequestMapping(value = "socialsignup", method = RequestMethod.GET)
+    public String socialSignUp(WebRequest request) {
+        localAuthenticationService.socialSignUp(request);
+        return "redirect:/";
     }
 
     @Autowired
