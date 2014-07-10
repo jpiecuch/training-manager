@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.web.authentication;
 
+import java.util.List;
 import java.util.Locale;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.context.request.WebRequest;
@@ -13,4 +14,10 @@ public interface AuthenticationService extends UserDetailsService {
     boolean create(Users user, Locale locale);
     void socialSignUp(WebRequest request, boolean authenticate);
     boolean activate(String value);
+    List<Social> availableSocials();
+    
+    public interface Social {
+        String getId();
+        String getScope();
+    }
 }

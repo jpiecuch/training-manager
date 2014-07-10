@@ -283,6 +283,22 @@
             <version>1.1.0.RELEASE</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- Spring Social Twitter -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-twitter</artifactId>
+            <version>1.1.0.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- Spring Social Google -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-google</artifactId>
+            <version>1.0.0.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
 

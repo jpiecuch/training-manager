@@ -30,9 +30,12 @@ import pl.jakubpiecuch.trainingmanager.service.calendar.Event;
 import pl.jakubpiecuch.trainingmanager.service.day.DayService;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryService;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.EquipmentSet;
+import pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationService;
+import pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationService.Social;
+import pl.jakubpiecuch.trainingmanager.web.authentication.LocalAuthenticationService;
 import pl.jakubpiecuch.trainingmanager.web.authentication.SpringSecuritySignInAdapter;
-import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 import pl.jakubpiecuch.trainingmanager.web.ui.DayExerciseUI;
+import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
 @Controller
 @RequestMapping(value = "/api")
@@ -42,6 +45,7 @@ public class ApiController {
     private DayService dayService;
     private DictionaryService dictionaryService;
     private MessageSource messageSource;
+    private AuthenticationService authenticationService;
     private String messageSourceFile;
     
     @InitBinder
@@ -68,8 +72,8 @@ public class ApiController {
     }
     
     @RequestMapping(value = "dictionary/social", method = RequestMethod.GET)
-    public @ResponseBody SpringSecuritySignInAdapter.Social[] socials() {
-        return SpringSecuritySignInAdapter.Social.values();
+    public @ResponseBody List<Social> socials() {
+        return authenticationService.availableSocials();
     }
 
     @RequestMapping(value = "calendar/events/start/{start}/end/{end}", method = RequestMethod.GET)
@@ -140,6 +144,11 @@ public class ApiController {
     @Autowired
     public void setDayService(DayService dayService) {
         this.dayService = dayService;
+    }
+
+    @Autowired
+    public void setAuthenticationService(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
     @Value("/web_%s.properties")

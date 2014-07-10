@@ -23,6 +23,14 @@
                         <constructor-arg value="${facebook.clientId}" />
                         <constructor-arg value="${facebook.clientSecret}" />
                 </bean>
+                <bean class="org.springframework.social.twitter.connect.TwitterConnectionFactory">
+                        <constructor-arg value="${twitter.clientId}" />
+                        <constructor-arg value="${twitter.clientSecret}" />
+                </bean>
+                <bean class="org.springframework.social.google.connect.GoogleConnectionFactory">
+                    <constructor-arg value="${google.clientId}" />
+                    <constructor-arg value="${google.clientSecret}" />
+                </bean>
             </list>
         </property>
     </bean>

@@ -74,8 +74,11 @@
 			<h4><spring:message code="user.login.with"/> </h4>
 			<ul class="social-icons">
                             <li ng-repeat="s in socials">
-                                <a href="" ng-click="socialSubmit(s)" class="{{s}}" data-original-title="{{s}}" ></a>
-                                <form id="{{s}}-form" action="<c:url value="/signin/facebook"/>" method="post"></form>
+                                <a href="" ng-click="socialSubmit(s)" class="{{s.id}}" data-original-title="{{s.id}}" ></a>
+                                
+                                <form id="{{s.id}}-form" action="{{socialURL + s.id}}" method="post">
+                                    <input ng-if="s.scope" type="hidden" name="scope" value="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile">
+                                </form>
                             </li>
 			</ul>
                         </div>
@@ -239,6 +242,7 @@
                     
                     $http.get('<c:url value="/api/dictionary/social"/>').success(function(data) {
                         $scope.socials = data;
+                        $scope.socialURL = '<c:url value="/signin/"/>';
                     });               
                 };
                 
@@ -264,7 +268,7 @@
                 };
                 
                 $scope.socialSubmit = function(s) {
-                    document.getElementById(s + '-form').submit();
+                    document.getElementById(s.id + '-form').submit();
                 };
             });
         </script>

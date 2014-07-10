@@ -14,13 +14,11 @@ import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 public class SpringSecuritySignInAdapter implements SignInAdapter {
     
-    public enum Social { facebook }
     protected final static Logger LOGGER = LoggerFactory.getLogger(SpringSecuritySignInAdapter.class);
     
     private AuthenticationService authenticationService;
     private RequestCache requestCache;
     
-
     @Override
     public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {
         UserDetails userDetails = authenticationService.loadUserByUsername(userId);

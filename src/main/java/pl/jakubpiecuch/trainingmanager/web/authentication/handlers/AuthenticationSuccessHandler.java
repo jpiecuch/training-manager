@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
     
+    @Autowired
     private RequestCache requestCache;
     
     @Override
@@ -24,11 +25,5 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
         } else {
             response.sendRedirect(request.getContextPath());
         }
-    }
-
-    @Override
-    @Autowired
-    public void setRequestCache(RequestCache requestCache) {
-        super.setRequestCache(requestCache); //To change body of generated methods, choose Tools | Templates.
     }
 }

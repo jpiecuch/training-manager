@@ -3,6 +3,7 @@ package pl.jakubpiecuch.trainingmanager.web.authentication;
 import com.springcryptoutils.core.cipher.symmetric.Base64EncodedCipherer;
 import com.springcryptoutils.core.cipher.symmetric.SymmetricEncryptionException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,6 +126,50 @@ public class LocalAuthenticationService implements AuthenticationService, Social
             log.warn("Wrong activate value {}", value);
         }
         return false;
+    }
+
+    @Override
+    public List<Social> availableSocials() {
+        List<Social> result = new ArrayList<Social>();
+        result.add(new Social() {
+
+            @Override
+            public String getId() {
+                return "facebook";
+            }
+
+            @Override
+            public String getScope() {
+                return null;
+            }
+        });
+        
+        result.add(new Social() {
+
+            @Override
+            public String getId() {
+                return "twitter";
+            }
+
+            @Override
+            public String getScope() {
+                return null;
+            }
+        });
+        
+        result.add(new Social() {
+
+            @Override
+            public String getId() {
+                return "google";
+            }
+
+            @Override
+            public String getScope() {
+                return "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile";
+            }
+        });
+        return result;
     }
     
     private UserDetails details(Users user) {

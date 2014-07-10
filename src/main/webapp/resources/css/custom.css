@@ -104,3 +104,7 @@ h4.equipments-title {
 .float-right {
     float: right;
 }
+
+.social-icons li .google {
+    background: url(../img/social/google.png) no-repeat;
+}
