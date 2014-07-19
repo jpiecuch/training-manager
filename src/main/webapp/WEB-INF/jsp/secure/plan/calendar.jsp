@@ -5,7 +5,7 @@
 <link href="<c:url value="/resources/assets/global/plugins/fullcalendar/fullcalendar/fullcalendar.css"/>" rel="stylesheet"/>
 <script src="<c:url value="/resources/assets/global/plugins/fullcalendar/fullcalendar/fullcalendar.min.js"/>"></script>
 <script type="text/javascript">
-    training.controller("calendarController", function($scope, $http) {
+    training.controller("calendarController", function($scope, $http, $translate) {
         $scope.eventSources = [];
         
         $scope.startDrag = function(event, ui) {
@@ -18,6 +18,7 @@
             //console.log(ui.helper.offset());
            };
         $scope.init = function() {
+            $translate.use('${pageContext.response.locale.language}');
             var dragEventStartDate;
             var currentDate = new Date();
             currentDate.setHours(0,0,0,0);           

@@ -76,8 +76,8 @@
                             <li ng-repeat="s in socials">
                                 <a href="" ng-click="socialSubmit(s)" class="{{s.id}}" data-original-title="{{s.id}}" ></a>
                                 
-                                <form id="{{s.id}}-form" action="{{socialURL + s.id}}" method="post">
-                                    <input ng-if="s.scope" type="hidden" name="scope" value="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile">
+                                <form id="{{s.id}}-form" action="{{socialURL + '/' + s.id}}" method="post">
+                                    <input ng-if="s.scope" type="hidden" name="scope" value="{{s.scope}}">
                                 </form>
                             </li>
 			</ul>
@@ -242,7 +242,7 @@
                     
                     $http.get('<c:url value="/api/dictionary/social"/>').success(function(data) {
                         $scope.socials = data;
-                        $scope.socialURL = '<c:url value="/signin/"/>';
+                        $scope.socialURL = '<c:url value="/signin"/>';
                     });               
                 };
                 

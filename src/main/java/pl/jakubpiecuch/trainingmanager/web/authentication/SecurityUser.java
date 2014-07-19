@@ -2,17 +2,17 @@ package pl.jakubpiecuch.trainingmanager.web.authentication;
 
 import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.social.security.SocialUser;
+import pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationService.Social;
 
-public class SecurityUser extends SocialUser {
-
+public class SecurityUser extends SecuritySocialUser {
+    
     private Long id;
     private String salt;
     private String fullName;
     private Long calendarId;
 
-    public SecurityUser(Long id, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<GrantedAuthority> authorities, String salt, String fullName, Long calendarId) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+    public SecurityUser(Long id, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<GrantedAuthority> authorities, String salt, String fullName, Long calendarId, Social.Type type) {
+        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities, type);
         this.salt = salt;
         this.fullName = fullName;
         this.id = id;

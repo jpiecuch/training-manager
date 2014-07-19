@@ -5,6 +5,8 @@ import com.springcryptoutils.core.cipher.symmetric.SymmetricEncryptionException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.request.WebRequest;
 import pl.jakubpiecuch.trainingmanager.dao.CalendarsDao;
 import pl.jakubpiecuch.trainingmanager.dao.UsersDao;
@@ -58,7 +62,16 @@ public class LocalAuthenticationService implements AuthenticationService, Social
         if (user == null || Users.Status.ACTIVE != user.getStatus()) {
             throw new UsernameNotFoundException("User not exists");
         }
-        return details(user);
+        return details(user, null);
+    }
+    
+    @Override
+    public UserDetails loadUserByUsername(String username, Connection<?> connection) throws UsernameNotFoundException {
+        Users user = usersDao.findByUniques(null, username, null);
+        if (user == null || Users.Status.ACTIVE != user.getStatus()) {
+            throw new UsernameNotFoundException("User not exists");
+        }
+        return details(user, connection);
     }
     
     @Override
@@ -105,10 +118,9 @@ public class LocalAuthenticationService implements AuthenticationService, Social
         
         user.setCalendar(calendar);
         usersDao.save(user);
-        
         ProviderSignInUtils.handlePostSignUp(user.getName(), request);
         if (authenticate) {
-            WebUtil.authenticate(details(user));
+            WebUtil.authenticate(details(user, connection));
         }
     }
     
@@ -131,49 +143,14 @@ public class LocalAuthenticationService implements AuthenticationService, Social
     @Override
     public List<Social> availableSocials() {
         List<Social> result = new ArrayList<Social>();
-        result.add(new Social() {
-
-            @Override
-            public String getId() {
-                return "facebook";
-            }
-
-            @Override
-            public String getScope() {
-                return null;
-            }
-        });
-        
-        result.add(new Social() {
-
-            @Override
-            public String getId() {
-                return "twitter";
-            }
-
-            @Override
-            public String getScope() {
-                return null;
-            }
-        });
-        
-        result.add(new Social() {
-
-            @Override
-            public String getId() {
-                return "google";
-            }
-
-            @Override
-            public String getScope() {
-                return "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile";
-            }
-        });
+        result.add(new Social.Builder().id("facebook").scope("email,read_friendlists,publish_actions").build());
+        result.add(new Social.Builder().id("twitter").scope("publish_stream").build());
+        result.add(new Social.Builder().id("google").scope("https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile").build());
         return result;
     }
     
-    private UserDetails details(Users user) {
-        return new SecurityUser(user.getId(), user.getName(), user.getPassword(), true, true, true, true, new ArrayList<GrantedAuthority>(), user.getSalt(), user.getFullName(), user.getCalendar().getId());
+    private UserDetails details(Users user, Connection connection) {
+        return new SecurityUser(user.getId(), user.getName(), user.getPassword(), true, true, true, true, new ArrayList<GrantedAuthority>(), user.getSalt(), user.getFullName(), user.getCalendar().getId(), connection != null ? Social.Type.valueOf(StringUtils.upperCase(connection.getKey().getProviderId())) : null);
     }
 
     @Override

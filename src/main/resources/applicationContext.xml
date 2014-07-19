@@ -46,7 +46,7 @@
     </bean>
  
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-        <property name="defaultLocale" value="pl"/>
+        <property name="defaultLocale" value="en"/>
     </bean>
     
     <bean id="dictionaryService" class="pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryDBService">
@@ -121,6 +121,16 @@
             </map>
         </property>
     </bean>
+    
+    <bean id="apiController" class="pl.jakubpiecuch.trainingmanager.web.controllers.ApiController">
+        <property name="socialServices">
+            <map>
+                <entry key="FACEBOOK" value-ref="facebookService"/>
+            </map>
+        </property>
+    </bean>
+    
+    <import resource="applicationContext-social.xml"/> 
     
     <crypt:b64SymmetricCipherer id="encrypter" mode="ENCRYPT"/>
     <crypt:b64SymmetricCipherer id="decrypter" mode="DECRYPT"/>

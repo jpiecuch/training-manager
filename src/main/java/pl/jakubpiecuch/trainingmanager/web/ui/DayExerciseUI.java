@@ -36,6 +36,7 @@ public class DayExerciseUI implements Serializable {
     private Double totalWeight;
     private Boolean confirmed;
     private Long time;
+    private int version;
 
     public static DayExerciseUI fromDayExercise(final DayExercises d, MessageSource messageSource, Locale locale) {
         DayExerciseUI result = new DayExerciseUI();
@@ -60,6 +61,7 @@ public class DayExerciseUI implements Serializable {
         result.calendarId = d.getCalendar().getId();
         result.confirmed = d.getConfirmed();
         result.time = d.getTime();
+        result.version = d.getVersion();
         return result;
     }
     
@@ -135,6 +137,10 @@ public class DayExerciseUI implements Serializable {
     public Long getTime() {
         return time;
     }
+
+    public int getVersion() {
+        return version;
+    }
   
     public DayExercises toDayExercises() {
         DayExercises result = new DayExercises(this.id);
@@ -159,6 +165,7 @@ public class DayExerciseUI implements Serializable {
         result.setCalendar(new Calendars(this.calendarId));
         result.setExercise(new Exercises(this.exercise.getId()));
         result.setTime(this.time);
+        result.setVersion(version);
         return result;
     }
     

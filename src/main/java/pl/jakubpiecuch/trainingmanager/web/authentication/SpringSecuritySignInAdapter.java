@@ -21,7 +21,7 @@ public class SpringSecuritySignInAdapter implements SignInAdapter {
     
     @Override
     public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {
-        UserDetails userDetails = authenticationService.loadUserByUsername(userId);
+        UserDetails userDetails = authenticationService.loadUserByUsername(userId, connection);
         WebUtil.authenticate(userDetails);
         
         SavedRequest savedRequest = requestCache.getRequest((HttpServletRequest) request.getNativeRequest(), null);

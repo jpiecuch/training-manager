@@ -60,5 +60,9 @@
     </bean>	
     	
     <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" factory-method="noOpText" />
+    
+    <bean id="facebookService" class="pl.jakubpiecuch.trainingmanager.service.social.facebook.FacebookService">
+        <property name="connectionRepository" ref="connectionRepository"/>
+    </bean>
 
 </beans>

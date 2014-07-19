@@ -1,8 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 @MappedSuperclass()
 public class Equipment extends CommonEntity {

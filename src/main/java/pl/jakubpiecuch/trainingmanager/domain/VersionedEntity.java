@@ -47,7 +47,7 @@ public class VersionedEntity extends CommonEntity {
         return version;
     }
 
-    protected void setVersion(int version) {
+    public void setVersion(int version) {
         this.version = version;
     }
 }

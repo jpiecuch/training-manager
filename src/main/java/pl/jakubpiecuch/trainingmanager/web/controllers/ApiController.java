@@ -30,10 +30,9 @@ import pl.jakubpiecuch.trainingmanager.service.calendar.Event;
 import pl.jakubpiecuch.trainingmanager.service.day.DayService;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryService;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.EquipmentSet;
+import pl.jakubpiecuch.trainingmanager.service.social.SocialService;
 import pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationService;
 import pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationService.Social;
-import pl.jakubpiecuch.trainingmanager.web.authentication.LocalAuthenticationService;
-import pl.jakubpiecuch.trainingmanager.web.authentication.SpringSecuritySignInAdapter;
 import pl.jakubpiecuch.trainingmanager.web.ui.DayExerciseUI;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
@@ -47,6 +46,7 @@ public class ApiController {
     private MessageSource messageSource;
     private AuthenticationService authenticationService;
     private String messageSourceFile;
+    private Map<Social.Type, SocialService> socialServices;
     
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -125,6 +125,11 @@ public class ApiController {
     public @ResponseBody Event createEvent(@RequestBody final Event event) throws Exception {
         return calendarService.create(event, AuthenticatedUserUtil.getUser());
     }
+    
+    @RequestMapping(value = "social/{type}", method = RequestMethod.POST)
+    public @ResponseBody void socialPost(@PathVariable Social.Type type) {
+        socialServices.get(type).post(null);
+    }
 
     @Autowired
     public void setDictionaryService(DictionaryService dictionaryService) {
@@ -149,6 +154,10 @@ public class ApiController {
     @Autowired
     public void setAuthenticationService(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
+    }
+
+    public void setSocialServices(Map<Social.Type, SocialService> socialServices) {
+        this.socialServices = socialServices;
     }
 
     @Value("/web_%s.properties")

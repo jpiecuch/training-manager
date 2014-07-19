@@ -22,49 +22,49 @@
                         <div class="portlet-body">
                                 <span ng-hide="tab.bars.length === 0" class="equipments-title label label-info"><input ng-click="checkAll(deleteEquipment, tab, 'bars')" type="checkbox" id="bars-all-checkbox-delete" ng-checked="deleteEquipment['bars'].length === tab['bars'].length"><label class="all-checkbox" for="bars-all-checkbox-delete"><span></span></label> <spring:message code="equipment.bars"/></span>
                                 <div class="equipments-info" ng-hide="tab.bars.length === 0">
-                                    <div ng-repeat="bar in tab.bars">
+                                    <div ng-repeat="bar in tab.bars | orderBy: 'strength'">
                                         <input type="checkbox" checklist-model="deleteEquipment.bars" checklist-value="bar" id="bars-checkbox-delete-{{$index}}"/><label for="bars-checkbox-delete-{{$index}}"><span></span></label>
                                         {{$index + 1}}. <spring:message code="equipment.strength"/>: <span>{{bar.strength}} {{bar.strengthUnit.shortName}}</span>, <spring:message code="equipment.length"/>: <span>{{bar.lengthOf}} {{bar.lengthOfUnit.shortName}}</span>, <spring:message code="equipment.handles"/>: <span>{{bar.handlesNo}}</span>
                                     </div>
                                 </div>
                                 <span ng-hide="tab.benches.length === 0" class="equipments-title label label-info"><input ng-click="checkAll(deleteEquipment, tab, 'benches')" type="checkbox" id="benches-all-checkbox-delete" ng-checked="deleteEquipment['benches'].length === tab['benches'].length"><label class="all-checkbox" for="benches-all-checkbox-delete"><span></span></label><spring:message code="equipment.benches"/></span>
                                 <div ng-hide="tab.benches.length === 0" class="equipments-info">     
-                                    <div ng-repeat="bench in tab.benches">
+                                    <div ng-repeat="bench in tab.benches | orderBy: 'length'">
                                         <input type="checkbox" checklist-model="deleteEquipment.benches" checklist-value="bench" id="benches-checkbox-delete-{{$index}}"/><label for="benches-checkbox-delete-{{$index}}"><span></span></label>
                                         {{$index + 1}}. <spring:message code="equipment.type"/>: <span>{{bench.type}}</span>, <spring:message code="equipment.length"/>: <span>{{bench.lengthOf}} {{bench.lengthOfUnit.shortName}}</span>, <spring:message code="equipment.height"/>: <span>{{bench.height}} {{bench.heightUnit.shortName}}</span>
                                    </div> 
                                 </div>
                                 <span ng-hide="tab.dumbbells.length === 0" class="equipments-title label label-info"><input ng-click="checkAll(deleteEquipment, tab, 'dumbbells')" type="checkbox" id="dumbbells-all-checkbox-delete" ng-checked="deleteEquipment['dumbbells'].length === tab['dumbbells'].length"><label class="all-checkbox" for="dumbbells-all-checkbox-delete"><span></span></label><spring:message code="equipment.dumbbells"/></span>
                                 <div ng-hide="tab.dumbbells.length === 0" class="equipments-info">
-                                    <div ng-repeat="dumbbell in tab.dumbbells">
+                                    <div ng-repeat="dumbbell in tab.dumbbells | orderBy: 'weight'">
                                         <input type="checkbox" checklist-model="deleteEquipment.dumbbells" checklist-value="dumbbell" id="dumbbells-checkbox-delete-{{$index}}"/><label for="dumbbells-checkbox-delete-{{$index}}"><span></span></label>
                                         {{$index + 1}}. <spring:message code="equipment.weight"/>: <span>{{dumbbell.weight}} {{dumbbell.weightUnit.shortName}}</span>, <spring:message code="equipment.permanent.load"/>: <span>{{dumbbell.connectedLoad ? '<spring:message code="yes"/>' : '<spring:message code="no"/>'}}</span>
                                     </div>
                                 </div>
                                 <span ng-hide="tab.loads.length === 0" class="equipments-title label label-info"><input ng-click="checkAll(deleteEquipment, tab, 'loads')" type="checkbox" id="loads-all-checkbox-delete" ng-checked="deleteEquipment['loads'].length === tab['loads'].length"><label class="all-checkbox" for="loads-all-checkbox-delete"><span></span></label> <spring:message code="equipment.loads"/></span>
                                 <div ng-hide="tab.loads.length === 0" class="equipments-info">
-                                    <div ng-repeat="load in tab.loads">
+                                    <div ng-repeat="load in tab.loads | orderBy: 'weight'">
                                         <input type="checkbox" checklist-model="deleteEquipment.loads" checklist-value="load" id="loads-checkbox-delete-{{$index}}"/><label for="loads-checkbox-delete-{{$index}}"><span></span></label>
                                         {{$index + 1}}. <spring:message code="equipment.weight"/>: <span>{{load.weight}} {{load.weightUnit.shortName}}</span>, <spring:message code="equipment.hole.diameter"/>: <span>{{load.holeDiameter}} {{load.holeDiameterUnit.shortName}}</span>
                                     </div>
                                 </div>
                                 <span ng-hide="tab.necks.length === 0" class="equipments-title label label-info"><input ng-click="checkAll(deleteEquipment, tab, 'necks')" type="checkbox" id="necks-all-checkbox-delete" ng-checked="deleteEquipment['necks'].length === tab['necks'].length"><label class="all-checkbox" for="necks-all-checkbox-delete"><span></span></label> <spring:message code="equipment.necks"/></span>
                                 <div ng-hide="tab.necks.length === 0" class="equipments-info">
-                                    <div ng-repeat="neck in tab.necks">
+                                    <div ng-repeat="neck in tab.necks | orderBy: 'weight'">
                                         <input type="checkbox" checklist-model="deleteEquipment.necks" checklist-value="neck" id="necks-checkbox-delete-{{$index}}"/><label for="necks-checkbox-delete-{{$index}}"><span></span></label>
                                         {{$index + 1}}. <spring:message code="equipment.type"/>: <span>{{neck.type.name}}</span>, <spring:message code="equipment.weight"/>: <span>{{neck.weight}} {{neck.weightUnit.shortName}}</span>, <spring:message code="equipment.diameter"/>: <span>{{neck.diameter}} {{neck.diameterUnit.shortName}}</span>, <spring:message code="equipment.length"/>: <span>{{neck.lengthOf}} {{neck.lengthOfUnit.shortName}}</span>
                                     </div>
                                 </div>
                                 <span ng-hide="tab.stands.length === 0" class="equipments-title label label-info"><input ng-click="checkAll(deleteEquipment, tab, 'stands')" type="checkbox" id="stands-all-checkbox-delete" ng-checked="deleteEquipment['stands'].length === tab['stands'].length"><label class="all-checkbox" for="stands-all-checkbox-delete"><span></span></label> <spring:message code="equipment.stands"/></span>
                                 <div ng-hide="tab.stands.length === 0" class="equipments-info">                                 
-                                    <div ng-repeat="stand in tab.stands">
+                                    <div ng-repeat="stand in tab.stands | orderBy: 'heightMin'">
                                         <input type="checkbox" checklist-model="deleteEquipment.stands" checklist-value="stand" id="stands-checkbox-delete-{{$index}}"/><label for="stands-checkbox-delete-{{$index}}"><span></span></label>
                                         {{$index + 1}}. <spring:message code="equipment.levels"/>: <span>{{stand.levels}}</span>, <spring:message code="equipment.height.min"/>: <span>{{stand.heightMin}} {{stand.heightMinUnit.shortName}}</span>, <spring:message code="equipment.height.max"/>: <span>{{stand.heightMax}} {{stand.heightMaxUnit.shortName}}</span>
                                     </div>     
                                 </div>
                                 <span ng-hide="tab.press.length === 0" class="equipments-title label label-info"><input ng-click="checkAll(deleteEquipment, tab, 'press')" type="checkbox" id="press-all-checkbox-delete" ng-checked="deleteEquipment['press'].length === tab['press'].length"><label class="all-checkbox" for="press-all-checkbox-delete"><span></span></label> <spring:message code="equipment.press"/></span>
                                 <div ng-hide="tab.press.length === 0" class="equipments-info">                                 
-                                    <div ng-repeat="press in tab.press">
+                                    <div ng-repeat="press in tab.press | orderBy: 'strength'">
                                         <input type="checkbox" checklist-model="deleteEquipment.press" checklist-value="press" id="press-checkbox-delete-{{$index}}"/><label for="press-checkbox-delete-{{$index}}"><span></span></label>
                                         {{$index + 1}}. <spring:message code="equipment.strength"/>: <span>{{press.strength}} {{press.strengthUnit.shortName}}</span>, <spring:message code="equipment.handles"/>: <span>{{press.handlesNo}}</span>
                                     </div>     
@@ -167,7 +167,7 @@
 <script src="<c:url value="/resources/assets/global/plugins/flot/jquery.flot.time.min.js"/>"></script>
 <script src="<c:url value="/resources/plugins/flot/jquery.flot.tooltip.min.js"/>"></script>
 <script type="text/javascript">
-        training.controller("recordsController", function($scope, $http, $sce, $modal, $timeout, dayService, growl) {
+        training.controller("recordsController", function($scope, $http, $sce, $modal, $timeout, $translate, dayService, growl) {
             var chartColors = ['#88bbc8', '#ed7a53', '#9FC569', '#bbdce3', '#9a3b1b', '#5a8022', '#2c7282'];
             var equipment = {};
         $scope.link = function(src) {return $sce.trustAsResourceUrl(src);};
@@ -178,6 +178,7 @@
         $scope.stopwatch = [];
         
         $scope.init = function() {
+            $translate.use('${pageContext.response.locale.language}');
             $scope.stopwatchFlag = false;
             $http.get('${pageContext.servletContext.contextPath}' + "/api/exercise/${param.date}").success(function(data) {
                 var position = '${param.position}';
@@ -237,6 +238,7 @@
         
         $scope.save = function(d, message) {
             $http.post('${pageContext.servletContext.contextPath}' + "/api/exercise/save", d).success(function() {
+                d.version++;
                 growl.addSuccessMessage(message === undefined ? "day.exercise.save" : message);
             });
         };
