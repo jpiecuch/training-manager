@@ -1,3 +1,4 @@
 /target/
 src/main/webapp/META-INF/context.xml
 .idea/
+.idea/dataSources.xml
