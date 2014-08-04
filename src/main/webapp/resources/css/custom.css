@@ -108,3 +108,11 @@ h4.equipments-title {
 .social-icons li .google {
     background: url(../img/social/google.png) no-repeat;
 }
+
+.page-footer-inner a {
+    color: white;
+}
+
+.page-footer-inner a:hover {
+    color: white;
+}

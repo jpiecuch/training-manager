@@ -18,8 +18,8 @@
                     <div class="form-row row-fluid">
                         <div class="span12">
                             <div class="row-fluid">
-                                <label class="form-label span4" for="normal">Nazwa</label>
-                                <sf:input path="name" class="span8" type="text" />
+                                <label class="form-label span4" for="name">Nazwa</label>
+                                <sf:input path="name" class="span8" type="text" id="name" />
                             </div>
                         </div>
                     </div>

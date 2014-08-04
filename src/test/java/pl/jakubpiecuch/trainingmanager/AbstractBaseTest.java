@@ -11,6 +11,7 @@ public abstract class AbstractBaseTest extends AbstractTransactionalJUnit4Spring
     
     static {
         System.setProperty("env", "dev");
+        System.setProperty("sys:catalina.base", "C:\\gym-home");
     }
     
     @Before

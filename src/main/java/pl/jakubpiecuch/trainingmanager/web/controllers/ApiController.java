@@ -160,7 +160,7 @@ public class ApiController {
         this.socialServices = socialServices;
     }
 
-    @Value("/web_%s.properties")
+    @Value("/bundles/web/web_%s.properties")
     public void setMessageSourceFile(String messageSourceFile) {
         this.messageSourceFile = messageSourceFile;
     }

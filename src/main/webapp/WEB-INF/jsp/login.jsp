@@ -27,12 +27,41 @@
         <link href="<c:url value="/resources/assets/global/css/plugins.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/resources/assets/global/css/components.css"/>" rel="stylesheet" type="text/css">
         <link rel="icon" href="<c:url value="/resources/favicon.ico"/>" sizes="16x16 32x32 48x48 64x64" type="image/vnd.microsoft.icon">
+        
+        <script src="<c:url value="/resources/assets/global/plugins/jquery-1.11.0.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/plugins/jquery-backstretch/jquery.backstretch.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/angularjs/angular.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-cookies.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-sanitize.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-backstretch.js"/>" type="text/javascript" ></script>
+        
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate-loader-url.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate-loader-static-files.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate-storage-local.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate-storage-cookie.min.js"/>" type="text/javascript" ></script>
+        
+        <script src="<c:url value="/resources/js/angularjs/modules/ui-bootstrap-tpls-0.10.0.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/calendar.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/perfect-scrollbar.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-dragdrop.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-growl.js"/>" type="text/javascript" ></script>
+        
+        <script src="<c:url value="/resources/js/angularjs/modules/app.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/checklist-model.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/directives.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/filters.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/services.js"/>" type="text/javascript" ></script>  
+        <script src="<c:url value="/resources/assets/global/plugins/bootstrap/js/bootstrap.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/ng-table.min.js"/>" type="text/javascript" ></script>
+        <script src="<c:url value="/resources/js/angularjs/modules/angular-youtube-embed.min.js"/>" type="text/javascript" ></script>
     </head>
-    <body ng-app="training" ng-controller="loginController" ng-init="init()" class="login" backstretch bgs="{{bgs}}">
+    <body ng-app="training" class="login" ng-controller="loginController" ng-init="init()" backstretch bgs="{{bgs}}">
         <div class="logo">
             <img src="<c:url value="resources/img/logo-big.png"/>" alt="">
         </div>
-        <div class="content" >
+        <div  class="content" >
             <div ng-show="activeView === 0">
                     <c:if test="${not empty sessionScope['SPRING_SECURITY_LAST_EXCEPTION']}">
                         <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope = "session" />
@@ -183,7 +212,7 @@
                     </div>
                 </div>
                 <div class="form-group" ng-class="inputStatus(createForm.tnc)">
-                    <label><input required type="checkbox" ng-model="accept" name="tnc" id="tnc" /><label for="tnc"><span></span></label> <spring:message code="app.i.agree.to"/> <a href="#"> <spring:message code="app.terms.of.service"/></a> <spring:message code="app.and"/> <a href="#"> <spring:message code="app.privacy.policy"/> </a></label>
+                    <label><input required type="checkbox" ng-model="accept" name="tnc" id="tnc" /><label for="tnc"><span></span></label> <spring:message code="app.i.agree.to"/> <a href="#"> <spring:message code="app.terms.of.service"/></a> <spring:message code="app.and"/> <a href="" ng-click="showPolicy()"> <spring:message code="app.privacy.policy"/> </a></label>
                     <span ng-show="createForm.tnc.$invalid && !createForm.tnc.$pristine" class="help-block"><spring:message code="user.tnc.required.error"/></span>
                 </div>
                 <div class="form-actions">
@@ -195,41 +224,15 @@
         <div class="copyright">
             2014 &copy; <spring:message code="app.title"/>.
         </div>
+        <%@include file="secure/policy.jsp" %>
         <!--[if lt IE 9]>
             <script src="assets/plugins/respond.min.js"></script>
             <script src="assets/plugins/excanvas.min.js"></script> 
         <![endif]-->
-        <script src="<c:url value="/resources/assets/global/plugins/jquery-1.11.0.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/resources/plugins/jquery-backstretch/jquery.backstretch.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/resources/js/angularjs/angular.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/angular-cookies.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/angular-sanitize.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/angular-backstretch.js"/>" type="text/javascript" ></script>
-        
-        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate-loader-url.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate-loader-static-files.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate-storage-local.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/angular-translate-storage-cookie.min.js"/>" type="text/javascript" ></script>
-        
-        <script src="<c:url value="/resources/js/angularjs/modules/ui-bootstrap-tpls-0.10.0.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/calendar.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/perfect-scrollbar.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/angular-dragdrop.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/angular-growl.js"/>" type="text/javascript" ></script>
-        
-        <script src="<c:url value="/resources/js/angularjs/modules/app.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/checklist-model.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/directives.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/filters.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/services.js"/>" type="text/javascript" ></script>  
-        <script src="<c:url value="/resources/assets/global/plugins/bootstrap/js/bootstrap.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/ng-table.min.js"/>" type="text/javascript" ></script>
-        <script src="<c:url value="/resources/js/angularjs/modules/angular-youtube-embed.min.js"/>" type="text/javascript" ></script>
+       
         <script type="text/javascript">
             training.constant('contextPath', '${pageContext.request.contextPath}');
-            training.controller("loginController", function($scope, $http) {
+            training.controller("loginController", function($scope, $http, $rootScope) {
                 $scope.init = function() {
                     $scope.activeView = 0;
                     $http.get('<c:url value="/resource/names/image/start-bg"/>').success(function(data) {
@@ -269,6 +272,10 @@
                 
                 $scope.socialSubmit = function(s) {
                     document.getElementById(s.id + '-form').submit();
+                };
+                
+                $scope.showPolicy = function() {
+                    $rootScope.$broadcast('showPolicyEvent');
                 };
             });
         </script>
