@@ -25,6 +25,11 @@
     
     var policyModalController = function () {};
 </script>
+<style type="text/css">
+    .modal-content {
+        margin-top: 80px;
+    }
+</style>
 <script type="text/ng-template" id="policy.html">
     <div class="modal-header">
         <h3 class="modal-title"><spring:message code="privacy.policy"/></h3>
