@@ -128,6 +128,8 @@ public class ApiController {
     
     @RequestMapping(value = "social/{type}", method = RequestMethod.POST)
     public @ResponseBody void socialPost(@PathVariable Social.Type type) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(SocialService.Params.CODE, "test");
         socialServices.get(type).post(null);
     }
 
