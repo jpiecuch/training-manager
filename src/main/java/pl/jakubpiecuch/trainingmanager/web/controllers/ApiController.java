@@ -130,7 +130,7 @@ public class ApiController {
     public @ResponseBody void socialPost(@PathVariable Social.Type type) {
         Map<String, String> params = new HashMap<String, String>();
         params.put(SocialService.Params.CODE, "test");
-        socialServices.get(type).post(null);
+        socialServices.get(type).post(params);
     }
 
     @Autowired
