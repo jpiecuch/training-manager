@@ -1,68 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:facebook="http://www.springframework.org/schema/social/facebook"
-	xmlns:twitter="http://www.springframework.org/schema/social/twitter"
-	xmlns:social="http://www.springframework.org/schema/social"
-	xmlns:linkedin="http://www.springframework.org/schema/social/linkedin"
-	xmlns:c="http://www.springframework.org/schema/c"
-	xmlns:context="http://www.springframework.org/schema/context"
-        xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/social/facebook http://www.springframework.org/schema/social/spring-social-facebook.xsd
-		http://www.springframework.org/schema/social/linkedin http://www.springframework.org/schema/social/spring-social-linkedin.xsd
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:facebook="http://www.springframework.org/schema/social/facebook"
+       xmlns:twitter="http://www.springframework.org/schema/social/twitter"
+       xmlns:social="http://www.springframework.org/schema/social"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/social/facebook http://www.springframework.org/schema/social/spring-social-facebook.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/social/twitter http://www.springframework.org/schema/social/spring-social-twitter.xsd
 		http://www.springframework.org/schema/social http://www.springframework.org/schema/social/spring-social.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-                http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
         <property name="connectionFactories">
             <list>
                 <bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
-                        <constructor-arg value="${facebook.clientId}" />
-                        <constructor-arg value="${facebook.clientSecret}" />
+                    <constructor-arg value="${facebook.clientId}"/>
+                    <constructor-arg value="${facebook.clientSecret}"/>
                 </bean>
                 <bean class="org.springframework.social.twitter.connect.TwitterConnectionFactory">
-                        <constructor-arg value="${twitter.clientId}" />
-                        <constructor-arg value="${twitter.clientSecret}" />
+                    <constructor-arg value="${twitter.clientId}"/>
+                    <constructor-arg value="${twitter.clientSecret}"/>
                 </bean>
                 <bean class="org.springframework.social.google.connect.GoogleConnectionFactory">
-                    <constructor-arg value="${google.clientId}" />
-                    <constructor-arg value="${google.clientSecret}" />
+                    <constructor-arg value="${google.clientId}"/>
+                    <constructor-arg value="${google.clientSecret}"/>
                 </bean>
             </list>
         </property>
     </bean>
 
     <bean id="usersConnectionRepository" class="org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository">
-        <constructor-arg ref="dataSource" />
-        <constructor-arg ref="connectionFactoryLocator" />
-        <constructor-arg ref="textEncryptor" />
+        <constructor-arg ref="dataSource"/>
+        <constructor-arg ref="connectionFactoryLocator"/>
+        <constructor-arg ref="textEncryptor"/>
     </bean>
-    
-    <bean id="connectionRepository" factory-bean="usersConnectionRepository" factory-method="createConnectionRepository" scope="request">
-        <constructor-arg value="#{request.userPrincipal.name}" />
-        <aop:scoped-proxy proxy-target-class="false" />
+
+    <bean id="connectionRepository" factory-bean="usersConnectionRepository" factory-method="createConnectionRepository"
+          scope="request">
+        <constructor-arg value="#{request.userPrincipal.name}"/>
+        <aop:scoped-proxy proxy-target-class="false"/>
     </bean>
-    	   
-    <bean id="userIdSource" class="org.springframework.social.security.AuthenticationNameUserIdSource" />
 
-    <bean id="connectController" class="org.springframework.social.connect.web.ConnectController" autowire="constructor"/>
+    <bean id="userIdSource" class="org.springframework.social.security.AuthenticationNameUserIdSource"/>
 
-    <bean id="psc" class="org.springframework.social.connect.web.ProviderSignInController" >
+    <bean id="connectController" class="org.springframework.social.connect.web.ConnectController"
+          autowire="constructor"/>
+
+    <bean id="psc" class="org.springframework.social.connect.web.ProviderSignInController">
         <constructor-arg index="0" ref="connectionFactoryLocator"/>
         <constructor-arg index="1" ref="usersConnectionRepository"/>
-        <constructor-arg index="2"><bean class="pl.jakubpiecuch.trainingmanager.web.authentication.SpringSecuritySignInAdapter"/></constructor-arg>
+        <constructor-arg index="2">
+            <bean class="pl.jakubpiecuch.trainingmanager.web.authentication.SpringSecuritySignInAdapter"/>
+        </constructor-arg>
         <property name="signUpUrl" value="/authentication/socialsignup"/>
         <property name="postSignInUrl" value="/"/>
         <property name="signInUrl" value="/"/>
-    </bean>	
-    	
-    <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" factory-method="noOpText" />
-    
+    </bean>
+
+    <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" factory-method="noOpText"/>
+
     <bean id="facebookService" class="pl.jakubpiecuch.trainingmanager.service.social.facebook.FacebookService">
         <property name="connectionRepository" ref="connectionRepository"/>
+        <property name="url" value="http:\\www.gym-home.com\\result\\%s"/>
     </bean>
 
 </beans>

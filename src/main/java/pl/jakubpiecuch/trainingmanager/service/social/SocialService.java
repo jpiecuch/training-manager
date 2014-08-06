@@ -1,10 +1,13 @@
 package pl.jakubpiecuch.trainingmanager.service.social;
 
+import java.util.Map;
+
 public interface SocialService {
-    
-    public class Message {
+
+    public interface Params {
+        String CODE = "code";
     }
    
-    void post(Message message);
+    void post(Map<String, String> params);
     
 }
