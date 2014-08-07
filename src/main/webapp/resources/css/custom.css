@@ -116,3 +116,11 @@ h4.equipments-title {
 .page-footer-inner a:hover {
     color: white;
 }
+
+.loading {
+    background: url(../assets/global/img/loading.gif) no-repeat;
+    height: 8px;
+    width: 26px;
+    float: left;
+    margin-top: 5px;
+}

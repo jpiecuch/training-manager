@@ -99,18 +99,18 @@
                             <button ng-disabled="loginForm.$invalid" type="submit" class="btn green pull-right"><spring:message code="user.login"/> <i class="m-icon-swapright m-icon-white"></i></button>
                         </div>
                     </form>
-                        <div class="login-options">
-			<h4><spring:message code="user.login.with"/> </h4>
-			<ul class="social-icons">
+                    <div class="login-options">
+                        <h4><spring:message code="user.login.with"/> </h4>
+                        <ul class="social-icons">
                             <li ng-repeat="s in socials">
                                 <a href="" ng-click="socialSubmit(s)" class="{{s.id}}" data-original-title="{{s.id}}" ></a>
-                                
+
                                 <form id="{{s.id}}-form" action="{{socialURL + '/' + s.id}}" method="post">
                                     <input ng-if="s.scope" type="hidden" name="scope" value="{{s.scope}}">
                                 </form>
                             </li>
-			</ul>
-                        </div>
+                        </ul>
+                    </div>
                         <div class="forget-password">
                             <h4><spring:message code="user.forgot.password"/></h4>
                             <p><spring:message code="user.click"/> <a href="" ng-click="activeView = 1" id="forget-password-btn"><spring:message code="user.here"/></a> <spring:message code="user.to.reset.password"/></p>

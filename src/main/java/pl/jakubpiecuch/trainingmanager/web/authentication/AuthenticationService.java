@@ -35,7 +35,7 @@ public interface AuthenticationService extends UserDetailsService {
                 this.providerId = providerId;
             }
             
-            public String getProvierId() {
+            public String getProviderId() {
                 return providerId;
             }
         }

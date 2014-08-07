@@ -5,7 +5,7 @@ import com.springcryptoutils.core.cipher.symmetric.SymmetricEncryptionException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,14 +17,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.request.WebRequest;
 import pl.jakubpiecuch.trainingmanager.dao.CalendarsDao;
 import pl.jakubpiecuch.trainingmanager.dao.UsersDao;
@@ -48,8 +46,8 @@ public class LocalAuthenticationService implements AuthenticationService, Social
     private CalendarsDao calendarsDao;
     private PasswordEncoder passwordEncoder;
     private EmailService emailService;
-    private Base64EncodedCipherer encrypter;
-    private Base64EncodedCipherer decrypter;
+    private Base64EncodedCipherer encryptService;
+    private Base64EncodedCipherer decryptService;
     
     @Override
     public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException, DataAccessException {
@@ -94,7 +92,7 @@ public class LocalAuthenticationService implements AuthenticationService, Social
         calendarsDao.save(calendar);
         user.setCalendar(calendar);
         usersDao.save(user);
-        emailService.sendEmail(new Object[] { encrypter.encrypt(KEY, IV, String.format(FORMAT, user.getName(), user.getEmail())), user  }, locale, EmailService.Template.REGISTER, user.getEmail());
+        emailService.sendEmail(new Object[] { encryptService.encrypt(KEY, IV, String.format(FORMAT, user.getName(), user.getEmail())), user  }, locale, EmailService.Template.REGISTER, user.getEmail());
         return true;
     }
 
@@ -127,7 +125,7 @@ public class LocalAuthenticationService implements AuthenticationService, Social
     @Override
     public boolean activate(String value) {
         try {
-            String[] decrypt = decrypter.encrypt(KEY, IV, value).split(VAL_SPLITTER);
+            String[] decrypt = decryptService.encrypt(KEY, IV, value).split(VAL_SPLITTER);
             Users user = usersDao.findByUniques(null, decrypt[0], decrypt[1]);
             if (user != null && Users.Status.ACTIVE != user.getStatus()) {
                 user.setStatus(Users.Status.ACTIVE);
@@ -179,14 +177,12 @@ public class LocalAuthenticationService implements AuthenticationService, Social
     }
 
     @Autowired
-    @Qualifier("decrypter")
-    public void setDecrypter(Base64EncodedCipherer decrypter) {
-        this.decrypter = decrypter;
+    public void setDecryptService(Base64EncodedCipherer decryptService) {
+        this.decryptService = decryptService;
     }
 
     @Autowired
-    @Qualifier("encrypter")
-    public void setEncrypter(Base64EncodedCipherer encrypter) {
-        this.encrypter = encrypter;
+    public void setEncryptService(Base64EncodedCipherer encryptService) {
+        this.encryptService = encryptService;
     }
 }

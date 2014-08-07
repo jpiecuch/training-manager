@@ -1,22 +1,39 @@
  <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+ <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <div ng-controller="recordsController" ng-init="init()">
     <div class="col-md-9" >
         <div style="margin-bottom: 20px;" class="tabbable-custom nav-justified">
-            <ul class="nav nav-tabs nav-justified"> <li ng-repeat="d in dayExercises" ng-class="{'active': d === tab}"><a href="" ng-click="changeTab(d)">{{d.position}}. {{d.exercise.partyMuscles | translate}}</a></li></ul>
+            <ul class="nav nav-tabs nav-justified"> <li ng-repeat="d in dayExercises" ng-class="{'active': d === tab}"><a href="" ng-click="changeTab(d)">{{d.position}}. {{d.exercise.partyMuscles | translate}}<div ng-if="loading && d === tab" class="loading"></div></a></li></ul>
             <div style="float: left; width: 100%" class="tab-content">
                 <div  class="tab-pane col-md-12 active" id="tab">
                     <div class="col-md-6">
-                        <div class="dashboard-stat blue">
+                        <div class="dashboard-stat" ng-class="tab.confirmed ? 'green' : 'red'" style="margin-bottom: 5px;">
                             <div class="visual visual-status"><i class="fa" ng-class="{'fa-check-square-o': tab.confirmed, 'fa-square-o': !tab.confirmed}"></i></div>
                             <div class="details" style="position: static;">
                                 <div class="desc"><h4>{{tab.exercise.name}}</h4></div>
                                 <div class="desc"><h5>{{tab.date | date: 'dd MMMM yyyy (EEEE)'}}</h5></div> 
                                 <div class="number total-weight">{{tab.totalWeight}} kg</div>
                             </div>
-                            <div class="more"><a data-toggle="modal" href="#dialog" class="btn btn-sm btn-info" ng-click="progress(tab)"><i class="fa fa-bar-chart-o"></i> <spring:message code="exercise.progress"/></a> <a href="" class="btn btn-sm btn-success" ng-click="save(tab)"><i class="fa fa-save"></i> <spring:message code="save"/></a> <a href="" class="btn btn-sm btn-warning" ng-click="confirm(tab)"><i class="fa fa-check"></i> <spring:message code="confirm"/></a></div>
-			</div>
+                            <div class="more">
+                                <div style="float: left; margin-bottom: 9px;">
+                                    <a data-toggle="modal" href="#dialog" class="btn btn-sm btn-info" ng-click="progress(tab)">
+                                        <i class="fa fa-bar-chart-o"></i> <spring:message code="exercise.progress"/>
+                                    </a>
+                                    <a href="" class="btn btn-sm btn-success" ng-click="save(tab)">
+                                        <i class="fa fa-save"></i> <spring:message code="save"/>
+                                    </a>
+                                    <a href="" class="btn btn-sm btn-warning" ng-click="confirm(tab)">
+                                        <i class="fa fa-check"></i> <spring:message code="confirm"/>
+                                    </a>
+                                </div>
+                                <sec:authentication var="social" property="principal.type"></sec:authentication>
+                                <div ng-if="tab.confirmed && '${social}' !== ''">
+                                    <h5 style="float: left">&nbsp;<spring:message code="exrcise.share.results"/>: </h5>&nbsp; <a style="background-color: white" href="" ng-click="socialShare()" data-original-title="${social.providerId}" class="social-icon social-icon-color ${social.providerId}" ng-if="!sharing" ></a>
+                                </div>
+                            </div>
+			            </div>
                         <div class="portlet">
                         <div class="portlet-title"><div class="caption"><spring:message code="equipment.equipment"/></div></div>
                         <div class="portlet-body">
@@ -156,7 +173,7 @@
             <span ng-show="equipment.press.length > 0" class="equipments-title label label-info"><input type="checkbox" id="press-all-checkbox" ng-checked="addEquipment['press'].length === equipment['press'].length" ng-click="checkAll(addEquipment, equipment, 'press')"><label class="all-checkbox" for="press-all-checkbox"><span></span></label> <spring:message code="equipment.press"/></span>
             <div ng-show="equipment.press.length > 0" class="row-fluid equipments-info">  
                 <div ng-repeat="p in equipment.press | orderBy: 'strength'">
-                    <div style="margin-left: 0px;"><input type="checkbox" checklist-model="addEquipment.press" checklist-value="p" id="press-checkbox-{{$index}}"/><label for="presss-checkbox-{{$index}}"><span></span></label> <spring:message code="equipment.strength"/>: <span>{{p.strength}} {{p.strengthUnit.shortName}}</span>, <spring:message code="equipment.handles"/>: <span>{{p.handlesNo}}</span></div>
+                    <div style="margin-left: 0px;"><input type="checkbox" checklist-model="addEquipment.press" checklist-value="p" id="press-checkbox-{{$index}}"/><label for="press-checkbox-{{$index}}"><span></span></label> <spring:message code="equipment.strength"/>: <span>{{p.strength}} {{p.strengthUnit.shortName}}</span>, <spring:message code="equipment.handles"/>: <span>{{p.handlesNo}}</span></div>
                 </div>
             </div>
         </div>
@@ -178,6 +195,7 @@
         $scope.stopwatch = [];
         
         $scope.init = function() {
+            updateLoading(false);
             $translate.use('${pageContext.response.locale.language}');
             $scope.stopwatchFlag = false;
             $http.get('${pageContext.servletContext.contextPath}' + "/api/exercise/${param.date}").success(function(data) {
@@ -237,9 +255,11 @@
         };
         
         $scope.save = function(d, message) {
+            updateLoading();
             $http.post('${pageContext.servletContext.contextPath}' + "/api/exercise/save", d).success(function() {
                 d.version++;
                 growl.addSuccessMessage(message === undefined ? "day.exercise.save" : message);
+                updateLoading();
             });
         };
         
@@ -339,6 +359,22 @@
                 checkObject[name] = angular.copy(useObject[name]);
             }
         };
+
+         $scope.socialShare = function() {
+             $scope.sharing = true;
+             updateLoading();
+             $http.post('${pageContext.servletContext.contextPath}' + "/api/social/${social}").success(function() {
+                 $scope.sharing = false;
+                 updateLoading();
+             }).error(function() {
+                 $scope.sharing = false;
+                 updateLoading();
+             });
+         }
+
+         function updateLoading(flag) {
+             $scope.loading = flag === undefined ? !$scope.loading : flag;
+         }
         
         function updateArrays(items, reducesArray, increasedArray, clear) {
             for(var i = 0; i < items.length; i++) {

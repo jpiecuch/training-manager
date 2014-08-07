@@ -4,12 +4,11 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:crypt="http://springcryptoutils.com/schema/crypt"
+
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
-       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
-       http://springcryptoutils.com/schema/crypt http://springcryptoutils.com/schema/crypt.xsd">
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
     <context:annotation-config />
     <context:component-scan base-package="pl.jakubpiecuch.trainingmanager.*" />
@@ -135,8 +134,5 @@
         </property>
     </bean>
     
-    <import resource="applicationContext-social.xml"/> 
-    
-    <crypt:b64SymmetricCipherer id="encrypter" mode="ENCRYPT"/>
-    <crypt:b64SymmetricCipherer id="decrypter" mode="DECRYPT"/>
+    <import resource="applicationContext-social.xml"/>
 </beans>
