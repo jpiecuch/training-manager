@@ -16,8 +16,8 @@
                                 <div class="desc"><h5>{{tab.date | date: 'dd MMMM yyyy (EEEE)'}}</h5></div> 
                                 <div class="number total-weight">{{tab.totalWeight}} kg</div>
                             </div>
-                            <div class="more" style="min-height: 42px;">
-                                <div style="float: left; margin-bottom: 9px;">
+                            <div class="more" style="min-height: 40px">
+                                <div style="float: left;">
                                     <a data-toggle="modal" href="#dialog" class="btn btn-sm btn-info" ng-click="progress(tab)">
                                         <i class="fa fa-bar-chart-o"></i> <spring:message code="exercise.progress"/>
                                     </a>
@@ -30,7 +30,7 @@
                                 </div>
                                 <sec:authentication var="social" property="principal.type"></sec:authentication>
                                 <div ng-if="tab.confirmed && '${social}' !== ''">
-                                    <h5 style="float: left">&nbsp;<spring:message code="exrcise.share.results"/>: </h5>&nbsp; <a style="background-color: white" href="" ng-click="socialShare()" data-original-title="${social.providerId}" class="social-icon social-icon-color ${social.providerId}" ng-if="!sharing" ></a>
+                                    <h5 style="float: left; margin-bottom: 0px;">&nbsp;<spring:message code="exrcise.share.results"/>: </h5>&nbsp; <a style="background-color: white; margin-bottom: -3px;" href="" ng-click="socialShare()" data-original-title="${social.providerId}" class="social-icon social-icon-color ${social.providerId}" ng-if="!sharing" ></a>
                                 </div>
                             </div>
 			            </div>
