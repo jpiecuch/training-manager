@@ -16,7 +16,7 @@
                                 <div class="desc"><h5>{{tab.date | date: 'dd MMMM yyyy (EEEE)'}}</h5></div> 
                                 <div class="number total-weight">{{tab.totalWeight}} kg</div>
                             </div>
-                            <div class="more">
+                            <div class="more" style="min-height: 42px;">
                                 <div style="float: left; margin-bottom: 9px;">
                                     <a data-toggle="modal" href="#dialog" class="btn btn-sm btn-info" ng-click="progress(tab)">
                                         <i class="fa fa-bar-chart-o"></i> <spring:message code="exercise.progress"/>
