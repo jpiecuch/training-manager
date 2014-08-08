@@ -363,7 +363,7 @@
          $scope.socialShare = function() {
              $scope.sharing = true;
              updateLoading();
-             $http.post('${pageContext.servletContext.contextPath}' + "/api/social/${social}").success(function() {
+             $http.post('${pageContext.servletContext.contextPath}' + "/api/social/${social}/" + $scope.tab.id).success(function() {
                  $scope.sharing = false;
                  updateLoading();
              }).error(function() {

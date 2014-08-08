@@ -27,12 +27,14 @@ import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.domain.Exercises;
 import pl.jakubpiecuch.trainingmanager.service.calendar.CalendarService;
 import pl.jakubpiecuch.trainingmanager.service.calendar.Event;
+import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.day.DayService;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryService;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.EquipmentSet;
 import pl.jakubpiecuch.trainingmanager.service.social.SocialService;
 import pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationService;
 import pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationService.Social;
+import pl.jakubpiecuch.trainingmanager.web.authentication.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.web.ui.DayExerciseUI;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
@@ -47,6 +49,7 @@ public class ApiController {
     private AuthenticationService authenticationService;
     private String messageSourceFile;
     private Map<Social.Type, SocialService> socialServices;
+    private CryptService cryptService;
     
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -84,6 +87,12 @@ public class ApiController {
     @RequestMapping(value = "exercise/save", method = RequestMethod.POST)
     public @ResponseBody void saveDay(@RequestBody DayExerciseUI dayExercises) {
         dayService.save(dayExercises.toDayExercises());
+    }
+
+    @RequestMapping(value = "exercise/result/{code}", method = RequestMethod.GET)
+    public @ResponseBody DayExerciseUI exercise(@PathVariable final String code, Locale locale) {
+        String id = cryptService.decrypt(code, 1);
+        return DayExerciseUI.fromDayExercise(dayService.exercise(Long.valueOf(id)), messageSource, locale);
     }
     
     @RequestMapping(value = "exercise/{id}/progress", method = RequestMethod.GET)
@@ -126,10 +135,10 @@ public class ApiController {
         return calendarService.create(event, AuthenticatedUserUtil.getUser());
     }
     
-    @RequestMapping(value = "social/{type}", method = RequestMethod.POST)
-    public @ResponseBody void socialPost(@PathVariable Social.Type type) {
+    @RequestMapping(value = "social/{type}/{id}", method = RequestMethod.POST)
+    public @ResponseBody void socialPost(@PathVariable Social.Type type, @PathVariable Long id) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put(SocialService.Params.CODE, "test");
+        params.put(SocialService.Params.CODE, cryptService.encrypt(type.name(), id.toString()));
         socialServices.get(type).post(params);
     }
 
@@ -160,6 +169,11 @@ public class ApiController {
 
     public void setSocialServices(Map<Social.Type, SocialService> socialServices) {
         this.socialServices = socialServices;
+    }
+
+    @Autowired
+    public void setCryptService(CryptService cryptService) {
+        this.cryptService = cryptService;
     }
 
     @Value("/bundles/web/web_%s.properties")

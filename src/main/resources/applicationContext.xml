@@ -4,11 +4,12 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:util="http://www.springframework.org/schema/util"
-
+       xmlns:crypt="http://springcryptoutils.com/schema/crypt"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
-       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+       http://springcryptoutils.com/schema/crypt http://springcryptoutils.com/schema/crypt.xsd">
 
     <context:annotation-config />
     <context:component-scan base-package="pl.jakubpiecuch.trainingmanager.*" />
@@ -133,6 +134,14 @@
             </map>
         </property>
     </bean>
+
+    <bean id="cryptService" class="pl.jakubpiecuch.trainingmanager.service.crypt.SymmetricCryptService">
+        <property name="decryptService" ref="decryptService"/>
+        <property name="encryptService" ref="encryptService"/>
+    </bean>
+
+    <crypt:b64SymmetricCipherer id="encryptService" mode="ENCRYPT"/>
+    <crypt:b64SymmetricCipherer id="decryptService" mode="DECRYPT"/>
     
     <import resource="applicationContext-social.xml"/>
 </beans>

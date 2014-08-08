@@ -9,5 +9,5 @@ public interface DayService {
     List<DayExercises> day(Users user, Date date);
     List<DayExercises> exerciseProgress(Users user, Long exerciseId);
     void save(DayExercises dayExercises);
-    
+    DayExercises exercise(Long id);
 }

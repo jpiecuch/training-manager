@@ -4,11 +4,9 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
              xmlns:p="http://www.springframework.org/schema/p" 
              xmlns:util="http://www.springframework.org/schema/util"
-             xmlns:crypt="http://springcryptoutils.com/schema/crypt"
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
-        http://springcryptoutils.com/schema/crypt http://springcryptoutils.com/schema/crypt.xsd">
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
     
     <http use-expressions="true" auto-config="true" >
         <intercept-url pattern="/login.html" access="permitAll" />
@@ -32,15 +30,11 @@
         <beans:property name="usersDao" ref="usersDao"/>
         <beans:property name="calendarsDao" ref="calendarsDao"/>
         <beans:property name="passwordEncoder" ref="shaPasswordEncoder"/>
-        <beans:property name="decryptService" ref="decryptService"/>
-        <beans:property name="encryptService" ref="encryptService"/>
+        <beans:property name="cryptService" ref="cryptService"/>
         <beans:property name="emailService" ref="emailService"/>
     </beans:bean>
     
     <beans:bean id="shaPasswordEncoder" class="pl.jakubpiecuch.trainingmanager.web.authentication.SHAPasswordEncoder"><beans:property name="strength" value="256"/></beans:bean>
  
     <authentication-manager><authentication-provider ref="localAuthenticationProvider"></authentication-provider></authentication-manager>
-
-    <crypt:b64SymmetricCipherer id="encryptService" mode="ENCRYPT"/>
-    <crypt:b64SymmetricCipherer id="decryptService" mode="DECRYPT"/>
 </beans:beans>

@@ -28,26 +28,23 @@ import pl.jakubpiecuch.trainingmanager.dao.CalendarsDao;
 import pl.jakubpiecuch.trainingmanager.dao.UsersDao;
 import pl.jakubpiecuch.trainingmanager.domain.Calendars;
 import pl.jakubpiecuch.trainingmanager.domain.Users;
+import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.mail.EmailService;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 @Service
 @Transactional
 public class LocalAuthenticationService implements AuthenticationService, SocialUserDetailsService {
-    
+
     protected final static Logger log = LoggerFactory.getLogger(LocalAuthenticationService.class);
-    private static final String IV = "AQIDBAUGAQI=";
-    private static final String KEY = "Rs3xEA16I52XJpsWwkw4GrB8l6FiVGK/";
-    private static final String VAL_SPLITTER = "/";
-    private static final String FORMAT = "%s" + VAL_SPLITTER + "%s";
     private static final String OAUTH_PASSWORD = "oauth";
-    
+    private static final int EMAIL_CRYPT_POSITION = 1;
+
     private UsersDao usersDao;
     private CalendarsDao calendarsDao;
     private PasswordEncoder passwordEncoder;
     private EmailService emailService;
-    private Base64EncodedCipherer encryptService;
-    private Base64EncodedCipherer decryptService;
+    private CryptService cryptService;
     
     @Override
     public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException, DataAccessException {
@@ -92,7 +89,7 @@ public class LocalAuthenticationService implements AuthenticationService, Social
         calendarsDao.save(calendar);
         user.setCalendar(calendar);
         usersDao.save(user);
-        emailService.sendEmail(new Object[] { encryptService.encrypt(KEY, IV, String.format(FORMAT, user.getName(), user.getEmail())), user  }, locale, EmailService.Template.REGISTER, user.getEmail());
+        emailService.sendEmail(new Object[] { cryptService.encrypt(user.getName(), user.getEmail()), user  }, locale, EmailService.Template.REGISTER, user.getEmail());
         return true;
     }
 
@@ -125,8 +122,8 @@ public class LocalAuthenticationService implements AuthenticationService, Social
     @Override
     public boolean activate(String value) {
         try {
-            String[] decrypt = decryptService.encrypt(KEY, IV, value).split(VAL_SPLITTER);
-            Users user = usersDao.findByUniques(null, decrypt[0], decrypt[1]);
+            String decrypt = cryptService.decrypt(value, EMAIL_CRYPT_POSITION);
+            Users user = usersDao.findByUniques(null, null, decrypt);
             if (user != null && Users.Status.ACTIVE != user.getStatus()) {
                 user.setStatus(Users.Status.ACTIVE);
                 usersDao.save(user);
@@ -148,7 +145,7 @@ public class LocalAuthenticationService implements AuthenticationService, Social
     }
     
     private UserDetails details(Users user, Connection connection) {
-        return new SecurityUser(user.getId(), user.getName(), user.getPassword(), true, true, true, true, new ArrayList<GrantedAuthority>(), user.getSalt(), user.getFullName(), user.getCalendar().getId(), connection != null ? Social.Type.valueOf(StringUtils.upperCase(connection.getKey().getProviderId())) : null);
+        return new SecurityUser(user.getId(), user.getName(), user.getPassword(), true, true, true, true, new ArrayList<GrantedAuthority>(), user.getSalt(), user.getFullName(), user.getCalendar().getId(), connection != null ? Social.Type.valueOf(StringUtils.upperCase(connection.getKey().getProviderId())) : Social.Type.FACEBOOK);
     }
 
     @Override
@@ -177,12 +174,7 @@ public class LocalAuthenticationService implements AuthenticationService, Social
     }
 
     @Autowired
-    public void setDecryptService(Base64EncodedCipherer decryptService) {
-        this.decryptService = decryptService;
-    }
-
-    @Autowired
-    public void setEncryptService(Base64EncodedCipherer encryptService) {
-        this.encryptService = encryptService;
+    public void setCryptService(CryptService cryptService) {
+        this.cryptService = cryptService;
     }
 }

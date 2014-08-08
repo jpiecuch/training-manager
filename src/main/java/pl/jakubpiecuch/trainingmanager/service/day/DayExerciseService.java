@@ -24,6 +24,11 @@ public class DayExerciseService implements DayService {
     }
 
     @Override
+    public DayExercises exercise(Long id) {
+        return dayExercisesDao.findById(id);
+    }
+
+    @Override
     public void save(DayExercises dayExercises) {
         dayExercisesDao.save(dayExercises);
     }

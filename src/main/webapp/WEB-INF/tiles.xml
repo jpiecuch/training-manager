@@ -9,6 +9,8 @@
         <put-attribute name="body" value="" />
         <put-attribute name="end" value="/WEB-INF/jsp/secure/layout/end.jsp" />
     </definition>
+
+    <definition name="result/exercise" template="/WEB-INF/jsp/secure/result/exercise.jsp"/>
     
     <definition name="index" extends="baseLayout">
         <put-attribute name="body" value="/WEB-INF/jsp/secure/index.jsp" />

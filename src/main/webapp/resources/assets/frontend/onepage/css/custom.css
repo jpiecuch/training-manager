@@ -1,0 +1,13 @@
+.services-block .col-md-6:last-child {
+    border-right: none;
+}
+
+.equipment-name {
+    color: #33b1e6;
+    font-weight: 900;
+    text-align: left;
+}
+
+.equipment-desc {
+    text-align: left;
+}
