@@ -19,6 +19,8 @@
         <intercept-url pattern="/api/languages/**" access="permitAll" />
         <intercept-url pattern="/signin/**" access="permitAll" />
         <intercept-url pattern="/api/dictionary/social" access="permitAll" />
+        <intercept-url pattern="/api/exercise/result/**" access="permitAll" />
+        <intercept-url pattern="/result/**" access="permitAll" />
         <intercept-url pattern="/**" access="isAuthenticated()" />   
         <form-login login-page="/login.html" authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-url="/failure.html"/>
         <logout invalidate-session="true" logout-success-url="/logout.html"/>
