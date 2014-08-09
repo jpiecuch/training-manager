@@ -66,7 +66,7 @@
 
     <bean id="facebookService" class="pl.jakubpiecuch.trainingmanager.service.social.facebook.FacebookService">
         <property name="connectionRepository" ref="connectionRepository"/>
-        <property name="url" value="http:\\www.gym-home.com/result/%s"/>
+        <property name="url" value="http://www.gym-home.com/result/%s"/>
     </bean>
 
 </beans>
