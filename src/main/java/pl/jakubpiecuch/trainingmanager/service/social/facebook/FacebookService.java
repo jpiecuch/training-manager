@@ -7,6 +7,8 @@ import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
 import pl.jakubpiecuch.trainingmanager.service.social.SocialService;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 
 
@@ -18,7 +20,11 @@ public class FacebookService implements SocialService {
     @Override
     public void post(Map<String, String> params) {
         Connection<Facebook> facebook = connectionRepository.findPrimaryConnection(Facebook.class);
-        facebook.getApi().openGraphOperations().publishAction("perform", "workout", String.format(url, params.get(Params.CODE)));
+        try {
+            facebook.getApi().openGraphOperations().publishAction("perform", "workout", URLEncoder.encode(String.format(url, params.get(Params.CODE)), "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Autowired
