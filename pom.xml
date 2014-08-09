@@ -17,6 +17,12 @@
             </properties>
         </profile>
         <profile>
+            <id>uat</id>
+            <properties>
+                <environment>uat</environment>
+            </properties>
+        </profile>
+        <profile>
             <id>dev</id>
             <activation><activeByDefault>true</activeByDefault></activation>
             <properties>
