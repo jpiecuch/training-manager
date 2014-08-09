@@ -8,7 +8,7 @@
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
-<html lang="en">
+<html lang="en" ng-app ng-controller="ResultController" ng-init="init()">
 <!--<![endif]-->
 
 <!-- Head BEGIN -->
@@ -24,8 +24,8 @@
     <meta content="keenthemes" name="author">
     <meta http-equiv="cleartype" content="on">
 
-    <meta property="fb:app_id" content="1444314535848485">
-    <meta property="og:title" content="Sample Workout">
+    <meta property="fb:app_id" content="1433161253630480">
+    <meta property="og:title" content="{{result.exercise.name}}">
     <meta property="og:image" content="https://fbstatic-a.akamaihd.net/images/devsite/attachment_blank.png">
     <meta property="og:url" content="http://www.gym-home.com${requestScope['javax.servlet.forward.request_uri']}">
     <meta property="og:type" content="gym-home:workout">
@@ -46,7 +46,7 @@
 
     <!-- Theme styles END -->
 </head>
-<body ng-app ng-controller="ResultController" ng-init="init()">
+<body>
 
 <div class="services-block content content-center" id="services">
     <div class="container">
