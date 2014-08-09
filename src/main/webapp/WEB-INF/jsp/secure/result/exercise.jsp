@@ -24,12 +24,11 @@
     <meta content="keenthemes" name="author">
     <meta http-equiv="cleartype" content="on">
 
-    <meta property="og:site_name" content="-CUSTOMER VALUE-">
-    <meta property="og:title" content="-CUSTOMER VALUE-">
-    <meta property="og:description" content="-CUSTOMER VALUE-">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="-CUSTOMER VALUE-"><!-- link to image for socio -->
-    <meta property="og:url" content="-CUSTOMER VALUE-">
+    <meta property="fb:app_id" content="1444314535848485">
+    <meta property="og:title" content="Sample Workout">
+    <meta property="og:image" content="https://fbstatic-a.akamaihd.net/images/devsite/attachment_blank.png">
+    <meta property="og:url" content="http://www.gym-home.com${requestScope['javax.servlet.forward.request_uri']}">
+    <meta property="og:type" content="gym-home:workout">
 
     <link rel="shortcut icon" href="favicon.ico">
 
