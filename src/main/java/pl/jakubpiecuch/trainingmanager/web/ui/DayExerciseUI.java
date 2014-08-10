@@ -148,8 +148,11 @@ public class DayExerciseUI implements Serializable {
         result.setDate(this.date);
         result.setConfirmed(this.confirmed);
         StringBuilder builder = new StringBuilder();
-        for(int i = 0; i < this.series.length;) {
-            builder.append(series[i++].getValue());
+        for(int i = 0; i < this.series.length; i++) {
+            if (series[i].getValue() == null) {
+                continue;
+            }
+            builder.append(series[i].getValue());
             if (i < series.length) {
                 builder.append(DayExercises.SERIES_DELIMITER);
             }        

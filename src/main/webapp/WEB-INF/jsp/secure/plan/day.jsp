@@ -92,17 +92,18 @@
                         <div class="portlet">
                             <div class="portlet-title"><div class="caption"><spring:message code="exercise.series"/></div></div>
                             <div class="portlet-body">
-                                <div class="series-content">
-                                    <div ng-repeat="s in tab.series" class="row-fluid"> 
-                                        <div class="input-group input-small margin-top-10">
-                                            <span class="input-group-addon" style="min-width: 45px;">{{$index +1}}.</span><input type="text" ng-model="s.value" class="form-control " style="width: 50px">
-                                            <span class="input-group-btn"><a class="btn btn-sm default" type="button" style="font-size: 17px; min-width: 34px"><i class="fa fa-minus"></i></a></span>
+
+                                    <div ng-repeat="s in tab.series" style="width:50px; float: left;">
+                                        <div class="input-group">
+                                            <span ng-click="removeSeries(tab, s)" class="input-group-addon remove-series-button" style="width: 50px; float: left"><span>{{$index +1}}.</span><i class="fa fa-minus" style="color: white; display: hidden"></i></span>
+                                            <input type="text" ng-model="s.value" class="form-control" >
                                         </div> 
                                     </div>
-                                </div>
-                                <div class="input-group input-small" style="margin-top: 10px">
-                                    <span class="input-group-btn"><a href="" class="btn btn-sm green float-right" style="font-size: 17px; min-width: 34px; margin-right: -8px" ng-click="addSeries(d)"><i class="fa fa-plus"></i></a></span>
-                                </div>
+                                    <div style="width:50px; float: left;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon add-series-button" ng-click="addSeries(tab)"><i class="fa fa-plus"></i></span>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -253,11 +254,16 @@
         $scope.addSeries = function(d) {
             d.series[d.series.length] = {};
         };
+
+        $scope.removeSeries = function(d, s) {
+            d.series.splice(s.indexOf, 1);
+        }
         
         $scope.save = function(d, message) {
             updateLoading();
-            $http.post('${pageContext.servletContext.contextPath}' + "/api/exercise/save", d).success(function() {
+            $http.post('${pageContext.servletContext.contextPath}' + "/api/exercise/save", d).success(function(data) {
                 d.version++;
+                d.series = data.series;
                 growl.addSuccessMessage(message === undefined ? "day.exercise.save" : message);
                 updateLoading();
             });

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.domain.Exercises;
 import pl.jakubpiecuch.trainingmanager.service.calendar.CalendarService;
@@ -85,8 +86,10 @@ public class ApiController {
     }
 
     @RequestMapping(value = "exercise/save", method = RequestMethod.POST)
-    public @ResponseBody void saveDay(@RequestBody DayExerciseUI dayExercises) {
-        dayService.save(dayExercises.toDayExercises());
+    public @ResponseBody DayExerciseUI saveDay(@RequestBody DayExerciseUI dayExercises, Locale locale) {
+        DayExercises d = dayExercises.toDayExercises();
+        dayService.save(d);
+        return DayExerciseUI.fromDayExercise(d, messageSource, locale);
     }
 
     @RequestMapping(value = "exercise/result/{code}", method = RequestMethod.GET)
