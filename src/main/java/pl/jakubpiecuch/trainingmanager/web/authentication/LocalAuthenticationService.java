@@ -145,7 +145,7 @@ public class LocalAuthenticationService implements AuthenticationService, Social
     }
     
     private UserDetails details(Users user, Connection connection) {
-        return new SecurityUser(user.getId(), user.getName(), user.getPassword(), true, true, true, true, new ArrayList<GrantedAuthority>(), user.getSalt(), user.getFullName(), user.getCalendar().getId(), connection != null ? Social.Type.valueOf(StringUtils.upperCase(connection.getKey().getProviderId())) : Social.Type.FACEBOOK);
+        return new SecurityUser(user.getId(), user.getName(), user.getPassword(), true, true, true, true, new ArrayList<GrantedAuthority>(), user.getSalt(), user.getFullName(), user.getCalendar().getId(), connection != null ? Social.Type.valueOf(StringUtils.upperCase(connection.getKey().getProviderId())) : null);
     }
 
     @Override
