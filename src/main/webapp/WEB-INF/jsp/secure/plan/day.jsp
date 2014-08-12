@@ -34,7 +34,7 @@
                                     <c:if test="${not empty socials}">
                                         <h5 style="float: left; margin-bottom: 0px;">&nbsp;<spring:message code="exrcise.share.results"/>: </h5>&nbsp;
                                         <c:forEach items="${socials}" var="social">
-                                             <a style="background-color: white; margin-bottom: -3px;" href="" ng-click="socialShare()" data-original-title="${social.providerId}" class="social-icon social-icon-color ${social.providerId}" ng-if="!sharing" ></a>
+                                             <a style="background-color: white; margin-bottom: -3px;" href="" ng-click="socialShare('${social}')" data-original-title="${social.providerId}" class="social-icon social-icon-color ${social.providerId}" ng-if="!sharing" ></a>
                                         </c:forEach>
                                     </c:if>
                                 </div>
@@ -372,10 +372,10 @@
             }
         };
 
-         $scope.socialShare = function() {
+         $scope.socialShare = function(social) {
              $scope.sharing = true;
              updateLoading();
-             $http.post('${pageContext.servletContext.contextPath}' + "/api/social/${social}/" + $scope.tab.id).success(function() {
+             $http.post('${pageContext.servletContext.contextPath}' + "/api/social/" + social + "/" + $scope.tab.id).success(function() {
                  $scope.sharing = false;
                  updateLoading();
              }).error(function() {
