@@ -27,7 +27,7 @@
     <spring:eval var="fbAppId" expression="@propertyConfigurer.getProperty('facebook.clientId')" />
     <meta property="fb:app_id" content="${fbAppId}">
     <meta property="og:title" content="${exercise.exercise.name}">
-    <meta property="og:image" content="https://fbstatic-a.akamaihd.net/images/devsite/attachment_blank.png">
+    <meta property="og:image" content="http://gym-home.com/resource/content/logo/gh-1024x1024.png">
     <meta property="og:url" content="http://www.gym-home.com${requestScope['javax.servlet.forward.request_uri']}">
     <meta property="og:type" content="gym-home:workout">
 
