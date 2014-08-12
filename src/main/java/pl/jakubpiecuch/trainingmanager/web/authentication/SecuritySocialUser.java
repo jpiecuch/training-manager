@@ -8,18 +8,17 @@ import pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationService.
 
 public class SecuritySocialUser extends SocialUser {
     
-    private Social.Type type;
+    private Social.Type[] socials;
     
-    public SecuritySocialUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, Social.Type type) {
+    public SecuritySocialUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-        this.type = type;
     }
 
-    public Social.Type getType() {
-        return type;
+    public Social.Type[] getSocials() {
+        return socials;
     }
 
-    public void setType(Social.Type type) {
-        this.type = type;
+    public void setSocials(Social.Type[] socials) {
+        this.socials = socials;
     }
 }

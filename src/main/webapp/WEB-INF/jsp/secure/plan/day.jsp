@@ -1,7 +1,8 @@
- <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
- <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div ng-controller="recordsController" ng-init="init()">
     <div class="col-md-9" >
         <div style="margin-bottom: 20px;" class="tabbable-custom nav-justified">
@@ -28,9 +29,14 @@
                                         <i class="fa fa-check"></i> <spring:message code="confirm"/>
                                     </a>
                                 </div>
-                                <sec:authentication var="social" property="principal.type"></sec:authentication>
-                                <div ng-if="tab.confirmed && '${social}' !== ''">
-                                    <h5 style="float: left; margin-bottom: 0px;">&nbsp;<spring:message code="exrcise.share.results"/>: </h5>&nbsp; <a style="background-color: white; margin-bottom: -3px;" href="" ng-click="socialShare()" data-original-title="${social.providerId}" class="social-icon social-icon-color ${social.providerId}" ng-if="!sharing" ></a>
+                                <sec:authentication var="socials" property="principal.socials"></sec:authentication>
+                                <div ng-if="tab.confirmed">
+                                    <c:if test="${not empty socials}">
+                                        <h5 style="float: left; margin-bottom: 0px;">&nbsp;<spring:message code="exrcise.share.results"/>: </h5>&nbsp;
+                                        <c:forEach items="${socials}" var="social">
+                                             <a style="background-color: white; margin-bottom: -3px;" href="" ng-click="socialShare()" data-original-title="${social.providerId}" class="social-icon social-icon-color ${social.providerId}" ng-if="!sharing" ></a>
+                                        </c:forEach>
+                                    </c:if>
                                 </div>
                             </div>
 			            </div>

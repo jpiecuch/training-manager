@@ -91,12 +91,6 @@ public class ApiController {
         dayService.save(d);
         return DayExerciseUI.fromDayExercise(d, messageSource, locale);
     }
-
-    @RequestMapping(value = "exercise/result/{code}", method = RequestMethod.GET)
-    public @ResponseBody DayExerciseUI exercise(@PathVariable final String code, Locale locale) {
-        String id = cryptService.decrypt(code, 1);
-        return DayExerciseUI.fromDayExercise(dayService.exercise(Long.valueOf(id)), messageSource, locale);
-    }
     
     @RequestMapping(value = "exercise/{id}/progress", method = RequestMethod.GET)
     public @ResponseBody List<DayExerciseUI> exerciseProgress(@PathVariable final Long id, Locale locale) {

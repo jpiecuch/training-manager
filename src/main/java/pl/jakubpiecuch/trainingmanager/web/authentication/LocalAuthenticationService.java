@@ -70,8 +70,8 @@ public class LocalAuthenticationService implements AuthenticationService, Social
     }
     
     @Override
-    public ResetStatus resetPassword(String emial) {
-        Users user = usersDao.findByUniques(null, null, emial);
+    public ResetStatus resetPassword(String email) {
+        Users user = usersDao.findByUniques(null, null, email);
         if (user != null) {
             user.setStatus(Users.Status.RESET_PASSWORD);
             usersDao.save(user);
@@ -145,7 +145,11 @@ public class LocalAuthenticationService implements AuthenticationService, Social
     }
     
     private UserDetails details(Users user, Connection connection) {
-        return new SecurityUser(user.getId(), user.getName(), user.getPassword(), true, true, true, true, new ArrayList<GrantedAuthority>(), user.getSalt(), user.getFullName(), user.getCalendar().getId(), connection != null ? Social.Type.valueOf(StringUtils.upperCase(connection.getKey().getProviderId())) : null);
+        SecurityUser result = new SecurityUser(user.getId(), user.getName(), user.getPassword(), true, true, true, true, new ArrayList<GrantedAuthority>(), user.getSalt(), user.getFullName(), user.getCalendar().getId());
+        if (connection != null) {
+            result.setSocials(new Social.Type[] {Social.Type.valueOf(StringUtils.upperCase(connection.getKey().getProviderId()))});
+        }
+        return result;
     }
 
     @Override
