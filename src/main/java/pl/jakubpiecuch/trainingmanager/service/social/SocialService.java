@@ -9,5 +9,4 @@ public interface SocialService {
     }
    
     void post(Map<String, String> params);
-    
 }
