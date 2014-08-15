@@ -69,4 +69,14 @@
         <property name="url" value="http://www.gym-home.com/result/%s"/>
     </bean>
 
+    <bean id="googleService" class="pl.jakubpiecuch.trainingmanager.service.social.google.GoogleService">
+        <property name="connectionRepository" ref="connectionRepository"/>
+        <property name="url" value="http://www.gym-home.com/result/%s"/>
+    </bean>
+
+    <bean id="twitterService" class="pl.jakubpiecuch.trainingmanager.service.social.twitter.TwitterService">
+        <property name="connectionRepository" ref="connectionRepository"/>
+        <property name="url" value="http://www.gym-home.com/result/%s"/>
+    </bean>
+
 </beans>

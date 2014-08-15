@@ -131,6 +131,8 @@
         <property name="socialServices">
             <map>
                 <entry key="FACEBOOK" value-ref="facebookService"/>
+                <entry key="GOOGLE" value-ref="googleService"/>
+                <entry key="TWITTER" value-ref="twitterService "/>
             </map>
         </property>
     </bean>

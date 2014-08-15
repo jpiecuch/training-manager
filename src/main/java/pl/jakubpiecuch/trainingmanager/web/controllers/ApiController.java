@@ -35,7 +35,6 @@ import pl.jakubpiecuch.trainingmanager.service.dictionary.EquipmentSet;
 import pl.jakubpiecuch.trainingmanager.service.social.SocialService;
 import pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationService;
 import pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationService.Social;
-import pl.jakubpiecuch.trainingmanager.web.authentication.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.web.ui.DayExerciseUI;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
@@ -136,7 +135,7 @@ public class ApiController {
     public @ResponseBody void socialPost(@PathVariable Social.Type type, @PathVariable Long id) {
         Map<String, String> params = new HashMap<String, String>();
         params.put(SocialService.Params.CODE, cryptService.encrypt(type.name(), id.toString()));
-        socialServices.get(type).post(params);
+        socialServices.get(type).publicMessage(params);
     }
 
     @Autowired
