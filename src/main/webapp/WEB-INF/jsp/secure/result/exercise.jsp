@@ -26,7 +26,7 @@
 
     <spring:eval var="fbAppId" expression="@propertyConfigurer.getProperty('facebook.clientId')" />
     <meta property="fb:app_id" content="${fbAppId}">
-    <meta property="og:title" content="${exercise.exercise.name}">
+    <meta property="og:title" content="${exercise.exercise.names[pageContext.response.locale.language]}">
     <meta property="og:image" content="http://gym-home.com/resource/content/logo/gh-1024x1024.png">
     <meta property="og:url" content="http://www.gym-home.com${requestScope['javax.servlet.forward.request_uri']}">
     <meta property="og:type" content="gym-home:workout">
@@ -45,7 +45,7 @@
 
 <div class="services-block content content-center" id="services">
     <div class="container">
-        <h2><spring:message code="exercise"/> : <strong>${exercise.exercise.name}</strong></h2>
+        <h2><spring:message code="exercise"/> : <strong>${exercise.exercise.names[pageContext.response.locale.language]}</strong></h2>
         <h4>${exercise.date}</h4>
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12 item">

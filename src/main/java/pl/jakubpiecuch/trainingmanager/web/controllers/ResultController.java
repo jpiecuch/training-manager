@@ -27,7 +27,7 @@ public class ResultController {
 
     @RequestMapping(value = "exercise/**")
     public String  exercise(Locale locale, Model model, HttpServletRequest request) {
-        String id = cryptService.decrypt(StringUtils.substringAfterLast(WebUtil.extractPathFromPattern(request), "exercise/"), 1);
+        String id = cryptService.decrypt(WebUtil.extractPathFromPattern(request), 1);
         DayExerciseUI dayExercise = DayExerciseUI.fromDayExercise(dayService.exercise(Long.valueOf(id)));
         model.addAttribute("exercise", dayExercise);
 

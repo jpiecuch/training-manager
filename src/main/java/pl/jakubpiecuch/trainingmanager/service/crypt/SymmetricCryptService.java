@@ -9,7 +9,7 @@ public class SymmetricCryptService implements CryptService {
     private Base64EncodedCipherer decryptService;
     private static final String IV = "AQIDBAUGAQI=";
     private static final String KEY = "Rs3xEA16I52XJpsWwkw4GrB8l6FiVGK/";
-    private static final String VAL_SPLITTER = "|";
+    private static final String VAL_SPLITTER = "/";
 
     @Override
     public String encrypt(String... args) {
