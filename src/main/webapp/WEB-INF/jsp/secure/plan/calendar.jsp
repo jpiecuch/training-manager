@@ -73,14 +73,14 @@
                         window.location.href = '${pageContext.servletContext.contextPath}' + '/plan/day.html?date=' + moment(event.start).format('YYYY-MM-DD') + '&position=' + event.title.split('.')[0];
                     },
                     viewRender: function(view, element) {
-                       $http.get('${pageContext.servletContext.contextPath}' + '/api/calendar/events/start/' + moment(view.visStart).format('YYYY-MM-DD') + '/end/' + moment(view.visEnd).format('YYYY-MM-DD')).success(function(data) { 
+                       $http.get('${pageContext.servletContext.contextPath}' + '/api/calendar/event/start/' + moment(view.visStart).format('YYYY-MM-DD') + '/end/' + moment(view.visEnd).format('YYYY-MM-DD')).success(function(data) {
                             $scope.eventSources[0] = data;
                        }); 
                     }
                 }
             };
             
-            $http.get('${pageContext.servletContext.contextPath}' + '/api/dictionary/exercises').success(function(exercises) {
+            $http.get('${pageContext.servletContext.contextPath}' + '/api/dictionary/exercise/first/0/max/1000').success(function(exercises) {
                 $http.get('${pageContext.servletContext.contextPath}' + '/api/dictionary/partymuscles').success(function(pm) {
                     $scope.pm = pm;
                     $scope.exercises = {};
@@ -89,8 +89,8 @@
                         $scope.exercises[$scope.pm[i]] = [];
                         $scope.collapseStatus[i] = true;
                     }
-                    for (var i = 0; i < exercises.length; i++) {
-                    $scope.exercises[exercises[i].partyMuscles].push(exercises[i]);
+                    for (var i = 0; i < exercises.result.length; i++) {
+                    $scope.exercises[exercises.result[i].partyMuscles].push(exercises.result[i]);
                 }
                 });
             });
@@ -131,8 +131,9 @@
         <div class="portlet-body light-grey">
             <div class="row" id="calendar-row">
                 <div class="col-md-3 col-sm-12" data-drag="true" data-jqyoui-options="uiConfig.eventBox" jqyoui-draggable>
+                    <div class="col-sm-3" style="position: fixed; padding-left: 0px; padding-right: 30px;">
                     <h3 class="event-form-title"><spring:message code="exercises"/></h3>
-                    <div id="external-events">            
+                    <div id="external-events">
                         <div>
                             <div class="fa fa-arrow-up" style="position: absolute; font-size: 200px; color: #ffb848; left: 25%; opacity: 0.3;top: 100px;"></div>
                             <div class="fa fa-arrow-down" style="position: absolute; font-size: 200px; color: #ffb848; left: 25%; opacity: 0.3;bottom: 100px;"></div>
@@ -143,12 +144,13 @@
                                 </div>
                                 <div class="portlet-body" collapse="collapseStatus[$index]">
                                    <perfect-scrollbar suppress-scroll-x="true" wheel-speed="5" class="perf-scroller">
-                                       <div ng-repeat-start="e in exercises[p]" class="exercise-event external-event label label-success" value="{{e.id}}" data-drag="true" data-jqyoui-options="uiConfig.event" jqyoui-draggable="uiConfig.draggable">{{e.name}}</div><br ng-repeat-end/>
+                                       <div ng-repeat-start="e in exercises[p]" class="exercise-event external-event label label-success" value="{{e.id}}" data-drag="true" data-jqyoui-options="uiConfig.event" jqyoui-draggable="uiConfig.draggable">{{e.names['${pageContext.response.locale.language}']}}</div><br ng-repeat-end/>
                                    </perfect-scrollbar>
                                 </div>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
+                    </div>
                 </div>
                 <div class="col-md-9 col-sm-12"><div id="calendar" ng-model="eventSources" ui-calendar="uiConfig.calendar" calendar="calendar" class="has-toolbar"></div></div>
             </div>

@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ public class FullCalendarServiceTest extends AbstractBaseTest {
     
     @Test
     public void getEventsTest() throws ParseException {
-        List<Event> events = calendarService.events(new Users(1l, 1l), new SimpleDateFormat("yyyy-MM-dd").parse("2014-01-01"), new SimpleDateFormat("yyyy-MM-dd").parse("2014-05-01"));
+        List<Event> events = calendarService.events(new Users(1l, 1l), new SimpleDateFormat("yyyy-MM-dd").parse("2014-01-01"), new SimpleDateFormat("yyyy-MM-dd").parse("2014-05-01"), new Locale("pl"));
         
         assertEquals(6, events.size());
     }

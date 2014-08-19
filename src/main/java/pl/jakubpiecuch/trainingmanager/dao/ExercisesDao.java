@@ -9,4 +9,5 @@ public interface ExercisesDao extends CoreDao {
     List<Exercises> findAll();
     List<Exercises> findByPartyMuscles(PartyMuscles pms); 
     Exercises findById(Long id);
+    PageResult<Exercises> findPage(int firstResult, int maxResult);
 }

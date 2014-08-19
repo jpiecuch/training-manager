@@ -13,7 +13,7 @@
                         <div class="dashboard-stat" ng-class="tab.confirmed ? 'green' : 'red'" style="margin-bottom: 5px;">
                             <div class="visual visual-status"><i class="fa" ng-class="{'fa-check-square-o': tab.confirmed, 'fa-square-o': !tab.confirmed}"></i></div>
                             <div class="details" style="position: static;">
-                                <div class="desc"><h4>{{tab.exercise.name}}</h4></div>
+                                <div class="desc"><h4>{{tab.exercise.names['${pageContext.response.locale.language}']}}</h4></div>
                                 <div class="desc"><h5>{{tab.date | date: 'dd MMMM yyyy (EEEE)'}}</h5></div> 
                                 <div class="number total-weight">{{tab.totalWeight}} kg</div>
                             </div>
@@ -101,7 +101,7 @@
 
                                     <div ng-repeat="s in tab.series" style="width:50px; float: left;">
                                         <div class="input-group">
-                                            <span ng-click="removeSeries(tab, s)" class="input-group-addon remove-series-button" style="width: 50px; float: left"><span>{{$index +1}}.</span><i class="fa fa-minus" style="color: white; display: hidden"></i></span>
+                                            <span ng-click="removeSeries(tab, $index)" class="input-group-addon remove-series-button" style="width: 50px; float: left"><span>{{$index +1}}.</span><i class="fa fa-minus" style="color: white; display: hidden"></i></span>
                                             <input type="text" ng-model="s.value" class="form-control" >
                                         </div> 
                                     </div>
@@ -129,8 +129,8 @@
                         <div class="portlet">
                             <div class="portlet-title"><div class="caption"><spring:message code="exercise.video"/></div></div>
                             <div class="portlet-body" >
-                                <span ng-if="tab.exercise.movieURL"><youtube-video id="video" video-url="tab.exercise.movieURL"/></span>
-                                <div style="text-align: center;" ng-if="!tab.exercise.movieURL"><i style="opacity: 0.3; font-size: 300px; margin-top: 150px; color: #cecece;" class="fa fa-eye-slash"></i></div>
+                                <span ng-if="tab.exercise.movieUrl"><youtube-video id="video" video-url="tab.exercise.movieUrl"/></span>
+                                <div style="text-align: center;" ng-if="!tab.exercise.movieUrl"><i style="opacity: 0.3; font-size: 300px; margin-top: 150px; color: #cecece;" class="fa fa-eye-slash"></i></div>
                             </div>
                         </div>
                     </div>
@@ -205,7 +205,7 @@
             updateLoading(false);
             $translate.use('${pageContext.response.locale.language}');
             $scope.stopwatchFlag = false;
-            $http.get('${pageContext.servletContext.contextPath}' + "/api/exercise/${param.date}").success(function(data) {
+            $http.get('${pageContext.servletContext.contextPath}' + "/api/day/exercise/${param.date}").success(function(data) {
                 var position = '${param.position}';
                 $scope.date = ${param.date};
                 $scope.dayExercises = data;
@@ -261,13 +261,13 @@
             d.series[d.series.length] = {};
         };
 
-        $scope.removeSeries = function(d, s) {
-            d.series.splice(s.indexOf, 1);
+        $scope.removeSeries = function(d, idx) {
+            d.series.splice(idx, 1);
         }
         
         $scope.save = function(d, message) {
             updateLoading();
-            $http.post('${pageContext.servletContext.contextPath}' + "/api/exercise/save", d).success(function(data) {
+            $http.post('${pageContext.servletContext.contextPath}' + "/api/day/exercise", d).success(function(data) {
                 d.version++;
                 d.series = data.series;
                 growl.addSuccessMessage(message === undefined ? "day.exercise.save" : message);
@@ -303,7 +303,7 @@
               windowClass: 'progress-modal'
             });
             
-            $http.get('${pageContext.servletContext.contextPath}' + "/api/exercise/"+ d.exercise.id +"/progress/").success(function(progressData) {
+            $http.get('${pageContext.servletContext.contextPath}' + "/api/day/exercise/"+ d.exercise.id +"/progress/").success(function(progressData) {
                 var chartLine = new Array();
                 var chartWeightLine = new Array();
                 for (var i = 0; i < progressData.length; i++) {

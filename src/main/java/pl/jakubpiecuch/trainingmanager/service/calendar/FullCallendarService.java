@@ -6,6 +6,8 @@ import com.google.common.collect.Sets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,7 @@ public class FullCallendarService implements CalendarService {
     private ExercisesDao exercisesDao;
 
     @Override
-    public  List<Event> events(Users user, Date start, Date end) {
+    public  List<Event> events(Users user, Date start, Date end,final Locale locale) {
         return Lists.newArrayList(Lists.transform(dayExercisesDao.findByCalendarId(user.getCalendar().getId(), start, end), new Function<DayExercises, Event>() {
             @Override
             public Event apply(DayExercises d) {
@@ -34,14 +36,14 @@ public class FullCallendarService implements CalendarService {
                 result.setAllDay(Boolean.TRUE);
                 result.setId(d.getId());
                 result.setStart(DateFormatUtils.format(d.getDate(), CALENDAR_FORMAT_DATE));
-                result.setTitle(String.format(EVENT_TITLE_FORMAT, d.getPosition(), d.getExercise().getName()));
+                result.setTitle(String.format(EVENT_TITLE_FORMAT, d.getPosition(), d.getExercise().getNames().get(locale.getLanguage())));
                 return result;
             } 
         }));
     }
 
     @Override
-    public Event create(Event event, Users user) throws Exception {
+    public Event create(Event event, Users user, Locale locale) throws Exception {
         DayExercises d = new DayExercises();
         d.setDate(DateUtils.parseDate(event.getStart(), new String[] {CALENDAR_FORMAT_DATE}));
         d.setExercise(new Exercises(event.getId()));
@@ -57,10 +59,10 @@ public class FullCallendarService implements CalendarService {
             d.setNecks(Sets.newHashSet(last.getNecks()));
             d.setStands(Sets.newHashSet(last.getStands()));
             d.setSeries(last.getSeries());
-            event.setTitle(String.format(EVENT_TITLE_FORMAT, d.getPosition(), last.getExercise().getName()));
+            event.setTitle(String.format(EVENT_TITLE_FORMAT, d.getPosition(), last.getExercise().getNames().get(locale.getLanguage())));
         } else {
             d.setSeries(DayExercises.DEFAULT_SERIES);
-            event.setTitle(String.format(EVENT_TITLE_FORMAT, d.getPosition(), exercisesDao.findById(event.getId()).getName()));
+            event.setTitle(String.format(EVENT_TITLE_FORMAT, d.getPosition(), exercisesDao.findById(event.getId()).getNames().get(locale.getLanguage())));
         }
         dayExercisesDao.save(d);
         event.setId(d.getId());

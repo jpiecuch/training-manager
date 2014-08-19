@@ -1,14 +1,27 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
+
+import javax.annotation.Nullable;
+import javax.persistence.*;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "exercises")
 public class Exercises extends CommonEntity {
+
+    private final static String NAME_PERSIST_FORMAT = "%s:%s";
+    private final static String NAME_DELIMETER = ";";
 
     public enum PartyMuscles { ABDOMINALS, BACKS, BICEPS_AND_FLEXORS, CHEST, FOREARMS, LEGS_AND_BUTTOCKS, SHOULDERS, TRICEPS_AND_RECTIFIERS }
 
@@ -25,11 +38,11 @@ public class Exercises extends CommonEntity {
     }
 
     @Column(name = "name")
-    public String getName() {
+    protected String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    protected void setName(String name) {
         this.name = name;
     }
 
@@ -63,7 +76,45 @@ public class Exercises extends CommonEntity {
 
     @Override
     public String toString() {
-        return "pl.jakubpiecuch.trainingmanager.domain.dictionaries.ExerciseTypes[ id=" + getId() + " ]";
+        return "pl.jakubpiecuch.trainingmanager.domain.dictionaries.Exercises[ id=" + getId() + " ]";
+    }
+
+    @Transient
+    public Map<String, String> getNames() {
+        return new HashMap<String, String>() {
+            {
+                if (StringUtils.isNotEmpty(name)) {
+                    for (String s : StringUtils.splitByWholeSeparatorPreserveAllTokens(name, NAME_DELIMETER)) {
+                        String[] result = StringUtils.splitPreserveAllTokens(s, ":");
+                        put(result[0], result[1]);
+                    }
+                }
+            }
+        };
+    }
+    @JsonDeserialize(using = NamesDeserializer.class)
+    protected void setNames(Map<String, String> names) {
+        for (Map.Entry<String, String> e : names.entrySet()) {
+            addName(e.getKey(), e.getValue());
+        }
+    }
+
+    public void addName(String lang, String name) {
+        this.name = (StringUtils.isNotEmpty(this.name) ? this.name + NAME_DELIMETER : "") + String.format(NAME_PERSIST_FORMAT, lang, name);
+    }
+
+    public static class NamesDeserializer extends JsonDeserializer<Map<String, String>> {
+
+        @Override
+        public Map<String, String> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+            Map<String, String> result = new HashMap<String, String>();
+
+            jsonParser.nextToken();
+            while (!jsonParser.nextToken().isStructEnd()) {
+                result.put(jsonParser.getCurrentName(), jsonParser.getValueAsString());
+            }
+            return result;
+        }
     }
 
 }

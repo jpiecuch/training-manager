@@ -1,18 +1,18 @@
 package pl.jakubpiecuch.trainingmanager.web.controllers;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.day.DayService;
 import pl.jakubpiecuch.trainingmanager.web.ui.DayExerciseUI;
 import pl.jakubpiecuch.trainingmanager.web.ui.SeriesUI;
+import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -25,10 +25,10 @@ public class ResultController {
     private DayService dayService;
     private MessageSource messageSource;
 
-    @RequestMapping(value = "{code}")
-    public String  exercise(@PathVariable final String code, Locale locale, Model model) {
-        String id = cryptService.decrypt(code, 1);
-        DayExerciseUI dayExercise = DayExerciseUI.fromDayExercise(dayService.exercise(Long.valueOf(id)), messageSource, locale);
+    @RequestMapping(value = "exercise/**")
+    public String  exercise(Locale locale, Model model, HttpServletRequest request) {
+        String id = cryptService.decrypt(StringUtils.substringAfterLast(WebUtil.extractPathFromPattern(request), "exercise/"), 1);
+        DayExerciseUI dayExercise = DayExerciseUI.fromDayExercise(dayService.exercise(Long.valueOf(id)));
         model.addAttribute("exercise", dayExercise);
 
         int mod4 = dayExercise.getSeries().length % 4;

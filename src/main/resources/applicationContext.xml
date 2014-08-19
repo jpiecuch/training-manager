@@ -81,6 +81,10 @@
         <property name="namePattern" value="${user.name.pattern}"/>
         <property name="passwordValidator" ref="passwordValidator"/>
     </bean>
+
+    <bean id="exerciseValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.ExerciseValidator">
+        <property name="langs" value="${app.langs}"/>
+    </bean>
     
     <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean" >
         <property name="velocityProperties">
@@ -132,7 +136,7 @@
             <map>
                 <entry key="FACEBOOK" value-ref="facebookService"/>
                 <entry key="GOOGLE" value-ref="googleService"/>
-                <entry key="TWITTER" value-ref="twitterService "/>
+                <entry key="TWITTER" value-ref="twitterService"/>
             </map>
         </property>
     </bean>

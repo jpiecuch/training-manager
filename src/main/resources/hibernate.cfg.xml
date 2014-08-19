@@ -4,6 +4,6 @@
     <session-factory>
         <property name="hibernate.show_sql">false</property>
         <property name="hibernate.format_sql">true</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.dialect">pl.jakubpiecuch.trainingmanager.orm.hibernate.dialect.PostgreSQLDialect</property>
     </session-factory>
 </hibernate-configuration>

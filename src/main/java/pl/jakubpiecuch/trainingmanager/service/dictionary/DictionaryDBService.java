@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jakubpiecuch.trainingmanager.dao.EquipmentDao;
 import pl.jakubpiecuch.trainingmanager.dao.ExercisesDao;
+import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.domain.Exercises;
 
@@ -14,8 +15,8 @@ public class DictionaryDBService implements DictionaryService {
     private Map<Equipment.Type, EquipmentDao> daos;
     
     @Override
-    public List<Exercises> getExercises() {
-        return exercisesDao.findAll();
+    public PageResult<Exercises> getExercises(int firstResult, int maxResult) {
+        return exercisesDao.findPage(firstResult, maxResult);
     }
 
     @Override
@@ -24,7 +25,7 @@ public class DictionaryDBService implements DictionaryService {
     }
 
     @Override
-    public void saveExercise(Exercises exercise) {
+    public void save(Exercises exercise) {
         exercisesDao.save(exercise);
     }
     
@@ -34,7 +35,7 @@ public class DictionaryDBService implements DictionaryService {
     }
     
     @Override
-    public void saveEquipment(Equipment equipment) {
+    public void save(Equipment equipment) {
         daos.get(equipment.getEquipmentType()).save(equipment);
     }
 

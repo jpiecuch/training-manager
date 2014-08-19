@@ -3,7 +3,7 @@ var training = angular.module('training', ['ui.bootstrap', 'ui.calendar', 'ui.pe
         .config(function($translateProvider, contextPath) {
             $translateProvider.preferredLanguage('en');
             $translateProvider.useStaticFilesLoader({
-                prefix: contextPath + '/api/languages/',
+                prefix: contextPath + '/api/dictionary/language/',
                 suffix: ''
             });
             $translateProvider.useCookieStorage();

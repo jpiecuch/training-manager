@@ -23,7 +23,7 @@ public class DayExerciseUI implements Serializable {
     private Long id;
     private Date date;
     private Long calendarId;
-    private ExerciseUI exercise;
+    private Exercises exercise;
     private SeriesUI[] series;
     private Integer position;
     private List<Benches> benches;
@@ -38,10 +38,10 @@ public class DayExerciseUI implements Serializable {
     private Long time;
     private int version;
 
-    public static DayExerciseUI fromDayExercise(final DayExercises d, MessageSource messageSource, Locale locale) {
+    public static DayExerciseUI fromDayExercise(final DayExercises d) {
         DayExerciseUI result = new DayExerciseUI();
         result.id = d.getId();
-        result.exercise = ExerciseUI.fromExercise(d.getExercise(), messageSource, locale);
+        result.exercise = d.getExercise();
         String[] seriesArray = d.getSeries().split(DayExercises.SERIES_DELIMITER);
         SeriesUI[] series = new SeriesUI[seriesArray.length];
         for(int i = 0; i < seriesArray.length; i++) {
@@ -65,11 +65,11 @@ public class DayExerciseUI implements Serializable {
         return result;
     }
     
-    public static List<DayExerciseUI> fromDayExerciseList(List<DayExercises> list, final MessageSource messageSource, final Locale locale) {
+    public static List<DayExerciseUI> fromDayExerciseList(List<DayExercises> list) {
         return Lists.newArrayList(Lists.transform(list, new Function<DayExercises, DayExerciseUI>() {
             @Override
             public DayExerciseUI apply(DayExercises d) {
-                return fromDayExercise(d, messageSource, locale);
+                return fromDayExercise(d);
             }
         }));
     }
@@ -78,7 +78,7 @@ public class DayExerciseUI implements Serializable {
         return id;
     }
 
-    public ExerciseUI getExercise() {
+    public Exercises getExercise() {
         return exercise;
     }
 
@@ -166,7 +166,7 @@ public class DayExerciseUI implements Serializable {
         result.setStands(Sets.newHashSet(this.stands));
         result.setPress(Sets.newHashSet(this.press));
         result.setCalendar(new Calendars(this.calendarId));
-        result.setExercise(new Exercises(this.exercise.getId()));
+        result.setExercise(this.exercise);
         result.setTime(this.time);
         result.setVersion(version);
         return result;
