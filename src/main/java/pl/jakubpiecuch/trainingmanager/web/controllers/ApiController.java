@@ -77,14 +77,20 @@ public class ApiController {
         return result;
     }
 
+    @RequestMapping(value = "dictionary/exercise/first/{first}/max/{max}/partymuscles/{partyMuscles}", method = RequestMethod.GET)
+    public @ResponseBody PageResult<Exercises> exercisesPartyMuscles(@PathVariable int first, @PathVariable int max, @PathVariable Exercises.PartyMuscles partyMuscles) {
+        return dictionaryService.getExercises(first, max, new Exercises.PartyMuscles[] { partyMuscles });
+    }
+
     @RequestMapping(value = "dictionary/exercise/first/{first}/max/{max}", method = RequestMethod.GET)
     public @ResponseBody PageResult<Exercises> exercises(@PathVariable int first, @PathVariable int max) {
-        return dictionaryService.getExercises(first, max);
+        return dictionaryService.getExercises(first, max, null);
     }
 
 
     @RequestMapping(value = "dictionary/exercise", method = RequestMethod.POST)
     public @ResponseBody void exercise(@RequestBody @Valid Exercises exercise, Errors errors) {
+        exerciseValidator.validate(exercise, errors);
         if (!errors.hasErrors()) {
             dictionaryService.save(exercise);
         }

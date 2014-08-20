@@ -9,7 +9,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Exercises.PartyMuscles;
 
 public interface DictionaryService {
 
-    PageResult<Exercises> getExercises(int firstResult, int maxResults);
+    PageResult<Exercises> getExercises(int firstResult, int maxResults, PartyMuscles[] partyMuscles);
     Exercises getExercise(Long id);
     void save(Exercises exercise);
     List<Exercises> getPartyMusclesExercisesList(PartyMuscles pms);

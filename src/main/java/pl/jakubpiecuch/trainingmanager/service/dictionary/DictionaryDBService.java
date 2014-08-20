@@ -15,8 +15,8 @@ public class DictionaryDBService implements DictionaryService {
     private Map<Equipment.Type, EquipmentDao> daos;
     
     @Override
-    public PageResult<Exercises> getExercises(int firstResult, int maxResult) {
-        return exercisesDao.findPage(firstResult, maxResult);
+    public PageResult<Exercises> getExercises(int firstResult, int maxResult, Exercises.PartyMuscles[] partyMuscles) {
+        return exercisesDao.findPage(firstResult, maxResult, partyMuscles);
     }
 
     @Override

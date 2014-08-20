@@ -23,7 +23,7 @@ public class Exercises extends CommonEntity {
     private final static String NAME_PERSIST_FORMAT = "%s:%s";
     private final static String NAME_DELIMETER = ";";
 
-    public enum PartyMuscles { ABDOMINALS, BACKS, BICEPS_AND_FLEXORS, CHEST, FOREARMS, LEGS_AND_BUTTOCKS, SHOULDERS, TRICEPS_AND_RECTIFIERS }
+    public enum PartyMuscles { ABDOMINALS, TRAPS, BICEPS, CHEST, FOREARMS, QUADS, SHOULDERS, TRICEPS, NECK, CALVES, LATS, MIDDLE_BACK, LOWER_BACK, GLUTES, HAMSTRINGS }
 
     private String name;
     private String movieUrl;

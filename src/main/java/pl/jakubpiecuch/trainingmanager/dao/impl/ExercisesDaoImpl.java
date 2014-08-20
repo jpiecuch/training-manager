@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.ArrayUtils;
+import org.hibernate.Query;
 import pl.jakubpiecuch.trainingmanager.dao.ExercisesDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
@@ -28,9 +31,21 @@ public class ExercisesDaoImpl extends CoreDaoImpl  implements ExercisesDao {
     }
 
     @Override
-    public PageResult<Exercises> findPage(int firstResult, int maxResult) {
+    public PageResult<Exercises> findPage(int firstResult, int maxResult, PartyMuscles[] partyMuscles) {
 
-        final List<Object[]> result = session().createQuery("SELECT e, over(count(*)) FROM Exercises e ORDER BY e.id").setFirstResult(firstResult).setMaxResults(maxResult).list();
+        StringBuilder sb = new StringBuilder("SELECT e, over(count(*)) FROM Exercises e ");
+        if (partyMuscles != null) {
+            sb.append("WHERE e.partyMuscles IN (:partyMuscles) ");
+        }
+        sb.append(" ORDER BY e.id");
+
+        Query query = session().createQuery(sb.toString()).setFirstResult(firstResult).setMaxResults(maxResult);
+
+        if (partyMuscles != null) {
+            query.setParameterList("partyMuscles", partyMuscles);
+        }
+
+        final List<Object[]> result = query.list();
 
         return new PageResult<Exercises>() {
             @Override

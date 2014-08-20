@@ -129,7 +129,8 @@
                         <div class="portlet">
                             <div class="portlet-title"><div class="caption"><spring:message code="exercise.video"/></div></div>
                             <div class="portlet-body" >
-                                <span ng-if="tab.exercise.movieUrl"><youtube-video id="video" video-url="tab.exercise.movieUrl"/></span>
+                                <span ng-if="tab.exercise.movieUrl && tab.exercise.movieUrl.indexOf('youtube') !== -1"><youtube-video id="video" video-url="tab.exercise.movieUrl"/></span>
+                                <span ng-if="tab.exercise.movieUrl && tab.exercise.movieUrl.indexOf('youtube') === -1"><div class="BBCOMVideoEmbed" data-video-key="b3840135d7eebd656704" data-autoplay="false" data-thumbnail-url="http://videos.bodybuilding.com/preview/114000/2_114652.jpg"><script type="text/javascript" src="http://assets.bodybuilding.com/videos/javascript/min/external-video-embed.js"></script></div></span>
                                 <div style="text-align: center;" ng-if="!tab.exercise.movieUrl"><i style="opacity: 0.3; font-size: 300px; margin-top: 150px; color: #cecece;" class="fa fa-eye-slash"></i></div>
                             </div>
                         </div>
