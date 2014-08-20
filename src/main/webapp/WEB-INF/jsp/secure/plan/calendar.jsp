@@ -8,6 +8,10 @@
     training.controller("calendarController", function($scope, $http, $translate) {
         $scope.eventSources = [];
 
+        $scope.startDrag = function(event, ui) {
+            ui.helper.css('background-color', '#28b779');
+            ui.helper.css('width', $('.exercise-event').width());
+        };
 
         $scope.init = function() {
             $scope.page = 0;
@@ -16,8 +20,8 @@
             var currentDate = new Date();
             currentDate.setHours(0,0,0,0);           
             $scope.uiConfig = {
-                draggable: {},
-                event: { zIndex: 999, revert: true, revertDuration: 0, appendTo: 'body', helper: 'clone', containment: 'window', scroll: true },
+                draggable: {onStart: 'startDrag'},
+                event: { zIndex: 999, revert: true, revertDuration: 0, appendTo: 'body', helper: 'clone' },
                 eventBox : { axis: 'y', containment: '#calendar-row' },
                 calendar: {
                     header: { left: 'title', center: '', right: 'prev, next,today' },
@@ -88,18 +92,10 @@
     });
 </script>
 <style type="text/css">
-    
-    
+
+
     .fc-day {
         cursor: pointer;
-    }
-    
-    .perf-scroller {
-        white-space: pre-line;
-        width: 440px;
-        height: 200px;
-        overflow: hidden;
-        position: relative;
     }
     
     .exercise-event {
@@ -115,6 +111,16 @@
         background-color: #28b779;
     }
 
+    .exercise-events {
+        position: fixed;
+        z-index: 10;
+        background-color: white;
+        border: 2px solid #35aa47;
+        margin-left: 10px;
+        width: 24.5%;
+        min-width: 300px
+    }
+
     #external-events {
         margin-top: 10px;
     }
@@ -124,7 +130,7 @@
         <div class="portlet-title"><div class="caption"><i class="fa fa-calendar"></i><spring:message code="calendar.calendar"/></div></div>
         <div class="portlet-body light-grey">
             <div class="row" id="calendar-row">
-                <div class="col-md-3" style="position: fixed; z-index: 10; background-color: white; border: 2px solid #35aa47; margin-left: 10px; width: 24.5%">
+                <div class="col-md-3 exercise-events">
                     <h3 class="event-form-title"><spring:message code="exercises"/></h3>
                     <select ng-model="p" ng-options="pm | translate for pm in partyMuscles" ng-change="update(0)" class="form-control"></select>
                     <div id="external-events">
