@@ -16,7 +16,7 @@
         <intercept-url pattern="/resources/**" access="permitAll" />
         <intercept-url pattern="/resource/**" access="permitAll" />
         <intercept-url pattern="/authentication/**" access="permitAll" />
-        <intercept-url pattern="/api/languages/**" access="permitAll" />
+        <intercept-url pattern="/api/dictionary/language/**" access="permitAll" />
         <intercept-url pattern="/signin/**" access="permitAll" />
         <intercept-url pattern="/api/dictionary/social" access="permitAll" />
         <intercept-url pattern="/api/exercise/result/**" access="permitAll" />

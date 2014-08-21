@@ -15,6 +15,7 @@
 
         $scope.init = function() {
             $scope.page = 0;
+            $scope.lastPage = true;
             $translate.use('${pageContext.response.locale.language}');
             var dragEventStartDate;
             var currentDate = new Date();
@@ -87,6 +88,7 @@
             $scope.page += increment;
             $http.get('${pageContext.servletContext.contextPath}' + '/api/dictionary/exercise/first/'+$scope.page * maxResults +'/max/'+maxResults+'/partymuscles/' + $scope.p).success(function(exercises) {
                 $scope.exercises = exercises.result;
+                $scope.lastPage = exercises.count / maxResults < $scope.page + 1;
              });
         }
     });
@@ -140,7 +142,7 @@
                         <li ng-show="page > 0" class="previous">
                             <a ng-click="update(-1)" href="">&laquo; <spring:message code="prevPage"/></a>
                         </li>
-                        <li class="next">
+                        <li ng-show="!lastPage" class="next">
                             <a ng-click="update(1)" href=""><spring:message code="nextPage"/> &raquo;</a>
                         </li>
                     </ul>
