@@ -62,6 +62,17 @@
             <img src="<c:url value="resources/img/logo-big.png"/>" alt="">
         </div>
         <div  class="content" >
+            <div id="lang-icons" class="pull-right">
+                <c:set var="queryString"><c:forEach items="${fn:split(fn:trim(pageContext.request.queryString), '&')}" var="q"><c:if test="${not fn:startsWith(q,'lang') and not empty q}"><c:out value="${q}&"/></c:if></c:forEach></c:set>
+                <ul class="nav navbar-nav">
+                    <li id="lang-pl">
+                        <a class="${pageContext.response.locale.language eq 'pl' ? 'selected' : ''}" href="${requestScope['javax.servlet.forward.request_uri']}?${queryString}lang=pl"></a>
+                    </li>
+                    <li id="lang-en">
+                        <a class="${pageContext.response.locale.language eq 'en' ? 'selected' : ''}" href="${requestScope['javax.servlet.forward.request_uri']}?${queryString}lang=en"></a>
+                    </li>
+                </ul>
+            </div>
             <div ng-show="activeView === 0">
                     <c:if test="${not empty sessionScope['SPRING_SECURITY_LAST_EXCEPTION']}">
                         <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope = "session" />
