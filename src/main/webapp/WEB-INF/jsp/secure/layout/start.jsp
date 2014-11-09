@@ -22,8 +22,5 @@
     <link href="<c:url value="/resources/css/custom.css"/>" rel="stylesheet" type="text/css"/>
     <link href="<c:url value="/resources/assets/global/css/plugins.css"/>" rel="stylesheet" type="text/css">
     <link href="<c:url value="/resources/assets/global/css/components.css"/>" rel="stylesheet" type="text/css">
-
-    <script src="<c:url value="/resources/assets/global/plugins/jquery-1.11.0.min.js"/>" type="text/javascript"></script>
-    <script src="<c:url value="/resources/js/angularjs/angular.js"/>" type="text/javascript" ></script>
-    <script src="<c:url value="/resources/js/angularjs/modules/app.js"/>" type="text/javascript" ></script>
+    <link href="<c:url value="/resources/assets/global/plugins/fullcalendar/fullcalendar/fullcalendar.css"/>" rel="stylesheet"/>
 </head>

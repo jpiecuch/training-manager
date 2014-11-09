@@ -17,4 +17,9 @@ public class PlanController {
     public String day() {
         return "plan/day";
     }
+
+    @RequestMapping(value = "plan/plan.html", method = RequestMethod.GET)
+    public String plan() {
+        return "plan/plan";
+    }
 }

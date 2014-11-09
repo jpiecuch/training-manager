@@ -36,4 +36,12 @@ public class WebUtil {
         securityContext.setAuthentication(auth);
         auth.setDetails(userDetails);
     }
+
+    public static Integer[] toIntArray(String[] array) {
+        Integer res[] = new Integer[array.length];
+        for (int i = 0; i < array.length; i++) {
+            res[i] = Integer.parseInt(array[i]);
+        }
+        return res;
+    }
 }

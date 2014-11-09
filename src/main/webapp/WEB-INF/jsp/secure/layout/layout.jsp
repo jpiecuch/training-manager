@@ -11,49 +11,25 @@
 <html lang="en" class="no-js">
 <!--<![endif]-->
     <tiles:insertAttribute name="start" />
-    <body ng-app="training" ng-controller="sidebarController" class="page-header-fixed page-quick-sidebar-over-content" ng-class="hide ? 'page-sidebar-closed' : ''">
-        <script type="text/javascript">training.constant('contextPath', '${pageContext.request.contextPath}');</script>
+    <body ng-app="training" class="page-header-fixed page-quick-sidebar-over-content" ng-controller="SidebarCtrl" ng-class="{'page-sidebar-closed': menu.isClosed}" >
         <tiles:insertAttribute name="header"/>
         <div class="clearfix"></div>
         <div class="page-container">
             <div growl></div>
             <c:set var="fullContextPath" value="${pageContext.request.contextPath}/"/>
             <div class="page-sidebar-wrapper" >
-            <script type="text/javascript">
-                training.controller('sidebarController', function($scope) {
-                    $scope.hide = true;
-
-                    $scope.sidebar = function() {
-                        $scope.hide = !$scope.hide;
-                    }
-                });
-            </script>
             <div class="page-sidebar navbar-collapse collapse">
-            <ul class="page-sidebar-menu" ng-class="hide ? 'page-sidebar-menu-closed' : ''">
+            <ul class="page-sidebar-menu" ng-class="{'page-sidebar-menu-closed': menu.isClosed}">
             <li class="sidebar-toggler-wrapper">
-                <div class="sidebar-toggler" ng-click="sidebar()"></div>
+                <div class="sidebar-toggler" ng-click="menu.state()"></div>
             </li></br>
-            <li class="start ${fn:endsWith(requestScope['javax.servlet.forward.request_uri'], '/index.html') or requestScope['javax.servlet.forward.request_uri'] eq fullContextPath  ? 'active' : ''}">
-                <a href="<c:url value='/'/>">
-                    <i class="icon-home"></i>
-                    <span class="title"><spring:message code="dashboard"/></span>
+            <li ng-repeat="e in menu.elements" class="start" ng-class="{active: menu.isActive(e.url)}">
+                <a href="{{e.url}}">
+                    <i class="{{e.icon}}"></i>
+                    <span class="title">{{e.code}}</span>
                     <span class="selected"></span>
                 </a>
             </li>
-            <li class="start ${fn:endsWith(requestScope['javax.servlet.forward.request_uri'], '/plan/calendar.html') ? 'active' : ''}">
-                <a href="<c:url value='/plan/calendar.html'/>">
-                    <i class="icon-calendar"></i>
-                    <span class="title"><spring:message code="calendar.calendar"/></span>
-                    <span class="selected"></span>
-                </a>
-            </li>
-                <li class="start ${fn:endsWith(requestScope['javax.servlet.forward.request_uri'], '/dictionary/exercises.html') ? 'active' : ''}">
-                    <a href="<c:url value='/dictionary/exercises.html'/>">
-                        <i class="icon-doc"></i>
-                        <span class="title"><spring:message code="exercises"/></span>
-                        <span class="selected"></span>
-                    </a>
-                </li>
             </ul>
             </div>
             </div>
@@ -64,17 +40,15 @@
             </div>
         </div>
         <div class="page-footer" ng-controller="footerController">
-            <script type="text/javascript">
-                training.controller('footerController', function($scope, $http, $rootScope) {
-                    $scope.link = function(type) {
-                        $rootScope.$broadcast(type === 'policy' ? 'showPolicyEvent' : 'showTermsEvent');
-                    }
-                });
-            </script>
             <div class="page-footer-inner">2014 &copy; <a href="<c:url value="/"/> "><spring:message code="app.title"/></a> | <span><a href="" ng-click="link('policy')"><spring:message code="privacy.policy"/></a></span> | <span><a href="" ng-click="link('terms')"><spring:message code="terms.of.service"/></a></span></div>
             <div class="page-footer-tools"><span class="go-top"><i class="fa fa-angle-up"></i></span></div>
         </div>
         <%@include file="../policy.jsp" %>
         <tiles:insertAttribute name="end"/>
+        <script type="text/javascript">
+            training.constant('contextPath', '${pageContext.request.contextPath}')
+                    .constant('lang', '${pageContext.response.locale.language}')
+                    .constant('version', 'v1');
+        </script>
     </body>
 </html>

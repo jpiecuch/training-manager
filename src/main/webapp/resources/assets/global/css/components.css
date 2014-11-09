@@ -3342,6 +3342,22 @@ Social Icons
 .social-icons li:hover > a {
   background-position: 0 -38px;
 }
+.social-icons li > form > input {
+    width: 28px;
+    height: 28px;
+    display: block;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    border: none;
+}
+.social-icons li:hover > form > input {
+    background-position: 0 -38px;
+}
 .social-icons li .amazon {
   background: url(../img/social/amazon.png) no-repeat;
 }

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import pl.jakubpiecuch.trainingmanager.AbstractBaseTest;
-import pl.jakubpiecuch.trainingmanager.domain.Exercises;
+import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 
 public class ExerciseValidatorTest extends AbstractBaseTest {
 
@@ -15,7 +15,7 @@ public class ExerciseValidatorTest extends AbstractBaseTest {
 
     @Test
     public void validateTest() {
-        Exercises e = new Exercises();
+        Exercise e = new Exercise();
         Errors errors = new BeanPropertyBindingResult(e, "exercise");
 
         exerciseValidator.validate(e, errors);

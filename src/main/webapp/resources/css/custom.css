@@ -8,13 +8,16 @@
     width:30px;
     height:30px;
     background-position:0px -30px;
+    opacity: 0.3;
     -webkit-transition: all 0.4s;
     -moz-transition: all 0.4s;
     -o-transition: all 0.4s;
 }
-#lang-icons ul li a:hover { background-position:0 0;  }
+#lang-icons ul li a:hover { background-position:0 0;
+    opacity: 1.0;  }
 
-#lang-icons ul li a.selected { background-position:0 30px;  }
+#lang-icons ul li a.selected { background-position:0 30px;
+    opacity: 1.0; }
 
 #lang-pl a { background-image: url(../img/langs/pl.png); }
 
@@ -105,6 +108,12 @@ input[type="checkbox"]:hover:checked + label:hover span:hover {
 div.equipments-info {
     margin-bottom: 10px; 
     border: #57b5e3 solid 1px;
+    float: left;
+    padding-left: 0px;
+}
+
+div.equipments-info div {
+    padding-left: 0px;
 }
 
 div.equipments-info span {
@@ -113,10 +122,19 @@ div.equipments-info span {
     font-weight: bold;
 }
 
-div.equipments-info div {
-    margin-left: 5px; 
-    margin-top: 2px; 
-    margin-bottom: 3px;
+div.equipment-checker {
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+    width: 5%;
+}
+
+div.exercise-in-progress {
+    background-image: linear-gradient(45deg,rgba(255,255,255,.15) 5%,transparent 5%,transparent 10%,rgba(255,255,255,.15) 10%,rgba(255,255,255,.15) 15%,transparent 15%,transparent 20%,rgba(255,255,255,.15) 20%,
+    rgba(255,255,255,.15) 25%,transparent 25%,transparent 30%,rgba(255,255,255,.15) 30%,rgba(255,255,255,.15) 35%,transparent 35%,transparent 40%,rgba(255,255,255,.15) 40%,rgba(255,255,255,.15) 45%,transparent 45%,
+    transparent 50%, rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 55%, transparent 55%,transparent 60%, rgba(255,255,255,.15) 60%,rgba(255,255,255,.15) 65%, transparent 65%,transparent 70%, rgba(255,255,255,.15) 70%,
+    rgba(255,255,255,.15) 75%, transparent 75%,transparent 80%, rgba(255,255,255,.15) 80%,rgba(255,255,255,.15) 85%, transparent 85%,transparent 90%, rgba(255,255,255,.15) 90%,rgba(255,255,255,.15) 95%, transparent 95%);
+    -webkit-animation: progress-bar-stripes 2s linear infinite;
+    background-size: 200px 200px;
 }
 
 h4.equipments-title {
@@ -185,4 +203,44 @@ h4.equipments-title {
 
 .remove-series-button:hover span {
     display: none;
+}
+
+.fc-day {
+    cursor: pointer;
+}
+
+.exercise-event {
+    width: 100%;
+    cursor: pointer !important;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-bottom: 0px !important;
+    margin-left: 0px !important;
+}
+
+.exercise-event:hover {
+    background-color: #28b779;
+}
+
+.exercise-events {
+    position: fixed;
+    z-index: 10;
+    background-color: white;
+    border: 2px solid #35aa47;
+    margin-left: 10px;
+    width: 24.5%;
+    min-width: 300px
+}
+
+#external-events {
+    margin-top: 10px;
+}
+
+.comments-scroll {
+    position: relative;
+    height: 400px;
+}
+
+.ta-toolbar .btn-group {
+    padding-bottom: 2px;
 }

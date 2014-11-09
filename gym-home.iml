@@ -19,8 +19,8 @@
     <facet type="hibernate" name="Hibernate">
       <configuration>
         <datasource-map>
-          <unit-entry name="hibernate.cfg.xml" value="a5cfbd6d-b842-4f5d-a479-05778f80b923" />
-          <unit-entry name="sessionFactory" value="a5cfbd6d-b842-4f5d-a479-05778f80b923" />
+          <unit-entry name="hibernate.cfg.xml" />
+          <unit-entry name="sessionFactory" value="dataSource" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/hibernate.cfg.xml" />
@@ -147,7 +147,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework.security:spring-security-crypto:3.2.3.RELEASE" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework.social:spring-social-google:1.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="sass-stdlib" level="application" />
-    <orderEntry type="library" name="angularjs-DefinitelyTyped" level="application" />
   </component>
 </module>
 

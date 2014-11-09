@@ -1,5 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -21,7 +23,7 @@ public class Users extends VersionedEntity {
     private String salt;
     private String firstName;
     private String lastName;
-    private Calendars calendar;
+    private Plan calendar;
     private Status status;
     private String rPassword;
 
@@ -30,7 +32,7 @@ public class Users extends VersionedEntity {
 
     public Users(Long id, Long calendarId) {
         this.setId(id);
-        this.calendar = new Calendars(calendarId);
+        this.calendar = new Plan(calendarId);
     }
 
     @Column(name = "name")
@@ -43,6 +45,7 @@ public class Users extends VersionedEntity {
     }
 
     @Column(name = "password")
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -52,6 +55,7 @@ public class Users extends VersionedEntity {
     }
 
     @Column(name = "salt")
+    @JsonIgnore
     public String getSalt() {
         return salt;
     }
@@ -80,11 +84,12 @@ public class Users extends VersionedEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "calendar")
-    public Calendars getCalendar() {
+    @JsonIgnore
+    public Plan getCalendar() {
         return calendar;
     }
 
-    public void setCalendar(Calendars calendar) {
+    public void setCalendar(Plan calendar) {
         this.calendar = calendar;
     }
 
@@ -113,6 +118,7 @@ public class Users extends VersionedEntity {
     }
 
     @Transient
+    @JsonIgnore
     public String getrPassword() {
         return rPassword;
     }

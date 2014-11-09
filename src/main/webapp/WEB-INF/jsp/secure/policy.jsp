@@ -1,28 +1,5 @@
-<div ng-controller="policyController" ng-init="init()"></div>
+<div ng-controller="policyController" ng-init="init(${param.privacy})"></div>
 <script type="text/javascript">
-    training.controller("policyController", function($scope, $http, $modal) {
-        
-        $scope.init = function() {   
-            if ('${param.privacy}') {
-                open();
-            }
-        };
-        
-        $scope.$on('showPolicyEvent', function () {
-            open();
-        }); 
-            
-        var open = function() {
-            var modalInstance = $modal.open({
-                templateUrl: 'policy.html',
-                controller: policyModalController,
-                size: 'lg'
-            });
-            modalInstance.result.then(function () {});
-        }
-        
-    });
-    
     var policyModalController = function () {};
 </script>
 <style type="text/css">

@@ -1,0 +1,12 @@
+{
+    "attributes": {},
+    "elements": {
+        "youtube-video": {
+            "attributes": {
+                "id": {},
+                "style": {},
+                "video-url": {}
+            }
+        }
+    }
+}

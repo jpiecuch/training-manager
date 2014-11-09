@@ -47,5 +47,9 @@
     <bean id="dayExercisesDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.DayExercisesDaoImpl" parent="coreDao"/>
     
     <bean id="calendarsDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.CalendarsDaoImpl" parent="coreDao"/>
+
+    <bean id="planDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.PlanDaoImpl" parent="coreDao"/>
+
+    <bean id="exerciseCommentDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.ExerciseCommentDaoImpl" parent="coreDao"/>
     
 </beans>

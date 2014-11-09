@@ -1,0 +1,25 @@
+<div data-ng-init="init()">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-8">
+            <div ng-repeat="d in weekdays" class="col-md-12">
+                <div class="portlet solid blue">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-gift"></i><span data-ng-bind="d | translate"></span>
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"></a>
+                            <a href="javascript;" data-toggle="modal" class="config"></a>
+                            <a href="javascript:;" class="reload"></a>
+                            <a href="javascript:;" class="remove"></a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div ng-repeat="e in plan[d]"> {{e.position}}. {{e.exercise.names['pl']}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

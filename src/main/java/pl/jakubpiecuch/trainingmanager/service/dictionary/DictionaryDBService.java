@@ -7,7 +7,7 @@ import pl.jakubpiecuch.trainingmanager.dao.EquipmentDao;
 import pl.jakubpiecuch.trainingmanager.dao.ExercisesDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
-import pl.jakubpiecuch.trainingmanager.domain.Exercises;
+import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 
 public class DictionaryDBService implements DictionaryService {
     
@@ -15,17 +15,17 @@ public class DictionaryDBService implements DictionaryService {
     private Map<Equipment.Type, EquipmentDao> daos;
     
     @Override
-    public PageResult<Exercises> getExercises(int firstResult, int maxResult, Exercises.PartyMuscles[] partyMuscles) {
+    public PageResult<Exercise> getExercises(int firstResult, int maxResult, Exercise.PartyMuscles[] partyMuscles) {
         return exercisesDao.findPage(firstResult, maxResult, partyMuscles);
     }
 
     @Override
-    public Exercises getExercise(Long id) {
+    public Exercise getExercise(Long id) {
         return exercisesDao.findById(id);
     }
 
     @Override
-    public void save(Exercises exercise) {
+    public void save(Exercise exercise) {
         exercisesDao.save(exercise);
     }
     
@@ -40,7 +40,7 @@ public class DictionaryDBService implements DictionaryService {
     }
 
     @Override
-    public List<Exercises> getPartyMusclesExercisesList(Exercises.PartyMuscles pms) {
+    public List<Exercise> getPartyMusclesExercisesList(Exercise.PartyMuscles pms) {
         return exercisesDao.findByPartyMuscles(pms);
     }
     

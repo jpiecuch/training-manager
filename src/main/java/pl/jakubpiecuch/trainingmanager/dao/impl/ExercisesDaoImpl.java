@@ -4,36 +4,34 @@ import java.util.List;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.ArrayUtils;
 import org.hibernate.Query;
 import pl.jakubpiecuch.trainingmanager.dao.ExercisesDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
-import pl.jakubpiecuch.trainingmanager.domain.Exercises;
-import pl.jakubpiecuch.trainingmanager.domain.Exercises.PartyMuscles;
+import pl.jakubpiecuch.trainingmanager.domain.Exercise;
+import pl.jakubpiecuch.trainingmanager.domain.Exercise.PartyMuscles;
 
 public class ExercisesDaoImpl extends CoreDaoImpl  implements ExercisesDao {
     
     @Override
-    public List<Exercises> findAll() {
-        return session().createQuery("SELECT e FROM Exercises e ORDER BY e.id").list();
+    public List<Exercise> findAll() {
+        return session().createQuery("SELECT e FROM Exercise e ORDER BY e.id").list();
     }
 
     @Override
-    public List<Exercises> findByPartyMuscles(PartyMuscles partyMuscles) {
-        return session().createQuery("SELECT e FROM Exercises e WHERE e.partyMuscles = :partyMuscles").setParameter("partyMuscles", partyMuscles).list();
+    public List<Exercise> findByPartyMuscles(PartyMuscles partyMuscles) {
+        return session().createQuery("SELECT e FROM Exercise e WHERE e.partyMuscles = :partyMuscles").setParameter("partyMuscles", partyMuscles).list();
     }
 
     @Override
-    public Exercises findById(Long id) {
-        return (Exercises) session().get(Exercises.class, id);
+    public Exercise findById(Long id) {
+        return (Exercise) session().get(Exercise.class, id);
     }
 
     @Override
-    public PageResult<Exercises> findPage(int firstResult, int maxResult, PartyMuscles[] partyMuscles) {
+    public PageResult<Exercise> findPage(int firstResult, int maxResult, PartyMuscles[] partyMuscles) {
 
-        StringBuilder sb = new StringBuilder("SELECT e, over(count(*)) FROM Exercises e ");
+        StringBuilder sb = new StringBuilder("SELECT e, over(count(*)) FROM Exercise e ");
         if (partyMuscles != null) {
             sb.append("WHERE e.partyMuscles IN (:partyMuscles) ");
         }
@@ -47,13 +45,13 @@ public class ExercisesDaoImpl extends CoreDaoImpl  implements ExercisesDao {
 
         final List<Object[]> result = query.list();
 
-        return new PageResult<Exercises>() {
+        return new PageResult<Exercise>() {
             @Override
-            public List<Exercises> getResult() {
-                return Lists.transform(result, new Function<Object[], Exercises>() {
+            public List<Exercise> getResult() {
+                return Lists.transform(result, new Function<Object[], Exercise>() {
                     @Override
-                    public Exercises apply(Object[] in) {
-                        return (Exercises) in[0];
+                    public Exercise apply(Object[] in) {
+                        return (Exercise) in[0];
                     }
                 });
             }

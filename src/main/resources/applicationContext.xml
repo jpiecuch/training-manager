@@ -50,8 +50,9 @@
         <property name="paramName" value="lang" />
     </bean>
  
-    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
         <property name="defaultLocale" value="en"/>
+        <property name="cookieMaxAge" value="100000"/>
     </bean>
     
     <bean id="dictionaryService" class="pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryDBService">
@@ -132,6 +133,17 @@
     </bean>
     
     <bean id="apiController" class="pl.jakubpiecuch.trainingmanager.web.controllers.ApiController">
+
+
+        <property name="versionServices">
+            <map>
+                <entry key="v1" value-ref="version1Service"/>
+                <entry key="v2" value-ref="version2Service"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
         <property name="socialServices">
             <map>
                 <entry key="FACEBOOK" value-ref="facebookService"/>

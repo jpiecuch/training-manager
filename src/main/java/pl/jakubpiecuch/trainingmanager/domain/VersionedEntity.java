@@ -1,5 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -12,7 +14,6 @@ public class VersionedEntity extends CommonEntity {
     
     private Date created;
     private Date updated;
-    private int version;
 
     public VersionedEntity() {
     }
@@ -34,20 +35,12 @@ public class VersionedEntity extends CommonEntity {
 
     @Column(name = "updated", insertable = false, nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonIgnore
     public Date getUpdated() {
         return updated;
     }
 
     public void setUpdated(Date updated) {
         this.updated = updated;
-    }
-    
-    @Version
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
     }
 }

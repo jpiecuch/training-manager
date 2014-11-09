@@ -3,7 +3,6 @@ package pl.jakubpiecuch.trainingmanager.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,12 +23,12 @@ public class DayExercises extends VersionedEntity implements Serializable {
     public static final String SERIES_DELIMITER = ";";
     public static final String DEFAULT_SERIES = "0;0;0";
 
-    private Exercises exercise;
+    private Exercise exercise;
     private String series;
     private Date date;
     private Integer position;
     private Boolean confirmed;
-    private Calendars calendar;
+    private Plan calendar;
     private Set<Benches> benches;
     private Set<Dumbbells> dumbbells;
     private Set<Loads> loads;
@@ -48,11 +47,11 @@ public class DayExercises extends VersionedEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type")
-    public Exercises getExercise() {
+    public Exercise getExercise() {
         return exercise;
     }
 
-    public void setExercise(Exercises exercise) {
+    public void setExercise(Exercise exercise) {
         this.exercise = exercise;
     }
 
@@ -136,11 +135,11 @@ public class DayExercises extends VersionedEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "calendar")
-    public Calendars getCalendar() {
+    public Plan getCalendar() {
         return calendar;
     }
 
-    public void setCalendar(Calendars calendar) {
+    public void setCalendar(Plan calendar) {
         this.calendar = calendar;
     }
 

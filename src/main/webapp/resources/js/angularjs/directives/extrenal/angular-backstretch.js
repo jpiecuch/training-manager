@@ -3,12 +3,9 @@ angular.module('backstretch', [])
 		return {
 			restrict: 'A',                      
 			link: function (scope, element, attr) {
-                            scope.$watch('bgs', function () {
+                            scope.$watch('login.bgs', function () {
                             element.backstretch(attr.bgs.split(','), {duration: 1000, fade: 4000});
                         });
-                            
-                            
-                            
 			}
 		}
 	});

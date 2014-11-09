@@ -12,3 +12,7 @@ CREATE TRIGGER day_exercises_stamp BEFORE UPDATE ON day_exercises
 DROP TRIGGER IF EXISTS users_stamp ON users;
 CREATE TRIGGER users_stamp BEFORE UPDATE ON users
     FOR EACH ROW EXECUTE PROCEDURE TimeStampEntry();
+
+DROP TRIGGER IF EXISTS exercise_comment_stamp ON exercise_comment;
+CREATE TRIGGER exercise_comment_stamp BEFORE UPDATE ON users
+FOR EACH ROW EXECUTE PROCEDURE TimeStampEntry();

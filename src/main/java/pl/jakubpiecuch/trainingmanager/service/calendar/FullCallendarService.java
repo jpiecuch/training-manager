@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.jakubpiecuch.trainingmanager.dao.DayExercisesDao;
 import pl.jakubpiecuch.trainingmanager.dao.ExercisesDao;
-import pl.jakubpiecuch.trainingmanager.domain.Calendars;
+import pl.jakubpiecuch.trainingmanager.domain.Exercise;
+import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
-import pl.jakubpiecuch.trainingmanager.domain.Exercises;
 import pl.jakubpiecuch.trainingmanager.domain.Users;
 
 @Service
@@ -46,8 +46,8 @@ public class FullCallendarService implements CalendarService {
     public Event create(Event event, Users user, Locale locale) throws Exception {
         DayExercises d = new DayExercises();
         d.setDate(DateUtils.parseDate(event.getStart(), new String[] {CALENDAR_FORMAT_DATE}));
-        d.setExercise(new Exercises(event.getId()));
-        d.setCalendar(new Calendars(user.getCalendar().getId()));
+        d.setExercise(new Exercise(event.getId()));
+        d.setCalendar(new Plan(user.getCalendar().getId()));
         d.setPosition(dayExercisesDao.countByCalendarIdAndDate(user.getCalendar().getId(), d.getDate()).intValue() + 1);
         d.setConfirmed(false);
         DayExercises last = dayExercisesDao.findLastDayExercise(event.getId(), d.getDate());

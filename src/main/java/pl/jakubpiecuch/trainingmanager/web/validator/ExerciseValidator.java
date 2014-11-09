@@ -4,9 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import pl.jakubpiecuch.trainingmanager.domain.Exercises;
-
-import java.util.Map;
+import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 
 public class ExerciseValidator implements Validator {
 
@@ -14,12 +12,12 @@ public class ExerciseValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return Exercises.class.isAssignableFrom(clazz);
+        return Exercise.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        Exercises e = (Exercises) target;
+        Exercise e = (Exercise) target;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "partyMuscles", "exercise.partyMuscles.empty.error");
 

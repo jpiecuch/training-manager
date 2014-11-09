@@ -6,24 +6,15 @@ import com.google.common.collect.Sets;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import org.springframework.context.MessageSource;
-import pl.jakubpiecuch.trainingmanager.domain.Bars;
-import pl.jakubpiecuch.trainingmanager.domain.Benches;
-import pl.jakubpiecuch.trainingmanager.domain.Dumbbells;
-import pl.jakubpiecuch.trainingmanager.domain.Exercises;
-import pl.jakubpiecuch.trainingmanager.domain.Loads;
-import pl.jakubpiecuch.trainingmanager.domain.Necks;
-import pl.jakubpiecuch.trainingmanager.domain.Press;
-import pl.jakubpiecuch.trainingmanager.domain.Stands;
-import pl.jakubpiecuch.trainingmanager.domain.Calendars;
-import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
+
+import pl.jakubpiecuch.trainingmanager.domain.*;
+import pl.jakubpiecuch.trainingmanager.domain.Plan;
 
 public class DayExerciseUI implements Serializable {
     private Long id;
     private Date date;
     private Long calendarId;
-    private Exercises exercise;
+    private Exercise exercise;
     private SeriesUI[] series;
     private Integer position;
     private List<Benches> benches;
@@ -61,7 +52,6 @@ public class DayExerciseUI implements Serializable {
         result.calendarId = d.getCalendar().getId();
         result.confirmed = d.getConfirmed();
         result.time = d.getTime();
-        result.version = d.getVersion();
         return result;
     }
     
@@ -78,7 +68,7 @@ public class DayExerciseUI implements Serializable {
         return id;
     }
 
-    public Exercises getExercise() {
+    public Exercise getExercise() {
         return exercise;
     }
 
@@ -165,10 +155,9 @@ public class DayExerciseUI implements Serializable {
         result.setNecks(Sets.newHashSet(this.necks));
         result.setStands(Sets.newHashSet(this.stands));
         result.setPress(Sets.newHashSet(this.press));
-        result.setCalendar(new Calendars(this.calendarId));
+        result.setCalendar(new Plan(this.calendarId));
         result.setExercise(this.exercise);
         result.setTime(this.time);
-        result.setVersion(version);
         return result;
     }
     

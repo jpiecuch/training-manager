@@ -1,6 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.web.authentication;
 
-import com.springcryptoutils.core.cipher.symmetric.Base64EncodedCipherer;
 import com.springcryptoutils.core.cipher.symmetric.SymmetricEncryptionException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +9,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.WebRequest;
 import pl.jakubpiecuch.trainingmanager.dao.CalendarsDao;
 import pl.jakubpiecuch.trainingmanager.dao.UsersDao;
-import pl.jakubpiecuch.trainingmanager.domain.Calendars;
+import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.domain.Users;
 import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.mail.EmailService;
@@ -85,7 +83,7 @@ public class LocalAuthenticationService implements AuthenticationService, Social
         user.setStatus(Users.Status.CREATED);
         user.setSalt(KeyGenerators.string().generateKey());
         user.setPassword(passwordEncoder.encodePassword(user.getPassword(), user.getSalt()));
-        Calendars calendar = new Calendars();
+        Plan calendar = new Plan();
         calendarsDao.save(calendar);
         user.setCalendar(calendar);
         usersDao.save(user);
@@ -108,7 +106,7 @@ public class LocalAuthenticationService implements AuthenticationService, Social
         user.setSalt(KeyGenerators.string().generateKey());
         user.setPassword(OAUTH_PASSWORD);
         
-        Calendars calendar = new Calendars();
+        Plan calendar = new Plan();
         calendarsDao.save(calendar);
         
         user.setCalendar(calendar);

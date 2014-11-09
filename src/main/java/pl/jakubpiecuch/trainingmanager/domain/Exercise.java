@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
+import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 
 import javax.annotation.Nullable;
 import javax.persistence.*;
@@ -18,23 +19,32 @@ import java.util.Map;
 
 @Entity
 @Table(name = "exercises")
-public class Exercises extends CommonEntity {
+public class Exercise extends CommonEntity {
 
     private final static String NAME_PERSIST_FORMAT = "%s:%s";
     private final static String NAME_DELIMETER = ";";
 
-    public enum PartyMuscles { ABDOMINALS, TRAPS, BICEPS, CHEST, FOREARMS, QUADS, SHOULDERS, TRICEPS, NECK, CALVES, LATS, MIDDLE_BACK, LOWER_BACK, GLUTES, HAMSTRINGS }
+    public enum PartyMuscles { ABDOMINALS, TRAPS, BICEPS, CHEST, FOREARMS, QUADS, SHOULDERS, TRICEPS, NECK, CALVES, LATS, MIDDLE_BACK, LOWER_BACK, GLUTES, HAMSTRINGS, ABDUCTORS }
+    public enum Type { CARDIO, OLYMPIC_WEIGHTLIFTING, PLYOMETRICS, POWERLIFTING, STRENGTH, STRETCHING, STRONMGMAN }
+    public enum Level { BEGINNER, INTERMEDIATE, EXPERT }
+    public enum Mechanics { COMPOUND, ISOLATION }
+    public enum Force { PUSH, PULL, STATIC }
 
     private String name;
     private String movieUrl;
     private String description;
     private PartyMuscles partyMuscles;
+    private Type type;
+    private Equipment.Type equipment;
+    private Level level;
+    private Mechanics mechanics;
+    private Force force;
 
-    public Exercises(Long id) {
+    public Exercise(Long id) {
         super(id);
     }
 
-    public Exercises() {
+    public Exercise() {
     }
 
     @Column(name = "name")
@@ -74,9 +84,49 @@ public class Exercises extends CommonEntity {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "pl.jakubpiecuch.trainingmanager.domain.dictionaries.Exercises[ id=" + getId() + " ]";
+    @Column(name = "equipment")
+    public Equipment.Type getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(Equipment.Type equipment) {
+        this.equipment = equipment;
+    }
+
+    @Column(name = "type")
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    @Column(name = "level")
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    @Column(name = "mechanics")
+    public Mechanics getMechanics() {
+        return mechanics;
+    }
+
+    public void setMechanics(Mechanics mechanics) {
+        this.mechanics = mechanics;
+    }
+
+    @Column(name = "force")
+    public Force getForce() {
+        return force;
+    }
+
+    public void setForce(Force force) {
+        this.force = force;
     }
 
     @Transient
@@ -103,11 +153,11 @@ public class Exercises extends CommonEntity {
         this.name = (StringUtils.isNotEmpty(this.name) ? this.name + NAME_DELIMETER : "") + String.format(NAME_PERSIST_FORMAT, lang, name);
     }
 
-    public static class NamesDeserializer extends JsonDeserializer<Map<String, String>> {
+    public static class NamesDeserializer extends JsonDeserializer<Map> {
 
         @Override
-        public Map<String, String> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
-            Map<String, String> result = new HashMap<String, String>();
+        public Map deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+            Map result = new HashMap();
 
             jsonParser.nextToken();
             while (!jsonParser.nextToken().isStructEnd()) {

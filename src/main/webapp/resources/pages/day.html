@@ -1,0 +1,128 @@
+<div ng-init="init()" ng-cloak>
+    <div class="col-md-9" >
+        <div style="margin-bottom: 20px;" class="tabbable-custom nav-justified">
+            <ul class="nav nav-tabs nav-justified"> <li ng-repeat="d in dayExercises" ng-class="{'active': d === tab}"><a ng-click="changeTab(d)" href="#/calendar/day/{{d.date | date: 'yyyy-MM-dd'}}?position={{d.position}}">{{d.position}}. {{d.exercise.partyMuscles | translate}}<div ng-if="loading && d === tab" class="loading"></div></a></li></ul>
+            <div style="float: left; width: 100%" class="tab-content">
+                <div  class="tab-pane col-md-12 active" id="tab">
+                    <div class="col-md-6">
+                        <div class="dashboard-stat" ng-class="{'green': tab.confirmed, 'red': !tab.confirmed, 'exercise-in-progress': stopwatch[tab.id]}" style="margin-bottom: 5px;">
+                            <div class="visual visual-status"><i class="fa" ng-class="{'fa-check-square-o': tab.confirmed, 'fa-square-o': !tab.confirmed}"></i></div>
+                            <div class="details" style="position: static;">
+                                <div class="desc"><h4>{{tab.exercise.names['pl']}}</h4></div>
+                                <div class="desc"><h5>{{tab.date | date: 'dd MMMM yyyy (EEEE)'}}</h5></div>
+                                <div class="desc"><h4><i ng-click="stopwatch[tab.id] ? stop(tab) : start(tab)" ng-class="stopwatch[tab.id] ?  'fa fa-pause' : 'fa fa-play'" style="padding-right: 5px; cursor: pointer; font-size:17px;" ></i>{{tab.time | stopwatch}}</h4></div>
+                                <div class="number total-weight" style="padding-top: 0px;">{{tab.totalWeight}} kg</div>
+                            </div>
+                            <div class="more" style="min-height: 40px">
+                                <div style="float: left;">
+                                    <a data-toggle="modal" class="btn btn-sm btn-info" ng-click="progress(tab)" href="#/calendar/day/{{tab.date | date: 'yyyy-MM-dd'}}?position={{tab.position}}&progress=true">
+                                        <i class="fa fa-bar-chart-o"></i> {{'exercise.progress' | translate}}
+                                    </a>
+                                    <a href="" class="btn btn-sm btn-success" ng-click="save(tab)">
+                                        <i class="fa fa-save"></i> {{'save' | translate}}
+                                    </a>
+                                    <a href="" class="btn btn-sm btn-warning" ng-click="confirm(tab)">
+                                        <i class="fa fa-check"></i> {{'confirm' | translate}}
+                                    </a>
+                                </div>
+                                <div ng-if="tab.confirmed && user.socials">
+                                        <h5 style="float: left; margin-bottom: 0px;">&nbsp;{{'exrcise.share.results' | translate}}: </h5>&nbsp;
+                                        <a ng-repeat="social in user.socials" style="background-color: white; margin-bottom: -3px;" href="" ng-click="socialShare(social)" data-original-title="{{social.providerId}}" class="social-icon social-icon-color {{social.providerId}}" ng-if="!sharing" ></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet">
+                            <div class="portlet-title"><div class="caption">{{'equipment.equipment' | translate}}</div></div>
+                            <div class="row portlet-body">
+                                <div class="col-md-12" ng-repeat="et in equipmentTypes">
+                                    <span ng-hide="tab[et].length === 0" class="equipments-title label label-info"><input ng-click="checkAll(deleteEquipment, tab, et)" type="checkbox" id="{{et}}-all-checkbox-delete" ng-checked="deleteEquipment[et].length === tab[et].length"><label class="all-checkbox" for="{{et}}-all-checkbox-delete"><span></span></label> {{et}}</span>
+                                    <div class="col-md-12 equipments-info" ng-hide="tab[et].length === 0">
+                                        <div class="col-md-12" ng-repeat="e in tab[et] | orderBy: 'strength'">
+                                            <div class="col-md-1 equipment-checker"><input type="checkbox" checklist-model="deleteEquipment[et]" checklist-value="e" id="{{et}}-checkbox-delete-{{$index}}"/><label for="{{et}}-checkbox-delete-{{$index}}"><span></span></label></div>
+                                            <div class="col-md-11"><equipment-desc type="et" equipment="e"></equipment-desc></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12"><a class="btn btn-danger btn-sm btn-block" ng-hide="empty(deleteEquipment)" ng-click="delete(tab)"><i class="fa fa-minus"></i> {{'equipment.remove' | translate}}</a></div>
+                            </div>
+                        </div>
+                        <div class="portlet">
+                            <div class="portlet-title"><div class="caption">{{'exercise.series' | translate}}</div></div>
+                            <div class="portlet-body">
+                                <div ng-repeat="s in tab.series" style="width:50px; float: left;">
+                                    <div class="input-group">
+                                        <span ng-click="removeSeries(tab, $index)" class="input-group-addon remove-series-button" style="width: 50px; float: left"><span>{{$index +1}}.</span><i class="fa fa-minus" style="color: white; display: hidden"></i></span>
+                                        <input type="text" ng-model="s.value" class="form-control" >
+                                    </div>
+                                </div>
+                                <div style="width:50px; float: left;"><div class="input-group"><span class="input-group-addon add-series-button" ng-click="addSeries(tab)"><i class="fa fa-plus"></i></span></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="portlet">
+                            <div class="portlet-title"><div class="caption">{{'exercise.video' | translate}}</div><div class="tools"><a href="" ng-click="portlets.updateState('video')" ng-class="portlets.video.visibility ? 'collapse' : 'expand'"></a></div></div>
+                            <div class="portlet-body" style="{{portlets.video.visibility ? 'display: block' : 'display: none'}}" >
+                                <div ng-if="tab.exercise.movieUrl" >
+                                <youtube-video id="video" video-url="tab.exercise.movieUrl"></youtube-video>
+                                </div>
+                                <div style="text-align: center;" ng-if="!tab.exercise.movieUrl"><i style="opacity: 0.3; font-size: 300px; margin-top: 150px; color: #cecece;" class="fa fa-eye-slash"></i></div>
+                            </div>
+                        </div>
+                        <div class="portlet">
+                            <div class="portlet-title"><div class="caption">{{'exercise.description' | translate}}</div><div class="tools"><a href="" ng-click="portlets.updateState('description')" ng-class="portlets.description.visibility ? 'collapse' : 'expand'"></a></div></div>
+                            <div class="portlet-body" style="{{portlets.description.visibility ? 'display: block' : 'display: none'}}" ><p ng-bind-html="description(tab.exercise.description)"></p></div>
+                        </div>
+                        <div class="portlet">
+                            <div class="portlet-title"><div class="caption">{{'exercise.comments' | translate}}</div><div class="tools"><a href="" ng-click="portlets.updateState('comments')" ng-class="portlets.comments.visibility ? 'collapse' : 'expand'"></a></div></div>
+                            <div class="portlet-body" style="{{portlets.comments.visibility ? 'display: block' : 'display: none'}}">
+                                <perfect-scrollbar suppress-scroll-x="true" wheel-speed="5" class="comments-scroll" style="{{'height: ' + (comments.length * 70 > 400 ? '400px' : comments.length * 70 + 'px')}}">
+                                    <ul class="chats">
+                                        <li ng-repeat="comment in comments" ng-class="$index % 2 == 0 ? 'in' : 'out'">
+                                            <img class="avatar" alt="" ng-src="resources/assets/admin/layout/img/avatar_small.png">
+                                            <div class="message">
+                                                <span class="arrow"></span><a href="#" class="name">{{comment.user.fullName}}</a><span class="datetime"> at {{comment.created | date : 'dd-MM-yyyy HH:mm'}} </span>
+                                                <span class="body">{{comment.comment}}</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </perfect-scrollbar>
+                                <div class="chat-form">
+                                    <div class="input-cont"><input ng-model="message" class="form-control" type="text" placeholder="{{'type.message' | translate}}"></div>
+                                    <div class="btn-cont"><span class="arrow"></span><a ng-click="postComment()" href="" class="btn blue icn-only"><i class="fa fa-check icon-white"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3" style="font-size: 12px !important;">
+        <h4>{{'exercise.available.equipment' | translate}}</h4>
+        <div class="row" id="external-events">
+            <div class="col-md-12" ng-repeat="et in equipmentTypes">
+                <span ng-hide="equipment[et].length === 0" class="equipments-title label label-info"><input ng-click="checkAll(addEquipment, equipment, et)" type="checkbox" id="{{et}}-all-checkbox" ng-checked="addEquipment[et].length === equipment[et].length"><label class="all-checkbox" for="{{et}}-all-checkbox"><span></span></label> {{et}}</span>
+                <div class="col-md-12 equipments-info" ng-hide="equipment[et].length === 0">
+                    <div class="col-md-12" ng-repeat="e in equipment[et] | orderBy: 'strength'">
+                        <div class="col-md-1 equipment-checker"><input type="checkbox" checklist-model="addEquipment[et]" checklist-value="e" id="{{et}}-checkbox-{{$index}}"/><label for="{{et}}-checkbox-{{$index}}"><span></span></label></div>
+                        <div class="col-md-11" style="width:95%; padding-right: 0px;"><equipment-desc type="et" equipment="e"></equipment-desc></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12"><a ng-hide="empty(addEquipment)" href="" class="btn btn-block btn-primary btn-sm" style="margin-top: 10px;" ng-click="add()"><i class="fa fa-plus" ></i> {{'add' | translate}}</a></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var ModalInstanceCtrl = function ($scope, $modalInstance) {
+        $scope.ok = function () {
+            $modalInstance.close();
+        };
+    };
+
+    var e = document.createElement("script");
+    e.src = "//www.youtube.com/iframe_api";
+    var t = document.getElementsByTagName("script")[0];
+    t.parentNode.insertBefore(e, t);
+</script>
