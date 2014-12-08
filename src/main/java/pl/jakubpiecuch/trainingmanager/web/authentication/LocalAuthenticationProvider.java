@@ -6,11 +6,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
+import pl.jakubpiecuch.trainingmanager.service.encoder.password.PasswordEncoder;
+import pl.jakubpiecuch.trainingmanager.service.user.SecurityUser;
+import pl.jakubpiecuch.trainingmanager.service.user.UserService;
+import pl.jakubpiecuch.trainingmanager.service.user.local.LocalUserService;
 
 @Component
 public class LocalAuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {
     
-    private AuthenticationService localAuthenticationService;
+    private LocalUserService localAuthenticationService;
     private PasswordEncoder shaPasswordEncoder;
 
     @Override
@@ -19,7 +23,7 @@ public class LocalAuthenticationProvider implements org.springframework.security
         if (user == null) {
             throw new BadCredentialsException("Username not found.");
         }
-        if (!shaPasswordEncoder.encodePassword((String) a.getCredentials(), user.getSalt()).equals(user.getPassword())) {
+        if (!shaPasswordEncoder.encode((String) a.getCredentials(), user.getSalt()).equals(user.getPassword())) {
             throw new BadCredentialsException("Wrong password.");
         }
         return new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
@@ -31,7 +35,7 @@ public class LocalAuthenticationProvider implements org.springframework.security
     }
 
     @Autowired
-    public void setLocalAuthenticationService(AuthenticationService localAuthenticationService) {
+    public void setLocalAuthenticationService(LocalUserService localAuthenticationService) {
         this.localAuthenticationService = localAuthenticationService;
     }
 

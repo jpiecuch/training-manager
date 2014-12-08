@@ -3,7 +3,6 @@ package pl.jakubpiecuch.trainingmanager.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -14,7 +13,7 @@ import javax.persistence.MappedSuperclass;
 public class BaseComment<T> extends VersionedEntity {
     
     private String comment;
-    private Users user;
+    private Account account;
     private T commented;
 
     public BaseComment() {
@@ -47,11 +46,11 @@ public class BaseComment<T> extends VersionedEntity {
 
     @JoinColumn(name = "creator")
     @ManyToOne(fetch = FetchType.LAZY)
-    public Users getUser() {
-        return user;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setUser(Users user) {
-        this.user = user;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

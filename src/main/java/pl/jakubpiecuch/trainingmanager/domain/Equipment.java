@@ -1,12 +1,34 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang.StringUtils;
+import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
-@MappedSuperclass()
-public class Equipment extends CommonEntity {
-    public enum Type {bars, benches, dumbbells, loads, necks, press, stands}
+import javax.persistence.*;
+import java.io.IOException;
+
+@Entity
+@Table(name = "equipment")
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.INTEGER)
+public abstract class Equipment<T> extends CommonEntity implements EquipmentDescriptor<T> {
+    public interface Type {
+        String BAR = "0";
+        String BENCH = "1";
+        String DUMBBELL = "2";
+        String LOAD = "3";
+        String NECK = "4";
+        String PRESS = "5";
+        String STAND = "6";
+        String RACK = "7";
+    }
+
+    private int type;
+    private String data;
+    private Double weight;
+    private Integer length;
+    private Double strength;
 
     public Equipment() {
     }
@@ -14,31 +36,154 @@ public class Equipment extends CommonEntity {
     public Equipment(Long id) {
         setId(id);
     }
-    
-    @JsonIgnore
+
+    @Column(name = "type", nullable=false, updatable=false, insertable=false)
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    @Column(name = "data")
+    protected String getData() {
+        return data;
+    }
+
+    protected void setData(String data) {
+        this.data = data;
+    }
+
+    @Column(name = "strength")
+    public Double getStrength() {
+        return strength;
+    }
+
+    public void setStrength(Double strength) {
+        this.strength = strength;
+    }
+
+    @Column(name = "weight")
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    @Column(name = "length")
+    public Integer getLength() {
+        return length;
+    }
+
+    public void setLength(Integer length) {
+        this.length = length;
+    }
+
     @Transient
-    public Type getEquipmentType() {
-        if (this instanceof Bars) {
-            return Type.bars;
+    public T getConfig() throws Exception {
+        return StringUtils.isNotEmpty(this.data) ? (T) WebUtil.fromJson(this.data, getConfigClass()) : null;
+    }
+
+    public void setConfig(T config) throws Exception {
+        this.data = WebUtil.toJson(config);
+    }
+
+    @Entity
+    @DiscriminatorValue(Type.BENCH)
+    public static class Bench extends Equipment<BenchConfig> {
+
+        @Override
+        @Transient
+        @JsonIgnore
+        public Class getConfigClass() {
+            return BenchConfig.class;
         }
-        if (this instanceof Benches) {
-            return Type.benches;
+    }
+
+    @Entity
+    @DiscriminatorValue(Type.BAR)
+    public static class Bar extends Equipment<BarConfig> {
+
+        @Override
+        @Transient
+        @JsonIgnore
+        public Class getConfigClass() {
+            return BarConfig.class;
         }
-        if (this instanceof Dumbbells) {
-            return Type.dumbbells;
+    }
+
+    @Entity
+    @DiscriminatorValue(Type.NECK)
+    public static class Neck extends Equipment<NeckConfig> {
+
+        @Override
+        @Transient
+        @JsonIgnore
+        public Class getConfigClass() {
+            return NeckConfig.class;
         }
-        if (this instanceof Loads) {
-            return Type.loads;
+    }
+
+    @Entity
+    @DiscriminatorValue(Type.DUMBBELL)
+    public static class Dumbbell extends Equipment<DumbbellConfig> {
+
+        @Override
+        @Transient
+        @JsonIgnore
+        public Class getConfigClass() {
+            return DumbbellConfig.class;
         }
-        if (this instanceof Necks) {
-            return Type.necks;
+    }
+
+    @Entity
+    @DiscriminatorValue(Type.LOAD)
+    public static class Load extends Equipment<LoadConfig> {
+
+        @Override
+        @Transient
+        @JsonIgnore
+        public Class getConfigClass() {
+            return LoadConfig.class;
         }
-        if (this instanceof Press) {
-            return Type.press;
+    }
+
+    @Entity
+    @DiscriminatorValue(Type.PRESS)
+    public static class Press extends Equipment<PressConfig> {
+
+        @Override
+        @Transient
+        @JsonIgnore
+        public Class getConfigClass() {
+            return PressConfig.class;
         }
-        if (this instanceof Stands) {
-            return Type.stands;
+    }
+
+    @Entity
+    @DiscriminatorValue(Type.STAND)
+    public static class Stand extends Equipment<StandConfig> {
+
+        @Override
+        @Transient
+        @JsonIgnore
+        public Class getConfigClass() {
+            return StandConfig.class;
         }
-        return null;
+    }
+
+    @Entity
+    @DiscriminatorValue(Type.RACK)
+    public static class Rack extends Equipment<RackConfig> {
+
+        @Override
+        @Transient
+        @JsonIgnore
+        public Class getConfigClass() {
+            return RackConfig.class;
+        }
     }
 }

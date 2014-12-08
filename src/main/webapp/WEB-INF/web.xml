@@ -60,7 +60,7 @@
     <servlet>
         <servlet-name>spring</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <load-on-startup>2</load-on-startup>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     
     <servlet-mapping>
@@ -73,10 +73,5 @@
         <session-timeout>30</session-timeout>
     </session-config>
  
-    <welcome-file-list><welcome-file>/login</welcome-file></welcome-file-list>
-    
-    <error-page>
-        <error-code>404</error-code>
-        <location>/WEB-INF/jsp/errors/layout-404.jsp</location>
-    </error-page>
+    <welcome-file-list><welcome-file>/</welcome-file></welcome-file-list>
 </web-app>

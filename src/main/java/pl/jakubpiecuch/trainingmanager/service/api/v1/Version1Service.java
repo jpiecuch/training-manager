@@ -1,47 +1,83 @@
 package pl.jakubpiecuch.trainingmanager.service.api.v1;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.context.request.WebRequest;
+import pl.jakubpiecuch.trainingmanager.common.MapperService;
 import pl.jakubpiecuch.trainingmanager.dao.ExerciseCommentDao;
-import pl.jakubpiecuch.trainingmanager.domain.DayExercises;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.domain.ExerciseComment;
+import pl.jakubpiecuch.trainingmanager.service.SupportService;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
-import pl.jakubpiecuch.trainingmanager.service.calendar.CalendarService;
-import pl.jakubpiecuch.trainingmanager.service.calendar.Event;
 import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
-import pl.jakubpiecuch.trainingmanager.service.day.DayService;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryService;
 import pl.jakubpiecuch.trainingmanager.service.plan.PlanService;
+import pl.jakubpiecuch.trainingmanager.service.user.Authentication;
+import pl.jakubpiecuch.trainingmanager.service.user.Provider;
+import pl.jakubpiecuch.trainingmanager.service.user.Registration;
+import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 import pl.jakubpiecuch.trainingmanager.service.social.SocialService;
-import pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationService;
-import pl.jakubpiecuch.trainingmanager.web.ui.DayExerciseUI;
+import pl.jakubpiecuch.trainingmanager.service.user.UserService;
+import pl.jakubpiecuch.trainingmanager.web.Response;
+import pl.jakubpiecuch.trainingmanager.web.Validator;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
-import pl.jakubpiecuch.trainingmanager.web.validator.ExerciseValidator;
+import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
+import pl.jakubpiecuch.trainingmanager.web.validator.AuthenticationValidator;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class Version1Service implements ApiVersionService {
 
     private final static String EXERCISE_SOCIAL_PREFIX = "exercise/";
     private String messageSourceFile;
-    private CalendarService calendarService;
-    private DayService dayService;
     private DictionaryService dictionaryService;
-    private MessageSource messageSource;
-    private AuthenticationService authenticationService;
-    private Map<AuthenticationService.Social.Type, SocialService> socialServices;
+    private SupportService<SocialProvider> supportService;
+    private Map<SocialProvider.SocialType, SocialService> socialServices;
     private CryptService cryptService;
-    private ExerciseValidator exerciseValidator;
     private PlanService planService;
     private ExerciseCommentDao exerciseCommentDao;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private Map<Provider.Type, UserService> userServices;
+    private MapperService mapperService;
+    private Validator validator;
+
+    @Override
+    public Response signIn(WebRequest request) throws Exception {
+        Response<Authentication> response = new Response<Authentication>();
+        HttpServletRequest httpServletRequest = (HttpServletRequest) ((NativeWebRequest) request).getNativeRequest();
+        String input = IOUtils.toString(httpServletRequest.getInputStream());
+        Authentication authentication = mapperService.getObject(IOUtils.toInputStream(input), Authentication.class, response);
+        if (validator.isValid(authentication, response, "")) {
+            UserDetails details = userServices.get(authentication.getProvider()).resolveDetails(IOUtils.toInputStream(input));
+            userServices.get(authentication.getProvider()).signIn(details, request, response);
+        }
+        return response;
+    }
+
+    @Override
+    public Response signOut() {
+        WebUtil.invalidate();
+        return new Response();
+    }
+
+    @Override
+    public Response signOn(HttpServletRequest request) throws Exception {
+        Response<Registration> response = new Response<Registration>();
+        Registration registration = mapperService.getObject(request.getInputStream(), Registration.class, response);
+        if (validator.isValid(registration, response, "")) {
+            userServices.get(registration.getProvider()).signOn(registration, response, request.getLocale());
+        }
+        return response;
+    }
 
     @Override
     public Object language(String lang) throws Exception {
@@ -62,34 +98,17 @@ public class Version1Service implements ApiVersionService {
 
     @Override
     public void exercise(HttpServletRequest request) throws Exception {
-        dictionaryService.save(objectMapper.readValue(request.getInputStream(), Exercise.class));
+        dictionaryService.save(mapperService.getObject(request.getInputStream(), Exercise.class));
     }
 
     @Override
     public Object availableSocials() {
-        return authenticationService.availableSocials();
+        return supportService.supported();
     }
 
     @Override
-    public Object saveDay(HttpServletRequest request) throws Exception {
-        DayExercises d = objectMapper.readValue(request.getInputStream(), DayExerciseUI.class).toDayExercises();
-        dayService.save(d);
-        return DayExerciseUI.fromDayExercise(d);
-    }
-
-    @Override
-    public Object exerciseProgress(long id) {
-        return DayExerciseUI.fromDayExerciseList(dayService.exerciseProgress(AuthenticatedUserUtil.getUser(), id));
-    }
-
-    @Override
-    public Object dayExercises(Date date) {
-        return DayExerciseUI.fromDayExerciseList(dayService.day(AuthenticatedUserUtil.getUser(), date));
-    }
-
-    @Override
-    public void socialPost(AuthenticationService.Social.Type type, long id) {
-        socialServices.get(type).publicMessage(EXERCISE_SOCIAL_PREFIX + cryptService.encrypt(type.name(), String.valueOf(id)));
+    public void socialPost(SocialProvider.SocialType socialType, long id) {
+        socialServices.get(socialType).publicMessage(EXERCISE_SOCIAL_PREFIX + cryptService.encrypt(socialType.name(), String.valueOf(id)));
     }
 
     @Override
@@ -99,16 +118,11 @@ public class Version1Service implements ApiVersionService {
 
     @Override
     public Object equipmentTypes() {
-        return Equipment.Type.values();
+        return Equipment.Type.BENCH;
     }
 
     @Override
-    public Object equimpentSet() {
-        return dictionaryService.getEquipmentSet();
-    }
-
-    @Override
-    public Object equipment(Equipment.Type type) {
+    public Object equipments(Integer[] type) {
         return dictionaryService.getEquipments(type);
     }
 
@@ -123,29 +137,9 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Override
-    public Object events(Date start, Date end, Locale locale) {
-        return calendarService.events(AuthenticatedUserUtil.getUser(), start, end, locale);
-    }
-
-    @Override
-    public void moveEvent(HttpServletRequest request) throws Exception {
-        calendarService.move(objectMapper.readValue(request.getInputStream(), Event.class));
-    }
-
-    @Override
-    public void removeEvent(HttpServletRequest request) throws Exception {
-        calendarService.remove(objectMapper.readValue(request.getInputStream(), Event.class));
-    }
-
-    @Override
-    public Object createEvent(HttpServletRequest request) throws Exception {
-        return calendarService.create(objectMapper.readValue(request.getInputStream(), Event.class), AuthenticatedUserUtil.getUser(), request.getLocale());
-    }
-
-    @Override
     public Object comment(HttpServletRequest request) throws Exception {
-        ExerciseComment e = objectMapper.readValue(request.getInputStream(), ExerciseComment.class);
-        e.setUser(AuthenticatedUserUtil.getUser());
+        ExerciseComment e = mapperService.getObject(request.getInputStream(), ExerciseComment.class);
+        e.setAccount(AuthenticatedUserUtil.getUser());
         exerciseCommentDao.save(e);
         return exerciseCommentDao.findById(e.getId());
     }
@@ -156,28 +150,8 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Autowired
-    public void setMessageSource(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
-
-    @Autowired
-    public void setCalendarService(CalendarService calendarService) {
-        this.calendarService = calendarService;
-    }
-
-    @Autowired
-    public void setDayService(DayService dayService) {
-        this.dayService = dayService;
-    }
-
-    @Autowired
-    public void setAuthenticationService(AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
-    }
-
-    @Autowired
-    public void setExerciseValidator(ExerciseValidator exerciseValidator) {
-        this.exerciseValidator = exerciseValidator;
+    public void setSupportService(SupportService<SocialProvider> supportService) {
+        this.supportService = supportService;
     }
 
     @Autowired
@@ -185,7 +159,7 @@ public class Version1Service implements ApiVersionService {
         this.planService = planService;
     }
 
-    public void setSocialServices(Map<AuthenticationService.Social.Type, SocialService> socialServices) {
+    public void setSocialServices(Map<SocialProvider.SocialType, SocialService> socialServices) {
         this.socialServices = socialServices;
     }
 
@@ -199,9 +173,22 @@ public class Version1Service implements ApiVersionService {
         this.exerciseCommentDao = exerciseCommentDao;
     }
 
+    @Autowired
+    public void setMapperService(MapperService mapperService) {
+        this.mapperService = mapperService;
+    }
+
+    @Required
+    public void setUserServices(Map<Provider.Type, UserService> userServices) {
+        this.userServices = userServices;
+    }
+
     @Value("/bundles/web/web_%s.properties")
     public void setMessageSourceFile(String messageSourceFile) {
         this.messageSourceFile = messageSourceFile;
     }
 
+    public void setValidator(Validator validator) {
+        this.validator = validator;
+    }
 }

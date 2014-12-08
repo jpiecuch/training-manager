@@ -1,15 +1,12 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import org.hibernate.annotations.Where;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.Nullable;
 import javax.persistence.*;
 
 @Entity
@@ -22,7 +19,7 @@ public class Plan extends pl.jakubpiecuch.trainingmanager.domain.CommonEntity im
     private String name;
     private Integer weeks;
     private Goal goal;
-    private Users creator;
+    private Account creator;
     private List<PlanExercise> exercises;
 
     public Plan() {
@@ -62,11 +59,11 @@ public class Plan extends pl.jakubpiecuch.trainingmanager.domain.CommonEntity im
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator")
-    public Users getCreator() {
+    public Account getCreator() {
         return creator;
     }
 
-    public void setCreator(Users creator) {
+    public void setCreator(Account creator) {
         this.creator = creator;
     }
 

@@ -55,36 +55,17 @@
         <property name="cookieMaxAge" value="100000"/>
     </bean>
     
-    <bean id="dictionaryService" class="pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryDBService">
-        <property name="daos">
-            <map>
-                <entry key="bars"  value-ref="barsDao"/>
-                <entry key="benches" value-ref="benchesDao"/>
-                <entry key="dumbbells" value-ref="dumbbellsDao"/>
-                <entry key="loads" value-ref="loadsDao"/>
-                <entry key="necks" value-ref="necksDao"/>
-                <entry key="press" value-ref="pressDao"/>
-                <entry key="stands" value-ref="standsDao"/>
-            </map>
-        </property>
-    </bean>
+    <bean id="dictionaryService" class="pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryDBService"/>
     
-    <bean id="passwordValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.PasswordValidator">
-        <property name="maxPasswordLength" value="${user.password.maxLength}"/>
-        <property name="minPasswordLength" value="${user.password.minLength}"/>
-        <property name="passwordPattern" value="${user.password.pattern}"/>
-    </bean>
-    
-    <bean id="userValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.UserValidator">
+    <bean id="registrationValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.RegistrationValidator">
         <property name="emailPattern" value="${user.email.pattern}"/>
         <property name="maxNameLength" value="${user.name.maxLength}"/>
         <property name="minNameLength" value="${user.name.minLength}"/>
         <property name="namePattern" value="${user.name.pattern}"/>
-        <property name="passwordValidator" ref="passwordValidator"/>
-    </bean>
-
-    <bean id="exerciseValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.ExerciseValidator">
-        <property name="langs" value="${app.langs}"/>
+        <property name="maxPasswordLength" value="${user.password.maxLength}"/>
+        <property name="minPasswordLength" value="${user.password.minLength}"/>
+        <property name="passwordPattern" value="${user.password.pattern}"/>
+        <property name="authenticationValidator" ref="authenticationValidator"/>
     </bean>
     
     <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean" >
@@ -96,6 +77,10 @@
             </props>
         </property>
     </bean>
+
+    <bean id="mapperService" class="pl.jakubpiecuch.trainingmanager.common.fasterxml.jackson.JacksonMapperService"/>
+
+    <bean id="supportService" class="pl.jakubpiecuch.trainingmanager.service.social.SocialSupportService"/>
     
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" >
         <property name="host" value="smtp.gmail.com" />
@@ -123,8 +108,22 @@
     <bean id="imageResource" class="pl.jakubpiecuch.trainingmanager.service.resource.image.ImageResource">
         <property name="root" value="${resource.directory}/images/"/>
     </bean>
-    
-    <bean id="resourceController" class="pl.jakubpiecuch.trainingmanager.web.controllers.ResourceController">
+
+    <bean id="abstractController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController" abstract="true">
+        <property name="versionServices">
+            <map>
+                <entry key="v1" value-ref="version1Service"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="signInController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signin.SignInController" parent="abstractController"/>
+
+    <bean id="signOutController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signout.SignOutController" parent="abstractController"/>
+
+    <bean id="signOnController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signon.SignOnController" parent="abstractController"/>
+
+    <bean id="apiResourceController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiResourceController">
         <property name="resourceServices">
             <map>
                 <entry key="image" value-ref="imageResource"/>
@@ -132,13 +131,27 @@
         </property>
     </bean>
     
-    <bean id="apiController" class="pl.jakubpiecuch.trainingmanager.web.controllers.ApiController">
-
-
+    <bean id="apiController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiController">
         <property name="versionServices">
             <map>
                 <entry key="v1" value-ref="version1Service"/>
-                <entry key="v2" value-ref="version2Service"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="apiDictionaryController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiDictionaryController">
+        <property name="versionServices">
+            <map>
+                <entry key="v1" value-ref="version1Service"/>
+            </map>
+        </property>
+    </bean>
+    
+    <bean id="responseValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.ResponseValidator">
+        <property name="validators">
+            <map>
+                <entry key="pl.jakubpiecuch.trainingmanager.service.user.Authentication" value-ref="authenticationValidator"/>
+                <entry key="pl.jakubpiecuch.trainingmanager.service.user.Registration" value-ref="registrationValidator"/>
             </map>
         </property>
     </bean>
@@ -151,6 +164,13 @@
                 <entry key="TWITTER" value-ref="twitterService"/>
             </map>
         </property>
+        <property name="userServices">
+            <map>
+                <entry key="SOCIAL" value-ref="socialUserService"/>
+                <entry key="LOCAL" value-ref="localUserService"/>
+            </map>
+        </property>
+        <property name="validator" ref="responseValidator"/>
     </bean>
 
     <bean id="cryptService" class="pl.jakubpiecuch.trainingmanager.service.crypt.SymmetricCryptService">

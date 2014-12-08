@@ -16,9 +16,9 @@ public abstract class AbstractBaseTest extends AbstractTransactionalJUnit4Spring
     
     @Before
     public void setUp() throws Exception {
-        executeSqlScript("truncate.sql", true);
-        executeSqlScript("dictionary.sql", true);
-        executeSqlScript("data.sql", true);
+        //executeSqlScript("truncate.sql", true);
+        //executeSqlScript("dictionary.sql", true);
+        //executeSqlScript("data.sql", true);
     }
 
 }

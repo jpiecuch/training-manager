@@ -55,7 +55,7 @@
         <constructor-arg index="0" ref="connectionFactoryLocator"/>
         <constructor-arg index="1" ref="usersConnectionRepository"/>
         <constructor-arg index="2">
-            <bean class="pl.jakubpiecuch.trainingmanager.web.authentication.SpringSecuritySignInAdapter"/>
+            <bean class="pl.jakubpiecuch.trainingmanager.service.user.social.SocialSignInAdapter"/>
         </constructor-arg>
         <property name="signUpUrl" value="/authentication/socialsignup"/>
         <property name="postSignInUrl" value="/"/>
@@ -77,6 +77,16 @@
     <bean id="twitterService" class="pl.jakubpiecuch.trainingmanager.service.social.twitter.TwitterService">
         <property name="connectionRepository" ref="connectionRepository"/>
         <property name="url" value="http://www.gym-home.com/result/%s"/>
+    </bean>
+
+    <bean id="socialUserService" class="pl.jakubpiecuch.trainingmanager.service.user.social.SocialUserServiceImpl">
+        <property name="socialServices">
+            <map>
+                <entry key="FACEBOOK" value-ref="facebookService"/>
+                <entry key="GOOGLE" value-ref="googleService"/>
+                <entry key="TWITTER" value-ref="twitterService"/>
+            </map>
+        </property>
     </bean>
 
 </beans>

@@ -131,13 +131,26 @@ CREATE SEQUENCE day_exercises_id_seq
     NO MAXVALUE
     CACHE 1;
 
-CREATE TABLE calendars (
-    id bigint DEFAULT nextval('calendars_id_seq'::regclass) NOT NULL,
+CREATE TABLE plan (
+    id bigint DEFAULT nextval('plan_id_seq'::regclass) NOT NULL,
     name character varying(50),
-    CONSTRAINT calendars_pkey PRIMARY KEY (id)
+    creator bigint NOT NULL,
+    goal int NOT NULL,
+    CONSTRAINT plan_pkey PRIMARY KEY (id),
+    CONSTRAINT plan_creator_fkey
+        FOREIGN KEY (creator) REFERENCES user(id)
+        MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
-CREATE TABLE users (
+CREATE TABLE phase (
+    id bigint DEFAULT nextval('phase_id_seq'::regclass) NOT NULL,
+    position int NOT NULL,
+    name character varying(50),
+    goal int NOT NULL,
+    CONSTRAINT phase_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE user (
     id bigint DEFAULT nextval('users_id_seq'::regclass) NOT NULL,
     name character varying(50) NOT NULL,
     password character varying(255) NOT NULL,

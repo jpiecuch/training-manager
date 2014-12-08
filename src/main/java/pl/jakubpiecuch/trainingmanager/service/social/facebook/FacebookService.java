@@ -3,6 +3,7 @@ package pl.jakubpiecuch.trainingmanager.service.social.facebook;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.social.facebook.api.Facebook;
 import pl.jakubpiecuch.trainingmanager.service.social.AbstractSocialService;
+import pl.jakubpiecuch.trainingmanager.service.user.SecurityUser;
 
 
 public class FacebookService extends AbstractSocialService<Facebook> {
@@ -16,5 +17,8 @@ public class FacebookService extends AbstractSocialService<Facebook> {
         connection().getApi().openGraphOperations().publishAction("perform", "workout", String.format(url, code));
     }
 
-
+    @Override
+    protected String getRestUrl() {
+        return "https://graph.facebook.com/me?access_token=%s";
+    }
 }

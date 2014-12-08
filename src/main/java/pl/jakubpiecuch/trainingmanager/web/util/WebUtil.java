@@ -1,6 +1,9 @@
 package pl.jakubpiecuch.trainingmanager.web.util;
 
 import javax.servlet.http.HttpServletRequest;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +15,8 @@ import org.springframework.web.servlet.HandlerMapping;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
 
 public class WebUtil {
+
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     public static String extractPathFromPattern(final HttpServletRequest request) {
         String path = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
@@ -43,5 +48,23 @@ public class WebUtil {
             res[i] = Integer.parseInt(array[i]);
         }
         return res;
+    }
+
+    public static <T> T fromJson(String data, Class<T> outputClass) throws Exception {
+        return mapper.readValue(data, outputClass);
+    }
+
+    public static String toJson(Object data) throws Exception {
+        return mapper.writeValueAsString(data);
+    }
+
+    public static void invalidate() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(null);
+    }
+
+    public static boolean isAuthenitcated() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        return securityContext.getAuthentication() != null;
     }
 }

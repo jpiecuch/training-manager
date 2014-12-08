@@ -1,6 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.dictionary;
 
 import java.util.List;
+import java.util.Map;
 
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
@@ -12,9 +13,8 @@ public interface DictionaryService {
     PageResult<Exercise> getExercises(int firstResult, int maxResults, PartyMuscles[] partyMuscles);
     Exercise getExercise(Long id);
     void save(Exercise exercise);
-    List<Exercise> getPartyMusclesExercisesList(PartyMuscles pms);
-    EquipmentSet getEquipmentSet();
-    List<Equipment> getEquipments(Equipment.Type type);
+    Map<Exercise.PartyMuscles, List<Exercise>> getPartyMusclesExercisesList(Exercise.PartyMuscles[] pms);
+    List<Equipment> getEquipments(Integer[] type);
     void save(Equipment equipment);
     
 }

@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.social.google.api.Google;
 import org.springframework.social.google.api.plus.moments.CreateActivity;
 import pl.jakubpiecuch.trainingmanager.service.social.AbstractSocialService;
+import pl.jakubpiecuch.trainingmanager.service.user.SecurityUser;
 
 public class GoogleService extends AbstractSocialService<Google> {
-    private String url;
-
     @Override
     public void publicMessage(String code) {
         connection().getApi().plusOperations().insertMoment(new CreateActivity(String.format(url, code)));
@@ -18,8 +17,8 @@ public class GoogleService extends AbstractSocialService<Google> {
         return Google.class;
     }
 
-    @Required
-    public void setUrl(String url) {
-        this.url = url;
+    @Override
+    public String getRestUrl() {
+        return "https://www.googleapis.com/oauth2/v1/userinfo?access_token=%s";
     }
 }

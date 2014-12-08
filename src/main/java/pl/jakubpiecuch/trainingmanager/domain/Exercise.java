@@ -10,7 +10,6 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 
-import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.io.IOException;
 import java.util.HashMap;
@@ -35,7 +34,7 @@ public class Exercise extends CommonEntity {
     private String description;
     private PartyMuscles partyMuscles;
     private Type type;
-    private Equipment.Type equipment;
+    private Integer equipment;
     private Level level;
     private Mechanics mechanics;
     private Force force;
@@ -85,11 +84,11 @@ public class Exercise extends CommonEntity {
     }
 
     @Column(name = "equipment")
-    public Equipment.Type getEquipment() {
+    public Integer getEquipment() {
         return equipment;
     }
 
-    public void setEquipment(Equipment.Type equipment) {
+    public void setEquipment(Integer equipment) {
         this.equipment = equipment;
     }
 

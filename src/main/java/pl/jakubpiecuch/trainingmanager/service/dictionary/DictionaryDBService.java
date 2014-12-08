@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.dictionary;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 public class DictionaryDBService implements DictionaryService {
     
     private ExercisesDao exercisesDao;
-    private Map<Equipment.Type, EquipmentDao> daos;
+    private EquipmentDao equipmentDao;
     
     @Override
     public PageResult<Exercise> getExercises(int firstResult, int maxResult, Exercise.PartyMuscles[] partyMuscles) {
@@ -30,35 +31,29 @@ public class DictionaryDBService implements DictionaryService {
     }
     
     @Override
-    public List<Equipment> getEquipments(Equipment.Type type) {
-        return daos.get(type).findAll();
+    public List<Equipment> getEquipments(Integer[] type) {
+        return equipmentDao.findByType(type);
+    }
+
+    @Override
+    public Map<Exercise.PartyMuscles, List<Exercise>> getPartyMusclesExercisesList(Exercise.PartyMuscles[] pms) {
+        Map<Exercise.PartyMuscles, List<Exercise>> result = new HashMap<Exercise.PartyMuscles, List<Exercise>>();
+        for (Exercise.PartyMuscles p : pms) {
+            result.put(p, exercisesDao.findByPartyMuscles(p));
+        }
+        return result;
     }
     
     @Override
     public void save(Equipment equipment) {
-        daos.get(equipment.getEquipmentType()).save(equipment);
+        equipmentDao.save(equipment);
     }
 
-    @Override
-    public List<Exercise> getPartyMusclesExercisesList(Exercise.PartyMuscles pms) {
-        return exercisesDao.findByPartyMuscles(pms);
-    }
-    
-    @Override
-    public EquipmentSet getEquipmentSet() {
-        EquipmentSet result = new EquipmentSet();
-        result.setBenches(daos.get(Equipment.Type.benches).findAll());
-        result.setDumbbells(daos.get(Equipment.Type.dumbbells).findAll());
-        result.setLoads(daos.get(Equipment.Type.loads).findAll());
-        result.setNecks(daos.get(Equipment.Type.necks).findAll());
-        result.setStands(daos.get(Equipment.Type.stands).findAll());
-        result.setBars(daos.get(Equipment.Type.bars).findAll());
-        result.setPress(daos.get(Equipment.Type.press).findAll());
-        return result;
-    }
 
-    public void setDaos(Map<Equipment.Type, EquipmentDao> daos) {
-        this.daos = daos;
+
+    @Autowired
+    public void setEquipmentDao(EquipmentDao equipmentDao) {
+        this.equipmentDao = equipmentDao;
     }
 
     @Autowired
