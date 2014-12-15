@@ -64,7 +64,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
 <body ng-controller="AppController"
 
-      ng-class="{'page-container-bg-solid': (settings.layout.pageBodySolid && settings.login), 'page-sidebar-closed': settings.layout.pageSidebarClosed && settings.login, 'login': !settings.login, 'page-header-fixed page-sidebar-closed-hide-logo page-quick-sidebar-over-content page-on-load' : settings.login}">
+      ng-class="{'page-container-bg-solid': (settings.layout.pageBodySolid && settings.isUserSignIn), 'page-sidebar-closed': settings.layout.pageSidebarClosed && settings.isUserSignIn, 'login': !settings.isUserSignIn, 'page-header-fixed page-sidebar-closed-hide-logo page-quick-sidebar-over-content page-on-load' : settings.isUserSignIn}">
 
 <!-- BEGIN PAGE SPINNER -->
 <div ng-spinner-bar class="page-spinner-bar">
@@ -75,7 +75,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END PAGE SPINNER -->
 
 <!-- BEGIN HEADER -->
-<div data-ng-if="settings.login" data-ng-include="'resources/tpl/header.html'" data-ng-controller="HeaderController"
+<div data-ng-if="settings.isUserSignIn" data-ng-include="'resources/tpl/header.html'" data-ng-controller="HeaderController"
      class="page-header navbar navbar-fixed-top">
 </div>
 <!-- END HEADER -->
@@ -86,15 +86,15 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
-    <div data-ng-if="setttings.login" data-ng-include="'resources/tpl/sidebar.html'" data-ng-controller="SidebarController" class="page-sidebar-wrapper">
+    <div data-ng-if="setttings.isUserSignIn" data-ng-include="'resources/tpl/sidebar.html'" data-ng-controller="SidebarController" class="page-sidebar-wrapper">
     </div>
     <!-- END SIDEBAR -->
 
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
-        <div ng-class="'page-content' : settings.login">
+        <div ng-class="{'page-content' : settings.isUserSignIn}">
             <!-- BEGIN STYLE CUSTOMIZER(optional) -->
-            <div data-ng-if="settings.login" data-ng-include="'resources/tpl/theme-panel.html'" data-ng-controller="ThemePanelController"
+            <div data-ng-if="settings.isUserSignIn" data-ng-include="'resources/tpl/theme-panel.html'" data-ng-controller="ThemePanelController"
                  class="theme-panel hidden-xs hidden-sm">
             </div>
             <!-- END STYLE CUSTOMIZER -->
@@ -117,7 +117,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END CONTAINER -->
 
 <!-- BEGIN FOOTER -->
-<div data-ng-if="settings.login" data-ng-include="'resources/tpl/footer.html'" data-ng-controller="FooterController" class="page-footer">
+<div data-ng-if="settings.isUserSignIn" data-ng-include="'resources/tpl/footer.html'" data-ng-controller="FooterController" class="page-footer">
 </div>
 <!-- END FOOTER -->
 
@@ -129,47 +129,41 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="resources/assets/global/plugins/excanvas.min.js"></script>
 <![endif]-->
 <script src="resources/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-<script src="resources/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
-<script src="resources/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="resources/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
-        type="text/javascript"></script>
-<script src="resources/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-<script src="resources/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-<script src="resources/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-<script src="resources/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
-<script src="resources/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"
-        type="text/javascript"></script>
 <!-- END CORE JQUERY PLUGINS -->
 
 <!-- BEGIN CORE ANGULARJS PLUGINS -->
 <script src="resources/assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
 <script src="resources/assets/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
 <script src="resources/assets/global/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>
+<script src="resources/assets/global/plugins/angularjs/angular-cookies.min.js" type="text/javascript"></script>
 <script src="resources/assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
 <script src="resources/assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
 <script src="resources/assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+<script src="resources/js/modules/angular-translate.min.js" type="text/javascript"></script>
+<script src="resources/js/modules/angular-translate-loader-static-files.min.js" type="text/javascript"></script>
+<script src="resources/js/modules/angular-translate-loader-url.min.js" type="text/javascript"></script>
+<script src="resources/js/modules/angular-translate-storage-cookie.min.js" type="text/javascript"></script>
+<script src="resources/js/modules/angular-translate-storage-local.min.js" type="text/javascript"></script>
 <!-- END CORE ANGULARJS PLUGINS -->
 
 <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
 <script src="resources/js/app.js" type="text/javascript"></script>
+<script src="resources/js/services/url-service.js" type="text/javascript"></script>
+<script src="resources/js/services/authenticate-service.js" type="text/javascript"></script>
+<script src="resources/js/services/resource-service.js" type="text/javascript"></script>
+<script src="resources/js/services/input-validate-service.js" type="text/javascript"></script>
+<script src="resources/js/services/policy-service.js" type="text/javascript"></script>
 <script src="resources/js/directives.js" type="text/javascript"></script>
 <!-- END APP LEVEL ANGULARJS SCRIPTS -->
 
-<!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
-<script src="resources/assets/global/scripts/metronic.js" type="text/javascript"></script>
-<script src="resources/assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
-<script src="resources/assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
-<script src="resources/assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
-<!-- END APP LEVEL JQUERY SCRIPTS -->
-
-<script type="text/javascript">
-    /* Init Metronic's core jquery plugins and layout scripts */
-    $(document).ready(function () {
-        Metronic.init(); // Run metronic theme
-        Metronic.setAssetsPath('resources/assets/'); // Set the assets folder path
-    });
-</script>
-<!-- END JAVASCRIPTS -->
+<script src="resources/js/underscore-min.js" type="text/javascript"></script>
+<script src="resources/js/underscore.string.min.js" type="text/javascript"></script>
 </body>
 <!-- END BODY -->
+<script type="text/javascript">
+    MetronicApp.constant('contextPath', '${pageContext.request.contextPath}')
+            .constant('lang', '${pageContext.response.locale.language}')
+            .constant('version', 'v1')
+            .constant('isSignIn', ${isSignIn});
+</script>
 </html>

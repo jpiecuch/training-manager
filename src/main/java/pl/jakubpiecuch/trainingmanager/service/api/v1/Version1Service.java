@@ -13,17 +13,15 @@ import pl.jakubpiecuch.trainingmanager.dao.ExerciseCommentDao;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.domain.ExerciseComment;
+import pl.jakubpiecuch.trainingmanager.service.AuthenticationService;
 import pl.jakubpiecuch.trainingmanager.service.SupportService;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryService;
 import pl.jakubpiecuch.trainingmanager.service.plan.PlanService;
-import pl.jakubpiecuch.trainingmanager.service.user.Authentication;
-import pl.jakubpiecuch.trainingmanager.service.user.Provider;
-import pl.jakubpiecuch.trainingmanager.service.user.Registration;
+import pl.jakubpiecuch.trainingmanager.service.user.*;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 import pl.jakubpiecuch.trainingmanager.service.social.SocialService;
-import pl.jakubpiecuch.trainingmanager.service.user.UserService;
 import pl.jakubpiecuch.trainingmanager.web.Response;
 import pl.jakubpiecuch.trainingmanager.web.Validator;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
@@ -49,24 +47,16 @@ public class Version1Service implements ApiVersionService {
     private Map<Provider.Type, UserService> userServices;
     private MapperService mapperService;
     private Validator validator;
+    private AuthenticationService authenticationService;
 
     @Override
     public Response signIn(WebRequest request) throws Exception {
-        Response<Authentication> response = new Response<Authentication>();
-        HttpServletRequest httpServletRequest = (HttpServletRequest) ((NativeWebRequest) request).getNativeRequest();
-        String input = IOUtils.toString(httpServletRequest.getInputStream());
-        Authentication authentication = mapperService.getObject(IOUtils.toInputStream(input), Authentication.class, response);
-        if (validator.isValid(authentication, response, "")) {
-            UserDetails details = userServices.get(authentication.getProvider()).resolveDetails(IOUtils.toInputStream(input));
-            userServices.get(authentication.getProvider()).signIn(details, request, response);
-        }
-        return response;
+        return authenticationService.signIn(request);
     }
 
     @Override
     public Response signOut() {
-        WebUtil.invalidate();
-        return new Response();
+        return authenticationService.signOut();
     }
 
     @Override
@@ -77,6 +67,11 @@ public class Version1Service implements ApiVersionService {
             userServices.get(registration.getProvider()).signOn(registration, response, request.getLocale());
         }
         return response;
+    }
+
+    @Override
+    public Response signed() throws Exception {
+        return authenticationService.signed();
     }
 
     @Override
@@ -190,5 +185,9 @@ public class Version1Service implements ApiVersionService {
 
     public void setValidator(Validator validator) {
         this.validator = validator;
+    }
+
+    public void setAuthenticationService(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 }

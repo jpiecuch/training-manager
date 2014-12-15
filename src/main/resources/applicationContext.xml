@@ -171,6 +171,7 @@
             </map>
         </property>
         <property name="validator" ref="responseValidator"/>
+        <property name="authenticationService" ref="authenticationService"/>
     </bean>
 
     <bean id="cryptService" class="pl.jakubpiecuch.trainingmanager.service.crypt.SymmetricCryptService">
@@ -180,6 +181,18 @@
 
     <crypt:b64SymmetricCipherer id="encryptService" mode="ENCRYPT"/>
     <crypt:b64SymmetricCipherer id="decryptService" mode="DECRYPT"/>
+
+    <bean id="authenticationService" class="pl.jakubpiecuch.trainingmanager.service.AuthenticationServiceImpl">
+        <property name="mapperService" ref="mapperService"/>
+        <property name="usersDao" ref="usersDao"/>
+        <property name="userServices">
+            <map>
+                <entry key="LOCAL" value-ref="localUserService"/>
+                <entry key="SOCIAL" value-ref="socialUserService"/>
+            </map>
+        </property>
+        <property name="validator" ref="responseValidator"/>
+    </bean>
     
     <import resource="applicationContext-social.xml"/>
 </beans>

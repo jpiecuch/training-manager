@@ -12,18 +12,20 @@ MetronicApp.directive('ngSpinnerBar', ['$rootScope',
 
                 // display the spinner bar whenever the route changes(the content part started loading)
                 $rootScope.$on('$stateChangeStart', function() {
-                    element.removeClass('hide'); // show spinner bar
+                        if (!$rootScope.settings.isAccessDenied) {
+                            element.removeClass('hide'); // show spinner bar
+                        }
+                        $rootScope.settings.isAccessDenied = false;
                 });
 
                 // hide the spinner bar on rounte change success(after the content loaded)
                 $rootScope.$on('$stateChangeSuccess', function() {
                     element.addClass('hide'); // hide spinner bar
                     $('body').removeClass('page-on-load'); // remove page loading indicator
-                    Layout.setSidebarMenuActiveLink('match'); // activate selected link in the sidebar menu
-                   
+
                     // auto scorll to page top
                     setTimeout(function () {
-                        Metronic.scrollTop(); // scroll to the top on content load
+                         // TODO scroll to the top on content load
                     }, $rootScope.settings.layout.pageAutoScrollOnLoad);     
                 });
 
@@ -53,23 +55,4 @@ MetronicApp.directive('a', function() {
             }
         }
     };
-});
-
-// Handle Dropdown Hover Plugin Integration
-MetronicApp.directive('dropdownMenuHover', function () {
-  return {
-    link: function (scope, elem) {
-      elem.dropdownHover();
-    }
-  };  
-});
-
-// Handle Dropdown Toggle 
-MetronicApp.directive('dropdownMenuToggle', function () {
-  return {
-    link: function (scope, elem) {
-      // if you want it to work on click, too:
-      elem.dropdown();
-    }
-  };  
 });

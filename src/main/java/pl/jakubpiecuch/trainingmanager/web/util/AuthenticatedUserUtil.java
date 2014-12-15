@@ -9,7 +9,8 @@ public class AuthenticatedUserUtil {
     private static final String NOT_AUTHENTICAED = "anonymousUser";
 
     public static SecurityUser getAuthenticatedUserDetails() {
-        return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return object instanceof String ? null : (SecurityUser) object;
     }
 
     public static boolean isAuthenticated() {

@@ -15,6 +15,7 @@ public interface ApiVersionService {
     Response signIn(WebRequest request) throws Exception;
     Response signOut();
     Response signOn(HttpServletRequest request) throws Exception;
+    Response signed() throws Exception;
     Object language(String lang) throws Exception;
     Object exercises(int first, int max, Exercise.PartyMuscles[] partyMuscles);
     void exercise(HttpServletRequest request) throws Exception;

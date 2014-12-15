@@ -2,6 +2,7 @@ package pl.jakubpiecuch.trainingmanager.web;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletResponse;
@@ -44,8 +45,23 @@ public class Response<T> {
     }
 
     public Response updateHttpStatus(HttpServletResponse response) {
-       response.setStatus(this.hasErrors() ? HttpStatus.BAD_REQUEST.value() : HttpStatus.OK.value());
-       return this;
+        if (this.hasErrors()) {
+            Set<Error> runtimeErrors = this.errors.get(Error.Type.RUNTIME);
+            if (runtimeErrors != null) {
+                for(Error e : runtimeErrors) {
+                    if (ArrayUtils.contains(new String[] {Error.Code.ACCOUNT_INVALID, Error.Code.NOT_SIGNED}, e.getValue())) {
+                        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                        return this;
+                    }
+                    response.setStatus(HttpStatus.BAD_REQUEST.value());
+                }
+            } else {
+                response.setStatus(HttpStatus.BAD_REQUEST.value());
+            }
+            return this;
+        }
+        response.setStatus(HttpStatus.OK.value());
+        return this;
     }
 
     public boolean hasErrors() {
@@ -57,7 +73,9 @@ public class Response<T> {
         public interface Code {
             String MARSHALLING = "wrong input data";
             String ACCOUNT_INVALID = "acount not exist or is inactive";
+            String NOT_SIGNED = "user no signed in";
         }
+
         public enum Type { VALIDATION, RUNTIME }
         private String property;
         private String restriction;

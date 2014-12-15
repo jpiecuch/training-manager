@@ -21,4 +21,10 @@ public class SignInController extends AbstractController {
     Response signIn(@PathVariable ApiVersionService.Version version, NativeWebRequest request, HttpServletResponse response) throws Exception {
         return versionServices.get(version).signIn(request).updateHttpStatus(response);
     }
+
+    @RequestMapping(method = { RequestMethod.GET })
+    public @ResponseBody
+    Response signed(@PathVariable ApiVersionService.Version version, HttpServletResponse response) throws Exception {
+        return versionServices.get(version).signed().updateHttpStatus(response);
+    }
 }

@@ -5,34 +5,33 @@
 <!-- BEGIN LOGO -->
 <div class="logo">
     <a href="index.html">
-        <img src="../../assets/admin/layout/img/logo-big.png" alt=""/>
+        <img src="resources/img/logo-big.png" alt=""/>
     </a>
 </div>
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->
 <div class="content">
 <!-- BEGIN LOGIN FORM -->
-<form class="login-form" action="index.html" method="post">
+<form data-ng-show="login.tab.idx === 0" data-ng-submit="login.signIn(loginForm)" name="loginForm" class="login-form" novalidate>
     <h3 class="form-title">Sign In</h3>
     <div class="alert alert-danger display-hide">
         <button class="close" data-close="alert"></button>
-			<span>
-			Enter any username and password. </span>
+		<span>Enter any username and password. </span>
     </div>
     <div class="form-group">
         <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
         <label class="control-label visible-ie8 visible-ie9">Username</label>
-        <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username"/>
+        <input data-ng-model="login.credentials.username" class="has-errors form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username"/>
     </div>
     <div class="form-group">
         <label class="control-label visible-ie8 visible-ie9">Password</label>
-        <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password"/>
+        <input data-ng-model="login.credentials.password" class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password"/>
     </div>
     <div class="form-actions">
         <button type="submit" class="btn btn-success uppercase">Login</button>
         <label class="rememberme check">
             <input type="checkbox" name="remember" value="1"/>Remember </label>
-        <a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a>
+        <a href="" data-ng-click="login.tab.setIdx(1)" id="forget-password" class="forget-password">Forgot Password?</a>
     </div>
     <div class="login-options">
         <h4>Or login with</h4>
@@ -41,25 +40,19 @@
                 <a class="social-icon-color facebook" data-original-title="facebook" href="#"></a>
             </li>
             <li>
-                <a class="social-icon-color twitter" data-original-title="Twitter" href="#"></a>
-            </li>
-            <li>
                 <a class="social-icon-color googleplus" data-original-title="Goole Plus" href="#"></a>
-            </li>
-            <li>
-                <a class="social-icon-color linkedin" data-original-title="Linkedin" href="#"></a>
             </li>
         </ul>
     </div>
     <div class="create-account">
         <p>
-            <a href="javascript:;" id="register-btn" class="uppercase">Create an account</a>
+            <a href="" data-ng-click="login.tab.setIdx(2)" id="register-btn" class="uppercase">Create an account</a>
         </p>
     </div>
 </form>
 <!-- END LOGIN FORM -->
 <!-- BEGIN FORGOT PASSWORD FORM -->
-<form class="forget-form" action="index.html" method="post">
+<form data-ng-show="login.tab.idx === 1" class="forget-form" action="index.html" method="post">
     <h3>Forget Password ?</h3>
     <p>
         Enter your e-mail address below to reset your password.
@@ -74,7 +67,7 @@
 </form>
 <!-- END FORGOT PASSWORD FORM -->
 <!-- BEGIN REGISTRATION FORM -->
-<form class="register-form" action="index.html" method="post">
+<form data-ng-show="login.tab.idx === 2" class="register-form" action="index.html" method="post">
 <h3>Sign Up</h3>
 <p class="hint">
     Enter your personal details below:
@@ -372,15 +365,4 @@
 <div class="copyright">
     2014 © Metronic. Admin Dashboard Template.
 </div>
-<script src="resources/assets/global/scripts/metronic.js" type="text/javascript"></script>
-<script src="resources/assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
-<script src="resources/assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
-<script>
-    jQuery(document).ready(function() {
-        Metronic.init(); // init metronic core components
-        Layout.init(); // init current layout
-        Demo.init();
-    });
-</script>
-<!-- END JAVASCRIPTS -->
