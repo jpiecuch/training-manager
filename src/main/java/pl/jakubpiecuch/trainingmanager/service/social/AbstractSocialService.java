@@ -19,6 +19,7 @@ import pl.jakubpiecuch.trainingmanager.dao.UsersDao;
 import pl.jakubpiecuch.trainingmanager.service.user.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.service.user.UserService;
+import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -30,7 +31,6 @@ public abstract class AbstractSocialService<T> implements SocialService {
     private UsersConnectionRepository usersConnectionRepository;
     private ConnectionFactoryRegistry connectionFactoryRegistry;
     private UserService userService;
-    private UsersDao usersDao;
     protected String url;
     protected WebRequest request;
     private RestTemplate rest = new RestTemplate();
@@ -80,10 +80,10 @@ public abstract class AbstractSocialService<T> implements SocialService {
                     throw new RuntimeException("Multiple oauth connections for single user");
                 }
             } else {
-                throw new ObjectNotFoundException("", "");
+                throw new NotFoundException();
             }
         } catch(HttpClientErrorException e) {
-            throw new ObjectNotFoundException("", "");
+            throw new NotFoundException();
         }
     }
 
@@ -109,11 +109,6 @@ public abstract class AbstractSocialService<T> implements SocialService {
     }
 
     @Autowired
-    public void setUsersDao(UsersDao usersDao) {
-        this.usersDao = usersDao;
-    }
-
-    @Autowired
     public void setRequest(WebRequest request) {
         this.request = request;
     }
@@ -121,5 +116,9 @@ public abstract class AbstractSocialService<T> implements SocialService {
     @Required
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public void setRest(RestTemplate rest) {
+        this.rest = rest;
     }
 }
