@@ -1,9 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.social.facebook;
 
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.social.facebook.api.Facebook;
 import pl.jakubpiecuch.trainingmanager.service.social.AbstractSocialService;
-import pl.jakubpiecuch.trainingmanager.service.user.SecurityUser;
 
 
 public class FacebookService extends AbstractSocialService<Facebook> {

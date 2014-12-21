@@ -5,7 +5,6 @@ import org.springframework.social.security.SocialUser;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class SecurityUser extends SocialUser {
 

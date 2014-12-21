@@ -1,11 +1,10 @@
 package pl.jakubpiecuch.trainingmanager.service.social;
 
 
-import org.apache.commons.lang.StringUtils;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.social.connect.*;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
 import org.springframework.social.connect.support.OAuth2Connection;
@@ -16,13 +15,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
-import pl.jakubpiecuch.trainingmanager.common.MapperService;
 import pl.jakubpiecuch.trainingmanager.dao.UsersDao;
-import pl.jakubpiecuch.trainingmanager.service.user.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.service.user.UserService;
-import pl.jakubpiecuch.trainingmanager.web.Response;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -36,6 +32,7 @@ public abstract class AbstractSocialService<T> implements SocialService {
     private UserService userService;
     private UsersDao usersDao;
     protected String url;
+    protected WebRequest request;
     private RestTemplate rest = new RestTemplate();
 
     protected abstract Class<T> getConnectionClass();
@@ -46,13 +43,13 @@ public abstract class AbstractSocialService<T> implements SocialService {
     }
 
     @Override
-    public boolean createConnection(SecurityUser user, WebRequest request, Response<Authentication> response) throws Exception{
+    public boolean createConnection(SecurityUser user) throws Exception{
         try {
             Map<String, String> res = rest.getForObject(String.format(getRestUrl(), user.getPassword()), HashMap.class);
             String id = res.get("id");
             ConnectionData connectionData = id != null && id.equals(user.getUsername()) ? new ConnectionData(user.getSocial().getProviderId(), res.get("id"), res.get("name"), res.get("link"), null, user.getPassword(), null, null, null) : null;
 
-            if (!response.hasErrors() && connectionData != null) {
+            if (connectionData != null) {
                 ConnectionFactory cf = connectionFactoryRegistry.getConnectionFactory(user.getSocial().getProviderId());
 
                 OAuth2Connection<?> con = (OAuth2Connection<?>)cf.createConnection(connectionData);
@@ -63,7 +60,6 @@ public abstract class AbstractSocialService<T> implements SocialService {
                     ConnectionRepository conRep = usersConnectionRepository.createConnectionRepository(userId);
                     con = (OAuth2Connection<?>)conRep.getConnection(new ConnectionKey(user.getSocial().getProviderId(), user.getUsername()));
                     conRep.updateConnection(con);
-                    response.addEntity(new Authentication(usersDao.findByUniques(null, String.format(SecurityUser.SOCIAL_USRENAME_FORMAT, user.getSocial().getProviderId(), user.getUsername()), null)));
                     return true;
                 } else  if (userIDs.isEmpty()) {
                     ProviderSignInAttempt signInAttempt = new ProviderSignInAttempt(con, connectionFactoryRegistry, usersConnectionRepository);
@@ -77,21 +73,18 @@ public abstract class AbstractSocialService<T> implements SocialService {
                     registration.setEmail(profile.getEmail());
                     registration.setFirstName(profile.getFirstName());
                     registration.setLastName(profile.getLastName());
-                    Response<Registration> registrationResponse = new Response<Registration>();
-                    userService.signOn(registration, registrationResponse, request.getLocale());
-                    response.addEntity(registrationResponse.getEntity());
+                    userService.signOn(registration, request.getLocale());
                     ProviderSignInUtils.handlePostSignUp(registration.getUsername(), request);
                     return true;
                 } else {
                     throw new RuntimeException("Multiple oauth connections for single user");
                 }
             } else {
-                response.addError(new Response.Error.Builder(Response.Error.Type.RUNTIME).value(Response.Error.Code.ACCOUNT_INVALID).build());
+                throw new ObjectNotFoundException("", "");
             }
         } catch(HttpClientErrorException e) {
-            response.addError(new Response.Error.Builder(Response.Error.Type.RUNTIME).value(Response.Error.Code.ACCOUNT_INVALID).build());
+            throw new ObjectNotFoundException("", "");
         }
-        return false;
     }
 
     @Autowired
@@ -118,6 +111,11 @@ public abstract class AbstractSocialService<T> implements SocialService {
     @Autowired
     public void setUsersDao(UsersDao usersDao) {
         this.usersDao = usersDao;
+    }
+
+    @Autowired
+    public void setRequest(WebRequest request) {
+        this.request = request;
     }
 
     @Required

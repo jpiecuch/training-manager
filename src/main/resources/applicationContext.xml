@@ -20,7 +20,7 @@
     <mvc:interceptors>  
         <mvc:interceptor>  
             <mvc:mapping path="/**"/>  
-            <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">  
+            <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
                 <property name="paramName" value="lang" />  
             </bean>  
         </mvc:interceptor>  
@@ -53,11 +53,17 @@
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
         <property name="defaultLocale" value="en"/>
         <property name="cookieMaxAge" value="100000"/>
+        <property name="cookieName" value="LOCALE_COOKIE"/>
+    </bean>
+
+    <bean id="localeService" class="pl.jakubpiecuch.trainingmanager.service.locale.cookie.ResolverLocaleService">
+        <property name="localeResolver" ref="localeResolver"/>
+        <property name="supportedLocales" value="pl,en"/>
     </bean>
     
     <bean id="dictionaryService" class="pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryDBService"/>
     
-    <bean id="registrationValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.RegistrationValidator">
+    <bean id="registrationValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.registration.RegistrationValidator">
         <property name="emailPattern" value="${user.email.pattern}"/>
         <property name="maxNameLength" value="${user.name.maxLength}"/>
         <property name="minNameLength" value="${user.name.minLength}"/>
@@ -123,35 +129,12 @@
 
     <bean id="signOnController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signon.SignOnController" parent="abstractController"/>
 
+    <bean id="localeController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.locale.LocaleController" parent="abstractController"/>
+
     <bean id="apiResourceController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiResourceController">
         <property name="resourceServices">
             <map>
                 <entry key="image" value-ref="imageResource"/>
-            </map>
-        </property>
-    </bean>
-    
-    <bean id="apiController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiController">
-        <property name="versionServices">
-            <map>
-                <entry key="v1" value-ref="version1Service"/>
-            </map>
-        </property>
-    </bean>
-
-    <bean id="apiDictionaryController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiDictionaryController">
-        <property name="versionServices">
-            <map>
-                <entry key="v1" value-ref="version1Service"/>
-            </map>
-        </property>
-    </bean>
-    
-    <bean id="responseValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.ResponseValidator">
-        <property name="validators">
-            <map>
-                <entry key="pl.jakubpiecuch.trainingmanager.service.user.Authentication" value-ref="authenticationValidator"/>
-                <entry key="pl.jakubpiecuch.trainingmanager.service.user.Registration" value-ref="registrationValidator"/>
             </map>
         </property>
     </bean>
@@ -170,7 +153,6 @@
                 <entry key="LOCAL" value-ref="localUserService"/>
             </map>
         </property>
-        <property name="validator" ref="responseValidator"/>
         <property name="authenticationService" ref="authenticationService"/>
     </bean>
 
@@ -182,7 +164,7 @@
     <crypt:b64SymmetricCipherer id="encryptService" mode="ENCRYPT"/>
     <crypt:b64SymmetricCipherer id="decryptService" mode="DECRYPT"/>
 
-    <bean id="authenticationService" class="pl.jakubpiecuch.trainingmanager.service.AuthenticationServiceImpl">
+    <bean id="authenticationService" class="pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationServiceImpl">
         <property name="mapperService" ref="mapperService"/>
         <property name="usersDao" ref="usersDao"/>
         <property name="userServices">
@@ -191,7 +173,7 @@
                 <entry key="SOCIAL" value-ref="socialUserService"/>
             </map>
         </property>
-        <property name="validator" ref="responseValidator"/>
+        <property name="validator" ref="authenticationValidator"/>
     </bean>
     
     <import resource="applicationContext-social.xml"/>

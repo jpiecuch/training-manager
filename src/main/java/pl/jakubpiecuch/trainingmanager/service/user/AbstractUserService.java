@@ -2,15 +2,12 @@ package pl.jakubpiecuch.trainingmanager.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.WebRequest;
 import pl.jakubpiecuch.trainingmanager.common.MapperService;
 import pl.jakubpiecuch.trainingmanager.dao.CalendarsDao;
 import pl.jakubpiecuch.trainingmanager.dao.UsersDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.mail.EmailService;
-import pl.jakubpiecuch.trainingmanager.web.Response;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 /**
@@ -24,13 +21,15 @@ public abstract class AbstractUserService implements UserService {
     protected UsersDao usersDao;
     protected MapperService mapperService;
 
-    public abstract boolean isValidCredentials(Account entity, UserDetails user, WebRequest request, Response<Authentication> response) throws Exception;
+    public abstract boolean isValidCredentials(Account entity, UserDetails user) throws Exception;
 
     @Override
-    public void signIn(UserDetails user, WebRequest request, Response<Authentication> response) throws Exception {
-        Account entity = usersDao.findByUniques(null, user.getUsername(), null);
-        if (isValidCredentials(entity, user, request, response)) {
-            WebUtil.authenticate(new SecurityUser(response.getEntity().getId(), response.getEntity().getUsername(), response.getEntity().getPassword(), null, null));
+    public void signIn(UserDetails user) throws Exception {
+        SecurityUser securityUser = (SecurityUser) user;
+        String username = securityUser.getSocial() != null ? String.format("%s:%s", securityUser.getSocial().getProviderId(), securityUser.getUsername()) : securityUser.getUsername();
+        Account entity = usersDao.findByUniques(null, username, null);
+        if (isValidCredentials(entity, user)) {
+            WebUtil.authenticate(new SecurityUser(entity.getId(), entity.getName(), entity.getPassword(), null, null));
         }
     }
 

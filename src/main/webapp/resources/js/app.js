@@ -45,6 +45,7 @@ MetronicApp.run(function ($rootScope, $location, $state, authenticateService, is
 });
 
 MetronicApp.config(function($translateProvider, contextPath, lang) {
+    console.log(lang);
     $translateProvider.preferredLanguage(lang);
     $translateProvider.useStaticFilesLoader({
         prefix: contextPath + '/api/v1/dictionary/language/',

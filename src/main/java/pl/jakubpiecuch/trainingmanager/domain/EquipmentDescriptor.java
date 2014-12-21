@@ -1,9 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-import com.fasterxml.jackson.core.JsonParseException;
-
-import java.io.IOException;
-
 public interface EquipmentDescriptor<W> {
     Class getConfigClass();
 

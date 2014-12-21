@@ -1,8 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.common;
 
-import pl.jakubpiecuch.trainingmanager.service.user.Authentication;
-import pl.jakubpiecuch.trainingmanager.web.Response;
-
 import java.io.InputStream;
 
 /**
@@ -11,6 +8,4 @@ import java.io.InputStream;
 public interface MapperService {
 
     <T> T getObject(InputStream stream, Class<T> clazz) throws Exception;
-
-    <T> T getObject(InputStream stream, Class<T> clazz, Response<T> response);
 }

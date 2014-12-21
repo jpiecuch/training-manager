@@ -1,13 +1,10 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringUtils;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
-import java.io.IOException;
 
 @Entity
 @Table(name = "equipment")

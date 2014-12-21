@@ -1,12 +1,12 @@
 package pl.jakubpiecuch.trainingmanager.service.dictionary;
 
-import java.util.List;
-import java.util.Map;
-
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise.PartyMuscles;
+
+import java.util.List;
+import java.util.Map;
 
 public interface DictionaryService {
 

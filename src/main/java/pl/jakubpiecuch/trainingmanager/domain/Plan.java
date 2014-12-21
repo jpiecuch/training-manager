@@ -5,9 +5,9 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.*;
 
 @Entity
 @Table(name = "plan")

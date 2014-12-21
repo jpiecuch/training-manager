@@ -3,8 +3,8 @@ package pl.jakubpiecuch.trainingmanager.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.commons.lang.StringUtils;
-import pl.jakubpiecuch.trainingmanager.common.util.ArrayMap;
 import pl.jakubpiecuch.trainingmanager.common.fasterxml.jackson.MapDeserializer;
+import pl.jakubpiecuch.trainingmanager.common.util.ArrayMap;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;

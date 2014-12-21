@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.jakubpiecuch.trainingmanager.common.MapperService;
-import pl.jakubpiecuch.trainingmanager.web.Response;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
@@ -21,16 +20,6 @@ public class JacksonMapperService implements MapperService {
         return mapper.readValue(stream, clazz);
     }
 
-    @Override
-    public <T> T getObject(InputStream stream, Class<T> clazz, Response<T> response) {
-        try {
-            return mapper.readValue(stream, clazz);
-        } catch (Exception e) {
-            response.addError(new Response.Error.Builder(Response.Error.Type.RUNTIME).value(Response.Error.Code.MARSHALLING).build());
-            log.warn("Problem with marshalling object: " + clazz.toString(), e);
-            return null;
-        }
-    }
 
     @PostConstruct
     private void afterPropertiesSet() {

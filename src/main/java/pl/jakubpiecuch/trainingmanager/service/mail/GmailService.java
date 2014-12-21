@@ -1,9 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.service.mail;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import javax.mail.internet.MimeMessage;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.tools.generic.DateTool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +9,11 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.ui.velocity.VelocityEngineUtils;
+
+import javax.mail.internet.MimeMessage;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class GmailService implements EmailService {
 

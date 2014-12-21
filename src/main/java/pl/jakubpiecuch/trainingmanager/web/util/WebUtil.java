@@ -1,9 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.web.util;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerMapping;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class WebUtil {
 
@@ -61,10 +60,5 @@ public class WebUtil {
     public static void invalidate() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(null);
-    }
-
-    public static boolean isAuthenitcated() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        return securityContext.getAuthentication() != null;
     }
 }

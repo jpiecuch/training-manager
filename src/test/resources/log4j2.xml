@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration strict="true">
+    <appenders>
+        <appender type="Console" name="console">
+            <layout type="PatternLayout" pattern="%d %-5p %c - %m%n"/>
+        </appender>
+    </appenders>
+
+    <loggers>
+        <root level="info">
+            <appender-ref ref="console"/>
+        </root>
+    </loggers>
+</configuration>

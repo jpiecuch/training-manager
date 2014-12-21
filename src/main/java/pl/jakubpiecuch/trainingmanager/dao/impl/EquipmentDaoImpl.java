@@ -1,10 +1,10 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
-import java.util.List;
-
 import pl.jakubpiecuch.trainingmanager.dao.EquipmentDao;
 import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
+
+import java.util.List;
 
 public class EquipmentDaoImpl extends CoreDaoImpl implements EquipmentDao {
 

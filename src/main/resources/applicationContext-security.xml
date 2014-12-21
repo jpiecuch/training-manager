@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
              xmlns:beans="http://www.springframework.org/schema/beans"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-             xmlns:p="http://www.springframework.org/schema/p" 
-             xmlns:util="http://www.springframework.org/schema/util"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
     
     <http use-expressions="true" auto-config="true" >
         <intercept-url pattern="/" access="permitAll" />
@@ -14,7 +11,7 @@
         <intercept-url pattern="/resource/**" access="permitAll" />
         <intercept-url pattern="/authentication/**" access="permitAll" />
         <intercept-url pattern="/api/v1/dictionary/**" access="permitAll" />
-        <intercept-url pattern="/api/v1/config/locale*" access="permitAll" />
+        <intercept-url pattern="/api/v1/locale*" access="permitAll" method="POST" />
         <intercept-url pattern="/api/v1/signin" access="permitAll" />
         <intercept-url pattern="/api/v1/signon" access="permitAll" />
         <intercept-url pattern="/signin/**" access="permitAll" />

@@ -1,13 +1,12 @@
 package pl.jakubpiecuch.trainingmanager.service.user.local;
 
 import com.springcryptoutils.core.cipher.symmetric.SymmetricEncryptionException;
+import org.hibernate.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.keygen.KeyGenerators;
-import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.context.request.WebRequest;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.encoder.password.PasswordEncoder;
@@ -16,11 +15,8 @@ import pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService;
 import pl.jakubpiecuch.trainingmanager.service.user.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.SecurityUser;
-import pl.jakubpiecuch.trainingmanager.web.Response;
-import pl.jakubpiecuch.trainingmanager.web.validator.ValidationUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.InputStream;
+import javax.validation.ValidationException;
 import java.util.Locale;
 
 /**
@@ -36,25 +32,19 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
 
 
     @Override
-    public SecurityUser resolveDetails(InputStream stream) throws Exception {
-        Authentication req = mapperService.getObject(stream, Authentication.class);
-        return new SecurityUser(null, req.getUsername(), req.getPassword(), null, null);
+    public SecurityUser resolveDetails(Authentication authentication) throws Exception {
+        return new SecurityUser(null, authentication.getUsername(), authentication.getPassword(), null, null);
     }
 
     @Override
-    public boolean isValidCredentials(Account entity, UserDetails user, WebRequest request, Response<Authentication> response) throws Exception {
-        if (entity == null) {
-            response.addError(new Response.Error.Builder(Response.Error.Type.RUNTIME).value(Response.Error.Code.ACCOUNT_INVALID).build());
-        } else if (Account.Status.ACTIVE != entity.getStatus()) {
-            response.addError(new Response.Error.Builder(Response.Error.Type.RUNTIME).value(Response.Error.Code.ACCOUNT_INVALID).build());
+    public boolean isValidCredentials(Account entity, UserDetails user) throws Exception {
+        if (entity == null || Account.Status.ACTIVE != entity.getStatus()) {
+            throw new ObjectNotFoundException("", "");
         }
         if (!passwordEncoder.isValid(entity.getPassword(), user.getPassword(), entity.getSalt())) {
-            response.addError(new Response.Error.Builder(Response.Error.Type.VALIDATION).property("password").restriction(ValidationUtils.Restriction.INCOMPATIBLE).build());
+            throw new ValidationException();
         }
-        if (!response.hasErrors()) {
-            response.addEntity(new Authentication(entity));
-        }
-        return !response.hasErrors();
+        return true;
     }
 
     @Override
@@ -99,7 +89,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
     }
 
     @Override
-    public void signOn(Registration registration, Response<Registration> response, Locale locale) throws Exception {
+    public void signOn(Registration registration, Locale locale) throws Exception {
         Account account = new Account();
         account.setName(registration.getUsername());
         account.setEmail(registration.getEmail());
@@ -109,7 +99,6 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
         account.setPassword(passwordEncoder.encode(registration.getPassword(), account.getSalt()));
         usersDao.save(account);
         emailService.sendEmail(new Object[] { cryptService.encrypt(account.getName(), account.getEmail()), account}, locale, EmailService.Template.REGISTER, account.getEmail());
-        response.addEntity(new Registration(account));
     }
 
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {

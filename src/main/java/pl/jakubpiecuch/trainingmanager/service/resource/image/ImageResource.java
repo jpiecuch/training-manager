@@ -1,17 +1,14 @@
 package pl.jakubpiecuch.trainingmanager.service.resource.image;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.List;
-import javax.annotation.PostConstruct;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Required;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
+
+import javax.annotation.PostConstruct;
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class ImageResource implements ResourceService {
 

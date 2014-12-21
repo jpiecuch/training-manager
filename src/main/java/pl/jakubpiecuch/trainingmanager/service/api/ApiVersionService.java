@@ -1,22 +1,22 @@
 package pl.jakubpiecuch.trainingmanager.service.api;
 
-import org.springframework.web.context.request.WebRequest;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
+import pl.jakubpiecuch.trainingmanager.service.user.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
-import pl.jakubpiecuch.trainingmanager.web.Response;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public interface ApiVersionService {
     enum Version {v1}
 
-    Response signIn(WebRequest request) throws Exception;
-    Response signOut();
-    Response signOn(HttpServletRequest request) throws Exception;
-    Response signed() throws Exception;
+    void signIn(Authentication authentication) throws Exception;
+    void signOut();
+    void signOn(HttpServletRequest request) throws Exception;
+    Authentication signed() throws Exception;
     Object language(String lang) throws Exception;
+    void locale(HttpServletRequest request, HttpServletResponse response, String locale);
+    //old api
     Object exercises(int first, int max, Exercise.PartyMuscles[] partyMuscles);
     void exercise(HttpServletRequest request) throws Exception;
     Object availableSocials();

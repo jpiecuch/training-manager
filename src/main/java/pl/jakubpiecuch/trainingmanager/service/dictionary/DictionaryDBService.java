@@ -1,14 +1,15 @@
 package pl.jakubpiecuch.trainingmanager.service.dictionary;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jakubpiecuch.trainingmanager.dao.EquipmentDao;
 import pl.jakubpiecuch.trainingmanager.dao.ExercisesDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DictionaryDBService implements DictionaryService {
     

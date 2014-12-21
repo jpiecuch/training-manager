@@ -10,7 +10,7 @@ training.controller("LocaleCtrl", function($scope, $translate, $http, urlService
            });
        },
        init: function() {
-           $scope.locale.current = angular.copy(lang);
+           $scope.locale.current = lang;
        }
    }
 });

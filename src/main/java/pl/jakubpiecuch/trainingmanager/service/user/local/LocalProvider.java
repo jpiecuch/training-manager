@@ -1,6 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.service.user.local;
 
-import org.springframework.cglib.core.Local;
 import pl.jakubpiecuch.trainingmanager.service.user.Provider;
 
 /**

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+       <context:annotation-config />
+       <util:properties id="propertyConfigurer" location="classpath:${env}.properties"/>
+       <context:property-placeholder properties-ref="propertyConfigurer" />
+
+       <bean id="authenticationValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.authentication.AuthenticationValidator"/>
+
+       <bean id="registrationValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.registration.RegistrationValidator">
+              <property name="emailPattern" value="${user.email.pattern}"/>
+              <property name="maxNameLength" value="${user.name.maxLength}"/>
+              <property name="minNameLength" value="${user.name.minLength}"/>
+              <property name="namePattern" value="${user.name.pattern}"/>
+              <property name="maxPasswordLength" value="${user.password.maxLength}"/>
+              <property name="minPasswordLength" value="${user.password.minLength}"/>
+              <property name="passwordPattern" value="${user.password.pattern}"/>
+              <property name="authenticationValidator" ref="authenticationValidator"/>
+       </bean>
+
+
+       <mvc:annotation-driven />
+</beans>

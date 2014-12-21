@@ -5,15 +5,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
-import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 
 import javax.persistence.*;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Entity

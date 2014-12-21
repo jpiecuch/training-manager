@@ -1,9 +1,9 @@
 package pl.jakubpiecuch.trainingmanager.orm.hibernate.dialect;
 
+import org.hibernate.QueryException;
 import org.hibernate.dialect.PostgreSQL82Dialect;
 import org.hibernate.dialect.function.SQLFunction;
 import org.hibernate.dialect.function.StandardSQLFunction;
-import org.hibernate.QueryException;
 import org.hibernate.engine.spi.Mapping;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.type.Type;

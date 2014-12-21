@@ -1,29 +1,40 @@
 package pl.jakubpiecuch.trainingmanager.web.validator;
 
-import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import pl.jakubpiecuch.trainingmanager.AbstractBaseTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.service.user.Registration;
-import pl.jakubpiecuch.trainingmanager.web.Response;
-import pl.jakubpiecuch.trainingmanager.web.Validator;
+import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
+
+import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 
-public class RegistrationValidatorTest extends AbstractBaseTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:test-validator-context.xml")
+public class RegistrationValidatorTest {
     
     @Autowired
     @Qualifier("registrationValidator")
     private Validator validator;
 
+    @Test(expected = ValidationException.class)
+    public void validateExceptionTest() {
+        Registration registration = new Registration();
+        BeanPropertyBindingResult errors = new BeanPropertyBindingResult(registration, "registration");
+        validator.validate(registration, errors);
+
+        assertTrue(errors.hasErrors());
+    }
+
     @Test
     public void validateTest() {
         Registration registration = new Registration();
-        Response<Registration> response = new Response<Registration>();
-        validator.isValid(registration, response, "");
-        
-        assertTrue(response.hasErrors());
 
         registration.setEmail("test@test.com");
         registration.setFirstName("test");
@@ -31,9 +42,9 @@ public class RegistrationValidatorTest extends AbstractBaseTest {
         registration.setUsername("test123");
         registration.setPassword("passWord123!");
         registration.setRepeat("passWord123!");
-        response = new Response<Registration>();
-        validator.isValid(registration, response, "");
+        BeanPropertyBindingResult errors = new BeanPropertyBindingResult(registration, "registration");
+        validator.validate(registration, errors);
         
-        assertFalse(response.hasErrors());
+        assertFalse(errors.hasErrors());
     }
 }

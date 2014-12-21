@@ -1,7 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
-import java.util.List;
-
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import org.hibernate.Query;
@@ -10,6 +8,8 @@ import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise.PartyMuscles;
+
+import java.util.List;
 
 public class ExercisesDaoImpl extends CoreDaoImpl  implements ExercisesDao {
     

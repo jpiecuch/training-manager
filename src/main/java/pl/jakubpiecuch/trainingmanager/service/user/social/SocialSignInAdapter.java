@@ -1,7 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.service.user.social;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +9,9 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
-import pl.jakubpiecuch.trainingmanager.service.user.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.SecurityUser;
-import pl.jakubpiecuch.trainingmanager.web.Response;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class SocialSignInAdapter implements SignInAdapter {
     
@@ -27,7 +25,7 @@ public class SocialSignInAdapter implements SignInAdapter {
         SecurityUser userDetails = new SecurityUser(null, userId, null, SocialProvider.SocialType.valueOf(StringUtils.upperCase(connection.getKey().getProviderId())), null);
 
         try {
-            userService.signIn(userDetails, request, new Response<Authentication>());
+            userService.signIn(userDetails);
         } catch(Exception e) {
 
         }

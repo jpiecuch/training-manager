@@ -5,7 +5,6 @@ import com.google.common.collect.Lists;
 import pl.jakubpiecuch.trainingmanager.dao.ExerciseCommentDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
-import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.domain.ExerciseComment;
 
 import java.util.List;

@@ -1,38 +1,35 @@
 package pl.jakubpiecuch.trainingmanager.service.api.v1;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.util.StringUtils;
 import pl.jakubpiecuch.trainingmanager.common.MapperService;
 import pl.jakubpiecuch.trainingmanager.dao.ExerciseCommentDao;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.domain.ExerciseComment;
-import pl.jakubpiecuch.trainingmanager.service.AuthenticationService;
+import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
 import pl.jakubpiecuch.trainingmanager.service.SupportService;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryService;
+import pl.jakubpiecuch.trainingmanager.service.locale.LocaleService;
 import pl.jakubpiecuch.trainingmanager.service.plan.PlanService;
-import pl.jakubpiecuch.trainingmanager.service.user.*;
-import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 import pl.jakubpiecuch.trainingmanager.service.social.SocialService;
-import pl.jakubpiecuch.trainingmanager.web.Response;
-import pl.jakubpiecuch.trainingmanager.web.Validator;
+import pl.jakubpiecuch.trainingmanager.service.user.Authentication;
+import pl.jakubpiecuch.trainingmanager.service.user.Provider;
+import pl.jakubpiecuch.trainingmanager.service.user.UserService;
+import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
-import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
-import pl.jakubpiecuch.trainingmanager.web.validator.AuthenticationValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Version1Service implements ApiVersionService {
 
@@ -46,31 +43,34 @@ public class Version1Service implements ApiVersionService {
     private ExerciseCommentDao exerciseCommentDao;
     private Map<Provider.Type, UserService> userServices;
     private MapperService mapperService;
-    private Validator validator;
     private AuthenticationService authenticationService;
+    private LocaleService localeService;
 
     @Override
-    public Response signIn(WebRequest request) throws Exception {
-        return authenticationService.signIn(request);
+    public void locale(HttpServletRequest request, HttpServletResponse response, String locale) {
+        localeService.update(request, response, StringUtils.parseLocaleString(locale));
     }
 
     @Override
-    public Response signOut() {
-        return authenticationService.signOut();
+    public void signIn(Authentication authentication) throws Exception {
+        authenticationService.signIn(authentication);
     }
 
     @Override
-    public Response signOn(HttpServletRequest request) throws Exception {
-        Response<Registration> response = new Response<Registration>();
-        Registration registration = mapperService.getObject(request.getInputStream(), Registration.class, response);
+    public void signOut() {
+        authenticationService.signOut();
+    }
+
+    @Override
+    public void signOn(HttpServletRequest request) throws Exception {
+        /*Registration registration = mapperService.getObject(request.getInputStream(), Registration.class, response);
         if (validator.isValid(registration, response, "")) {
             userServices.get(registration.getProvider()).signOn(registration, response, request.getLocale());
-        }
-        return response;
+        }*/
     }
 
     @Override
-    public Response signed() throws Exception {
+    public Authentication signed() throws Exception {
         return authenticationService.signed();
     }
 
@@ -173,6 +173,11 @@ public class Version1Service implements ApiVersionService {
         this.mapperService = mapperService;
     }
 
+    @Autowired
+    public void setLocaleService(LocaleService localeService) {
+        this.localeService = localeService;
+    }
+
     @Required
     public void setUserServices(Map<Provider.Type, UserService> userServices) {
         this.userServices = userServices;
@@ -181,10 +186,6 @@ public class Version1Service implements ApiVersionService {
     @Value("/bundles/web/web_%s.properties")
     public void setMessageSourceFile(String messageSourceFile) {
         this.messageSourceFile = messageSourceFile;
-    }
-
-    public void setValidator(Validator validator) {
-        this.validator = validator;
     }
 
     public void setAuthenticationService(AuthenticationService authenticationService) {
