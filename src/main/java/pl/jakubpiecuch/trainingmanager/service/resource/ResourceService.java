@@ -16,5 +16,5 @@ public interface ResourceService {
     }
     
     List<String> resources(String handler);
-    boolean read(String handler, OutputStream stream);
+    void read(String handler, OutputStream stream) throws Exception;
 }

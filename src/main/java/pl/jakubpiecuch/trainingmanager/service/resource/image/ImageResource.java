@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Required;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
+import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
@@ -14,26 +15,26 @@ public class ImageResource implements ResourceService {
 
     private String root;
 
+
+
     @Override
     public List<String> resources(String handler) {
         File directory = new File(root + handler);
-        return directory.exists() && directory.isDirectory() ? Arrays.asList(directory.list()) : null;
+        if (!directory.exists() || !directory.isDirectory() || directory.list().length == 0) {
+            throw new NotFoundException();
+        }
+        return Arrays.asList(directory.list());
     }
 
     @Override
-    public boolean read(String handler, OutputStream stream) {
+    public void read(String handler, OutputStream stream) throws Exception {
         File file = new File(root + handler);
-        if (file.exists()) {
-            InputStream is = null;
-            try {
-                is = new FileInputStream(file);
-                IOUtils.copy(is, stream);
-            } catch (IOException ex) {
-            } finally {
-                IOUtils.closeQuietly(is);
-            }
+        if (!file.exists() || file.isDirectory()) {
+            throw new NotFoundException();
         }
-        return file.exists();
+        InputStream is = new FileInputStream(file);
+        IOUtils.copy(is, stream);
+        IOUtils.closeQuietly(is);
     }
 
     @Required

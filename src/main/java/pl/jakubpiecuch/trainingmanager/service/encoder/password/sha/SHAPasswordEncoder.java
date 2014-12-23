@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.encoder.password.sha;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
@@ -12,7 +13,10 @@ public class SHAPasswordEncoder implements PasswordEncoder, InitializingBean {
     private ShaPasswordEncoder passwordEncoder;
     
     @Override
-    public String encode(String password, Object salt) {
+    public String encode(String password, String salt) {
+        if (StringUtils.isBlank(password) || StringUtils.isBlank(salt)) {
+            throw new IllegalArgumentException("parameter cannot be empty");
+        }
         return passwordEncoder.encodePassword(password, salt);
     }
 

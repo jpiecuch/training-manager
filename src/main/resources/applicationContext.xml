@@ -86,7 +86,7 @@
 
     <bean id="mapperService" class="pl.jakubpiecuch.trainingmanager.common.fasterxml.jackson.JacksonMapperService"/>
 
-    <bean id="supportService" class="pl.jakubpiecuch.trainingmanager.service.social.SocialSupportService"/>
+    <bean id="supportService" class="pl.jakubpiecuch.trainingmanager.service.support.social.SocialSupportService"/>
     
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" >
         <property name="host" value="smtp.gmail.com" />

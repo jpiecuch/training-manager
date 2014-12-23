@@ -1,7 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.service.social;
 
-
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
@@ -12,16 +10,13 @@ import org.springframework.social.connect.web.ProviderSignInAttempt;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
-import pl.jakubpiecuch.trainingmanager.dao.UsersDao;
 import pl.jakubpiecuch.trainingmanager.service.user.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.service.user.UserService;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +29,7 @@ public abstract class AbstractSocialService<T> implements SocialService {
     protected String url;
     protected WebRequest request;
     private RestTemplate rest = new RestTemplate();
+    private ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
 
     protected abstract Class<T> getConnectionClass();
     protected abstract String getRestUrl();
@@ -64,17 +60,17 @@ public abstract class AbstractSocialService<T> implements SocialService {
                 } else  if (userIDs.isEmpty()) {
                     ProviderSignInAttempt signInAttempt = new ProviderSignInAttempt(con, connectionFactoryRegistry, usersConnectionRepository);
                     request.setAttribute("org.springframework.social.connect.web.ProviderSignInAttempt", signInAttempt, RequestAttributes.SCOPE_SESSION);
-                    NativeWebRequest nativeWebRequest = (NativeWebRequest) request;
-                    HttpServletRequest req = (HttpServletRequest) nativeWebRequest.getNativeRequest();
-                    Registration registration = new Registration();
-                    Connection<?> connection = ProviderSignInUtils.getConnection(request);
+                    Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
                     UserProfile profile = connection.fetchUserProfile();
+
+                    Registration registration = new Registration();
                     registration.setUsername(String.format("%s:%s", connection.getKey().getProviderId(), connection.getKey().getProviderUserId()));
                     registration.setEmail(profile.getEmail());
                     registration.setFirstName(profile.getFirstName());
                     registration.setLastName(profile.getLastName());
+
                     userService.signOn(registration, request.getLocale());
-                    ProviderSignInUtils.handlePostSignUp(registration.getUsername(), request);
+                    providerSignInUtils.doPostSignUp(registration.getUsername(), request);
                     return true;
                 } else {
                     throw new RuntimeException("Multiple oauth connections for single user");
@@ -120,5 +116,9 @@ public abstract class AbstractSocialService<T> implements SocialService {
 
     public void setRest(RestTemplate rest) {
         this.rest = rest;
+    }
+
+    public void setProviderSignInUtils(ProviderSignInUtils providerSignInUtils) {
+        this.providerSignInUtils = providerSignInUtils;
     }
 }

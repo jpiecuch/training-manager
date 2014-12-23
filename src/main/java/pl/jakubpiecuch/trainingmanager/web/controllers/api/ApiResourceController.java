@@ -27,7 +27,7 @@ public class ApiResourceController {
     public void resource(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String path = WebUtil.extractPathFromPattern(request);        
         ResourceService resourceService = resourceServices.get(WebUtil.resolveResourceType(StringUtils.substringAfterLast(path, EXTENSION_SEPARATOR)));
-        response.setStatus(resourceService != null && resourceService.read(path, response.getOutputStream()) ? HttpStatus.OK.value() : HttpStatus.NOT_FOUND.value());
+        resourceService.read(path, response.getOutputStream());
     }
     
     @RequestMapping(value = "names/{type}/**", method = RequestMethod.GET)

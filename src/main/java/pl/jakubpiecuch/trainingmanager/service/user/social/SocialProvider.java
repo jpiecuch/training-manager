@@ -41,7 +41,6 @@ public class SocialProvider extends LocalProvider {
             return SocialType.valueOf(StringUtils.upperCase(id));
         } catch (IllegalArgumentException e) {
             LOGGER.error("Not matching social: {}", id);
-        } finally {
             return null;
         }
     }

@@ -13,7 +13,7 @@
 
        <bean id="signInController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signin.SignInController"/>
 
-       <bean id="myExceptionHandler" class="pl.jakubpiecuch.trainingmanager.web.RestExceptionHandler"/>
+       <bean id="myExceptionHandler" class="pl.jakubpiecuch.trainingmanager.web.handlers.exception.RestExceptionHandler"/>
 
        <mvc:annotation-driven />
 </beans>

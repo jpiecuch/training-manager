@@ -1,4 +1,4 @@
-package pl.jakubpiecuch.trainingmanager.service;
+package pl.jakubpiecuch.trainingmanager.service.support;
 
 import java.util.List;
 
