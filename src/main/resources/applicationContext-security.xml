@@ -35,6 +35,7 @@
         <beans:property name="passwordEncoder" ref="shaPasswordEncoder"/>
         <beans:property name="cryptService" ref="cryptService"/>
         <beans:property name="mapperService" ref="mapperService"/>
+        <beans:property name="validator" ref="registrationValidator"/>
     </beans:bean>
     
     <beans:bean id="shaPasswordEncoder" class="pl.jakubpiecuch.trainingmanager.service.encoder.password.sha.SHAPasswordEncoder"><beans:property name="strength" value="256"/></beans:bean>

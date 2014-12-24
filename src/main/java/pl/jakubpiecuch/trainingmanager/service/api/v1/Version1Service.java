@@ -11,6 +11,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.domain.ExerciseComment;
 import pl.jakubpiecuch.trainingmanager.service.support.SupportService;
+import pl.jakubpiecuch.trainingmanager.service.user.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 public class Version1Service implements ApiVersionService {
@@ -62,11 +64,8 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Override
-    public void signOn(HttpServletRequest request) throws Exception {
-        /*Registration registration = mapperService.getObject(request.getInputStream(), Registration.class, response);
-        if (validator.isValid(registration, response, "")) {
-            userServices.get(registration.getProvider()).signOn(registration, response, request.getLocale());
-        }*/
+    public void signOn(Registration registration, Locale locale) throws Exception {
+        userServices.get(registration.getProvider()).signOn(registration, locale);
     }
 
     @Override

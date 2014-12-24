@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.keygen.KeyGenerators;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.encoder.password.PasswordEncoder;
@@ -29,6 +31,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
 
     private PasswordEncoder passwordEncoder;
     private CryptService cryptService;
+    private Validator validator;
 
 
     @Override
@@ -90,6 +93,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
 
     @Override
     public void signOn(Registration registration, Locale locale) throws Exception {
+        validator.validate(registration, new BeanPropertyBindingResult(registration, "registration"));
         Account account = new Account();
         account.setName(registration.getUsername());
         account.setEmail(registration.getEmail());
@@ -107,5 +111,9 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
 
     public void setCryptService(CryptService cryptService) {
         this.cryptService = cryptService;
+    }
+
+    public void setValidator(Validator validator) {
+        this.validator = validator;
     }
 }

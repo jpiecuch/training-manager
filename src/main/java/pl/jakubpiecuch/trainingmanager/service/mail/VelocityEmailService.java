@@ -9,13 +9,14 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.springframework.util.Assert;
 
 import javax.mail.internet.MimeMessage;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class GmailService implements EmailService {
+public class VelocityEmailService implements EmailService {
 
     private JavaMailSender mailSender;
     private VelocityEngine velocityEngine;
@@ -27,6 +28,7 @@ public class GmailService implements EmailService {
     @Override
     @Async
     public void sendEmail(final Object[] data, final Locale locale, final Template template, final String... recipients) {
+        Assert.notNull(template); Assert.notNull(locale);
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
@@ -36,13 +38,16 @@ public class GmailService implements EmailService {
                 message.setFrom(sender);
                 message.setSubject(messageSource.getMessage("mail." + template + ".subject", null, locale));
 
-                Map<String, Object> model = new HashMap<String, Object>();
-                model.put("messageSource", messageSource);
-                model.put("locale", locale);
-                model.put("data", data);
-                model.put("date", new DateTool());
-                String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, String.format(templateLocation, template.toString().toLowerCase()), encoding, model);
-                message.setText(text, true);
+                Map<String, Object> model = new HashMap<String, Object>() {
+                    {
+                        put("messageSource", messageSource);
+                        put("locale", locale);
+                        put("data", data);
+                        put("date", new DateTool());
+                    }
+                };
+
+                message.setText(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, String.format(templateLocation, template.toString().toLowerCase()), encoding, model), true);
 
             }
         };

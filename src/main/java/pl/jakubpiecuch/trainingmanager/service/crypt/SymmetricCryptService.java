@@ -21,16 +21,15 @@ public class SymmetricCryptService implements CryptService {
     }
 
     @Override
-    public String decrypt(String arg, int position) {
-        return decryptService.encrypt(KEY, IV, arg).split(VAL_SPLITTER)[position];
+    public String decrypt(String arg, Integer position) {
+        String result = decryptService.encrypt(KEY, IV, arg);
+        return position != null ? result.split(VAL_SPLITTER)[position]  : result;
     }
 
-    @Autowired
     public void setDecryptService(Base64EncodedCipherer decryptService) {
         this.decryptService = decryptService;
     }
 
-    @Autowired
     public void setEncryptService(Base64EncodedCipherer encryptService) {
         this.encryptService = encryptService;
     }

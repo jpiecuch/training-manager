@@ -102,7 +102,7 @@
 	</property>
     </bean>
     
-    <bean id="emailService" class="pl.jakubpiecuch.trainingmanager.service.mail.GmailService">
+    <bean id="emailService" class="pl.jakubpiecuch.trainingmanager.service.mail.VelocityEmailService">
         <property name="encoding" value="UTF-8"/>
         <property name="mailSender" ref="mailSender"/>
         <property name="messageSource" ref="emailMessageSource"/>

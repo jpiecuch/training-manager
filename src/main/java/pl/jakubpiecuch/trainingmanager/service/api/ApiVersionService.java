@@ -2,17 +2,19 @@ package pl.jakubpiecuch.trainingmanager.service.api;
 
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.service.user.Authentication;
+import pl.jakubpiecuch.trainingmanager.service.user.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
 
 public interface ApiVersionService {
     enum Version {v1}
 
     void signIn(Authentication authentication) throws Exception;
     void signOut();
-    void signOn(HttpServletRequest request) throws Exception;
+    void signOn(Registration registration, Locale locale) throws Exception;
     Authentication signed() throws Exception;
     Object language(String lang) throws Exception;
     void locale(HttpServletRequest request, HttpServletResponse response, String locale);
