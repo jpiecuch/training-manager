@@ -1,6 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.user.local;
 
-import pl.jakubpiecuch.trainingmanager.service.user.Provider;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 
 /**
  * Created by Rico on 2014-11-23.

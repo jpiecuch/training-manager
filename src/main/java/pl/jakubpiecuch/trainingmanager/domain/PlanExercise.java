@@ -16,7 +16,7 @@ public class PlanExercise extends CommonEntity {
 
     private static final String SET_DELIMITER = ";";
 
-    public enum WeekDay { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY };
+    public enum WeekDay { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY }
 
     private Exercise exercise;
     private Plan plan;
@@ -84,8 +84,8 @@ public class PlanExercise extends CommonEntity {
     }
 
     @JsonDeserialize(using = MapDeserializer.class)
-    protected void setSets(Map<Integer, Integer> names) {
-        for (Map.Entry<Integer, Integer> e : names.entrySet()) {
+    protected void setSets(Map<Integer, Integer> sets) {
+        for (Map.Entry<Integer, Integer> e : sets.entrySet()) {
             getSets().put(e.getKey(), e.getValue());
         }
     }

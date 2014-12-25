@@ -1,8 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.service.api;
 
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
-import pl.jakubpiecuch.trainingmanager.service.user.Authentication;
-import pl.jakubpiecuch.trainingmanager.service.user.Registration;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 
 import javax.servlet.http.HttpServletRequest;

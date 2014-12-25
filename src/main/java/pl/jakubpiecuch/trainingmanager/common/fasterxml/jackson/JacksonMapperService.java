@@ -13,16 +13,10 @@ import java.io.InputStream;
  */
 public class JacksonMapperService implements MapperService {
     private final static Logger log = LoggerFactory.getLogger(JacksonMapperService.class);
-    private ObjectMapper mapper;
+    private ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public <T> T getObject(InputStream stream, Class<T> clazz) throws Exception {
         return mapper.readValue(stream, clazz);
-    }
-
-
-    @PostConstruct
-    private void afterPropertiesSet() {
-        mapper = new ObjectMapper();
     }
 }

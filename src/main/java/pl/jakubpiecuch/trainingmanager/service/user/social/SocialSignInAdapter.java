@@ -9,7 +9,7 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
-import pl.jakubpiecuch.trainingmanager.service.user.SecurityUser;
+import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
 import javax.servlet.http.HttpServletRequest;
 

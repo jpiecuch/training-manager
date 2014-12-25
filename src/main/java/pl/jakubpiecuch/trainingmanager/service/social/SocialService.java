@@ -1,6 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.social;
 
-import pl.jakubpiecuch.trainingmanager.service.user.SecurityUser;
+import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
 public interface SocialService {
    

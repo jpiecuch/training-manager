@@ -1,4 +1,4 @@
-package pl.jakubpiecuch.trainingmanager.service.user;
+package pl.jakubpiecuch.trainingmanager.service.user.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.social.security.SocialUser;

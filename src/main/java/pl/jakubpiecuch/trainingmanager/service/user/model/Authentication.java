@@ -1,4 +1,4 @@
-package pl.jakubpiecuch.trainingmanager.service.user;
+package pl.jakubpiecuch.trainingmanager.service.user.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import pl.jakubpiecuch.trainingmanager.domain.Account;

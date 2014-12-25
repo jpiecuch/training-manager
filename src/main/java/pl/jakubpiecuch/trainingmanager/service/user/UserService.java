@@ -1,6 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.service.user;
 
 import org.springframework.security.core.userdetails.UserDetails;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 
 import java.util.Locale;
 

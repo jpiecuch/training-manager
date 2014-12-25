@@ -9,9 +9,9 @@ import org.springframework.social.security.SocialUserDetails;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.social.SocialService;
 import pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService;
-import pl.jakubpiecuch.trainingmanager.service.user.Authentication;
-import pl.jakubpiecuch.trainingmanager.service.user.Registration;
-import pl.jakubpiecuch.trainingmanager.service.user.SecurityUser;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
+import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
 import java.util.Locale;
 import java.util.Map;

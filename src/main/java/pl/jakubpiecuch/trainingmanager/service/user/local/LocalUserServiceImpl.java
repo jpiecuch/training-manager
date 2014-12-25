@@ -14,9 +14,9 @@ import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.encoder.password.PasswordEncoder;
 import pl.jakubpiecuch.trainingmanager.service.mail.EmailService;
 import pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService;
-import pl.jakubpiecuch.trainingmanager.service.user.Authentication;
-import pl.jakubpiecuch.trainingmanager.service.user.Registration;
-import pl.jakubpiecuch.trainingmanager.service.user.SecurityUser;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
+import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
 import javax.validation.ValidationException;
 import java.util.Locale;

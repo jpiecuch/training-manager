@@ -13,17 +13,21 @@ import java.util.List;
 
 public class PostgreSQLDialect extends PostgreSQL82Dialect {
 
+    protected final static String OVER = "over";
+    protected final static String PARTITION = "partition";
+    protected final static String OVER_FORMAT = "%s " + OVER + "(%s)";
+
     public PostgreSQLDialect() {
         super();
         registerTypesAndFunctions();
     }
 
     protected void registerTypesAndFunctions() {
-        registerFunction("over", new Over());
-        registerFunction("partition", new StandardSQLFunction("partition"));
+        registerFunction(OVER, new Over());
+        registerFunction(PARTITION, new StandardSQLFunction(PARTITION));
     }
 
-    private class Over implements SQLFunction {
+    protected static class Over implements SQLFunction {
         @Override
         public boolean hasArguments() {
             return true;
@@ -41,13 +45,7 @@ public class PostgreSQLDialect extends PostgreSQL82Dialect {
 
         @Override
         public String render(Type firstArgumentType, List arguments, SessionFactoryImplementor factory) throws QueryException {
-            StringBuffer buf = new StringBuffer(arguments.get(0).toString());
-            buf.append(" over(");
-            if (arguments.size() == 2) {
-                buf.append(arguments.get(1));
-            }
-            buf.append(")");
-            return buf.toString();
+            return String.format(OVER_FORMAT, arguments.get(0), arguments.size() == 2 ? arguments.get(1) : "");
         }
     }
 }

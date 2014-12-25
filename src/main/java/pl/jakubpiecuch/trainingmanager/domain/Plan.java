@@ -14,7 +14,7 @@ import java.util.List;
 public class Plan extends pl.jakubpiecuch.trainingmanager.domain.CommonEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public enum Goal {muscles, strength};
+    public enum Goal {muscles, strength}
 
     private String name;
     private Integer weeks;

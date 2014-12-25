@@ -64,7 +64,7 @@ public class VelocityEmailServiceTest {
         emailService.sendEmail(null, VALID_LOCALE, VALID_TEMPLATE, null);
     }
 
-    //TODO - should not throw exception but successfully send message. Need to somehow mock SMTP server.
+    //FIXME - should not throw exception but successfully send message. Need to somehow mock SMTP server.
     @Test(expected = MailSendException.class)
     public void testSendEmail() throws Exception {
         emailService.sendEmail(null, VALID_LOCALE, VALID_TEMPLATE, VALID_RECIPIENT);
