@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import pl.jakubpiecuch.trainingmanager.common.MapperService;
-import pl.jakubpiecuch.trainingmanager.dao.CalendarsDao;
-import pl.jakubpiecuch.trainingmanager.dao.UsersDao;
+import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.mail.EmailService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
@@ -17,9 +16,8 @@ import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 @Service
 public abstract class AbstractUserService implements UserService {
 
-    protected CalendarsDao calendarsDao;
     protected EmailService emailService;
-    protected UsersDao usersDao;
+    protected AccountDao accountDao;
     protected MapperService mapperService;
 
     public abstract boolean isValidCredentials(Account entity, UserDetails user) throws Exception;
@@ -28,15 +26,10 @@ public abstract class AbstractUserService implements UserService {
     public void signIn(UserDetails user) throws Exception {
         SecurityUser securityUser = (SecurityUser) user;
         String username = securityUser.getSocial() != null ? String.format("%s:%s", securityUser.getSocial().getProviderId(), securityUser.getUsername()) : securityUser.getUsername();
-        Account entity = usersDao.findByUniques(null, username, null);
+        Account entity = accountDao.findByUniques(null, username, null);
         if (isValidCredentials(entity, user)) {
             WebUtil.authenticate(new SecurityUser(entity.getId(), entity.getName(), entity.getPassword(), null, null));
         }
-    }
-
-    @Autowired
-    public void setCalendarsDao(CalendarsDao calendarsDao) {
-        this.calendarsDao = calendarsDao;
     }
 
     @Autowired
@@ -45,8 +38,8 @@ public abstract class AbstractUserService implements UserService {
     }
 
     @Autowired
-    public void setUsersDao(UsersDao usersDao) {
-        this.usersDao = usersDao;
+    public void setAccountDao(AccountDao accountDao) {
+        this.accountDao = accountDao;
     }
 
     @Autowired

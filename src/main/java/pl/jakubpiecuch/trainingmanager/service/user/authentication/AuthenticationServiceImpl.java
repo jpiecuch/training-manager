@@ -1,18 +1,20 @@
 package pl.jakubpiecuch.trainingmanager.service.user.authentication;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
-import pl.jakubpiecuch.trainingmanager.common.MapperService;
-import pl.jakubpiecuch.trainingmanager.dao.UsersDao;
+import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.service.user.UserService;
-import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
-import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,10 +22,23 @@ import java.util.Map;
  */
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private MapperService mapperService;
+    private static final String ANONYMOUS_USER_PRINCIPAL = "anonymousUser";
+    private static final String ANONYMOUS_USER_KEY = "anonymousKey";
+    private static final String ANONYMOUS_ROLE = "ROLE_ANONYMOUS";
+    private static final List<GrantedAuthority> ANONYMOUS_USER_AUTHORITY = new ArrayList<GrantedAuthority>() {
+        {
+            add(new GrantedAuthority() {
+                @Override
+                public String getAuthority() {
+                    return ANONYMOUS_ROLE;
+                }
+            });
+        }
+    };
+
     private Validator validator;
     private Map<Provider.Type, UserService> userServices;
-    private UsersDao usersDao;
+    private AccountDao accountDao;
 
     @Override
     public void signIn(Authentication authentication) throws Exception {
@@ -34,18 +49,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public void signOut() {
-        WebUtil.invalidate();
+        SecurityContextHolder.getContext().setAuthentication(new AnonymousAuthenticationToken(ANONYMOUS_USER_KEY, ANONYMOUS_USER_PRINCIPAL, ANONYMOUS_USER_AUTHORITY));
     }
 
     @Override
     public Authentication signed() throws Exception {
-        SecurityUser authenticatedUserDetails = AuthenticatedUserUtil.getAuthenticatedUserDetails();
-        Account account = usersDao.findByUniques(authenticatedUserDetails.getId(), null, null);
+        Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SecurityUser user = object instanceof String ? null : (SecurityUser) object;
+        Account account = accountDao.findByUniques(user.getId(), null, null);
         return new Authentication(account);
-    }
-
-    public void setMapperService(MapperService mapperService) {
-        this.mapperService = mapperService;
     }
 
     public void setUserServices(Map<Provider.Type, UserService> userServices) {
@@ -56,7 +68,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.validator = validator;
     }
 
-    public void setUsersDao(UsersDao usersDao) {
-        this.usersDao = usersDao;
+    public void setAccountDao(AccountDao accountDao) {
+        this.accountDao = accountDao;
     }
 }

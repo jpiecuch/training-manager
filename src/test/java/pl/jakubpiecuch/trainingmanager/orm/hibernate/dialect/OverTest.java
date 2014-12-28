@@ -1,7 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.orm.hibernate.dialect;
 
 import org.junit.Test;
-import pl.jakubpiecuch.trainingmanager.orm.hibernate.dialect.PostgreSQLDialect.*;
+import pl.jakubpiecuch.trainingmanager.org.hibernate.dialect.PostgreSQLDialect;
+import pl.jakubpiecuch.trainingmanager.org.hibernate.dialect.PostgreSQLDialect.*;
 
 import java.util.ArrayList;
 import java.util.List;

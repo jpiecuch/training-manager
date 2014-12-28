@@ -15,8 +15,7 @@ MetronicApp.service('authenticateService', function($http, urlService, $q, $root
 
     this.signIn = function(credentials) {
         return $http.post(urlService.apiURL('/signin'), credentials).then(function(data) {
-            if (data.data.entity) {
-                user = data.data.entity;
+            if (data.status === 201) {
                 $rootScope.settings.isUserSignIn = true;
             }
             return data;
@@ -40,9 +39,7 @@ MetronicApp.service('authenticateService', function($http, urlService, $q, $root
         return deferred.promise.then(function() {
             return user !== null
         }).then(function(data) {
-            console.log('request ' + data);
             if (!data) {
-                console.log('request1');
                 return $http.get(urlService.apiURL('/signin')).then(function (data) {
 
                     if (data.data.entity) {
@@ -52,8 +49,6 @@ MetronicApp.service('authenticateService', function($http, urlService, $q, $root
                     }
                     $rootScope.settings.login = false;
                     return false;
-                }, function() {
-                    console.log('error');
                 });
             }
             return true;

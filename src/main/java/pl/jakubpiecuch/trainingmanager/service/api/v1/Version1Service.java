@@ -4,12 +4,18 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import pl.jakubpiecuch.trainingmanager.common.MapperService;
 import pl.jakubpiecuch.trainingmanager.dao.ExerciseCommentDao;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.domain.ExerciseComment;
+import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
 import pl.jakubpiecuch.trainingmanager.service.support.SupportService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
@@ -23,33 +29,34 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.UserService;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
+import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class Version1Service implements ApiVersionService {
 
-    private final static String EXERCISE_SOCIAL_PREFIX = "exercise/";
     private String messageSourceFile;
-    private DictionaryService dictionaryService;
-    private SupportService<SocialProvider> supportService;
-    private Map<SocialProvider.SocialType, SocialService> socialServices;
     private CryptService cryptService;
-    private PlanService planService;
-    private ExerciseCommentDao exerciseCommentDao;
     private Map<Provider.Type, UserService> userServices;
-    private MapperService mapperService;
     private AuthenticationService authenticationService;
     private LocaleService localeService;
+    private Map<ResourceService.Type, ResourceService> resourceServices;
+    private Map<String, PropertiesConfiguration> propertiesConfigurations;
+    private String[] langs;
+
+    @Override
+    public List<String> languages() {
+        return Arrays.asList(langs);
+    }
 
     @Override
     public void locale(HttpServletRequest request, HttpServletResponse response, String locale) {
+        Assert.notNull(locale);
         localeService.update(request, response, StringUtils.parseLocaleString(locale));
     }
 
@@ -74,88 +81,41 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Override
-    public Object language(String lang) throws Exception {
-        PropertiesConfiguration propertiesConfiguration = new PropertiesConfiguration(new File(getClass().getResource(String.format(messageSourceFile, lang)).toURI()));
-        Map<String, String> result = new HashMap<String, String>();
-        Iterator<String> keys = propertiesConfiguration.getKeys();
-        while (keys.hasNext()) {
-            String key = keys.next();
-            result.put(key, propertiesConfiguration.getString(key));
+    public ResponseEntity resource(ResourceService.Type type, String key) throws Exception {
+        final String handler = cryptService.decrypt(key, null);
+        final ResourceService resourceService = resourceServices.get(type);
+        if (resourceService.isCatalog(handler)) {
+            return new ResponseEntity(new ArrayList<String>() {
+                {
+                    for(String path : resourceService.resources(handler)) {
+                        add(cryptService.encrypt(path));
+                    }
+                }
+            }, HttpStatus.OK);
+        } else {
+            final HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(resourceService.getMediaType(handler));
+            return new ResponseEntity(resourceService.read(handler),headers, HttpStatus.OK);
         }
-        return result;
     }
 
     @Override
-    public Object exercises(int first, int max, Exercise.PartyMuscles[] partyMuscles) {
-        return dictionaryService.getExercises(first, max, partyMuscles);
+    public Object language(final String lang) throws Exception {
+        final PropertiesConfiguration propertiesConfiguration = propertiesConfigurations.get(lang);
+        if(propertiesConfiguration == null) {
+            throw new NotFoundException();
+        }
+        return  new HashMap<String, String>() {
+            {
+                Iterator<String> keys = propertiesConfiguration.getKeys();
+                while (keys.hasNext()) {
+                    String key = keys.next();
+                    put(key, propertiesConfiguration.getString(key));
+                }
+            }
+        };
     }
 
-    @Override
-    public void exercise(HttpServletRequest request) throws Exception {
-        dictionaryService.save(mapperService.getObject(request.getInputStream(), Exercise.class));
-    }
-
-    @Override
-    public Object availableSocials() {
-        return supportService.supported();
-    }
-
-    @Override
-    public void socialPost(SocialProvider.SocialType socialType, long id) {
-        socialServices.get(socialType).publicMessage(EXERCISE_SOCIAL_PREFIX + cryptService.encrypt(socialType.name(), String.valueOf(id)));
-    }
-
-    @Override
-    public Object comments(long exerciseId, int first, int max) {
-        return exerciseCommentDao.getPage(exerciseId, first, max);
-    }
-
-    @Override
-    public Object equipmentTypes() {
-        return Equipment.Type.BENCH;
-    }
-
-    @Override
-    public Object equipments(Integer[] type) {
-        return dictionaryService.getEquipments(type);
-    }
-
-    @Override
-    public Object plan(long id) {
-        return planService.getPlan(id);
-    }
-
-    @Override
-    public Object partyMuscles() {
-        return Exercise.PartyMuscles.values();
-    }
-
-    @Override
-    public Object comment(HttpServletRequest request) throws Exception {
-        ExerciseComment e = mapperService.getObject(request.getInputStream(), ExerciseComment.class);
-        e.setAccount(AuthenticatedUserUtil.getUser());
-        exerciseCommentDao.save(e);
-        return exerciseCommentDao.findById(e.getId());
-    }
-
-    @Autowired
-    public void setDictionaryService(DictionaryService dictionaryService) {
-        this.dictionaryService = dictionaryService;
-    }
-
-    @Autowired
-    public void setSupportService(SupportService<SocialProvider> supportService) {
-        this.supportService = supportService;
-    }
-
-    @Autowired
-    public void setPlanService(PlanService planService) {
-        this.planService = planService;
-    }
-
-    public void setSocialServices(Map<SocialProvider.SocialType, SocialService> socialServices) {
-        this.socialServices = socialServices;
-    }
 
     @Autowired
     public void setCryptService(CryptService cryptService) {
@@ -163,18 +123,12 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Autowired
-    public void setExerciseCommentDao(ExerciseCommentDao exerciseCommentDao) {
-        this.exerciseCommentDao = exerciseCommentDao;
-    }
-
-    @Autowired
-    public void setMapperService(MapperService mapperService) {
-        this.mapperService = mapperService;
-    }
-
-    @Autowired
     public void setLocaleService(LocaleService localeService) {
         this.localeService = localeService;
+    }
+
+    public void setResourceServices(Map<ResourceService.Type, ResourceService> resourceServices) {
+        this.resourceServices = resourceServices;
     }
 
     @Required
@@ -187,7 +141,27 @@ public class Version1Service implements ApiVersionService {
         this.messageSourceFile = messageSourceFile;
     }
 
+    @Value("${app.langs}")
+    public void setLangs(String[] langs) {
+        this.langs = langs;
+    }
+
     public void setAuthenticationService(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
+    }
+
+    public void setPropertiesConfigurations(Map<String, PropertiesConfiguration> propertiesConfigurations) {
+        this.propertiesConfigurations = propertiesConfigurations;
+    }
+
+    @PostConstruct
+    public void afterPropertiesSet() throws Exception{
+        this.propertiesConfigurations = new HashMap<String, PropertiesConfiguration>() {
+            {
+                for(String lang : langs) {
+                    put(lang, new PropertiesConfiguration(new File(getClass().getResource(String.format(messageSourceFile, lang)).toURI())));
+                }
+            }
+        };
     }
 }

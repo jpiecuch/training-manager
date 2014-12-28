@@ -37,7 +37,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
 
     @Override
     public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException, DataAccessException {
-        Account account = usersDao.findByUniques(null, userId, null);
+        Account account = accountDao.findByUniques(null, userId, null);
         if (account == null || Account.Status.ACTIVE != account.getStatus()) {
             throw new UsernameNotFoundException("User not exists");
         }
@@ -55,7 +55,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
         account.setSalt(KeyGenerators.string().generateKey());
         account.setPassword(OAUTH_PASSWORD);
 
-        usersDao.save(account);
+        accountDao.save(account);
     }
 
     @Required

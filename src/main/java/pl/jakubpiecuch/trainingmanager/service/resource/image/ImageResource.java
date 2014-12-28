@@ -1,13 +1,17 @@
 package pl.jakubpiecuch.trainingmanager.service.resource.image;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.http.MediaType;
+import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,26 +19,46 @@ public class ImageResource implements ResourceService {
 
     private String root;
 
-
-
     @Override
-    public List<String> resources(String handler) {
-        File directory = new File(root + handler);
-        if (!directory.exists() || !directory.isDirectory() || directory.list().length == 0) {
-            throw new NotFoundException();
-        }
-        return Arrays.asList(directory.list());
-    }
-
-    @Override
-    public void read(String handler, OutputStream stream) throws Exception {
+    public MediaType getMediaType(String handler) throws Exception {
         File file = new File(root + handler);
         if (!file.exists() || file.isDirectory()) {
             throw new NotFoundException();
         }
-        InputStream is = new FileInputStream(file);
-        IOUtils.copy(is, stream);
-        IOUtils.closeQuietly(is);
+        return MediaType.valueOf(Files.probeContentType(Paths.get(root + handler))) ;
+    }
+
+    @Override
+    public boolean isCatalog(String handler) {
+        File file = new File(root + handler);
+        if (!file.exists()) {
+            throw new NotFoundException();
+        }
+        return file.isDirectory();
+    }
+
+    @Override
+    public List<String> resources(final String handler) {
+        final File directory = new File(root + handler);
+        if (!directory.exists() || !directory.isDirectory() || directory.list().length == 0) {
+            throw new NotFoundException();
+        }
+        return new ArrayList<String>() {
+            {
+                for(String s : directory.list()) {
+                    add(handler + "/" + s);
+                }
+            }
+        };
+    }
+
+    @Override
+    public byte[] read(String handler) throws Exception {
+        File file = new File(root + handler);
+        if (!file.exists() || file.isDirectory()) {
+            throw new NotFoundException();
+        }
+        return FileUtils.readFileToByteArray(file);
     }
 
     @Required

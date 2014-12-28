@@ -1,5 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.resource;
 
+import org.springframework.http.MediaType;
+
 import java.io.OutputStream;
 import java.util.List;
 
@@ -16,5 +18,7 @@ public interface ResourceService {
     }
     
     List<String> resources(String handler);
-    void read(String handler, OutputStream stream) throws Exception;
+    byte[] read(String handler) throws Exception;
+    MediaType getMediaType(String handler) throws Exception;
+    boolean isCatalog(String handler);
 }

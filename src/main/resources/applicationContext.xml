@@ -131,22 +131,11 @@
 
     <bean id="localeController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.locale.LocaleController" parent="abstractController"/>
 
-    <bean id="apiResourceController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiResourceController">
-        <property name="resourceServices">
-            <map>
-                <entry key="image" value-ref="imageResource"/>
-            </map>
-        </property>
-    </bean>
+    <bean id="resourceController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.resource.ResourceController" parent="abstractController"/>
+
+    <bean id="languageController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.language.LanguageController" parent="abstractController"/>
 
     <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
-        <property name="socialServices">
-            <map>
-                <entry key="FACEBOOK" value-ref="facebookService"/>
-                <entry key="GOOGLE" value-ref="googleService"/>
-                <entry key="TWITTER" value-ref="twitterService"/>
-            </map>
-        </property>
         <property name="userServices">
             <map>
                 <entry key="SOCIAL" value-ref="socialUserService"/>
@@ -154,6 +143,11 @@
             </map>
         </property>
         <property name="authenticationService" ref="authenticationService"/>
+        <property name="resourceServices">
+            <map>
+                <entry key="image" value-ref="imageResource"/>
+            </map>
+        </property>
     </bean>
 
     <bean id="cryptService" class="pl.jakubpiecuch.trainingmanager.service.crypt.SymmetricCryptService">
@@ -165,8 +159,7 @@
     <crypt:b64SymmetricCipherer id="decryptService" mode="DECRYPT"/>
 
     <bean id="authenticationService" class="pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationServiceImpl">
-        <property name="mapperService" ref="mapperService"/>
-        <property name="usersDao" ref="usersDao"/>
+        <property name="accountDao" ref="usersDao"/>
         <property name="userServices">
             <map>
                 <entry key="LOCAL" value-ref="localUserService"/>

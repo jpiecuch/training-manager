@@ -128,5 +128,11 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.struts:struts-taglib:1.3.8" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.struts:struts-tiles:1.3.8" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.mockito:mockito-all:1.9.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.hsqldb:hsqldb:2.3.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.facebook.presto:presto-parser:0.89" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.google.code.findbugs:annotations:2.0.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.airlift:slice:0.7" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.antlr:antlr-runtime:3.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.antlr:stringtemplate:3.2.1" level="project" />
   </component>
 </module>

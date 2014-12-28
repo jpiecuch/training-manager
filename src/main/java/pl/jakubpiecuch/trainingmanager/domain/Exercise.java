@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-@Table(name = "exercises")
+@Table(name = "exercise")
 public class Exercise extends CommonEntity {
 
     private final static String NAME_PERSIST_FORMAT = "%s:%s";

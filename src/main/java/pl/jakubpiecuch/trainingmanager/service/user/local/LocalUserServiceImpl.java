@@ -52,7 +52,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = usersDao.findByUniques(null, username, null);
+        Account account = accountDao.findByUniques(null, username, null);
         if (account == null || Account.Status.ACTIVE != account.getStatus()) {
             throw new UsernameNotFoundException("User not exists");
         }
@@ -61,10 +61,10 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
 
     @Override
     public ResetStatus password(String id) {
-        Account account = usersDao.findByUniques(null, null, id);
+        Account account = accountDao.findByUniques(null, null, id);
         if (account != null) {
             account.setStatus(Account.Status.RESET_PASSWORD);
-            usersDao.save(account);
+            accountDao.save(account);
             return ResetStatus.OK;
         }
         return ResetStatus.USER_NOT_EXIST;
@@ -74,10 +74,10 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
     public boolean activate(String id) {
         try {
             String decrypt = cryptService.decrypt(id, EMAIL_CRYPT_POSITION);
-            Account account = usersDao.findByUniques(null, null, decrypt);
+            Account account = accountDao.findByUniques(null, null, decrypt);
             if (account != null && Account.Status.ACTIVE != account.getStatus()) {
                 account.setStatus(Account.Status.ACTIVE);
-                usersDao.save(account);
+                accountDao.save(account);
                 return true;
             }
         } catch (SymmetricEncryptionException e) {
@@ -88,7 +88,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
 
     @Override
     public boolean availability(String field, String value) {
-        return usersDao.findByUniques(null, "name".equals(field) ? value : null, "email".equals(field) ? value : null) == null;
+        return accountDao.findByUniques(null, "name".equals(field) ? value : null, "email".equals(field) ? value : null) == null;
     }
 
     @Override
@@ -101,7 +101,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
         account.setStatus(Account.Status.CREATED);
         account.setSalt(KeyGenerators.string().generateKey());
         account.setPassword(passwordEncoder.encode(registration.getPassword(), account.getSalt()));
-        usersDao.save(account);
+        accountDao.save(account);
         emailService.sendEmail(new Object[] { cryptService.encrypt(account.getName(), account.getEmail()), account}, locale, EmailService.Template.REGISTER, account.getEmail());
     }
 

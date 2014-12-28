@@ -16,6 +16,11 @@ public class CoreDaoImpl implements CoreDao {
     }
 
     @Override
+    public void flush() {
+        session().flush();
+    }
+
+    @Override
     public void save(Object o) {
         session().saveOrUpdate(o);
     }

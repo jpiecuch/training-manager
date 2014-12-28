@@ -10,7 +10,7 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
        <context:annotation-config />
-       <util:properties id="propertyConfigurer" location="classpath:${env}.properties"/>
+       <util:properties id="propertyConfigurer" location="classpath:dev.properties"/>
        <context:property-placeholder properties-ref="propertyConfigurer" />
 
        <bean id="authenticationValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.authentication.AuthenticationValidator"/>

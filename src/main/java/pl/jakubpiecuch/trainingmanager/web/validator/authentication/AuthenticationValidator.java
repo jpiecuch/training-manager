@@ -1,6 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.web.validator.authentication;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -21,6 +22,7 @@ public class AuthenticationValidator implements Validator  {
 
     @Override
     public void validate(Object target, Errors errors) {
+        Assert.notNull(target);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", RestrictionCode.REQUIRED);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", RestrictionCode.REQUIRED);
         if (errors.hasErrors()) {

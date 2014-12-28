@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.springframework.http.InvalidMediaTypeException;
+import org.springframework.http.MediaType;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 import java.io.BufferedWriter;
@@ -62,23 +64,44 @@ public class ImageResourceTest {
 
     @Test(expected = NotFoundException.class)
     public void testReadFolder() throws Exception {
-        imageResource.read("/" + FOLDER, null);
+        imageResource.read("/" + FOLDER);
     }
 
     @Test(expected = NotFoundException.class)
     public void testReadNotExistFile() throws Exception {
-        imageResource.read("/" + NOT_EXIST_FILE, null);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testReadNullOtputStream() throws Exception {
-        imageResource.read("/" + FOLDER + "/" + IMAGE, null);
+        imageResource.read("/" + NOT_EXIST_FILE);
     }
 
     @Test
     public void testRead() throws Exception {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        imageResource.read("/" + FOLDER + "/" + IMAGE, stream);
-        Assert.assertEquals(IMAGE, new String(stream.toByteArray()));
+        byte[] array = imageResource.read("/" + FOLDER + "/" + IMAGE);
+        Assert.assertEquals(IMAGE, new String(array));
     }
+
+    @Test
+    public void testIsCatalog() {
+        assertTrue(imageResource.isCatalog("/" + FOLDER));
+        assertFalse(imageResource.isCatalog("/" + FOLDER + "/" + IMAGE));
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testIsCatalogNotExists() {
+        assertTrue(imageResource.isCatalog("/" + NOT_EXIST_FOLDER));
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testGetMediaTypeOfDirectory() throws  Exception{
+        imageResource.getMediaType("/" + FOLDER);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testGetMediaTypeFileNotExists() throws  Exception{
+        imageResource.getMediaType("/" + NOT_EXIST_FOLDER);
+    }
+
+    @Test
+    public void testGetMediaType() throws  Exception{
+        assertEquals(MediaType.IMAGE_JPEG, imageResource.getMediaType("/" + FOLDER + "/" + IMAGE));
+    }
+
 }

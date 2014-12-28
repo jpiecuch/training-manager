@@ -56,9 +56,4 @@ public class WebUtil {
     public static String toJson(Object data) throws Exception {
         return mapper.writeValueAsString(data);
     }
-
-    public static void invalidate() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        securityContext.setAuthentication(null);
-    }
 }

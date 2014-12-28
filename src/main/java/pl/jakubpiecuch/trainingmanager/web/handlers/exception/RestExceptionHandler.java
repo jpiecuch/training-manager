@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 
 import java.util.ArrayList;
@@ -98,6 +99,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         return super.handleExceptionInternal(e, error, headers, HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler({ NotFoundException.class})
+    protected ResponseEntity<Object> handleNotFound(RuntimeException e, WebRequest request) {
+        NotFoundException ire = (NotFoundException) e;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        return super.handleExceptionInternal(e, null, headers, HttpStatus.NOT_FOUND, request);
     }
 
     @Override

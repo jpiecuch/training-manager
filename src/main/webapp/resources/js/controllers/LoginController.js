@@ -40,7 +40,7 @@ MetronicApp.controller('LoginController', function($state, $scope, $http, $rootS
         },
         signIn: function(form) {
           authenticateService.signIn($scope.login.credentials).then(function(data) {
-                if (data.data.entity) {
+              if (data.status === 201) {
                     $state.go('index');
                 }
           });

@@ -13,6 +13,10 @@
 
        <bean id="signInController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signin.SignInController"/>
 
+       <bean id="resourceController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.resource.ResourceController"/>
+
+       <bean id="languageController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.language.LanguageController"/>
+
        <bean id="myExceptionHandler" class="pl.jakubpiecuch.trainingmanager.web.handlers.exception.RestExceptionHandler"/>
 
        <mvc:annotation-driven />
