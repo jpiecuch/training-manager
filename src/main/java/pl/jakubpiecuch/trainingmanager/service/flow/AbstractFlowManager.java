@@ -1,23 +1,33 @@
 package pl.jakubpiecuch.trainingmanager.service.flow;
 
+import org.springframework.transaction.annotation.Transactional;
 import pl.jakubpiecuch.trainingmanager.dao.BaseDao;
+import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
-import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanFlow;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanDto;
 
 /**
  * Created by Rico on 2014-12-31.
  */
-public abstract class AbstractFlowManager<T extends FlowObject> implements FlowManager<T>{
+public abstract class AbstractFlowManager<T extends Flow> implements FlowManager<T> {
 
-    private FlowObjectConverter converter;
+    private FlowConverter converter;
     private BaseDao dao;
 
     @Override
-    public T getElement(long id) {
+    @Transactional
+    public T retrieve(long id) {
         return (T) converter.toFlowObject(dao.findById(id));
     }
 
-    public void setConverter(FlowObjectConverter<PlanFlow, Plan> converter) {
+    @Override
+    public long create(T element) {
+        CommonEntity entity = converter.fromFlowObject(element);
+        dao.save(element);
+        return entity.getId();
+    }
+
+    public void setConverter(FlowConverter<PlanDto, Plan> converter) {
         this.converter = converter;
     }
 

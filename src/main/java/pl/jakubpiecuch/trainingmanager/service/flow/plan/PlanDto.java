@@ -1,12 +1,12 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
-import pl.jakubpiecuch.trainingmanager.service.flow.FlowObject;
+import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 
 /**
  * Created by Rico on 2014-12-31.
  */
-public class PlanFlow extends FlowObject {
+public class PlanDto extends Flow {
 
     private Long id;
     private String name;
@@ -46,11 +46,11 @@ public class PlanFlow extends FlowObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PlanFlow planFlow = (PlanFlow) o;
+        PlanDto planDto = (PlanDto) o;
 
-        if (goal != planFlow.goal) return false;
-        if (id != null ? !id.equals(planFlow.id) : planFlow.id != null) return false;
-        if (name != null ? !name.equals(planFlow.name) : planFlow.name != null) return false;
+        if (goal != planDto.goal) return false;
+        if (id != null ? !id.equals(planDto.id) : planDto.id != null) return false;
+        if (name != null ? !name.equals(planDto.name) : planDto.name != null) return false;
 
         return true;
     }

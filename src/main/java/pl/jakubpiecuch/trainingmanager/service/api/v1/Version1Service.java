@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import pl.jakubpiecuch.trainingmanager.dao.PhaseDao;
+import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
+import pl.jakubpiecuch.trainingmanager.service.flow.FlowManager;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
@@ -36,6 +39,12 @@ public class Version1Service implements ApiVersionService {
     private Map<ResourceService.Type, ResourceService> resourceServices;
     private Map<String, PropertiesConfiguration> propertiesConfigurations;
     private String[] langs;
+    private Map<Flow.Hierarchy, FlowManager> flowManagers;
+
+    @Override
+    public <T extends Flow> T flow(Flow.Hierarchy hierarchy, Long id) {
+        return (T) flowManagers.get(hierarchy).retrieve(id);
+    }
 
     @Override
     public List<String> languages() {
@@ -140,6 +149,10 @@ public class Version1Service implements ApiVersionService {
 
     public void setPropertiesConfigurations(Map<String, PropertiesConfiguration> propertiesConfigurations) {
         this.propertiesConfigurations = propertiesConfigurations;
+    }
+
+    public void setFlowManagers(Map<Flow.Hierarchy, FlowManager> flowManagers) {
+        this.flowManagers = flowManagers;
     }
 
     @PostConstruct

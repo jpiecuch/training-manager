@@ -1,17 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "plan")
-public class Plan extends pl.jakubpiecuch.trainingmanager.domain.CommonEntity implements Serializable {
+public class Plan extends CommonEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public enum Goal {muscles, strength}

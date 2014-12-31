@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Rico on 2014-12-31.
  */
-public interface FlowObjectConverter<T extends FlowObject, E extends CommonEntity> {
+public interface FlowConverter<T extends Flow, E extends CommonEntity> {
     T toFlowObject(E entity);
     List<T> toFlowObjectList(List<E> list);
     E fromFlowObject(T flowObject);

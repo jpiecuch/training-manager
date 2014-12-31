@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Rico on 2014-12-31.
  */
-public abstract class AbstractFlowObjectConverter<T extends FlowObject, E extends CommonEntity> implements FlowObjectConverter<T, E> {
+public abstract class AbstractFlowConverter<T extends Flow, E extends CommonEntity> implements FlowConverter<T, E> {
 
     @Override
     public List<T> toFlowObjectList(List<E> list) {

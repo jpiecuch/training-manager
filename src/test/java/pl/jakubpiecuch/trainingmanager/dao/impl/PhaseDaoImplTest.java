@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class PhaseDaoImplTest extends BaseDAOTestCase {
 
-    private static final long PLAN_ID = 1l;
+    private static final Long PLAN_ID = 1l;
     private static final long PHASE_COUNT = 1l;
     private static final Plan.Goal GOAL = Plan.Goal.strength;
     private static final Integer POSITION = 1;
@@ -31,5 +31,6 @@ public class PhaseDaoImplTest extends BaseDAOTestCase {
         assertEquals(GOAL, phase.getGoal());
         assertEquals(POSITION, phase.getPosition());
         assertEquals(WEEKS, phase.getWeeks());
+        assertEquals(PLAN_ID, phase.getPlan().getId());
     }
 }

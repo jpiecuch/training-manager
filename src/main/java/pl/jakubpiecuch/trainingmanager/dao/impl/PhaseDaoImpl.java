@@ -14,4 +14,9 @@ public class PhaseDaoImpl extends CoreDaoImpl implements PhaseDao {
     public List<Phase> findPhaseByPlanId(long planId) {
         return session().createQuery("SELECT p FROM Phase p WHERE p.plan.id = :planId").setParameter("planId", planId).list();
     }
+
+    @Override
+    public Phase findById(long id) {
+        return (Phase) session().createQuery("SELECT p FROM Phase p WHERE p.id = :id").setParameter("id", id).uniqueResult();
+    }
 }

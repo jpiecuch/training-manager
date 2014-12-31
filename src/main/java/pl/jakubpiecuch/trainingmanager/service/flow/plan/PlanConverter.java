@@ -1,17 +1,17 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
-import pl.jakubpiecuch.trainingmanager.service.flow.AbstractFlowObjectConverter;
+import pl.jakubpiecuch.trainingmanager.service.flow.AbstractFlowConverter;
 
 /**
  * Created by Rico on 2014-12-31.
  */
-public class PlanFlowConverter extends AbstractFlowObjectConverter<PlanFlow, Plan> {
+public class PlanConverter extends AbstractFlowConverter<PlanDto, Plan> {
 
     @Override
-    protected PlanFlow convertTo(Plan entity) {
+    protected PlanDto convertTo(Plan entity) {
 
-        PlanFlow flow = new PlanFlow();
+        PlanDto flow = new PlanDto();
 
         flow.setId(entity.getId());
         flow.setName(entity.getName());
@@ -21,7 +21,7 @@ public class PlanFlowConverter extends AbstractFlowObjectConverter<PlanFlow, Pla
     }
 
     @Override
-    protected Plan convertFrom(PlanFlow flowObject) {
+    protected Plan convertFrom(PlanDto flowObject) {
         Plan entity = new Plan();
 
         entity.setId(flowObject.getId());

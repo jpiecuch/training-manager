@@ -6,15 +6,15 @@ import pl.jakubpiecuch.trainingmanager.domain.Plan;
 
 import static org.junit.Assert.*;
 
-public class PlanFlowConverterTest {
+public class PlanConverterTest {
 
     private static final Long ID = 1l;
     private static final Plan.Goal GOAL = Plan.Goal.muscles;
     private static final String NAME = "name";
-    private static PlanFlow PLAN_FLOW = new PlanFlow();
+    private static PlanDto PLAN_FLOW = new PlanDto();
     private static Plan PLAN = new Plan();
 
-    private static final PlanFlowConverter CONVERTER = new PlanFlowConverter();
+    private static final PlanConverter CONVERTER = new PlanConverter();
 
 
     @Before
@@ -30,7 +30,7 @@ public class PlanFlowConverterTest {
 
     @Test
     public void testToFlowObject() throws Exception {
-        PlanFlow flow = CONVERTER.toFlowObject(PLAN);
+        PlanDto flow = CONVERTER.toFlowObject(PLAN);
         assertEquals(flow, PLAN_FLOW);
     }
 

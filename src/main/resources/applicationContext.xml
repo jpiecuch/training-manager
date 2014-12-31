@@ -115,41 +115,6 @@
         <property name="root" value="${resource.directory}/images/"/>
     </bean>
 
-    <bean id="abstractController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController" abstract="true">
-        <property name="versionServices">
-            <map>
-                <entry key="v1" value-ref="version1Service"/>
-            </map>
-        </property>
-    </bean>
-
-    <bean id="signInController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signin.SignInController" parent="abstractController"/>
-
-    <bean id="signOutController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signout.SignOutController" parent="abstractController"/>
-
-    <bean id="signOnController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signon.SignOnController" parent="abstractController"/>
-
-    <bean id="localeController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.locale.LocaleController" parent="abstractController"/>
-
-    <bean id="resourceController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.resource.ResourceController" parent="abstractController"/>
-
-    <bean id="languageController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.language.LanguageController" parent="abstractController"/>
-
-    <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
-        <property name="userServices">
-            <map>
-                <entry key="SOCIAL" value-ref="socialUserService"/>
-                <entry key="LOCAL" value-ref="localUserService"/>
-            </map>
-        </property>
-        <property name="authenticationService" ref="authenticationService"/>
-        <property name="resourceServices">
-            <map>
-                <entry key="image" value-ref="imageResource"/>
-            </map>
-        </property>
-    </bean>
-
     <bean id="cryptService" class="pl.jakubpiecuch.trainingmanager.service.crypt.SymmetricCryptService">
         <property name="decryptService" ref="decryptService"/>
         <property name="encryptService" ref="encryptService"/>
@@ -170,4 +135,6 @@
     </bean>
     
     <import resource="applicationContext-social.xml"/>
+    <import resource="controller-context.xml"/>
+    <import resource="flow-context.xml"/>
 </beans>

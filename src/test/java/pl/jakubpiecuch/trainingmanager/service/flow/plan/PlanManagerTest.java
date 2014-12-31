@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import pl.jakubpiecuch.trainingmanager.dao.BaseDao;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
-import pl.jakubpiecuch.trainingmanager.service.flow.FlowObjectConverter;
+import pl.jakubpiecuch.trainingmanager.service.flow.FlowConverter;
 
 import static org.junit.Assert.*;
 
@@ -18,7 +18,7 @@ public class PlanManagerTest {
 
     private static final long ID = 1l;
     private static final long NOT_PERSIST_ID = 99l;
-    private static PlanFlow PLAN_FLOW = new PlanFlow();
+    private static PlanDto PLAN_FLOW = new PlanDto();
     private static Plan PLAN = new Plan();
     @InjectMocks
     private PlanManager planManager;
@@ -27,7 +27,7 @@ public class PlanManagerTest {
     BaseDao<Plan> dao;
 
     @Mock
-    FlowObjectConverter<PlanFlow, Plan> converter;
+    FlowConverter<PlanDto, Plan> converter;
 
     @Before
     public void setUp() {
@@ -43,13 +43,13 @@ public class PlanManagerTest {
 
     @Test
     public void testGetElement() {
-        PlanFlow flow = planManager.getElement(ID);
+        PlanDto flow = planManager.retrieve(ID);
         assertEquals(flow, PLAN_FLOW);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetElementNotPersist() {
-        planManager.getElement(NOT_PERSIST_ID);
+        planManager.retrieve(NOT_PERSIST_ID);
     }
 
 }
