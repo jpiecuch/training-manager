@@ -6,8 +6,9 @@ import pl.jakubpiecuch.trainingmanager.domain.Plan;
 
 public class PlanDaoImpl extends CoreDaoImpl implements PlanDao {
 
+
     @Override
-    public Plan getById(long id) {
-        return (Plan) session().createQuery("SELECT p FROM Plan p LEFT JOIN FETCH p.exercises pe LEFT JOIN FETCH pe.exercise LEFT JOIN FETCH p.creator WHERE p.id = :id").setParameter("id", id).uniqueResult();
+    public Plan findById(long id) {
+        return (Plan) session().createQuery("SELECT p FROM Plan p WHERE p.id = :id").setParameter("id", id).uniqueResult();
     }
 }

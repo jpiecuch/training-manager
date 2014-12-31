@@ -6,11 +6,11 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
-public class PlanExerciseTest extends TestCase {
+public class ExerciseTest extends TestCase {
 
     @Test
     public void testPlanExercise() {
-        PlanExercise day = new PlanExercise();
+        Exercise day = new Exercise();
         day.setReps("1;2;3;4");
 
         Assert.assertEquals(4, day.getSets().size());

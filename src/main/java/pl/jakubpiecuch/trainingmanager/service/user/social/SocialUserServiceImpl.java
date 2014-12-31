@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.social.security.SocialUserDetails;
+import org.springframework.util.Assert;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.social.SocialService;
 import pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService;
@@ -26,6 +27,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
 
     @Override
     public UserDetails resolveDetails(Authentication authentication) throws Exception {
+        Assert.notNull(authentication.getSocial());
         return new SecurityUser(null, authentication.getUsername(), authentication.getPassword(), authentication.getSocial(), null);
     }
 

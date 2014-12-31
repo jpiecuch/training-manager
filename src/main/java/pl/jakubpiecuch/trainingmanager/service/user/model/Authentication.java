@@ -10,6 +10,7 @@ import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Authentication {
+    public static final String BEAN_NAME = "authentication";
     private Long id;
     private String username;
     private String password;

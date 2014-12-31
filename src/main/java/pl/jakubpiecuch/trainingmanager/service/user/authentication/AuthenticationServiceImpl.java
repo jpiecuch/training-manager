@@ -12,6 +12,7 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.service.user.UserService;
+import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public void signIn(Authentication authentication) throws Exception {
-        validator.validate(authentication, new BeanPropertyBindingResult(authentication, "authentication"));
+        validator.validate(authentication, new BeanPropertyBindingResult(authentication, Authentication.BEAN_NAME));
         UserDetails details = userServices.get(authentication.getProvider()).resolveDetails(authentication);
         userServices.get(authentication.getProvider()).signIn(details);
     }
@@ -55,9 +56,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public Authentication signed() throws Exception {
         Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        SecurityUser user = object instanceof String ? null : (SecurityUser) object;
-        Account account = accountDao.findByUniques(user.getId(), null, null);
-        return new Authentication(account);
+        if (object instanceof String) {
+            throw new NotFoundException();
+        }
+        return new Authentication(accountDao.findByUniques(((SecurityUser) object).getId(), null, null));
     }
 
     public void setUserServices(Map<Provider.Type, UserService> userServices) {

@@ -20,7 +20,7 @@ import java.util.HashMap;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = "classpath:test-servlet.xml")
+@ContextConfiguration(locations = "classpath:test-controller-context.xml")
 public abstract class BaseControllerTestCase {
 
     @Autowired

@@ -2,10 +2,10 @@ package pl.jakubpiecuch.trainingmanager.service.dictionary;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jakubpiecuch.trainingmanager.dao.EquipmentDao;
-import pl.jakubpiecuch.trainingmanager.dao.ExerciseDao;
+import pl.jakubpiecuch.trainingmanager.dao.DescriptionDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
-import pl.jakubpiecuch.trainingmanager.domain.Exercise;
+import pl.jakubpiecuch.trainingmanager.domain.Description;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,22 +13,22 @@ import java.util.Map;
 
 public class DictionaryDBService implements DictionaryService {
     
-    private ExerciseDao exerciseDao;
+    private DescriptionDao descriptionDao;
     private EquipmentDao equipmentDao;
     
     @Override
-    public PageResult<Exercise> getExercises(int firstResult, int maxResult, Exercise.PartyMuscles[] partyMuscles) {
-        return exerciseDao.findPage(firstResult, maxResult, partyMuscles);
+    public PageResult<Description> getExercises(int firstResult, int maxResult, Description.PartyMuscles[] partyMuscles) {
+        return descriptionDao.findPage(firstResult, maxResult, partyMuscles);
     }
 
     @Override
-    public Exercise getExercise(Long id) {
-        return exerciseDao.findById(id);
+    public Description getExercise(Long id) {
+        return descriptionDao.findById(id);
     }
 
     @Override
-    public void save(Exercise exercise) {
-        exerciseDao.save(exercise);
+    public void save(Description description) {
+        descriptionDao.save(description);
     }
     
     @Override
@@ -37,10 +37,10 @@ public class DictionaryDBService implements DictionaryService {
     }
 
     @Override
-    public Map<Exercise.PartyMuscles, List<Exercise>> getPartyMusclesExercisesList(Exercise.PartyMuscles[] pms) {
-        Map<Exercise.PartyMuscles, List<Exercise>> result = new HashMap<Exercise.PartyMuscles, List<Exercise>>();
-        for (Exercise.PartyMuscles p : pms) {
-            result.put(p, exerciseDao.findByPartyMuscles(p));
+    public Map<Description.PartyMuscles, List<Description>> getPartyMusclesExercisesList(Description.PartyMuscles[] pms) {
+        Map<Description.PartyMuscles, List<Description>> result = new HashMap<Description.PartyMuscles, List<Description>>();
+        for (Description.PartyMuscles p : pms) {
+            result.put(p, descriptionDao.findByPartyMuscles(p));
         }
         return result;
     }
@@ -58,7 +58,7 @@ public class DictionaryDBService implements DictionaryService {
     }
 
     @Autowired
-    public void setExerciseDao(ExerciseDao exerciseDao) {
-        this.exerciseDao = exerciseDao;
+    public void setDescriptionDao(DescriptionDao descriptionDao) {
+        this.descriptionDao = descriptionDao;
     }
 }

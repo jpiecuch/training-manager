@@ -4,36 +4,28 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
-    
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${jdbc.driverClassName}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-    </bean>
-    
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="pl.jakubpiecuch.trainingmanager.domain"/>
-        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
-    </bean>
+    <bean id="eventListenerIntegrator" class="pl.jakubpiecuch.trainingmanager.org.hibernate.EventListenerIntegrator"/>
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+
     <tx:annotation-driven transaction-manager="transactionManager"/>
     
     <bean id="coreDao" class="pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl" />
     
     <bean id="equipmentDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.EquipmentDaoImpl" parent="coreDao"/>
     
-    <bean id="exerciseDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.ExerciseDaoImpl" parent="coreDao"/>
+    <bean id="descriptionDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.DescriptionDaoImpl" parent="coreDao"/>
     
     <bean id="usersDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.AccountDaoImpl" parent="coreDao"/>
 
     <bean id="planDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.PlanDaoImpl" parent="coreDao"/>
 
-    <bean id="exerciseCommentDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.ExerciseCommentDaoImpl" parent="coreDao"/>
-    
+    <bean id="phaseDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.PhaseDaoImpl" parent="coreDao"/>
+
+    <bean id="workoutDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.WorkoutDaoImpl" parent="coreDao"/>
+
+    <bean id="exerciseDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.ExerciseDaoImpl" parent="coreDao"/>
 </beans>

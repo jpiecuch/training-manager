@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 
@@ -42,6 +43,7 @@ public class RegistrationValidatorTest {
         registration.setUsername("test123");
         registration.setPassword("passWord123!");
         registration.setRepeat("passWord123!");
+        registration.setProvider(Provider.Type.LOCAL);
         BeanPropertyBindingResult errors = new BeanPropertyBindingResult(registration, "registration");
         validator.validate(registration, errors);
         

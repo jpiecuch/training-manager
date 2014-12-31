@@ -19,7 +19,7 @@ CREATE TABLE equipment (
     strength double precision
 );
 
-CREATE TABLE exercise (
+CREATE TABLE description (
     id bigint PRIMARY KEY NOT NULL,
     name character varying(255) NOT NULL,
     movie_url character varying(255),
@@ -36,16 +36,30 @@ CREATE TABLE plan (
     id bigint PRIMARY KEY NOT NULL,
     name character varying(50) NOT NULL,
     goal integer NOT NULL,
-    weeks integer NOT NULL,
     creator bigint NOT NULL
 );
 
-CREATE TABLE plan_exercise (
+CREATE TABLE phase (
     id bigint PRIMARY KEY NOT NULL,
+    position integer NOT NULL,
+    goal integer NOT NULL,
+    description character varying(50000),
     plan bigint NOT NULL,
-    exercise bigint NOT NULL,
+    weeks integer NOT NULL
+);
+
+CREATE TABLE workout (
+    id bigint PRIMARY KEY NOT NULL,
     week_day integer NOT NULL,
-    "position" integer NOT NULL,
+    muscles integer NOT NULL,
+    position integer NOT NULL,
+    phase bigint NOT NULL
+);
+
+CREATE TABLE exercise (
+    id bigint PRIMARY KEY NOT NULL,
+    workout bigint NOT NULL,
+    description bigint NOT NULL,
     reps character varying(50) NOT NULL
 );
 
@@ -68,6 +82,8 @@ ALTER TABLE userconnection ADD CONSTRAINT userconnection_pkey PRIMARY KEY (useri
 ALTER TABLE account ADD CONSTRAINT account_email_unique UNIQUE (email);
 ALTER TABLE account ADD CONSTRAINT account_name_unique UNIQUE (name);
 
-ALTER TABLE plan_exercise ADD CONSTRAINT exercise_fkey FOREIGN KEY (exercise) REFERENCES exercise(id);
-ALTER TABLE plan_exercise ADD CONSTRAINT plan_fkey FOREIGN KEY (plan) REFERENCES plan(id);
+ALTER TABLE exercise ADD CONSTRAINT description_fkey FOREIGN KEY (description) REFERENCES description(id);
+ALTER TABLE exercise ADD CONSTRAINT workout_fkey FOREIGN KEY (workout) REFERENCES workout(id);
 ALTER TABLE plan ADD CONSTRAINT creator_fkey FOREIGN KEY (creator) REFERENCES account(id);
+ALTER TABLE phase ADD CONSTRAINT plan_fkey FOREIGN KEY (plan) REFERENCES plan(id);
+ALTER TABLE workout ADD CONSTRAINT phase_fkey FOREIGN KEY (phase) REFERENCES phase(id);

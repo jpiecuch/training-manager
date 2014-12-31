@@ -1,18 +1,22 @@
 INSERT INTO account (id, name, password, salt, created, updated, status, email, config) VALUES (1, 'test.user', 'f0e734ab8910dee9762d0ee07964288dd8ffd95be9ab646af02ba1c1256e5037', '3994c7aea794c1cf', '2014-12-07 13:52:56.805', '2014-12-07 13:53:16.062', 0, 'test.user@test.com', '{"firstName":"Test","lastName":"User"}');
 
-INSERT INTO plan (id, name, goal, weeks, creator) VALUES (1, 'Main plan', 0, 8, 1);
+INSERT INTO plan (id, name, goal, creator) VALUES (1, 'Main plan', 0, 1);
 
-INSERT INTO exercise (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (1, 'pl:pl_1;en:en_1', 'url_1', NULL, 0, 0, NULL, 0, 0, 0);
-INSERT INTO exercise (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (2, 'pl:pl_2;en:en_2', 'url_2', NULL, 2, 1, NULL, 1, 1, 1);
-INSERT INTO exercise (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (3, 'pl:pl_3;en:en_3', 'url_3', NULL, 9, 2, NULL, 2, 0, 2);
-INSERT INTO exercise (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (4, 'pl:pl_4;en:en_4', 'url_4', NULL, 1, 4, NULL, 2, 1, 2);
-INSERT INTO exercise (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (5, 'pl:pl_5;en:en_5', 'url_5', '<h1>test 5</h1>', 12, 3, NULL, 1, 0, 0);
-INSERT INTO exercise (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (6, 'pl:pl_6;en:en_6', NULL, NULL, 7, 6, NULL, 0, 1, 1);
-INSERT INTO exercise (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (7, 'pl:pl_7;en:en_7', 'url_7', '<h1>test 7</h1>', 1, 5, NULL, 0, 0, 1);
-INSERT INTO exercise (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (8, 'pl:pl_8;en:en_8', 'url_8', NULL, 3, 2, NULL, 1, 1, 2);
+INSERT INTO phase (id, position, goal, description, plan, weeks) VALUES (1, 1, 1, 'Main phase', 1, 3);
 
-INSERT INTO plan_exercise (id, plan, exercise, week_day, "position", reps) VALUES (1, 1, 2, 1, 1, '12;12;12;12');
-INSERT INTO plan_exercise (id, plan, exercise, week_day, "position", reps) VALUES (2, 1, 3, 1, 2, '12;10;8;6');
+INSERT INTO workout (id, week_day, phase, muscles, position) VALUES (1, 1, 1, 2, 1);
+
+INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (1, 'pl:pl_1;en:en_1', 'url_1', NULL, 0, 0, NULL, 0, 0, 0);
+INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (2, 'pl:pl_2;en:en_2', 'url_2', NULL, 2, 1, NULL, 1, 1, 1);
+INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (3, 'pl:pl_3;en:en_3', 'url_3', NULL, 9, 2, NULL, 2, 0, 2);
+INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (4, 'pl:pl_4;en:en_4', 'url_4', NULL, 1, 4, NULL, 2, 1, 2);
+INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (5, 'pl:pl_5;en:en_5', 'url_5', '<h1>test 5</h1>', 12, 3, NULL, 1, 0, 0);
+INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (6, 'pl:pl_6;en:en_6', NULL, NULL, 7, 6, NULL, 0, 1, 1);
+INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (7, 'pl:pl_7;en:en_7', 'url_7', '<h1>test 7</h1>', 1, 5, NULL, 0, 0, 1);
+INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (8, 'pl:pl_8;en:en_8', 'url_8', NULL, 3, 2, NULL, 1, 1, 2);
+
+INSERT INTO exercise (id, workout, description, reps) VALUES (1, 1, 2, '12;12;12;12');
+INSERT INTO exercise (id, workout, description, reps) VALUES (2, 1, 3, '12;10;8;6');
 
 INSERT INTO equipment (id, type, data, length, weight, strength) VALUES (3, 4, '{"connectedLoad": false,"type":0}', 180, 8, 150);
 INSERT INTO equipment (id, type, data, length, weight, strength) VALUES (1, 0, '{"handlesNo":6}', 120, NULL, 200);

@@ -17,6 +17,7 @@ import pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
+import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 import javax.validation.ValidationException;
 import java.util.Locale;
@@ -42,7 +43,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
     @Override
     public boolean isValidCredentials(Account entity, UserDetails user) throws Exception {
         if (entity == null || Account.Status.ACTIVE != entity.getStatus()) {
-            throw new ObjectNotFoundException("", "");
+            throw new NotFoundException();
         }
         if (!passwordEncoder.isValid(entity.getPassword(), user.getPassword(), entity.getSalt())) {
             throw new ValidationException();

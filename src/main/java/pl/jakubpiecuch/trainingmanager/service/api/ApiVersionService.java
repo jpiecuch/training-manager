@@ -1,11 +1,9 @@
 package pl.jakubpiecuch.trainingmanager.service.api;
 
 import org.springframework.http.ResponseEntity;
-import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
-import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
