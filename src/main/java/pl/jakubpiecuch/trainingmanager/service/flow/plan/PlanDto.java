@@ -11,6 +11,7 @@ public class PlanDto extends Flow {
     private Long id;
     private String name;
     private Plan.Goal goal;
+    private Long creatorId;
 
     public Long getId() {
         return id;
@@ -36,9 +37,17 @@ public class PlanDto extends Flow {
         this.goal = goal;
     }
 
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
+
     @Override
-    public int getFlowPosition() {
-        return 0;
+    public Hierarchy getHierarchy() {
+        return Hierarchy.PLAN;
     }
 
     @Override

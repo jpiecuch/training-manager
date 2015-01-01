@@ -45,7 +45,6 @@ MetronicApp.run(function ($rootScope, $location, $state, authenticateService, is
 });
 
 MetronicApp.config(function($translateProvider, contextPath, lang) {
-    console.log(lang);
     $translateProvider.preferredLanguage(lang);
     $translateProvider.useStaticFilesLoader({
         prefix: contextPath + '/api/v1/languages/',
@@ -113,12 +112,17 @@ initialization can be disabled and Layout.init() should be called on page load c
 ***/
 
 /* Setup Layout Part - Header */
-MetronicApp.controller('HeaderController', ['$scope', 'authenticateService', '$state', function($scope, authenticateService, $state) {
+MetronicApp.controller('HeaderController', ['$scope', 'authenticateService', '$state', '$rootScope', function($scope, authenticateService, $state, $rootScope) {
     $scope.header = {
         signOut: function() {
             authenticateService.signOut().then(function() {
                 $state.go('login');
             })
+        },
+        sidebar: {
+            collapse: function() {
+                $rootScope.settings.layout.pageSidebarClosed = !$rootScope.settings.layout.pageSidebarClosed;
+            }
         }
     }
 }]);

@@ -7,5 +7,4 @@ import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import java.util.List;
 
 public interface PhaseDao extends BaseDao<Phase> {
-    List<Phase> findPhaseByPlanId(long planId);
 }

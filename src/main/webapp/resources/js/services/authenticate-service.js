@@ -30,28 +30,19 @@ MetronicApp.service('authenticateService', function($http, urlService, $q, $root
     }
 
     this.signed = function() {
-        return user;
-    }
-
-    this.isSignedIn = function() {
         var deferred = $q.defer();
         deferred.resolve();
         return deferred.promise.then(function() {
-            return user !== null
+            return user !== null ? user : null;
         }).then(function(data) {
-            if (!data) {
+            if ($rootScope.settings.isUserSignIn && !data) {
                 return $http.get(urlService.apiURL('/signin')).then(function (data) {
-
-                    if (data.data.entity) {
-                        user = data.data.entity;
-                        $rootScope.settings.login = true;
-                        return true;
-                    }
-                    $rootScope.settings.login = false;
-                    return false;
+                    user = data.data;
+                    $rootScope.settings.isUserSignIn = true;
+                    return user;
                 });
             }
-            return true;
+            return $rootScope.settings.isUserSignIn ? user : null;
         });
     }
 });

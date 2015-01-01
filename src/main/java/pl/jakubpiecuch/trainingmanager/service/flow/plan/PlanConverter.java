@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
+import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.AbstractFlowConverter;
 
@@ -16,6 +17,7 @@ public class PlanConverter extends AbstractFlowConverter<PlanDto, Plan> {
         flow.setId(entity.getId());
         flow.setName(entity.getName());
         flow.setGoal(entity.getGoal());
+        flow.setCreatorId(entity.getCreator().getId());
 
         return flow;
     }
@@ -27,7 +29,7 @@ public class PlanConverter extends AbstractFlowConverter<PlanDto, Plan> {
         entity.setId(flowObject.getId());
         entity.setName(flowObject.getName());
         entity.setGoal(flowObject.getGoal());
-
+        entity.setCreator(new Account(flowObject.getCreatorId()));
         return entity;
     }
 }

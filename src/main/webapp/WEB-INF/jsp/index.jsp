@@ -86,19 +86,13 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
-    <div data-ng-if="setttings.isUserSignIn" data-ng-include="'resources/tpl/sidebar.html'" data-ng-controller="SidebarController" class="page-sidebar-wrapper">
+    <div data-ng-if="settings.isUserSignIn" data-ng-include="'resources/tpl/sidebar.html'" data-ng-controller="SidebarController" class="page-sidebar-wrapper">
     </div>
     <!-- END SIDEBAR -->
 
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div ng-class="{'page-content' : settings.isUserSignIn}">
-            <!-- BEGIN STYLE CUSTOMIZER(optional) -->
-            <div data-ng-if="settings.isUserSignIn" data-ng-include="'resources/tpl/theme-panel.html'" data-ng-controller="ThemePanelController"
-                 class="theme-panel hidden-xs hidden-sm">
-            </div>
-            <!-- END STYLE CUSTOMIZER -->
-
             <!-- BEGIN ACTUAL CONTENT -->
             <div ui-view class="fade-in-up">
             </div>
@@ -106,13 +100,6 @@ License: You must have a valid license purchased only from themeforest(the above
         </div>
     </div>
     <!-- END CONTENT -->
-
-    <!-- BEGIN QUICK SIDEBAR -->
-    <a href="javascript:;" class="page-quick-sidebar-toggler"><i class="icon-close"></i></a>
-
-    <div data-ng-include="'resources/tpl/quick-sidebar.html'" data-ng-controller="QuickSidebarController"
-         class="page-quick-sidebar-wrapper"></div>
-    <!-- END QUICK SIDEBAR -->
 </div>
 <!-- END CONTAINER -->
 

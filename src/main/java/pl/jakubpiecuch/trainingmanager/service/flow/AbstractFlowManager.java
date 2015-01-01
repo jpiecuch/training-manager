@@ -6,6 +6,8 @@ import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanDto;
 
+import java.util.List;
+
 /**
  * Created by Rico on 2014-12-31.
  */
@@ -21,9 +23,14 @@ public abstract class AbstractFlowManager<T extends Flow> implements FlowManager
     }
 
     @Override
+    public List<T> children(long parentId) {
+        return converter.toFlowObjectList(dao.findByParentId(parentId));
+    }
+
+    @Override
     public long create(T element) {
         CommonEntity entity = converter.fromFlowObject(element);
-        dao.save(element);
+        dao.save(entity);
         return entity.getId();
     }
 

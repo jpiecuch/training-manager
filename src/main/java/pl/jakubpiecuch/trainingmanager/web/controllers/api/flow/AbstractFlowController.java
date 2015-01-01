@@ -3,6 +3,7 @@ package pl.jakubpiecuch.trainingmanager.web.controllers.api.flow;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
@@ -17,8 +18,17 @@ public abstract class AbstractFlowController extends AbstractController {
 
     protected abstract Flow.Hierarchy getHierarchy();
 
+    public ResponseEntity create(ApiVersionService.Version version, Flow flow) throws Exception {
+        return new ResponseEntity(versionServices.get(version).createFlow(getHierarchy(), flow), HttpStatus.CREATED);
+    }
+
     @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.GET })
-    public ResponseEntity phase(@PathVariable ApiVersionService.Version version, @PathVariable Long id) throws Exception {
+    public ResponseEntity flow(@PathVariable ApiVersionService.Version version, @PathVariable Long id) throws Exception {
         return new ResponseEntity(versionServices.get(version).flow(getHierarchy(), id), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM_CHILDREN, method = { RequestMethod.GET })
+    public ResponseEntity children(@PathVariable ApiVersionService.Version version, @PathVariable Long id) throws Exception {
+        return new ResponseEntity(versionServices.get(version).children(getHierarchy(), id), HttpStatus.OK);
     }
 }

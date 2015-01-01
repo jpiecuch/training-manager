@@ -92,8 +92,9 @@ public class PhaseDto extends Flow {
         return result;
     }
 
+
     @Override
-    public int getFlowPosition() {
-        return 1;
+    public Hierarchy getHierarchy() {
+        return Hierarchy.PHASE;
     }
 }

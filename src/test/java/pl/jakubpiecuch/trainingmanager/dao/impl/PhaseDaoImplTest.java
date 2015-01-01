@@ -23,7 +23,7 @@ public class PhaseDaoImplTest extends BaseDAOTestCase {
 
     @Test
     public void testFindByPlanId() throws Exception {
-        List<Phase> list = phaseDao.findPhaseByPlanId(PLAN_ID);
+        List<Phase> list = phaseDao.findByParentId(PLAN_ID);
         assertEquals(PHASE_COUNT, list.size());
 
         Phase phase = list.get(0);

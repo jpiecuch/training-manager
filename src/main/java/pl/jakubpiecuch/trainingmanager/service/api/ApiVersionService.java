@@ -18,6 +18,8 @@ public interface ApiVersionService {
     List<String> languages();
     ResponseEntity resource(ResourceService.Type type, String key) throws Exception;
     <T extends Flow> T flow(Flow.Hierarchy hierarchy, Long id);
+    <T extends Flow> List<T> children(Flow.Hierarchy hierarchy, Long id);
+    <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow);
     void signIn(Authentication authentication) throws Exception;
     void signOut();
     void signOn(Registration registration, Locale locale) throws Exception;

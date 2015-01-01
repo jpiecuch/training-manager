@@ -11,7 +11,7 @@ import java.util.List;
 public class PhaseDaoImpl extends CoreDaoImpl implements PhaseDao {
 
     @Override
-    public List<Phase> findPhaseByPlanId(long planId) {
+    public List<Phase> findByParentId(long planId) {
         return session().createQuery("SELECT p FROM Phase p WHERE p.plan.id = :planId").setParameter("planId", planId).list();
     }
 
