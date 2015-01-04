@@ -27,6 +27,10 @@
 
     <bean id="planController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.flow.plan.PlanController" parent="abstractController"/>
 
+    <bean id="dictionaryController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.dictionary.DictionaryController" parent="abstractController"/>
+
+    <bean id="descriptionController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.description.DescriptionController" parent="abstractController"/>
+
     <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
         <property name="userServices">
             <map>
@@ -46,6 +50,8 @@
                 <entry key="PLAN" value-ref="planeManager"/>
             </map>
         </property>
+        <property name="dictionary" ref="constantsDictionary"/>
+        <property name="repository" ref="descriptionRepository"/>
     </bean>
 
 </beans>

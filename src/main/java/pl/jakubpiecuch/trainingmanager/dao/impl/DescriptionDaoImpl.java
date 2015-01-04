@@ -2,17 +2,43 @@ package pl.jakubpiecuch.trainingmanager.dao.impl;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import pl.jakubpiecuch.trainingmanager.dao.DescriptionDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.domain.Description.PartyMuscles;
+import pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionCriteria;
 
 import java.util.List;
 
 public class DescriptionDaoImpl extends CoreDaoImpl  implements DescriptionDao {
-    
+
+    @Override
+    public Long count() {
+        return (Long) session().createQuery("SELECT count(*) FROM Description").uniqueResult();
+    }
+
+    @Override
+    public PageResult<Description> findByCriteria(DescriptionCriteria criteria) {
+        Criteria daoCriteria = session().createCriteria(Description.class);
+        criteria.fillDaoCriteria(daoCriteria);
+        final List list = daoCriteria.list();
+        final long count = count();
+        return new PageResult<Description>() {
+            @Override
+            public List<Description> getResult() {
+                return list;
+            }
+
+            @Override
+            public long getCount() {
+                return count;
+            }
+        };
+    }
+
     @Override
     public List<Description> findAll() {
         return session().createQuery("SELECT e FROM Description e ORDER BY e.id").list();

@@ -47,7 +47,7 @@ License: You must have a valid license purchased only from themeforest(the above
           id="style_color"/>
     <link href="resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
     <!-- END THEME STYLES -->
-
+    <link href="resources/css/custom.css" rel="stylesheet" type="text/css"/>
     <link rel="shortcut icon" href="favicon.ico"/>
 </head>
 <!-- END HEAD -->

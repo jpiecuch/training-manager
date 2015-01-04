@@ -1,8 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.service.api;
 
 import org.springframework.http.ResponseEntity;
+import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.PhaseDao;
+import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
+import pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionCriteria;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
@@ -20,6 +23,8 @@ public interface ApiVersionService {
     <T extends Flow> T flow(Flow.Hierarchy hierarchy, Long id);
     <T extends Flow> List<T> children(Flow.Hierarchy hierarchy, Long id);
     <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow);
+    PageResult<Description> descriptions(DescriptionCriteria descriptionCriteria);
+    Object dictionary(long id);
     void signIn(Authentication authentication) throws Exception;
     void signOut();
     void signOn(Registration registration, Locale locale) throws Exception;

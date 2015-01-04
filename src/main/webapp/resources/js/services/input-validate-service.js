@@ -1,6 +1,6 @@
 MetronicApp.service('inputValidateService', function() {
     this.isValid = function(input) {
-        return input.$valid && input.$touched
+        return input.$valid && input.$touched;
     }
 
     this.isNotValid = function(input) {

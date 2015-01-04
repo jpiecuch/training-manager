@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @RequestMapping(ApiURI.API_LANGUAGE_PATH)
 @RestController
-@Controller
 public class LanguageController extends AbstractController {
     
     @RequestMapping(method = { RequestMethod.GET })

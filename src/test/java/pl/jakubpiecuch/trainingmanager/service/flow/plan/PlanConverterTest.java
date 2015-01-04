@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class PlanConverterTest {
 
     private static final Long ID = 1l;
-    private static final Plan.Goal GOAL = Plan.Goal.muscles;
+    private static final Plan.Goal GOAL = Plan.Goal.MUSCLES;
     private static final String NAME = "name";
     private static PlanDto PLAN_FLOW = new PlanDto();
     private static Plan PLAN = new Plan();

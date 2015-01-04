@@ -1,10 +1,6 @@
 'use strict';
 
 MetronicApp.controller('LoginController', function($state, $scope, $http, $rootScope, urlService, authenticateService, resourceService, inputValidateService, policyService) {
-    // set sidebar closed and body solid layout mode
-    $rootScope.settings.layout.pageBodySolid = true;
-    $rootScope.settings.layout.pageSidebarClosed = false;
-
     $scope.login = {
         tab: {
             idx: 0,

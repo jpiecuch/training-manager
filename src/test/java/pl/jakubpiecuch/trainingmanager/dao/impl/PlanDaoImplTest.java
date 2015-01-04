@@ -12,11 +12,11 @@ import static org.junit.Assert.*;
 public class PlanDaoImplTest extends BaseDAOTestCase {
 
     private static final Long ID = 1l;
-    private static final Plan.Goal GOAL = Plan.Goal.muscles;
+    private static final Plan.Goal GOAL = Plan.Goal.MUSCLES;
     private static final String NAME = "Main plan";
     private static final Long NOT_PERSISTED_ID = 99l;
     private static final String NAME_SAVE = "save plan";
-    private static final Plan.Goal GOAL_SAVE = Plan.Goal.strength;
+    private static final Plan.Goal GOAL_SAVE = Plan.Goal.STRENGTH;
     private static final Long ACCOUNT_ID = 1l;
     private static final Account CREATOR_SAVE = new Account(ACCOUNT_ID);
 

@@ -9,9 +9,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-import pl.jakubpiecuch.trainingmanager.dao.PhaseDao;
+import pl.jakubpiecuch.trainingmanager.dao.PageResult;
+import pl.jakubpiecuch.trainingmanager.domain.Description;
+import pl.jakubpiecuch.trainingmanager.service.dictionary.Dictionary;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.flow.FlowManager;
+import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
+import pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionCriteria;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
@@ -40,6 +44,18 @@ public class Version1Service implements ApiVersionService {
     private Map<String, PropertiesConfiguration> propertiesConfigurations;
     private String[] langs;
     private Map<Flow.Hierarchy, FlowManager> flowManagers;
+    private Dictionary dictionary;
+    private Repository repository;
+
+    @Override
+    public PageResult<Description> descriptions(DescriptionCriteria descriptionCriteria) {
+        return repository.retrieve(descriptionCriteria);
+    }
+
+    @Override
+    public Object dictionary(long id) {
+        return dictionary.retrieve(id);
+    }
 
     @Override
     public <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow) {
@@ -163,6 +179,14 @@ public class Version1Service implements ApiVersionService {
 
     public void setFlowManagers(Map<Flow.Hierarchy, FlowManager> flowManagers) {
         this.flowManagers = flowManagers;
+    }
+
+    public void setDictionary(Dictionary dictionary) {
+        this.dictionary = dictionary;
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
     @PostConstruct

@@ -133,6 +133,12 @@
         </property>
         <property name="validator" ref="authenticationValidator"/>
     </bean>
+
+    <bean id="constantsDictionary" class="pl.jakubpiecuch.trainingmanager.service.dictionary.constants.ConstantsDictionary"/>
+
+    <bean  id="descriptionRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionRepository">
+        <property name="descriptionDao" ref="descriptionDao"/>
+    </bean>
     
     <import resource="applicationContext-social.xml"/>
     <import resource="controller-context.xml"/>
