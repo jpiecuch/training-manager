@@ -10,7 +10,12 @@ import java.util.List;
 public class ExerciseDaoImpl extends CoreDaoImpl implements ExerciseDao {
 
     @Override
-    public List<Exercise> findByWorkoutId(long workoutId) {
-        return session().createQuery("SELECT e FROM Exercise e WHERE e.workout.id = :workoutId").setParameter("workoutId", workoutId).list();
+    public Exercise findById(long id) {
+        return (Exercise) session().createQuery("SELECT e FROM Exercise e WHERE e.id = :id").setParameter("id", id).uniqueResult();
+    }
+
+    @Override
+    public List<Exercise> findByParentId(long parentId) {
+        return session().createQuery("SELECT e FROM Exercise e LEFT JOIN FETCH e.description WHERE e.workout.id = :workoutId").setParameter("workoutId", parentId).list();
     }
 }

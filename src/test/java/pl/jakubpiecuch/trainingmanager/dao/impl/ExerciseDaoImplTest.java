@@ -29,7 +29,7 @@ public class ExerciseDaoImplTest extends BaseDAOTestCase {
     
     @Test
     public void testFindByWorkoutId() {
-        List<Exercise> list = exerciseDao.findByWorkoutId(WORKOUT_ID);
+        List<Exercise> list = exerciseDao.findByParentId(WORKOUT_ID);
 
         assertEquals(EXERCISE_COUNT, list.size());
 

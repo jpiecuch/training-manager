@@ -1,5 +1,5 @@
-training.service('alertService', function($alert, alertOptions, $filter) {
+MetronicApp.service('alertService', function(toaster, $filter) {
     this.show = function(params) {
-        $alert(angular.extend({}, alertOptions, {title: $filter('translate')(params.title), content: $filter('translate')(params.description), type: params.type}));
+        toaster.pop(params.type, $filter('translate')(params.title), $filter('translate')(params.description), 5000);
     }
 });

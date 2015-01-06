@@ -19,7 +19,7 @@ public class WorkoutDaoImplTest extends BaseDAOTestCase {
 
     @Test
     public void testFindByPhaseId() {
-        List<Workout> list = workoutDao.findByPhaseId(PHASE_ID);
+        List<Workout> list = workoutDao.findByParentId(PHASE_ID);
 
         assertEquals(WORKOUT_COUNT, list.size());
 

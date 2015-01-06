@@ -48,6 +48,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="resources/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
     <!-- END THEME STYLES -->
     <link href="resources/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/toaster.css" rel="stylesheet" type="text/css"/>
     <link rel="shortcut icon" href="favicon.ico"/>
 </head>
 <!-- END HEAD -->
@@ -94,6 +95,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <div class="page-content-wrapper">
         <div ng-class="{'page-content' : settings.isUserSignIn}">
             <!-- BEGIN ACTUAL CONTENT -->
+            <toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'positionClass': 'toast-top-right'}"></toaster-container>
             <div ui-view class="fade-in-up">
             </div>
             <!-- END ACTUAL CONTENT -->
@@ -120,17 +122,19 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <!-- BEGIN CORE ANGULARJS PLUGINS -->
 <script src="resources/assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
+<script src="resources/assets/global/plugins/angularjs/angular-animate.min.js" type="text/javascript"></script>
 <script src="resources/assets/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
 <script src="resources/assets/global/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>
 <script src="resources/assets/global/plugins/angularjs/angular-cookies.min.js" type="text/javascript"></script>
 <script src="resources/assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
 <script src="resources/assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
-<script src="resources/assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/angular-translate.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/angular-translate-loader-static-files.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/angular-translate-loader-url.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/angular-translate-storage-cookie.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/angular-translate-storage-local.min.js" type="text/javascript"></script>
+<script src="resources/js/modules/ui-bootstrap-tpls-0.12.0.min.js" type="text/javascript"></script>
+<script src="resources/js/modules/toaster.js" type="text/javascript"></script>
 <!-- END CORE ANGULARJS PLUGINS -->
 
 <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
@@ -140,6 +144,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="resources/js/services/resource-service.js" type="text/javascript"></script>
 <script src="resources/js/services/input-validate-service.js" type="text/javascript"></script>
 <script src="resources/js/services/policy-service.js" type="text/javascript"></script>
+<script src="resources/js/services/alert-service.js" type="text/javascript"></script>
 <script src="resources/js/directives.js" type="text/javascript"></script>
 <!-- END APP LEVEL ANGULARJS SCRIPTS -->
 

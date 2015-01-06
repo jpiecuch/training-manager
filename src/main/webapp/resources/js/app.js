@@ -9,8 +9,15 @@ var MetronicApp = angular.module("MetronicApp", [
     "oc.lazyLoad",  
     "ngSanitize",
     "pascalprecht.translate",
-    "ngCookies"
+    "ngCookies",
+    'toaster'
 ]);
+
+MetronicApp.config(['$animateProvider',
+    function($animateProvider) {
+        $animateProvider.classNameFilter(/has-animate/);
+    }
+])
 
 MetronicApp.run(function ($rootScope, $location, $state, authenticateService, isSignIn) {
     $rootScope.settings = {

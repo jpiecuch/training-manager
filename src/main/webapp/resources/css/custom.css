@@ -464,9 +464,8 @@ small-tiles(new in v1.1.1)
 
 .indicator {
     position: absolute;
-    top: 0;
+    top: 25px;
     left: 40px;
-    bottom: 0;
     right: 0;
     overflow: hidden;
     font-size: 120px;
@@ -483,4 +482,219 @@ small-tiles(new in v1.1.1)
 .indicator.error {
     color: #a94442;
     opacity: 0.6;
+}
+
+/***
+dictionary-tiles(new in v1.1.1)
+***/
+.dictionary-tiles:before, .dictionary-tiles:after {
+    display: table;
+    content: " ";
+}
+.dictionary-tiles:after {
+    clear: both;
+}
+.dictionary-tiles .dictionary-tile {
+    display: block;
+    letter-spacing: 0.02em;
+    float: left;
+    height: 20px;
+    width:100% !important;
+    cursor: pointer;
+    text-decoration: none;
+    color: #ffffff;
+    position: relative;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    line-height: 20px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    margin: 0 10px 5px 0;
+}
+.dictionary-tiles .dictionary-tile:after, .dictionary-tiles .dictionary-tile:before {
+    content: "";
+    float: left;
+}
+.dictionary-tiles .dictionary-tile.double {
+    width: 280px !important;
+}
+.dictionary-tiles .dictionary-tile.double-down {
+    height: 280px !important;
+}
+.dictionary-tiles .dictionary-tile.double-down i {
+    margin-top: 95px;
+}
+.dictionary-tiles .dictionary-tile:hover {
+    border-color: #aaa !important;
+}
+.dictionary-tiles .dictionary-tile:active, .dictionary-tiles .dictionary-tile.selected {
+    border-color: #ccc !important;
+}
+.dictionary-tiles .dictionary-tile.selected .corner:after {
+    content: "";
+    display: inline-block;
+    border-left: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+    border-right: 40px solid #ccc;
+    position: absolute;
+    top: -3px;
+    right: -3px;
+}
+.dictionary-tiles .dictionary-tile.selected .check:after {
+    content: "";
+    font-family: FontAwesome;
+    font-size: 13px;
+    content: "\f00c";
+    display: inline-block;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+.dictionary-tiles .dictionary-tile.icon {
+    padding: 0;
+}
+.dictionary-tiles .dictionary-tile.image .dictionary-tile-body {
+    padding: 0 !important;
+}
+.dictionary-tiles .dictionary-tile.image .dictionary-tile-body > img {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    max-width: 100%;
+}
+.dictionary-tiles .dictionary-tile.image .dictionary-tile-body h3 {
+    display: inline-block;
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-body {
+    height: 100%;
+    vertical-align: top;
+    padding: 2px 2px;
+    overflow: hidden;
+    position: relative;
+    font-weight: 400;
+    font-size: 12px;
+    color: #000000;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-body p {
+    font-weight: 400;
+    font-size: 13px;
+    color: #000000;
+    color: #ffffff;
+    line-height: 20px;
+    overflow: hidden;
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-body p:hover {
+    color: rgba(0, 0, 0, 0.8);
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-body p:active {
+    color: rgba(0, 0, 0, 0.4);
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-body p:hover {
+    color: #ffffff;
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-body img {
+    float: left;
+    margin-right: 10px;
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-body img.pull-right {
+    float: right !important;
+    margin-left: 10px;
+    margin-right: 0px;
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-body > .content {
+    display: inline-block;
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-body > i {
+    margin-top: 17px;
+    display: block;
+    font-size: 56px;
+    line-height: 56px;
+    text-align: center;
+}
+
+.dictionary-tiles .dictionary-tile .dictionary-tile-body > span {
+    display: block;
+    font-size: 12px;
+    line-height: 12px;
+    text-align: center;
+}
+
+.dictionary-tiles .dictionary-tile .dictionary-tile-body h1,
+.dictionary-tiles .dictionary-tile .dictionary-tile-body h2,
+.dictionary-tiles .dictionary-tile .dictionary-tile-body h3,
+.dictionary-tiles .dictionary-tile .dictionary-tile-body h4,
+.dictionary-tiles .dictionary-tile .dictionary-tile-body h5,
+.dictionary-tiles .dictionary-tile .dictionary-tile-body h6,
+.dictionary-tiles .dictionary-tile .dictionary-tile-body p {
+    padding: 0;
+    margin: 0;
+    line-height: 14px;
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-body h1:hover,
+.dictionary-tiles .dictionary-tile .dictionary-tile-body h2:hover,
+.dictionary-tiles .dictionary-tile .dictionary-tile-body h3:hover,
+.dictionary-tiles .dictionary-tile .dictionary-tile-body h4:hover,
+.dictionary-tiles .dictionary-tile .dictionary-tile-body h5:hover,
+.dictionary-tiles .dictionary-tile .dictionary-tile-body h6:hover,
+.dictionary-tiles .dictionary-tile .dictionary-tile-body p:hover {
+    color: #ffffff;
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-body h3,
+.dictionary-tiles .dictionary-tile .dictionary-tile-body h4 {
+    margin-bottom: 5px;
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-object {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-height: 30px;
+    background-color: transparent;
+    *zoom: 1;
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-object:before, .dictionary-tiles .dictionary-tile .dictionary-tile-object:after {
+    display: table;
+    content: "";
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-object:after {
+    clear: both;
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-object > .name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right: 15px;
+    font-weight: 400;
+    font-size: 13px;
+    color: #ffffff;
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-object > .name > i {
+    vertical-align: middle;
+    display: block;
+    font-size: 24px;
+    height: 18px;
+    width: 24px;
+}
+.dictionary-tiles .dictionary-tile .dictionary-tile-object > .number {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 0;
+    color: #ffffff;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    line-height: 14px;
+    margin-bottom: 8px;
+    margin-right: 10px;
+}
+
+.input-icon.select-right > i {
+    margin-right: 10px;
 }

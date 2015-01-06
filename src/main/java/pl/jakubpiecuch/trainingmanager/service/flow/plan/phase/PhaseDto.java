@@ -2,6 +2,9 @@ package pl.jakubpiecuch.trainingmanager.service.flow.plan.phase;
 
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutDto;
+
+import java.util.List;
 
 /**
  * Created by Rico on 2014-12-31.
@@ -14,6 +17,7 @@ public class PhaseDto extends Flow {
     private Plan.Goal goal;
     private Long planId;
     private Integer weeks;
+    private List<WorkoutDto> workouts;
 
     public Long getId() {
         return id;
@@ -61,6 +65,14 @@ public class PhaseDto extends Flow {
 
     public void setWeeks(Integer weeks) {
         this.weeks = weeks;
+    }
+
+    public List<WorkoutDto> getWorkouts() {
+        return workouts;
+    }
+
+    public void setWorkouts(List<WorkoutDto> workouts) {
+        this.workouts = workouts;
     }
 
     @Override

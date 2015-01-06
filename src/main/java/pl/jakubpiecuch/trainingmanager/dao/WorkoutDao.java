@@ -5,6 +5,5 @@ import pl.jakubpiecuch.trainingmanager.domain.Workout;
 
 import java.util.List;
 
-public interface WorkoutDao extends CoreDao {
-    List<Workout> findByPhaseId(long phaseId);
+public interface WorkoutDao extends BaseDao<Workout> {
 }

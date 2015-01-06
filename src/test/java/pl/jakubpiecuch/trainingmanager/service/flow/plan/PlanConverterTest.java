@@ -30,7 +30,7 @@ public class PlanConverterTest {
 
     @Test
     public void testToFlowObject() throws Exception {
-        PlanDto flow = CONVERTER.toFlowObject(PLAN);
+        PlanDto flow = CONVERTER.toFlowObject(PLAN, false);
         assertEquals(flow, PLAN_FLOW);
     }
 
@@ -42,7 +42,7 @@ public class PlanConverterTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testToFlowObjectNull() throws Exception {
-        CONVERTER.toFlowObject(null);
+        CONVERTER.toFlowObject(null, false);
     }
 
     @Test(expected = IllegalArgumentException.class)

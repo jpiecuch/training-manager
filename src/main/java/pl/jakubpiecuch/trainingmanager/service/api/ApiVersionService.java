@@ -20,9 +20,9 @@ public interface ApiVersionService {
 
     List<String> languages();
     ResponseEntity resource(ResourceService.Type type, String key) throws Exception;
-    <T extends Flow> T flow(Flow.Hierarchy hierarchy, Long id);
-    <T extends Flow> List<T> children(Flow.Hierarchy hierarchy, Long id);
-    <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow);
+    <T extends Flow> T flow(Flow.Hierarchy hierarchy, Long id, boolean full);
+    <T extends Flow> List<T> children(Flow.Hierarchy hierarchy, Long id, boolean full);
+    <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow) throws Exception;
     PageResult<Description> descriptions(DescriptionCriteria descriptionCriteria);
     Object dictionary(long id);
     void signIn(Authentication authentication) throws Exception;

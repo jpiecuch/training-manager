@@ -1,17 +1,23 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
+
+import java.util.List;
 
 /**
  * Created by Rico on 2014-12-31.
  */
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class PlanDto extends Flow {
 
     private Long id;
     private String name;
     private Plan.Goal goal;
     private Long creatorId;
+    private List<PhaseDto> phases;
 
     public Long getId() {
         return id;
@@ -43,6 +49,14 @@ public class PlanDto extends Flow {
 
     public void setCreatorId(Long creatorId) {
         this.creatorId = creatorId;
+    }
+
+    public List<PhaseDto> getPhases() {
+        return phases;
+    }
+
+    public void setPhases(List<PhaseDto> phases) {
+        this.phases = phases;
     }
 
     @Override

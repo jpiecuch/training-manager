@@ -58,18 +58,18 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Override
-    public <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow) {
+    public <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow) throws Exception {
         return flowManagers.get(hierarchy).create(flow);
     }
 
     @Override
-    public <T extends Flow> List<T> children(Flow.Hierarchy hierarchy, Long id) {
-        return flowManagers.get(hierarchy.getChild()).children(id);
+    public <T extends Flow> List<T> children(Flow.Hierarchy hierarchy, Long id, boolean full) {
+        return flowManagers.get(hierarchy.getChild()).children(id, full);
     }
 
     @Override
-    public <T extends Flow> T flow(Flow.Hierarchy hierarchy, Long id) {
-        return (T) flowManagers.get(hierarchy).retrieve(id);
+    public <T extends Flow> T flow(Flow.Hierarchy hierarchy, Long id, boolean full) {
+        return (T) flowManagers.get(hierarchy).retrieve(id, full);
     }
 
     @Override

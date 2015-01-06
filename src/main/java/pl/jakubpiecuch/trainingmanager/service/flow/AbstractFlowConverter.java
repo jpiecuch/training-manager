@@ -12,13 +12,15 @@ import java.util.List;
  */
 public abstract class AbstractFlowConverter<T extends Flow, E extends CommonEntity> implements FlowConverter<T, E> {
 
+    protected FlowManager manager;
+
     @Override
-    public List<T> toFlowObjectList(List<E> list) {
+    public List<T> toFlowObjectList(List<E> list, final boolean full) {
         return Lists.transform(list, new Function<E, T>() {
 
             @Override
             public T apply(E input) {
-                return toFlowObject(input);
+                return toFlowObject(input, full);
             }
         });
     }
@@ -29,23 +31,32 @@ public abstract class AbstractFlowConverter<T extends Flow, E extends CommonEnti
 
             @Override
             public E apply(T input) {
-                return fromFlowObject(input);
+                try {
+                    return fromFlowObject(input);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
             }
         });
     }
 
     @Override
-    public T toFlowObject(E entity) {
+    public T toFlowObject(E entity, boolean full) {
         Assert.notNull(entity);
-        return convertTo(entity);
+        return convertTo(entity, full);
     }
 
     @Override
-    public E fromFlowObject(T flowObject) {
+    public E fromFlowObject(T flowObject) throws Exception {
         Assert.notNull(flowObject);
         return convertFrom(flowObject);
     }
 
-    protected abstract E convertFrom(T flowObject);
-    protected abstract T convertTo(E entity);
+    public void setManager(FlowManager manager) {
+        this.manager = manager;
+    }
+
+    protected abstract E convertFrom(T flowObject) throws Exception;
+    protected abstract T convertTo(E entity, boolean full);
 }

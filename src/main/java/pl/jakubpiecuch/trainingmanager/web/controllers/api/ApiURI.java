@@ -11,6 +11,8 @@ public class ApiURI {
     public static final String SIGN_IN_PATH = "/signin";
     public static final String RESOURCE_PATH = "/resources/{type}";
     public static final String LANGUAGE_PATH = "/languages";
+    public static final String EXERCISE_PATH = "/exercise";
+    public static final String WORKOUT_PATH = "/workout";
     public static final String PHASE_PATH = "/phase";
     public static final String PLAN_PATH = "/plan";
     public static final String CHILDREN_PATH = "/children";
@@ -29,8 +31,11 @@ public class ApiURI {
     public static final String API_SIGN_IN_PATH = API_VERSION_PATH + SIGN_IN_PATH;
     public static final String API_RESOURCE_PATH = API_VERSION_PATH + RESOURCE_PATH;
     public static final String API_LANGUAGE_PATH = API_VERSION_PATH + LANGUAGE_PATH;
+    public static final String API_WORKOUT_PATH = API_VERSION_PATH + WORKOUT_PATH;
     public static final String API_PHASE_PATH = API_VERSION_PATH + PHASE_PATH;
     public static final String API_PLAN_PATH = API_VERSION_PATH + PLAN_PATH;
     public static final String API_DICTIONARY_PATH = API_VERSION_PATH + DICTIONARY_PATH;
     public static final String API_DESCRIPTION_PATH = API_VERSION_PATH + DESCRIPTION_PATH;
+
+    public static final String API_EXERCISE_PATH = API_VERSION_PATH + EXERCISE_PATH;
 }

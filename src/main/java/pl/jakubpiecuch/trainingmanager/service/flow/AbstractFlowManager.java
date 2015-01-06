@@ -18,17 +18,17 @@ public abstract class AbstractFlowManager<T extends Flow> implements FlowManager
 
     @Override
     @Transactional
-    public T retrieve(long id) {
-        return (T) converter.toFlowObject(dao.findById(id));
+    public T retrieve(long id, boolean full) {
+        return (T) converter.toFlowObject(dao.findById(id), full);
     }
 
     @Override
-    public List<T> children(long parentId) {
-        return converter.toFlowObjectList(dao.findByParentId(parentId));
+    public List<T> children(long parentId, boolean full) {
+        return converter.toFlowObjectList(dao.findByParentId(parentId), full);
     }
 
     @Override
-    public long create(T element) {
+    public long create(T element) throws Exception {
         CommonEntity entity = converter.fromFlowObject(element);
         dao.save(entity);
         return entity.getId();

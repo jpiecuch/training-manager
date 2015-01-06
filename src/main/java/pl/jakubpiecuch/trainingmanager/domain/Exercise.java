@@ -2,6 +2,7 @@ package pl.jakubpiecuch.trainingmanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import pl.jakubpiecuch.trainingmanager.common.fasterxml.jackson.MapDeserializer;
 import pl.jakubpiecuch.trainingmanager.common.util.ArrayMap;
@@ -51,19 +52,11 @@ public class Exercise extends CommonEntity {
     }
 
     @Transient
-    public Map<Integer, Integer> getSets() {
-        return new ArrayMap<Integer>(reps != null ? WebUtil.toIntArray(StringUtils.splitByWholeSeparatorPreserveAllTokens(reps, SET_DELIMITER)) : new Integer[0]) {
-            @Override
-            public void update(Integer[] array) {
-                 reps = StringUtils.join(array, SET_DELIMITER);
-            }
-        };
+    public Integer[] getSets() {
+        return WebUtil.toIntArray(StringUtils.splitByWholeSeparatorPreserveAllTokens(reps, SET_DELIMITER));
     }
 
-    @JsonDeserialize(using = MapDeserializer.class)
-    protected void setSets(Map<Integer, Integer> sets) {
-        for (Map.Entry<Integer, Integer> e : sets.entrySet()) {
-            getSets().put(e.getKey(), e.getValue());
-        }
+    public void setSets(Integer[] sets) {
+        this.reps = StringUtils.join(sets, SET_DELIMITER);
     }
 }

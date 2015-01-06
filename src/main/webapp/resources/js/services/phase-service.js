@@ -1,4 +1,4 @@
-MetronicApp.service('phaseService', function(workoutService) {
+MetronicApp.service('phaseService', function($q, $http, workoutService, urlService) {
     var FORM_INPUT_DESCRIPTION = "phaseDescription";
     var FORM_INPUT_GOAL = "phaseGoal";
     var FORM_INPUT_WEEKS = "phaseWeeks";
@@ -27,16 +27,38 @@ MetronicApp.service('phaseService', function(workoutService) {
             && phase.form[FORM_INPUT_WEEKS + phase.index].$valid;
     }
 
-    this.get = function(form, index) {
+    this.post = function(phase) {
+        var deferred = $q.defer();
+        deferred.resolve();
+        return deferred.promise.then(function() {
+            return $http.post(urlService.apiURL('/phase'), { description: phase.description, goal: phase.goal, weeks: phase.weeks, planId: phase.planId, position: phase.position, id: phase.id }).then(function(data) {
+                phase.id = data.data;
+                return data;
+            });
+        }).then(function(data) {
+            var array = [];
+            for (var i =0; i < phase.workouts.length; i++) {
+                var workout = phase.workouts[i];
+                workout.phaseId = data.data;
+                array.push(workoutService.post(workout));
+            }
+            return $q.all(array);
+        });
+    }
+
+    this.get = function(form, index, phase) {
+        console.log(phase);
         var me = this;
-        return {
+        var result = {
+            id: phase ? phase.id : undefined,
             form: form,
             index: index,
-            description: null,
-            goal: null,
-            weeks: null,
-            weekDays: [],
+            childIndex: 0,
+            description: phase ? phase.description : null,
+            goal: phase ? phase.goal : null,
+            weeks: phase ? phase.weeks : null,
             workouts: [],
+            visible: true,
             isValid: function() {
                return me.isValid(this);
             },
@@ -57,15 +79,14 @@ MetronicApp.service('phaseService', function(workoutService) {
                     }
                 }
             },
-            addWorkout: function(weekDay, descriptions) {
+            addWorkout: function(weekDay, workout) {
                 if (!this.containsWeekDay(weekDay)) {
-                    var index = '' + this.index + this.workouts.length;
-                    descriptions.params[index] = {firstResult: 0, maxResults: 10, excludeId: []};
-                    this.workouts.push(workoutService.get(weekDay, this.form, index));
+                    var index = '' + this.index + this.childIndex++;
+                    this.workouts.push(workoutService.get(weekDay, this.form, index, workout));
                 } else {
                     for(var i =0; i < this.workouts.length; i++) {
-                        var workout = this.workouts[i];
-                        if (workout.weekDay === weekDay) {
+                        var removeWorkout = this.workouts[i];
+                        if (removeWorkout.weekDay === weekDay) {
                             this.workouts.splice(i, 1);
                             break;
                         }
@@ -73,5 +94,11 @@ MetronicApp.service('phaseService', function(workoutService) {
                 }
             }
         }
+        if (phase) {
+            for(var i = 0; i < phase.workouts.length; i++) {
+                result.addWorkout(i, phase.workouts[i]);
+            }
+        }
+        return result;
     }
 });
