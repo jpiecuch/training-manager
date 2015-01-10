@@ -19,7 +19,22 @@ MetronicApp.service('exerciseService', function($http, urlService) {
     }
 
     this.post = function(exercise) {
-        return $http.post(urlService.apiURL('/exercise'), {sets: exercise.sets, descriptionId: exercise.description.id, workoutId: exercise.workoutId, id: exercise.id}).then(function(data) {
+        console.log({
+            position: exercise.position,
+            group: exercise.group,
+            sets: exercise.sets,
+            descriptionId: exercise.description.id,
+            workoutId: exercise.workoutId,
+            id: exercise.id
+        });
+        return $http.post(urlService.apiURL('/exercise'), {
+            position: exercise.position,
+            group: exercise.group,
+            sets: exercise.sets,
+            descriptionId: exercise.description.id,
+            workoutId: exercise.workoutId,
+            id: exercise.id
+        }).then(function(data) {
             exercise.id = data.data;
             return data;
         });
@@ -43,6 +58,8 @@ MetronicApp.service('exerciseService', function($http, urlService) {
             description: description,
             visible: true,
             sets: array,
+            group: exercise ? exercise.group : null,
+            position: exercise ? exercise.position : null,
             addSet: function() {
                 this.sets.push(0);
             },

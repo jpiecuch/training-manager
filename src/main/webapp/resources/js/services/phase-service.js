@@ -47,7 +47,6 @@ MetronicApp.service('phaseService', function($q, $http, workoutService, urlServi
     }
 
     this.get = function(form, index, phase) {
-        console.log(phase);
         var me = this;
         var result = {
             id: phase ? phase.id : undefined,

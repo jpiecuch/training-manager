@@ -1,16 +1,13 @@
 package pl.jakubpiecuch.trainingmanager.web.controllers.api.description;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
+import pl.jakubpiecuch.trainingmanager.service.repository.Repositories;
 import pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionCriteria;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
-
-import java.util.List;
 
 /**
  * Created by Rico on 2015-01-01.
@@ -29,8 +26,23 @@ public class DescriptionController extends AbstractController {
                                @RequestParam(value = "excludeId", required = false) Long[] excludedIds,
                                @RequestParam(value = "firstResult") Integer firstResult,
                                @RequestParam(value = "maxResults") Integer maxResults) throws Exception {
-        return versionServices.get(version).descriptions(new DescriptionCriteria().addForceRestriction(forces).addLevelRestriction(levels)
+        return versionServices.get(version).retrieveFromRepository(new DescriptionCriteria().addForceRestriction(forces).addLevelRestriction(levels)
                 .addMechanicsRestriction(mechanics).addMuscleRestriction(muscles).addTypeRestriction(types).setFirstResultRestriction(firstResult)
-                .setMaxResultsRestriction(maxResults).addExcludedIdRestriction(excludedIds));
+                .setMaxResultsRestriction(maxResults).addExcludedIdRestriction(excludedIds), Repositories.DESCRIPTION);
+    }
+
+    @RequestMapping(method = { RequestMethod.POST })
+    public long create(@PathVariable ApiVersionService.Version version, @RequestBody Description description) {
+        return versionServices.get(version).storeInRepository(description, Repositories.DESCRIPTION);
+    }
+
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.PUT })
+    public void update(@PathVariable ApiVersionService.Version version, @PathVariable long id, @RequestBody Description description) {
+        versionServices.get(version).updateInRepository(description, Repositories.DESCRIPTION);
+    }
+
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.DELETE })
+    public void delete(@PathVariable ApiVersionService.Version version, @PathVariable long id) {
+        versionServices.get(version).removeFromRepository(id, Repositories.DESCRIPTION);
     }
 }

@@ -20,6 +20,8 @@ public class Exercise extends CommonEntity {
     private Description description;
     private Workout workout;
     private String reps;
+    private Integer position;
+    private Integer group;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "description")
@@ -49,6 +51,24 @@ public class Exercise extends CommonEntity {
 
     protected void setReps(String reps) {
         this.reps = reps;
+    }
+
+    @Column(name = "super_set")
+    public Integer getGroup() {
+        return group;
+    }
+
+    public void setGroup(Integer group) {
+        this.group = group;
+    }
+
+    @Column(name = "position")
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     @Transient

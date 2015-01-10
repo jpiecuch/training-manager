@@ -1,6 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.service.flow;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.dao.BaseDao;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
@@ -15,6 +17,7 @@ public abstract class AbstractFlowManager<T extends Flow> implements FlowManager
 
     private FlowConverter converter;
     private BaseDao dao;
+    private Validator validator;
 
     @Override
     @Transactional
@@ -28,7 +31,8 @@ public abstract class AbstractFlowManager<T extends Flow> implements FlowManager
     }
 
     @Override
-    public long create(T element) throws Exception {
+    public long save(T element) throws Exception {
+        validator.validate(element, new BeanPropertyBindingResult(element, element.getHierarchy().name().toLowerCase()));
         CommonEntity entity = converter.fromFlowObject(element);
         dao.save(entity);
         return entity.getId();
@@ -40,5 +44,9 @@ public abstract class AbstractFlowManager<T extends Flow> implements FlowManager
 
     public void setDao(BaseDao dao) {
         this.dao = dao;
+    }
+
+    public void setValidator(Validator validator) {
+        this.validator = validator;
     }
 }

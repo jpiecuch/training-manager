@@ -10,12 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
-import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.Dictionary;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.flow.FlowManager;
+import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
+import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
+import pl.jakubpiecuch.trainingmanager.service.repository.Repositories;
 import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
-import pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionCriteria;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
@@ -45,11 +46,27 @@ public class Version1Service implements ApiVersionService {
     private String[] langs;
     private Map<Flow.Hierarchy, FlowManager> flowManagers;
     private Dictionary dictionary;
-    private Repository repository;
+    private Map<Repositories, Repository> repositories;
+
 
     @Override
-    public PageResult<Description> descriptions(DescriptionCriteria descriptionCriteria) {
-        return repository.retrieve(descriptionCriteria);
+    public PageResult retrieveFromRepository(Criteria criteria, Repositories type) {
+        return repositories.get(type).retrieve(criteria);
+    }
+
+    @Override
+    public <T extends RepoObject> long storeInRepository(T object, Repositories type) {
+        return repositories.get(type).create(object);
+    }
+
+    @Override
+    public <T extends RepoObject> void updateInRepository(T object, Repositories type) {
+        repositories.get(type).update(object);
+    }
+
+    @Override
+    public void removeFromRepository(long id, Repositories type) {
+        repositories.get(type).delete(id);
     }
 
     @Override
@@ -59,7 +76,7 @@ public class Version1Service implements ApiVersionService {
 
     @Override
     public <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow) throws Exception {
-        return flowManagers.get(hierarchy).create(flow);
+        return flowManagers.get(hierarchy).save(flow);
     }
 
     @Override
@@ -185,8 +202,8 @@ public class Version1Service implements ApiVersionService {
         this.dictionary = dictionary;
     }
 
-    public void setRepository(Repository repository) {
-        this.repository = repository;
+    public void setRepositories(Map<Repositories, Repository> repositories) {
+        this.repositories = repositories;
     }
 
     @PostConstruct

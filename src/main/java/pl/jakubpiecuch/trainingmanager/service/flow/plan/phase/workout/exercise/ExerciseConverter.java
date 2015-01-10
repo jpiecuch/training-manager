@@ -22,6 +22,8 @@ public class ExerciseConverter extends AbstractFlowConverter<ExerciseDto, Exerci
         entity.setDescription(new Description(flowObject.getDescriptionId()));
         entity.setWorkout(new Workout(flowObject.getWorkoutId()));
         entity.setSets(flowObject.getSets());
+        entity.setPosition(flowObject.getPosition());
+        entity.setGroup(flowObject.getGroup());
 
         return entity;
     }
@@ -34,6 +36,8 @@ public class ExerciseConverter extends AbstractFlowConverter<ExerciseDto, Exerci
         dto.setSets(entity.getSets());
         dto.setDescriptionId(entity.getDescription().getId());
         dto.setWorkoutId(entity.getWorkout().getId());
+        dto.setGroup(entity.getGroup());
+        dto.setPosition(entity.getPosition());
         dto.setDescription(full ? entity.getDescription() : null);
         return dto;
     }

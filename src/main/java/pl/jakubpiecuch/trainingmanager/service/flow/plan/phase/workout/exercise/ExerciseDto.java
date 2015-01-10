@@ -13,6 +13,8 @@ public class ExerciseDto extends Flow {
     private Long descriptionId;
     private Integer[] sets;
     private Description description;
+    private Integer position;
+    private Integer group;
 
     public Long getId() {
         return id;
@@ -52,6 +54,22 @@ public class ExerciseDto extends Flow {
 
     public void setDescription(Description description) {
         this.description = description;
+    }
+
+    public Integer getGroup() {
+        return group;
+    }
+
+    public void setGroup(Integer group) {
+        this.group = group;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     @Override

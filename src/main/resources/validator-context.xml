@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="authenticationValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.authentication.AuthenticationValidator"/>
+
+    <bean id="registrationValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.registration.RegistrationValidator">
+        <property name="emailPattern" value="${user.email.pattern}"/>
+        <property name="maxNameLength" value="${user.name.maxLength}"/>
+        <property name="minNameLength" value="${user.name.minLength}"/>
+        <property name="namePattern" value="${user.name.pattern}"/>
+        <property name="maxPasswordLength" value="${user.password.maxLength}"/>
+        <property name="minPasswordLength" value="${user.password.minLength}"/>
+        <property name="passwordPattern" value="${user.password.pattern}"/>
+        <property name="authenticationValidator" ref="authenticationValidator"/>
+    </bean>
+
+    <bean id="descriptionValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.description.DescriptionValidator">
+        <property name="langs" value="${app.langs}"/>
+        <property name="minNameLength" value="${description.name.minLength}"/>
+        <property name="maxNameLength" value="${description.name.maxLength}"/>
+    </bean>
+
+    <bean id="planValidator" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanValidator"/>
+
+    <bean id="phaseValidator" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseValidator"/>
+
+    <bean id="workoutValidator" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutValidator"/>
+
+    <bean id="exerciseValidator" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseValidator"/>
+
+</beans>

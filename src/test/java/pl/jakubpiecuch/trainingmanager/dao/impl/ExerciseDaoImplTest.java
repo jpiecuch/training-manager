@@ -15,14 +15,7 @@ public class ExerciseDaoImplTest extends BaseDAOTestCase {
 
     private static final long WORKOUT_ID = 1l;
     private static final int EXERCISE_COUNT = 2;
-    private static final Map<Integer, Integer> SETS = new HashMap<Integer, Integer>() {
-        {
-            put(0, 12);
-            put(1, 12);
-            put(2, 12);
-            put(3, 12);
-        }
-    };
+    private static final Integer[] SETS = new Integer[] {12,12,12,12};
 
     @Autowired
     private ExerciseDao exerciseDao;

@@ -201,7 +201,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
 
         //Plan
         .state('plan', {
-            url: "/plan",
+            url: "/plan?id",
             templateUrl: "resources/views/plan.html",
             data: {pageTitle: 'Plan'},
             controller: "PlanController",

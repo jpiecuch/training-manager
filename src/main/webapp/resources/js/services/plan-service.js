@@ -74,7 +74,6 @@ MetronicApp.service('planService', function($q, $http, phaseService, formValidat
                     }
                 },
                 addPhase: function(phase) {
-                    console.log(phase);
                     this.phases.push(phaseService.get(this.form, '' + this.index + this.childIndex++, phase));
                 },
                 removePhase:  function(idx) {

@@ -54,6 +54,7 @@ MetronicApp.service('workoutService', function($q, $http, exerciseService, urlSe
             form: form,
             muscles: workout ? workout.muscles : null,
             exercises: [],
+            groupIndex: -1,
             weekDay: workout ? weekDaysMap[workout.weekDay] : weekDay,
             visible: true,
             descriptions: {
@@ -77,8 +78,58 @@ MetronicApp.service('workoutService', function($q, $http, exerciseService, urlSe
             isValid: function() {
                 return me.isValid(this);
             },
+            isInSuperSet: function(exercise) {
+                for(var j = 0; j < this.exercises.length; j++) {
+                    var temp = this.exercises[j];
+                    if (exercise.position !== temp.position && exercise.group === temp.group) {
+                        return true;
+                    }
+                }
+            },
+            isFirstInSuperSet: function(exercise) {
+                for(var j = 0; j < this.exercises.length; j++) {
+                    var temp = this.exercises[j];
+                    if (exercise.position !== temp.position && exercise.group === temp.group && exercise.position < temp.position) {
+                        return true;
+                    }
+                }
+            },
+            removeFromSuperSet: function(exercise) {
+                var updateGroup = false;
+                for(var j = 0; j < this.exercises.length; j++) {
+                    var temp = this.exercises[j];
+                    if (exercise.group !== temp.group && updateGroup) {
+                        temp.group++;
+                    }
+                    if (exercise.position !== temp.position && exercise.group === temp.group) {
+                        if (exercise.position < temp.position) {
+                            temp.group++;
+                        } else {
+                            exercise.group++;
+                        }
+                        updateGroup = true;
+                    }
+                }
+            },
+            joinToSuperSet: function(position1, position2) {
+                var exercise1 = this.exercises[position1 - 1];
+                var exercise2 = this.exercises[position2 - 1];
+                this.exercises.splice(exercise2.position  - 1, 1);
+                this.exercises.splice(exercise1.position > exercise2.position  - 1 ? exercise1.position - 1 : exercise1.position , 0, exercise2);
+                exercise2.group = exercise1.group;
+                for(var j = 0; j < this.exercises.length; j++) {
+                    this.exercises[j].position = j+1;
+                }
+            },
             addExercise: function (description, exercise) {
-                this.exercises.push(exerciseService.get(description, this.form, '' + this.index + this.childIndex++, exercise));
+                var e = exerciseService.get(description, this.form, '' + this.index + this.childIndex++, exercise);
+                if (!e.position) {
+                    e.position = this.exercises.length + 1;
+                    e.group = ++this.groupIndex;
+                } else if (e.group > this.groupIndex){
+                    this.groupIndex = e.group;
+                }
+                this.exercises.push(e);
                 var reduceDescriptions = []
                 for (var i = 0; i < this.descriptions.result.result.length; i++) {
                     if (description.id !== this.descriptions.result.result[i].id) {
@@ -88,7 +139,6 @@ MetronicApp.service('workoutService', function($q, $http, exerciseService, urlSe
                     }
                 }
                 this.descriptions.result.result = reduceDescriptions;
-
             },
             removeExercise:  function(idx) {
                 for(var i = 0; this.exercises.length; i++) {

@@ -1,6 +1,6 @@
 'use strict';
 
-MetronicApp.controller('PlanController', function($scope, dictionaryService, inputValidateService, planService) {
+MetronicApp.controller('PlanController', function($scope, $stateParams, dictionaryService, inputValidateService, planService) {
     $scope.validate = inputValidateService;
 
 
@@ -37,7 +37,7 @@ MetronicApp.controller('PlanController', function($scope, dictionaryService, inp
 
     $scope.$watch('planForm', function(form) {
         if ($scope.plan === undefined && form !== undefined) {
-            planService.get(form, 0).then(function(data) {
+            planService.get(form, 0, $stateParams.id).then(function(data) {
                 $scope.plan = data;
                 if ($scope.plan.phases.length === 0) {
                     $scope.plan.addPhase();

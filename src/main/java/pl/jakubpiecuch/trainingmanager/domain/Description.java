@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.commons.lang.StringUtils;
+import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 
 import javax.persistence.*;
 import java.io.IOException;
@@ -14,10 +15,10 @@ import java.util.Map;
 
 @Entity
 @Table(name = "description")
-public class Description extends CommonEntity {
+public class Description extends CommonEntity implements RepoObject {
 
     private final static String NAME_PERSIST_FORMAT = "%s:%s";
-    private final static String NAME_DELIMETER = ";";
+    private final static String NAME_DELIMITER = ";";
 
     public enum PartyMuscles { ABDOMINALS, TRAPS, BICEPS, CHEST, FOREARMS, QUADS, SHOULDERS, TRICEPS, NECK, CALVES, LATS, MIDDLE_BACK, LOWER_BACK, GLUTES, HAMSTRINGS, ABDUCTORS }
     public enum Type { CARDIO, OLYMPIC_WEIGHTLIFTING, PLYOMETRICS, POWERLIFTING, STRENGTH, STRETCHING, STRONMGMAN }
@@ -129,7 +130,7 @@ public class Description extends CommonEntity {
         return new HashMap<String, String>() {
             {
                 if (StringUtils.isNotEmpty(name)) {
-                    for (String s : StringUtils.splitByWholeSeparatorPreserveAllTokens(name, NAME_DELIMETER)) {
+                    for (String s : StringUtils.splitByWholeSeparatorPreserveAllTokens(name, NAME_DELIMITER)) {
                         String[] result = StringUtils.splitPreserveAllTokens(s, ":");
                         put(result[0], result[1]);
                     }
@@ -145,7 +146,7 @@ public class Description extends CommonEntity {
     }
 
     public void addName(String lang, String name) {
-        this.name = (StringUtils.isNotEmpty(this.name) ? this.name + NAME_DELIMETER : "") + String.format(NAME_PERSIST_FORMAT, lang, name);
+        this.name = (StringUtils.isNotEmpty(this.name) ? this.name + NAME_DELIMITER : "") + String.format(NAME_PERSIST_FORMAT, lang, name);
     }
 
     public static class NamesDeserializer extends JsonDeserializer<Map> {

@@ -15,8 +15,8 @@ INSERT INTO description (id, name, movie_url, description, party_muscles, type, 
 INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (7, 'pl:pl_7;en:en_7', 'url_7', '<h1>test 7</h1>', 1, 5, NULL, 0, 0, 1);
 INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (8, 'pl:pl_8;en:en_8', 'url_8', NULL, 3, 2, NULL, 1, 1, 2);
 
-INSERT INTO exercise (id, workout, description, reps) VALUES (1, 1, 2, '12;12;12;12');
-INSERT INTO exercise (id, workout, description, reps) VALUES (2, 1, 3, '12;10;8;6');
+INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (1, 1, 2, '12;12;12;12', 1, 1);
+INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (2, 1, 3, '12;10;8;6', 2, 2);
 
 INSERT INTO equipment (id, type, data, length, weight, strength) VALUES (3, 4, '{"connectedLoad": false,"type":0}', 180, 8, 150);
 INSERT INTO equipment (id, type, data, length, weight, strength) VALUES (1, 0, '{"handlesNo":6}', 120, NULL, 200);

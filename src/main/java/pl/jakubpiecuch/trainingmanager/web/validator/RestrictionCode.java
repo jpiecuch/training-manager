@@ -5,9 +5,8 @@ package pl.jakubpiecuch.trainingmanager.web.validator;
  */
 public class RestrictionCode {
     public final static String REQUIRED = "required";
-    public final static String INCOMPATIBLE = "incompatible";
     public final static String PATTERN = "pattern";
     public final static String EQUAL = "equal";
-    public final static String MIN_LENGTH = "minLength";
-    public final static String MAX_LENGTH = "maxLength";
+    public final static String MIN_LENGTH = "minLength: %s";
+    public final static String MAX_LENGTH = "maxLength: %s";
 }

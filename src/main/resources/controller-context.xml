@@ -57,7 +57,11 @@
             </map>
         </property>
         <property name="dictionary" ref="constantsDictionary"/>
-        <property name="repository" ref="descriptionRepository"/>
+        <property name="repositories">
+            <map>
+                <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
+            </map>
+        </property>
     </bean>
 
 </beans>

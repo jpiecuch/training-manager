@@ -63,17 +63,6 @@
     
     <bean id="dictionaryService" class="pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryDBService"/>
     
-    <bean id="registrationValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.registration.RegistrationValidator">
-        <property name="emailPattern" value="${user.email.pattern}"/>
-        <property name="maxNameLength" value="${user.name.maxLength}"/>
-        <property name="minNameLength" value="${user.name.minLength}"/>
-        <property name="namePattern" value="${user.name.pattern}"/>
-        <property name="maxPasswordLength" value="${user.password.maxLength}"/>
-        <property name="minPasswordLength" value="${user.password.minLength}"/>
-        <property name="passwordPattern" value="${user.password.pattern}"/>
-        <property name="authenticationValidator" ref="authenticationValidator"/>
-    </bean>
-    
     <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean" >
         <property name="velocityProperties">
             <props>
@@ -138,9 +127,11 @@
 
     <bean  id="descriptionRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionRepository">
         <property name="descriptionDao" ref="descriptionDao"/>
+        <property name="validator" ref="descriptionValidator"/>
     </bean>
     
-    <import resource="applicationContext-social.xml"/>
+    <import resource="social-context.xml"/>
     <import resource="controller-context.xml"/>
     <import resource="flow-context.xml"/>
+    <import resource="validator-context.xml"/>
 </beans>

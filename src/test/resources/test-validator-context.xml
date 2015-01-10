@@ -13,18 +13,7 @@
        <util:properties id="propertyConfigurer" location="classpath:dev.properties"/>
        <context:property-placeholder properties-ref="propertyConfigurer" />
 
-       <bean id="authenticationValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.authentication.AuthenticationValidator"/>
-
-       <bean id="registrationValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.registration.RegistrationValidator">
-              <property name="emailPattern" value="${user.email.pattern}"/>
-              <property name="maxNameLength" value="${user.name.maxLength}"/>
-              <property name="minNameLength" value="${user.name.minLength}"/>
-              <property name="namePattern" value="${user.name.pattern}"/>
-              <property name="maxPasswordLength" value="${user.password.maxLength}"/>
-              <property name="minPasswordLength" value="${user.password.minLength}"/>
-              <property name="passwordPattern" value="${user.password.pattern}"/>
-              <property name="authenticationValidator" ref="authenticationValidator"/>
-       </bean>
-
        <mvc:annotation-driven />
+
+       <import resource="validator-context.xml"/>
 </beans>

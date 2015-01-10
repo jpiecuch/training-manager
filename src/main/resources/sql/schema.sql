@@ -60,6 +60,8 @@ CREATE TABLE exercise (
     id bigint PRIMARY KEY NOT NULL,
     workout bigint NOT NULL,
     description bigint NOT NULL,
+    position integer NOT NULL,
+    super_set integer NOT NULL,
     reps character varying(50) NOT NULL
 );
 

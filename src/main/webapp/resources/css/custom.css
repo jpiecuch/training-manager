@@ -698,3 +698,20 @@ dictionary-tiles(new in v1.1.1)
 .input-icon.select-right > i {
     margin-right: 10px;
 }
+
+.super-set {
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+.super-set-title {
+    border-bottom: solid 1px #e1e1e1;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.super-set-title span {
+    padding-left: 25px;
+    font-size: 16px;
+    color: #4b77be !important;
+    font-weight: 700 !important;
+}
