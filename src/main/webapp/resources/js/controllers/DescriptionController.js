@@ -1,14 +1,11 @@
 'use strict';
 
-MetronicApp.controller('PlanController', function($scope, $stateParams, dictionaryService, inputValidateService, planService) {
+MetronicApp.controller('DescriptionController', function($scope, $stateParams, descriptionService, dictionaryService, inputValidateService) {
     $scope.validate = inputValidateService;
 
+    $scope.dictionary = {};
 
-    $scope.init = function(form) {
-        $scope.dictionary = {
-            weekDays: [0,1,2,3,4,5,6]
-        };
-
+    $scope.init = function() {
         dictionaryService.retrieve(1).then(function(data) {
             $scope.dictionary.goals = data;
         });
@@ -33,17 +30,17 @@ MetronicApp.controller('PlanController', function($scope, $stateParams, dictiona
             $scope.dictionary.force = data;
         });
 
+        dictionaryService.retrieve(7).then(function(data) {
+            $scope.dictionary.langs = data;
+        });
     }
 
-    $scope.$watch('planForm', function(form) {
-        if ($scope.plan === undefined && form !== undefined) {
-            planService.get(form, 0, $stateParams.id).then(function(data) {
-                $scope.plan = data;
-                if ($scope.plan.phases.length === 0) {
-                    $scope.plan.addPhase();
-                }
+    $scope.$watch('form', function(form) {
+        if ($scope.description === undefined && form !== undefined) {
+            descriptionService.get(form, $stateParams.id).then(function(data) {
+                $scope.description = data;
+                console.log($scope.description);
             });
-
         }
     });
 });

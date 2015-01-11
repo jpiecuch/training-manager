@@ -1,6 +1,10 @@
 package pl.jakubpiecuch.trainingmanager.service.api.v1;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.io.IOUtils;
+import org.dom4j.IllegalAddException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
+import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.Dictionary;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.flow.FlowManager;
@@ -32,6 +37,9 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.*;
 
 public class Version1Service implements ApiVersionService {
@@ -47,6 +55,7 @@ public class Version1Service implements ApiVersionService {
     private Map<Flow.Hierarchy, FlowManager> flowManagers;
     private Dictionary dictionary;
     private Map<Repositories, Repository> repositories;
+    private ObjectMapper mapper = new ObjectMapper();
 
 
     @Override
@@ -67,6 +76,15 @@ public class Version1Service implements ApiVersionService {
     @Override
     public void removeFromRepository(long id, Repositories type) {
         repositories.get(type).delete(id);
+    }
+
+    @Override
+    public Equipment resolve(InputStream stream, Equipment.Type type) throws IOException {
+        try {
+            return (Equipment) mapper.readValue(stream, type.getTypeClass());
+        } catch(Exception e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     @Override

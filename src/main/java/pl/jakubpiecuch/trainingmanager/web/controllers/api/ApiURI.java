@@ -18,6 +18,7 @@ public class ApiURI {
     public static final String CHILDREN_PATH = "/children";
     private static final String DICTIONARY_PATH = "/dictionary";
     private static final String DESCRIPTION_PATH = "/descriptions";
+    private static final String EQUIPMENT_PATH = "/equipments";
 
     public static final String KEY_PARAM = "key";
     public static final String KEY_PATH_PARAM = "/{"+ KEY_PARAM +"}";
@@ -36,6 +37,6 @@ public class ApiURI {
     public static final String API_PLAN_PATH = API_VERSION_PATH + PLAN_PATH;
     public static final String API_DICTIONARY_PATH = API_VERSION_PATH + DICTIONARY_PATH;
     public static final String API_DESCRIPTION_PATH = API_VERSION_PATH + DESCRIPTION_PATH;
-
     public static final String API_EXERCISE_PATH = API_VERSION_PATH + EXERCISE_PATH;
+    public static final String API_EQUIPMENT_PATH = API_VERSION_PATH + EQUIPMENT_PATH;
 }

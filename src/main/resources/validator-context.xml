@@ -30,4 +30,31 @@
 
     <bean id="exerciseValidator" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseValidator"/>
 
+    <bean id="equipmentValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.EquipmentValidator">
+        <property name="validators">
+            <map>
+                <entry key="BAR" value-ref="barValidator"/>
+                <entry key="BENCH" value-ref="benchValidator"/>
+                <entry key="DUMBBELL" value-ref="dumbbellValidator"/>
+                <entry key="LOAD" value-ref="loadValidator"/>
+                <entry key="NECK" value-ref="neckValidator"/>
+                <entry key="PRESS" value-ref="pressValidator"/>
+                <entry key="STAND" value-ref="standValidator"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="barValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.bar.BarValidator"/>
+
+    <bean id="benchValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.bench.BenchValidator"/>
+
+    <bean id="neckValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.neck.NeckValidator"/>
+
+    <bean id="loadValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.load.LoadValidator"/>
+
+    <bean id="dumbbellValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.dumbbell.DumbbellValidator"/>
+
+    <bean id="pressValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.press.PressValidator"/>
+
+    <bean id="standValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.stand.StandValidator"/>
 </beans>

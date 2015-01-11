@@ -19,14 +19,6 @@ MetronicApp.service('exerciseService', function($http, urlService) {
     }
 
     this.post = function(exercise) {
-        console.log({
-            position: exercise.position,
-            group: exercise.group,
-            sets: exercise.sets,
-            descriptionId: exercise.description.id,
-            workoutId: exercise.workoutId,
-            id: exercise.id
-        });
         return $http.post(urlService.apiURL('/exercise'), {
             position: exercise.position,
             group: exercise.group,

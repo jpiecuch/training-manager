@@ -1,9 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.service.api;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import org.springframework.http.ResponseEntity;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.PhaseDao;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
+import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
@@ -15,6 +17,9 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,6 +39,8 @@ public interface ApiVersionService {
     <T extends RepoObject> long storeInRepository(T object, Repositories type);
     <T extends RepoObject> void updateInRepository(T object, Repositories type);
     void removeFromRepository(long id, Repositories type);
+
+    Equipment resolve(InputStream stream, Equipment.Type type) throws IOException;
 
     Object dictionary(long id);
 

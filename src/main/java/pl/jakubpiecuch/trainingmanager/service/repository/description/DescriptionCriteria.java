@@ -77,14 +77,16 @@ public class DescriptionCriteria extends Criteria<DescriptionCriteria> {
     public void fillDaoCriteria(org.hibernate.Criteria criteria) {
         if (this.id != null) {
             criteria.add(Restrictions.eq("id", this.id));
-        }
+            criteria.setFirstResult(0);
+            criteria.setMaxResults(1);
+        } else {
+            if (this.firstResult != null) {
+                criteria.setFirstResult(firstResult);
+            }
 
-        if (this.firstResult != null) {
-            criteria.setFirstResult(firstResult);
-        }
-
-        if (this.maxResults != null) {
-            criteria.setMaxResults(maxResults);
+            if (this.maxResults != null) {
+                criteria.setMaxResults(maxResults);
+            }
         }
 
         if (CollectionUtils.isNotEmpty(muscles)) {

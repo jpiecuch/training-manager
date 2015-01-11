@@ -134,6 +134,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="resources/js/modules/angular-translate-storage-cookie.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/angular-translate-storage-local.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/ui-bootstrap-tpls-0.12.0.min.js" type="text/javascript"></script>
+<script src="resources/js/modules/textAngular.min.js" type="text/javascript"></script>
+<script src="resources/js/modules/textAngular-sanitize.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/toaster.js" type="text/javascript"></script>
 <!-- END CORE ANGULARJS PLUGINS -->
 

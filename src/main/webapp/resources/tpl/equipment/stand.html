@@ -1,0 +1,37 @@
+<div class="form-group">
+	<label class="col-md-3 control-label" data-ng-bind="'equipment.strength' | translate"></label>
+
+	<div class="col-md-5">
+		<input name="strength" type="text" class="form-control"
+			   placeholder="{{'equipment.strength.placeholder' | translate}}"
+			   data-ng-model="equipment.strength" required
+			   tooltip="{{'field.required' | translate}}" tooltip-placement="right">
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-md-3 control-label" data-ng-bind="'equipment.levels' | translate"></label>
+
+	<div class="col-md-5">
+		<input name="levels" type="text" class="form-control"
+			   placeholder="{{'equipment.levels.placeholder' | translate}}"
+			   data-ng-model="equipment.config.levels" required
+			   tooltip="{{'field.required' | translate}}" tooltip-placement="right">
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-md-3 control-label" data-ng-bind="'equipment.heightRange' | translate"></label>
+
+	<div class="col-md-2">
+		<input name="heightMin" type="text" class="form-control"
+			   placeholder="{{'equipment.heightMin.placeholder' | translate}}"
+			   data-ng-model="equipment.config.height.min" required
+			   tooltip="{{'field.required' | translate}}" tooltip-placement="right">
+	</div>
+
+	<div class="col-md-2">
+		<input name="heightMax" type="text" class="form-control"
+			   placeholder="{{'equipment.heightMax.placeholder' | translate}}"
+			   data-ng-model="equipment.config.height.max" required
+			   tooltip="{{'field.required' | translate}}" tooltip-placement="right">
+	</div>
+</div>

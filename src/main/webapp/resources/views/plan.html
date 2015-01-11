@@ -23,7 +23,6 @@
             <div class="form-body">
                 <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm.planName), 'has-error' : validate.isNotValid(planForm.planName)}">
                     <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm.planName.$touched}" data-ng-bind="'plan.name' | translate"></label>
-
                     <div class="col-md-4">
                         <div class="input-icon right">
                             <i data-ng-if="planForm.planName.$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm.planName), 'fa-exclamation' : validate.isNotValid(planForm.planName)}"></i>

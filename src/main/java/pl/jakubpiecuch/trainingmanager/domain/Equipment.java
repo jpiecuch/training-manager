@@ -2,15 +2,31 @@ package pl.jakubpiecuch.trainingmanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang.StringUtils;
+import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "equipment")
-@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.INTEGER)
-public abstract class Equipment<T> extends CommonEntity implements EquipmentDescriptor<T> {
-    public interface Type {
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
+public abstract class Equipment<T> extends CommonEntity implements EquipmentDescriptor, RepoObject {
+    public enum Type {
+        BAR(Bar.class), BENCH(Bench.class), DUMBBELL(Dumbbell.class), LOAD(Load.class),
+        NECK(Neck.class), PRESS(Press.class), STAND(Stand.class), RACK(Rack.class);
+
+        private Type(Class clazz){
+            this.clazz = clazz;
+        }
+
+        Class clazz;
+
+        public Class getTypeClass() {
+            return this.clazz;
+        }
+    }
+
+    private interface DiscriminatorType {
         String BAR = "0";
         String BENCH = "1";
         String DUMBBELL = "2";
@@ -35,12 +51,21 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
     }
 
     @Column(name = "type", nullable=false, updatable=false, insertable=false)
-    public int getType() {
+    protected int getDiscriminatorType() {
         return type;
     }
 
-    public void setType(int type) {
+    protected void setDiscriminatorType(int type) {
         this.type = type;
+    }
+
+    @Transient
+    public Type getType() {
+        return Type.values()[type];
+    }
+
+    public void setType(Type type) {
+        this.type = type.ordinal();
     }
 
     @Column(name = "data")
@@ -89,7 +114,7 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
     }
 
     @Entity
-    @DiscriminatorValue(Type.BENCH)
+    @DiscriminatorValue(DiscriminatorType.BENCH)
     public static class Bench extends Equipment<BenchConfig> {
 
         @Override
@@ -101,7 +126,7 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
     }
 
     @Entity
-    @DiscriminatorValue(Type.BAR)
+    @DiscriminatorValue(DiscriminatorType.BAR)
     public static class Bar extends Equipment<BarConfig> {
 
         @Override
@@ -113,7 +138,7 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
     }
 
     @Entity
-    @DiscriminatorValue(Type.NECK)
+    @DiscriminatorValue(DiscriminatorType.NECK)
     public static class Neck extends Equipment<NeckConfig> {
 
         @Override
@@ -125,7 +150,7 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
     }
 
     @Entity
-    @DiscriminatorValue(Type.DUMBBELL)
+    @DiscriminatorValue(DiscriminatorType.DUMBBELL)
     public static class Dumbbell extends Equipment<DumbbellConfig> {
 
         @Override
@@ -137,7 +162,7 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
     }
 
     @Entity
-    @DiscriminatorValue(Type.LOAD)
+    @DiscriminatorValue(DiscriminatorType.LOAD)
     public static class Load extends Equipment<LoadConfig> {
 
         @Override
@@ -149,7 +174,7 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
     }
 
     @Entity
-    @DiscriminatorValue(Type.PRESS)
+    @DiscriminatorValue(DiscriminatorType.PRESS)
     public static class Press extends Equipment<PressConfig> {
 
         @Override
@@ -161,7 +186,7 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
     }
 
     @Entity
-    @DiscriminatorValue(Type.STAND)
+    @DiscriminatorValue(DiscriminatorType.STAND)
     public static class Stand extends Equipment<StandConfig> {
 
         @Override
@@ -173,7 +198,7 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
     }
 
     @Entity
-    @DiscriminatorValue(Type.RACK)
+    @DiscriminatorValue(DiscriminatorType.RACK)
     public static class Rack extends Equipment<RackConfig> {
 
         @Override

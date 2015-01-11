@@ -1,0 +1,157 @@
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="#/" data-ng-bind="'dashboard' | translate"></a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <i class="fa fa-calendar"></i>
+            <a href="#/description" data-ng-bind="'description' | translate"></a>
+        </li>
+    </ul>
+</div>
+<form name="form" class="form-horizontal" data-ng-controller="DescriptionController" data-ng-init="init(form)"
+      data-ng-submit="description.create()" novalidate>
+    <div class="portlet light bg-inverse">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-equalizer font-red-sunglo"></i>
+                <span class="caption-subject bold uppercase"
+                      data-ng-class="{'font-green-jungle' : description.isValid() === true, 'font-red-sunglo ' : description.isValid() === false}"
+                      data-ng-bind="'description' | translate"></span>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <div class="form-body">
+                <div data-ng-repeat="lang in dictionary.langs" class="form-group"
+                     data-ng-class="{'has-success' : validate.isValid(form['name' + lang]), 'has-error' : validate.isNotValid(form['name' + lang])}">
+                    <label class="col-md-3 control-label" data-ng-class="{'bold' : form['name' + lang].$touched}"
+                           data-ng-bind="('description.name' | translate) + ' ' + (lang | translate)"></label>
+
+                    <div class="col-md-5">
+                        <div class="input-icon right">
+                            <i data-ng-if="form['name' + lang].$touched" class="fa"
+                               data-ng-class="{'fa-check' : validate.isValid(form['name' + lang]), 'fa-exclamation' : validate.isNotValid(form['name' + lang])}"></i>
+                            <input name="name{{lang}}" type="text" class="form-control"
+                                   placeholder="{{'description.name.placeholder' | translate}}"
+                                   data-ng-model="description.names[lang]" required
+                                   tooltip="{{'field.required' | translate}}" tooltip-placement="right">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" data-ng-bind="'description.movieUrl' | translate"></label>
+
+                    <div class="col-md-5">
+                        <input name="movieUrl" type="text" class="form-control"
+                               placeholder="{{'description.movieUrl.placeholder' | translate}}"
+                               data-ng-model="description.movieUrl">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" data-ng-bind="'description.description' | translate"></label>
+
+                    <div class="col-md-5">
+                        <div text-angular data-ng-model="description.description"></div>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                     data-ng-class="{'has-success' : validate.isValid(form.muscle), 'has-error' : validate.isNotValid(form.muscle)}">
+                    <label class="col-md-3 control-label" data-ng-class="{'bold' : form.muscle.$touched}"
+                           data-ng-bind="'description.muscles' | translate"></label>
+
+                    <div class="col-md-5">
+                        <div class="input-icon right select-right">
+                            <i data-ng-if="form.muscle.$touched" class="fa"
+                               data-ng-class="{'fa-check' : validate.isValid(form.muscle), 'fa-exclamation' : validate.isNotValid(form.muscle)}"></i>
+                            <select name="muscle" data-ng-model="description.partyMuscles" class="form-control" required
+                                    tooltip="{{'field.required' | translate}}" tooltip-placement="right">
+                                <option data-ng-repeat="muscle in dictionary.muscles" data-ng-bind="muscle"
+                                        value="{{muscle}}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group"
+                     data-ng-class="{'has-success' : validate.isValid(form.type), 'has-error' : validate.isNotValid(form.type)}">
+                    <label class="col-md-3 control-label" data-ng-class="{'bold' : form.type.$touched}"
+                           data-ng-bind="'description.type' | translate"></label>
+
+                    <div class="col-md-5">
+                        <div class="input-icon right select-right">
+                            <i data-ng-if="form.type.$touched" class="fa"
+                               data-ng-class="{'fa-check' : validate.isValid(form.type), 'fa-exclamation' : validate.isNotValid(form.type)}"></i>
+                            <select name="type" data-ng-model="description.type" class="form-control" required
+                                    tooltip="{{'field.required' | translate}}" tooltip-placement="right">
+                                <option data-ng-repeat="type in dictionary.type" data-ng-bind="type"
+                                        value="{{type}}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group"
+                     data-ng-class="{'has-success' : validate.isValid(form.level), 'has-error' : validate.isNotValid(form.level)}">
+                    <label class="col-md-3 control-label" data-ng-class="{'bold' : form.level.$touched}"
+                           data-ng-bind="'description.level' | translate"></label>
+
+                    <div class="col-md-5">
+                        <div class="input-icon right select-right">
+                            <i data-ng-if="form.level.$touched" class="fa"
+                               data-ng-class="{'fa-check' : validate.isValid(form.level), 'fa-exclamation' : validate.isNotValid(form.level)}"></i>
+
+                            <select name="level" data-ng-model="description.level" class="form-control" required
+                                    tooltip="{{'field.required' | translate}}" tooltip-placement="right">
+                                <option data-ng-repeat="level in dictionary.level" data-ng-bind="level"
+                                        value="{{level}}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group"
+                     data-ng-class="{'has-success' : validate.isValid(form.mechanic), 'has-error' : validate.isNotValid(form.mechanic)}">
+                    <label class="col-md-3 control-label" data-ng-class="{'bold' : form.mechanic.$touched}"
+                           data-ng-bind="'description.mechanic' | translate"></label>
+
+                    <div class="col-md-5">
+                        <div class="input-icon right select-right">
+                            <i data-ng-if="form.mechanic.$touched" class="fa"
+                               data-ng-class="{'fa-check' : validate.isValid(form.mechanic), 'fa-exclamation' : validate.isNotValid(form.mechanic)}"></i>
+                            <select name="mechanic" data-ng-model="description.mechanics" class="form-control" required
+                                    tooltip="{{'field.required' | translate}}" tooltip-placement="right">
+                                <option data-ng-repeat="mechanic in dictionary.mechanics"
+                                        data-ng-bind="mechanic" value="{{mechanic}}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group"
+                     data-ng-class="{'has-success' : validate.isValid(form.force), 'has-error' : validate.isNotValid(form.force)}">
+                    <label class="col-md-3 control-label" data-ng-class="{'bold' : form.force.$touched}"
+                           data-ng-bind="'description.force' | translate"></label>
+
+                    <div class="col-md-5">
+                        <div class="input-icon right select-right">
+                            <i data-ng-if="form.force.$touched" class="fa"
+                               data-ng-class="{'fa-check' : validate.isValid(form.force), 'fa-exclamation' : validate.isNotValid(form.force)}"></i>
+
+                            <select name="force" data-ng-model="description.force" class="form-control" required
+                                    tooltip="{{'field.required' | translate}}" tooltip-placement="right">
+                                <option data-ng-repeat="force in dictionary.force" data-ng-bind="force"
+                                        value="{{force}}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="portlet light bg-inverse">
+                <div class="col-md-offset-3 col-md-4">
+                    <button type="submit" class="btn green" data-ng-bind="'description.create' | translate"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

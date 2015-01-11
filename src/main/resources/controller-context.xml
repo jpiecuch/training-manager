@@ -35,6 +35,8 @@
 
     <bean id="descriptionController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.description.DescriptionController" parent="abstractController"/>
 
+    <bean id="equipmentController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.equipment.EquipmentController" parent="abstractController"/>
+
     <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
         <property name="userServices">
             <map>
@@ -60,6 +62,7 @@
         <property name="repositories">
             <map>
                 <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
+                <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
             </map>
         </property>
     </bean>

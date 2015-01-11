@@ -1,44 +1,46 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-public interface EquipmentDescriptor<W> {
+public interface EquipmentDescriptor {
     Class getConfigClass();
 
     public class BenchConfig {
-        private int height;
+        private Integer height;
 
-        public int getHeight() {
+        public Integer getHeight() {
             return height;
         }
     }
 
     public class  NeckConfig {
+        public enum Type {STRAIGHT, EZ}
         private boolean connectedLoad;
-        private int type;
+        private Type type;
 
         public boolean isConnectedLoad() {
             return this.connectedLoad;
         }
 
-        public int getType() {
+        public Type getType() {
             return type;
         }
     }
 
     public class BarConfig {
-        private int handlesNo;
+        private Integer handles;
 
-        public int getHandlesNo() {
-            return handlesNo;
+        public Integer getHandles() {
+            return handles;
         }
     }
 
     public class LoadConfig {
     }
+
     public class StandConfig {
-        private int levels;
+        private Integer levels;
         private Range<Double> height;
 
-        public int getLevels() {
+        public Integer getLevels() {
             return levels;
         }
 
@@ -46,7 +48,9 @@ public interface EquipmentDescriptor<W> {
             return height;
         }
     }
-    public class RackConfig {}
+    public class RackConfig {
+    }
+
     public class DumbbellConfig {
         private boolean connectedLoad;
 
@@ -55,9 +59,9 @@ public interface EquipmentDescriptor<W> {
         }
     }
     public class PressConfig {
-        private int handles;
+        private Integer handles;
 
-        public int getHandles() {
+        public Integer getHandles() {
             return handles;
         }
     }

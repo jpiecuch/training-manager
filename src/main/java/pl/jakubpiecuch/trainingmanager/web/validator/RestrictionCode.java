@@ -9,4 +9,6 @@ public class RestrictionCode {
     public final static String EQUAL = "equal";
     public final static String MIN_LENGTH = "minLength: %s";
     public final static String MAX_LENGTH = "maxLength: %s";
+    public static final String INVALID = "invalid";
+    public static final String LOWER = "lower than: %s";
 }

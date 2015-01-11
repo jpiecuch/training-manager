@@ -24,11 +24,16 @@ public class DescriptionController extends AbstractController {
                                @RequestParam(value = "type", required = false) Description.Type[] types,
                                @RequestParam(value = "mechanic", required = false) Description.Mechanics[] mechanics,
                                @RequestParam(value = "excludeId", required = false) Long[] excludedIds,
-                               @RequestParam(value = "firstResult") Integer firstResult,
-                               @RequestParam(value = "maxResults") Integer maxResults) throws Exception {
+                               @RequestParam(value = "firstResult", required = false, defaultValue = "0") Integer firstResult,
+                               @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults) throws Exception {
         return versionServices.get(version).retrieveFromRepository(new DescriptionCriteria().addForceRestriction(forces).addLevelRestriction(levels)
                 .addMechanicsRestriction(mechanics).addMuscleRestriction(muscles).addTypeRestriction(types).setFirstResultRestriction(firstResult)
                 .setMaxResultsRestriction(maxResults).addExcludedIdRestriction(excludedIds), Repositories.DESCRIPTION);
+    }
+
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.GET })
+    public Description description(@PathVariable ApiVersionService.Version version, @PathVariable long id) {
+        return (Description) versionServices.get(version).retrieveFromRepository(new DescriptionCriteria().setIdRestriction(id), Repositories.DESCRIPTION).getResult().get(0);
     }
 
     @RequestMapping(method = { RequestMethod.POST })

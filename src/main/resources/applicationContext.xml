@@ -61,8 +61,6 @@
         <property name="supportedLocales" value="pl,en"/>
     </bean>
     
-    <bean id="dictionaryService" class="pl.jakubpiecuch.trainingmanager.service.dictionary.DictionaryDBService"/>
-    
     <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean" >
         <property name="velocityProperties">
             <props>
@@ -123,11 +121,18 @@
         <property name="validator" ref="authenticationValidator"/>
     </bean>
 
-    <bean id="constantsDictionary" class="pl.jakubpiecuch.trainingmanager.service.dictionary.constants.ConstantsDictionary"/>
+    <bean id="constantsDictionary" class="pl.jakubpiecuch.trainingmanager.service.dictionary.constants.ConstantsDictionary">
+        <property name="langs" value="${app.langs}"/>
+    </bean>
 
     <bean  id="descriptionRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionRepository">
         <property name="descriptionDao" ref="descriptionDao"/>
         <property name="validator" ref="descriptionValidator"/>
+    </bean>
+
+    <bean  id="equipmentRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.equipment.EquipmentRepository">
+        <property name="equipmentDao" ref="equipmentDao"/>
+        <property name="validator" ref="equipmentValidator"/>
     </bean>
     
     <import resource="social-context.xml"/>

@@ -10,7 +10,8 @@ var MetronicApp = angular.module("MetronicApp", [
     "ngSanitize",
     "pascalprecht.translate",
     "ngCookies",
-    'toaster'
+    'toaster',
+    'textAngular'
 ]);
 
 MetronicApp.config(['$animateProvider',
@@ -218,6 +219,46 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             'resources/js/services/phase-service.js',
                             'resources/js/services/workout-service.js',
                             'resources/js/services/exercise-service.js'
+                        ]
+                    });
+                }]
+            }
+        })
+
+        .state('description', {
+            url: "/description?id",
+            templateUrl: "resources/views/description.html",
+            data: {pageTitle: 'Description'},
+            controller: "DescriptionController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        files: [
+                            'resources/js/controllers/DescriptionController.js',
+                            'resources/js/services/dictionary-service.js',
+                            'resources/js/services/description-service.js',
+                            'resources/js/services/form-validate-service.js',
+                        ]
+                    });
+                }]
+            }
+        })
+
+        .state('equipment', {
+            url: "/equipment?id",
+            templateUrl: "resources/views/equipment.html",
+            data: {pageTitle: 'Equipment'},
+            controller: "EquipmentController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        files: [
+                            'resources/js/controllers/EquipmentController.js',
+                            'resources/js/services/dictionary-service.js',
+                            'resources/js/services/equipment-service.js',
+                            'resources/js/services/form-validate-service.js',
                         ]
                     });
                 }]
