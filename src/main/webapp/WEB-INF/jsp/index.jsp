@@ -49,6 +49,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- END THEME STYLES -->
     <link href="resources/css/custom.css" rel="stylesheet" type="text/css"/>
     <link href="resources/css/toaster.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/ng-table.min.css" rel="stylesheet" type="text/css"/>
     <link rel="shortcut icon" href="favicon.ico"/>
 </head>
 <!-- END HEAD -->
@@ -137,6 +138,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="resources/js/modules/textAngular.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/textAngular-sanitize.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/toaster.js" type="text/javascript"></script>
+<script src="resources/js/modules/ng-table.min.js" type="text/javascript"></script>
 <!-- END CORE ANGULARJS PLUGINS -->
 
 <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->

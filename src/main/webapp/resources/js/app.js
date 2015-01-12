@@ -11,7 +11,8 @@ var MetronicApp = angular.module("MetronicApp", [
     "pascalprecht.translate",
     "ngCookies",
     'toaster',
-    'textAngular'
+    'textAngular',
+    'ngTable'
 ]);
 
 MetronicApp.config(['$animateProvider',
@@ -259,6 +260,58 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             'resources/js/services/dictionary-service.js',
                             'resources/js/services/equipment-service.js',
                             'resources/js/services/form-validate-service.js',
+                        ]
+                    });
+                }]
+            }
+        })
+
+        //Plan
+        .state('plans', {
+            url: "/plans",
+            templateUrl: "resources/views/plans.html",
+            data: {pageTitle: 'Plans'},
+            controller: "PlansController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        files: [
+                            'resources/js/controllers/PlansController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+
+        .state('descriptions', {
+            url: "/descriptions",
+            templateUrl: "resources/views/descriptions.html",
+            data: {pageTitle: 'Description'},
+            controller: "DescriptionsController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        files: [
+                            'resources/js/controllers/DescriptionsController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+
+        .state('equipments', {
+            url: "/equipments",
+            templateUrl: "resources/views/equipments.html",
+            data: {pageTitle: 'Equipment'},
+            controller: "EquipmentsController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        files: [
+                            'resources/js/controllers/EquipmentsController.js'
                         ]
                     });
                 }]

@@ -1,5 +1,5 @@
-<div class="form-group">
-	<label class="col-md-3 control-label" data-ng-bind="'equipment.weight' | translate"></label>
+<div class="form-group" data-ng-class="{'has-success' : validate.isValid(form.weight), 'has-error' : validate.isNotValid(form.weight)}">
+	<label class="col-md-3 control-label" data-ng-bind="'equipment.weight' | translate" data-ng-class="{'bold' : form.weight.$touched}"></label>
 
 	<div class="col-md-5">
 		<input name="weight" type="text" class="form-control"
@@ -8,8 +8,8 @@
 			   tooltip="{{'field.required' | translate}}" tooltip-placement="right">
 	</div>
 </div>
-<div class="form-group">
-	<label class="col-md-3 control-label" data-ng-bind="'equipment.strength' | translate"></label>
+<div class="form-group" data-ng-class="{'has-success' : validate.isValid(form.strength), 'has-error' : validate.isNotValid(form.strength)}">
+	<label class="col-md-3 control-label" data-ng-bind="'equipment.strength' | translate" data-ng-class="{'bold' : form.strength.$touched}"></label>
 
 	<div class="col-md-5">
 		<input name="strength" type="text" class="form-control"
@@ -19,7 +19,7 @@
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label" data-ng-bind="'equipment.handles' | translate"></label>
+	<label class="col-md-3 control-label" data-ng-bind="'equipment.handles' | translate" data-ng-class="{'bold' : form.handles.$touched}"></label>
 
 	<div class="col-md-5">
 		<input name="handles" type="text" class="form-control"
