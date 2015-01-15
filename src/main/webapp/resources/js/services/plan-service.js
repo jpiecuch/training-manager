@@ -93,4 +93,8 @@ MetronicApp.service('planService', function($q, $http, phaseService, formValidat
             return plan;
         });
     }
+
+    this.retrieve = function(params) {
+        return $http.get(urlService.apiURL('/plan'), { params: params });
+    }
 });

@@ -277,7 +277,15 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         files: [
-                            'resources/js/controllers/PlansController.js'
+                            'resources/js/controllers/PlansController.js',
+                            'resources/js/services/table-service.js',
+                            'resources/js/services/form-validate-service.js',
+                            'resources/js/services/plan-service.js',
+                            'resources/js/services/phase-service.js',
+                            'resources/js/services/workout-service.js',
+                            'resources/js/services/exercise-service.js',
+                            'resources/js/services/dictionary-service.js',
+                            'resources/js/services/description-service.js',
                         ]
                     });
                 }]
