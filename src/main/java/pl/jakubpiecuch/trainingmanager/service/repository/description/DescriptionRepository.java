@@ -16,7 +16,7 @@ public class DescriptionRepository implements Repository<Description, Descriptio
     private Validator validator;
 
     @Override
-    public PageResult<Description> retrieve(DescriptionCriteria criteria) {
+    public PageResult<Description> read(DescriptionCriteria criteria) {
         return descriptionDao.findByCriteria(criteria);
     }
 

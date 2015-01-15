@@ -2,9 +2,13 @@ package pl.jakubpiecuch.trainingmanager.web.controllers.api.flow.plan;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.jakubpiecuch.trainingmanager.dao.PageResult;
+import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanCriteria;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanDto;
+import pl.jakubpiecuch.trainingmanager.service.repository.Repositories;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.flow.AbstractFlowController;
 
@@ -23,5 +27,14 @@ public class PlanController extends AbstractFlowController {
     @RequestMapping(method = { RequestMethod.POST })
     public ResponseEntity create(@PathVariable ApiVersionService.Version version, @RequestBody PlanDto flow) throws Exception {
         return super.create(version, flow);
+    }
+
+    @RequestMapping(method = { RequestMethod.GET })
+    public PageResult<PlanDto> plans(@PathVariable ApiVersionService.Version version,
+                                                @RequestParam(value = "goal", required = false) Plan.Goal[] goals,
+                                                @RequestParam(value = "firstResult", required = false, defaultValue = "0") Integer firstResult,
+                                                @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults) throws Exception {
+        return versionServices.get(version).retrieveFromRepository(new PlanCriteria().setFirstResultRestriction(firstResult)
+                .setMaxResultsRestriction(maxResults).addGoalRestrictions(goals), Repositories.PLAN);
     }
 }

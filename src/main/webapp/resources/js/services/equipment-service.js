@@ -94,5 +94,9 @@ MetronicApp.service('equipmentService', function(urlService, $http, $q, formVali
             return result;
         });
     }
+
+    this.retrieve = function(params) {
+        return $http.get(urlService.apiURL('/equipments'), { params: params });
+    }
 });
 

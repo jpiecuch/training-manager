@@ -1,10 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.api.v1;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.io.IOUtils;
-import org.dom4j.IllegalAddException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,10 +15,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.Dictionary;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.flow.FlowManager;
-import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
-import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
-import pl.jakubpiecuch.trainingmanager.service.repository.Repositories;
-import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
+import pl.jakubpiecuch.trainingmanager.service.repository.*;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
@@ -39,7 +33,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.*;
 
 public class Version1Service implements ApiVersionService {
@@ -55,12 +48,13 @@ public class Version1Service implements ApiVersionService {
     private Map<Flow.Hierarchy, FlowManager> flowManagers;
     private Dictionary dictionary;
     private Map<Repositories, Repository> repositories;
+    private Map<Repositories, ReadRepository> readRepositories;
     private ObjectMapper mapper = new ObjectMapper();
 
 
     @Override
     public PageResult retrieveFromRepository(Criteria criteria, Repositories type) {
-        return repositories.get(type).retrieve(criteria);
+        return readRepositories.get(type).read(criteria);
     }
 
     @Override
@@ -210,6 +204,10 @@ public class Version1Service implements ApiVersionService {
 
     public void setPropertiesConfigurations(Map<String, PropertiesConfiguration> propertiesConfigurations) {
         this.propertiesConfigurations = propertiesConfigurations;
+    }
+
+    public void setReadRepositories(Map<Repositories, ReadRepository> readRepositories) {
+        this.readRepositories = readRepositories;
     }
 
     public void setFlowManagers(Map<Flow.Hierarchy, FlowManager> flowManagers) {

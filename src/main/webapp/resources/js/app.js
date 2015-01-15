@@ -294,7 +294,10 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         files: [
-                            'resources/js/controllers/DescriptionsController.js'
+                            'resources/js/controllers/DescriptionsController.js',
+                            'resources/js/services/description-service.js',
+                            'resources/js/services/form-validate-service.js',
+                            'resources/js/services/table-service.js'
                         ]
                     });
                 }]
@@ -311,7 +314,10 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                     return $ocLazyLoad.load({
                         name: 'MetronicApp',
                         files: [
-                            'resources/js/controllers/EquipmentsController.js'
+                            'resources/js/controllers/EquipmentsController.js',
+                            'resources/js/services/table-service.js',
+                            'resources/js/services/form-validate-service.js',
+                            'resources/js/services/equipment-service.js'
                         ]
                     });
                 }]

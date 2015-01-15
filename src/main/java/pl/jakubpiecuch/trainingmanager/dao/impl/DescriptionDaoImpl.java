@@ -22,31 +22,24 @@ public class DescriptionDaoImpl extends CoreDaoImpl  implements DescriptionDao {
 
     @Override
     public PageResult<Description> findByCriteria(DescriptionCriteria criteria) {
-        Criteria daoCriteria = session().createCriteria(Description.class);
-        criteria.fillDaoCriteria(daoCriteria);
-        final List list = daoCriteria.list();
-        final long count = count();
+        final List<Object[]> result = criteria.createQuery(session()).list();
+
         return new PageResult<Description>() {
             @Override
             public List<Description> getResult() {
-                return list;
+                return Lists.transform(result, new Function<Object[], Description>() {
+                    @Override
+                    public Description apply(Object[] in) {
+                        return (Description) in[0];
+                    }
+                });
             }
 
             @Override
             public long getCount() {
-                return count;
+                return result.size() > 0 ? (Long)result.get(0)[1] : 0;
             }
         };
-    }
-
-    @Override
-    public List<Description> findAll() {
-        return session().createQuery("SELECT e FROM Description e ORDER BY e.id").list();
-    }
-
-    @Override
-    public List<Description> findByPartyMuscles(PartyMuscles partyMuscles) {
-        return session().createQuery("SELECT e FROM Description e WHERE e.partyMuscles = :partyMuscles").setParameter("partyMuscles", partyMuscles).list();
     }
 
     @Override

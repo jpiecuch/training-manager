@@ -42,6 +42,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
     <link href="resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css"
           id="style_color"/>

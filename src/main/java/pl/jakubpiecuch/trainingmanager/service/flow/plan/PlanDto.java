@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
+import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by Rico on 2014-12-31.
  */
 @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
-public class PlanDto extends Flow {
+public class PlanDto extends Flow implements RepoObject {
 
     private Long id;
     private String name;

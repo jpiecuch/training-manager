@@ -1,4 +1,4 @@
-MetronicApp.service('descriptionService', function(urlService, $http, $q, formValidateService, alertService) {
+MetronicApp.service('descriptionService', function(urlService, $http, $q, formValidateService, alertService, ngTableParams) {
 
     var description = {
         names: { pl: null, en: null },

@@ -18,7 +18,7 @@ public class EquipmentRepository implements Repository<Equipment, EquipmentCrite
     private Validator validator;
 
     @Override
-    public PageResult<Equipment> retrieve(EquipmentCriteria criteria) {
+    public PageResult<Equipment> read(EquipmentCriteria criteria) {
         return equipmentDao.findByCriteria(criteria);
     }
 

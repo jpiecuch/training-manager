@@ -15,8 +15,8 @@ import java.util.List;
  */
 public abstract class AbstractFlowManager<T extends Flow> implements FlowManager<T> {
 
-    private FlowConverter converter;
-    private BaseDao dao;
+    protected FlowConverter converter;
+    protected BaseDao dao;
     private Validator validator;
 
     @Override

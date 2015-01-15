@@ -65,6 +65,13 @@
                 <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
             </map>
         </property>
+        <property name="readRepositories">
+            <map>
+                <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
+                <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
+                <entry key="PLAN" value-ref="planManager"/>
+            </map>
+        </property>
     </bean>
 
 </beans>
