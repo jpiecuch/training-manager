@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
-import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
@@ -54,7 +53,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public Authentication signed() throws Exception {
+    public Authentication signed() {
         Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (object instanceof String) {
             throw new NotFoundException();

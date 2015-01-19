@@ -1,12 +1,9 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
-import org.springframework.security.core.context.SecurityContext;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.AbstractFlowConverter;
 import pl.jakubpiecuch.trainingmanager.service.flow.FlowManager;
-import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseConverter;
-import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseManager;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 
@@ -33,7 +30,7 @@ public class PlanConverter extends AbstractFlowConverter<PlanDto, Plan> {
     }
 
     @Override
-    protected Plan convertFrom(PlanDto flowObject) throws Exception {
+    protected Plan convertFrom(PlanDto flowObject) {
         Plan entity = new Plan();
 
         entity.setName(flowObject.getName());

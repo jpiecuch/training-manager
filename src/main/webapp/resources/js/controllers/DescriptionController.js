@@ -39,7 +39,6 @@ MetronicApp.controller('DescriptionController', function($scope, $stateParams, d
         if ($scope.description === undefined && form !== undefined) {
             descriptionService.get(form, $stateParams.id).then(function(data) {
                 $scope.description = data;
-                console.log($scope.description);
             });
         }
     });

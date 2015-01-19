@@ -6,6 +6,9 @@ import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.PhaseDao;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
+import pl.jakubpiecuch.trainingmanager.service.OrderResolver;
+import pl.jakubpiecuch.trainingmanager.service.execution.ExecutionDto;
+import pl.jakubpiecuch.trainingmanager.service.execution.session.SessionExecutionCriteria;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
@@ -22,6 +25,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public interface ApiVersionService {
     enum Version {v1}
@@ -42,7 +46,11 @@ public interface ApiVersionService {
 
     Equipment resolve(InputStream stream, Equipment.Type type) throws IOException;
 
+    PageResult<ExecutionDto> executions(SessionExecutionCriteria sessionExecutionCriteria);
+
     Object dictionary(long id);
+
+    Map<String,OrderResolver> orderResolvers();
 
     void signIn(Authentication authentication) throws Exception;
     void signOut();

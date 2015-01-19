@@ -13,7 +13,7 @@ import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.
 public class WorkoutConverter extends AbstractFlowConverter<WorkoutDto, Workout> {
 
     @Override
-    protected Workout convertFrom(WorkoutDto flowObject) throws Exception {
+    protected Workout convertFrom(WorkoutDto flowObject) {
         Workout entity = new Workout();
 
         entity.setId(flowObject.getId());

@@ -24,7 +24,7 @@ public class Authentication {
 
     }
 
-    public Authentication(Account account) throws Exception {
+    public Authentication(Account account) {
         this.id = account.getId();
         this.email = account.getEmail();
         this.username = account.getName();

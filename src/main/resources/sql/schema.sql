@@ -79,6 +79,18 @@ CREATE TABLE userconnection (
     expiretime bigint
 );
 
+CREATE TABLE execution (
+    id BIGINT PRIMARY KEY NOT NULL,
+    reps character varying(50),
+    weights character varying(50),
+    exercise bigint NOT NULL,
+    account bigint NOT NULL,
+    date timestamp without time zone DEFAULT now() NOT NULL,
+    confirm boolean DEFAULT false NOT NULL,
+    comment character varying(50000),
+    remind boolean DEFAULT false
+);
+
 ALTER TABLE userconnection ADD CONSTRAINT userconnection_pkey PRIMARY KEY (userid, providerid, provideruserid);
 
 ALTER TABLE account ADD CONSTRAINT account_email_unique UNIQUE (email);
@@ -89,3 +101,5 @@ ALTER TABLE exercise ADD CONSTRAINT workout_fkey FOREIGN KEY (workout) REFERENCE
 ALTER TABLE plan ADD CONSTRAINT creator_fkey FOREIGN KEY (creator) REFERENCES account(id);
 ALTER TABLE phase ADD CONSTRAINT plan_fkey FOREIGN KEY (plan) REFERENCES plan(id);
 ALTER TABLE workout ADD CONSTRAINT phase_fkey FOREIGN KEY (phase) REFERENCES phase(id);
+ALTER TABLE execution ADD CONSTRAINT exercise_fkey FOREIGN KEY (exercise) REFERENCES exercise(id);
+ALTER TABLE execution ADD CONSTRAINT account_fkey FOREIGN KEY (account) REFERENCES account(id);

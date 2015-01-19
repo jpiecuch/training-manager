@@ -31,7 +31,7 @@ public class ConstantsDictionary implements Dictionary {
     private static Map<Long, List> MAP = new HashMap<Long, List>() {
         {
             put(GOAL_MAP_ID, Arrays.asList(Plan.Goal.values()));
-            put(EXERCISE_MUSCLES_MAP_ID, Arrays.asList(Description.PartyMuscles.values()));
+            put(EXERCISE_MUSCLES_MAP_ID, Arrays.asList(Description.Muscles.values()));
             put(EXERCISE_TYPE_ID, Arrays.asList(Description.Type.values()));
             put(EXERCISE_LEVEL_ID, Arrays.asList(Description.Level.values()));
             put(EXERCISE_MECHANICS_ID, Arrays.asList(Description.Mechanics.values()));

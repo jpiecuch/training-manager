@@ -1,287 +1,295 @@
-<div class="page-bar">
-    <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a href="#/" data-ng-bind="'dashboard' | translate"></a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li>
-            <i class="fa fa-calendar"></i>
-            <a href="#/" data-ng-bind="'plan' | translate"></a>
-        </li>
-    </ul>
-</div>
-<form name="planForm" class="form-horizontal" data-ng-controller="PlanController" data-ng-init="init(planForm)" data-ng-submit="plan.create(planForm)" novalidate>
-    <div class="portlet light bg-inverse">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="icon-equalizer font-red-sunglo"></i>
-                <span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : plan.isValid() === true, 'font-red-sunglo ' : plan.isValid() === false}" data-ng-bind="'plan' | translate"></span>
-            </div>
-        </div>
-        <div class="portlet-body form">
-            <div class="form-body">
-                <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm.planName), 'has-error' : validate.isNotValid(planForm.planName)}">
-                    <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm.planName.$touched}" data-ng-bind="'plan.name' | translate"></label>
-                    <div class="col-md-4">
-                        <div class="input-icon right">
-                            <i data-ng-if="planForm.planName.$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm.planName), 'fa-exclamation' : validate.isNotValid(planForm.planName)}"></i>
-                            <input name="planName" type="text" class="form-control" placeholder="{{'plan.name.placeholder' | translate}}"
-                                   data-ng-model="plan.name" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm.planGoal), 'has-error' : validate.isNotValid(planForm.planGoal)}">
-                    <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm.planGoal.$touched}" data-ng-bind="'plan.goal' | translate"></label>
-                    <div class="col-md-4">
-                        <div class="input-icon right select-right">
-                            <i data-ng-if="planForm.planGoal.$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm.planGoal), 'fa-exclamation' : validate.isNotValid(planForm.planGoal)}"></i>
-                            <select class="form-control" data-ng-model="plan.goal" required name="planGoal" tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
-                            <option data-ng-repeat="goal in dictionary.goals" data-ng-bind="goal"
-                                    value="{{goal}}"></option>
-                            </select>
-                        </div>
-                    </div>
+<section data-ng-controller="PlanController" data-ng-init="init(planForm)">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <i class="fa fa-home"></i>
+                <a href="#/" data-ng-bind="'dashboard' | translate"></a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <i class="fa fa-list"></i>
+                <a href="#/plans" data-ng-bind="'plans' | translate"></a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <i class="fa fa-calendar"></i>
+                <a href="#/plan{{plan.id ? '?id=' + plan.id : ''}}" data-ng-bind="'plan' | translate"></a>
+            </li>
+        </ul>
+    </div>
+    <form name="planForm" class="form-horizontal" data-ng-submit="plan.create(planForm)" novalidate>
+        <div class="portlet light bg-inverse">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-equalizer font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : plan.isValid() === true, 'font-red-sunglo ' : plan.isValid() === false}" data-ng-bind="'plan' | translate"></span>
                 </div>
             </div>
-            <!-- END FORM-->
-        </div>
-
-            <div class="bordered portlet light bg-inverse"
-                 data-ng-repeat="phase in plan.phases">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="icon-equalizer font-red-sunglo"></i>
-                        <span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : phase.isValid() === true, 'font-red-sunglo ' : phase.isValid() === false}" data-ng-bind="('phase' | translate) + ' ' + ($index +1)"></span>
-                    </div>
-                    <div class="actions">
-                        <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="phase.visible = !phase.visible">
-                            <i class="fa fa-angle-down"></i>
-                        </a>
-                        <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="plan.removePhase($index)" data-ng-if="plan.phases.length > 1">
-                            <i class="icon-trash"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="portlet-body" collapse="phase.visible === false">
+            <div class="portlet-body form">
                 <div class="form-body">
-                    <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['phaseDescription' + phase.index]), 'has-error' : validate.isNotValid(planForm['phaseDescription' + phase.index])}">
-                        <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['phaseDescription' + phase.index].$touched}" data-ng-bind="'phase.description' | translate"></label>
-
+                    <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm.planName), 'has-error' : validate.isNotValid(planForm.planName)}">
+                        <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm.planName.$touched}" data-ng-bind="'plan.name' | translate"></label>
                         <div class="col-md-4">
                             <div class="input-icon right">
-                                <i data-ng-if="planForm['phaseDescription' + phase.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['phaseDescription' + phase.index]), 'fa-exclamation' : validate.isNotValid(planForm['phaseDescription' + phase.index])}"></i>
-                                <input name="phaseDescription{{phase.index}}" type="text" class="form-control"
-                                   placeholder="{{'phase.description.placeholder' | translate}}"
-                                   data-ng-model="phase.description" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+                                <i data-ng-if="planForm.planName.$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm.planName), 'fa-exclamation' : validate.isNotValid(planForm.planName)}"></i>
+                                <input name="planName" type="text" class="form-control" placeholder="{{'plan.name.placeholder' | translate}}"
+                                       data-ng-model="plan.name" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['phaseGoal' + phase.index]), 'has-error' : validate.isNotValid(planForm['phaseGoal' + phase.index])}">
-                        <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['phaseGoal' + phase.index].$touched}" data-ng-bind="'phase.goal' | translate"></label>
-
+                    <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm.planGoal), 'has-error' : validate.isNotValid(planForm.planGoal)}">
+                        <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm.planGoal.$touched}" data-ng-bind="'plan.goal' | translate"></label>
                         <div class="col-md-4">
                             <div class="input-icon right select-right">
-                                <i data-ng-if="planForm['phaseGoal' + phase.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['phaseGoal' + phase.index]), 'fa-exclamation' : validate.isNotValid(planForm['phaseGoal' + phase.index])}"></i>
-                                <select name="phaseGoal{{phase.index}}" class="form-control" data-ng-model="phase.goal" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+                                <i data-ng-if="planForm.planGoal.$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm.planGoal), 'fa-exclamation' : validate.isNotValid(planForm.planGoal)}"></i>
+                                <select class="form-control" data-ng-model="plan.goal" required name="planGoal" tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
                                 <option data-ng-repeat="goal in dictionary.goals" data-ng-bind="goal"
                                         value="{{goal}}"></option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['phaseWeeks' + phase.index]), 'has-error' : validate.isNotValid(planForm['phaseWeeks' + phase.index])}">
-                        <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['phaseWeeks' + phase.index].$touched}" data-ng-bind="'phase.weeks' | translate"></label>
+                </div>
+                <!-- END FORM-->
+            </div>
 
-                        <div class="col-md-4">
-                            <div class="input-icon right select-right">
-                                <i data-ng-if="planForm['phaseWeeks' + phase.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['phaseWeeks' + phase.index]), 'fa-exclamation' : validate.isNotValid(planForm['phaseWeeks' + phase.index])}"></i>
-                                <select name="phaseWeeks{{phase.index}}" class="form-control" data-ng-model="phase.weeks" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                </select>
-                            </div>
+                <div class="bordered portlet light bg-inverse"
+                     data-ng-repeat="phase in plan.phases">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-equalizer font-red-sunglo"></i>
+                            <span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : phase.isValid() === true, 'font-red-sunglo ' : phase.isValid() === false}" data-ng-bind="('phase' | translate) + ' ' + ($index +1)"></span>
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="phase.visible = !phase.visible">
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="plan.removePhase($index)" data-ng-if="plan.phases.length > 1">
+                                <i class="icon-trash"></i>
+                            </a>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" data-ng-bind="'phase.weekDays' | translate"></label>
+                    <div class="portlet-body" collapse="phase.visible === false">
+                    <div class="form-body">
+                        <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['phaseDescription' + phase.index]), 'has-error' : validate.isNotValid(planForm['phaseDescription' + phase.index])}">
+                            <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['phaseDescription' + phase.index].$touched}" data-ng-bind="'phase.description' | translate"></label>
 
-                        <div class="col-md-4">
-                            <div class="small-tiles">
-                                <div class="small-tile" data-ng-repeat="weekDay in dictionary.weekDays"
-                                     data-ng-class="{'bg-grey-cascade' : !phase.containsWeekDay(weekDay), 'bg-green-jungle' : phase.isValidWeekDay(weekDay) === true, 'bg-red-sunglo' : phase.isValidWeekDay(weekDay) === false || phase.containsWeekDay(weekDay) && phase.isValidWeekDay(weekDay) === undefined}"
-                                     data-ng-click="phase.addWorkout(weekDay)">
-                                    <div class="small-tile-body">
-                                        <span data-ng-bind="'weekDay.' + weekDay + '.short' | translate"></span>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i data-ng-if="planForm['phaseDescription' + phase.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['phaseDescription' + phase.index]), 'fa-exclamation' : validate.isNotValid(planForm['phaseDescription' + phase.index])}"></i>
+                                    <input name="phaseDescription{{phase.index}}" type="text" class="form-control"
+                                       placeholder="{{'phase.description.placeholder' | translate}}"
+                                       data-ng-model="phase.description" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['phaseGoal' + phase.index]), 'has-error' : validate.isNotValid(planForm['phaseGoal' + phase.index])}">
+                            <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['phaseGoal' + phase.index].$touched}" data-ng-bind="'phase.goal' | translate"></label>
+
+                            <div class="col-md-4">
+                                <div class="input-icon right select-right">
+                                    <i data-ng-if="planForm['phaseGoal' + phase.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['phaseGoal' + phase.index]), 'fa-exclamation' : validate.isNotValid(planForm['phaseGoal' + phase.index])}"></i>
+                                    <select name="phaseGoal{{phase.index}}" class="form-control" data-ng-model="phase.goal" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+                                    <option data-ng-repeat="goal in dictionary.goals" data-ng-bind="goal"
+                                            value="{{goal}}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['phaseWeeks' + phase.index]), 'has-error' : validate.isNotValid(planForm['phaseWeeks' + phase.index])}">
+                            <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['phaseWeeks' + phase.index].$touched}" data-ng-bind="'phase.weeks' | translate"></label>
+
+                            <div class="col-md-4">
+                                <div class="input-icon right select-right">
+                                    <i data-ng-if="planForm['phaseWeeks' + phase.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['phaseWeeks' + phase.index]), 'fa-exclamation' : validate.isNotValid(planForm['phaseWeeks' + phase.index])}"></i>
+                                    <select name="phaseWeeks{{phase.index}}" class="form-control" data-ng-model="phase.weeks" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" data-ng-bind="'phase.weekDays' | translate"></label>
+
+                            <div class="col-md-4">
+                                <div class="small-tiles">
+                                    <div class="small-tile" data-ng-repeat="weekDay in dictionary.weekDays"
+                                         data-ng-class="{'bg-grey-cascade' : !phase.containsWeekDay(weekDay), 'bg-green-jungle' : phase.isValidWeekDay(weekDay) === true, 'bg-red-sunglo' : phase.isValidWeekDay(weekDay) === false || phase.containsWeekDay(weekDay) && phase.isValidWeekDay(weekDay) === undefined}"
+                                         data-ng-click="phase.addWorkout(weekDay)">
+                                        <div class="small-tile-body">
+                                            <span data-ng-bind="'weekDay.' + weekDay + '.short' | translate"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="portlet-body">
-                        <div class="bordered portlet light bg-inverse"
-                             data-ng-repeat="workout in phase.workouts | orderBy: 'weekDay'">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="icon-equalizer font-red-sunglo"></i>
-                                        <span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : workout.isValid() === true, 'font-red-sunglo' : workout.isValid() === false}" data-ng-bind="'weekDay.' + workout.weekDay + '.full' | translate"></span>
+                        <div class="portlet-body">
+                            <div class="bordered portlet light bg-inverse"
+                                 data-ng-repeat="workout in phase.workouts | orderBy: 'weekDay'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="icon-equalizer font-red-sunglo"></i>
+                                            <span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : workout.isValid() === true, 'font-red-sunglo' : workout.isValid() === false}" data-ng-bind="'weekDay.' + workout.weekDay + '.full' | translate"></span>
+                                    </div>
+                                    <div class="actions">
+                                        <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.visible = !workout.visible">
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="actions">
-                                    <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.visible = !workout.visible">
-                                        <i class="fa fa-angle-down"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="portlet-body" collapse="workout.visible === false">
-                                <div class="form-body">
-                                <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['workoutMuscles' + workout.index]), 'has-error' : validate.isNotValid(planForm['workoutMuscles' + workout.index])}">
-                                    <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['workoutMuscles' + workout.index].$touched}" data-ng-bind="'workout.muscle' | translate"></label>
-                                    <div class="col-md-4">
-                                        <div class="input-icon right select-right">
-                                            <i data-ng-if="planForm['workoutMuscles' + workout.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['workoutMuscles' + workout.index]), 'fa-exclamation' : validate.isNotValid(planForm['workoutMuscles' + workout.index])}"></i>
-                                            <select name="workoutMuscles{{workout.index}}" class="form-control" data-ng-model="workout.muscles" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
-                                            <option data-ng-repeat="muscle in dictionary.muscles" data-ng-bind="muscle"
-                                                    value="{{muscle}}"></option>
+                                <div class="portlet-body" collapse="workout.visible === false">
+                                    <div class="form-body">
+                                    <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['workoutMuscles' + workout.index]), 'has-error' : validate.isNotValid(planForm['workoutMuscles' + workout.index])}">
+                                        <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['workoutMuscles' + workout.index].$touched}" data-ng-bind="'workout.muscle' | translate"></label>
+                                        <div class="col-md-4">
+                                            <div class="input-icon right select-right">
+                                                <i data-ng-if="planForm['workoutMuscles' + workout.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['workoutMuscles' + workout.index]), 'fa-exclamation' : validate.isNotValid(planForm['workoutMuscles' + workout.index])}"></i>
+                                                <select name="workoutMuscles{{workout.index}}" class="form-control" data-ng-model="workout.muscles" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+                                                <option data-ng-repeat="muscle in dictionary.muscles" data-ng-bind="muscle"
+                                                        value="{{muscle}}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label"
+                                               data-ng-bind="'workout.exercises' | translate"></label>
+
+                                        <div class="col-md-1">
+                                            <select class="form-control" data-ng-model="workout.descriptions.params.muscle">
+                                                <option/>
+                                                <option data-ng-repeat="muscle in dictionary.muscles" data-ng-bind="muscle"
+                                                        value="{{muscle}}"></option>
                                             </select>
                                         </div>
+                                        <div class="col-md-1">
+                                            <select class="form-control" data-ng-model="workout.descriptions.params.type">
+                                                <option/>
+                                                <option data-ng-repeat="type in dictionary.type" data-ng-bind="type"
+                                                        value="{{type}}"></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <select class="form-control" data-ng-model="workout.descriptions.params.level">
+                                                <option/>
+                                                <option data-ng-repeat="level in dictionary.level" data-ng-bind="level"
+                                                        value="{{level}}"></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <select class="form-control" data-ng-model="workout.descriptions.params.mechanic">
+                                                <option/>
+                                                <option data-ng-repeat="mechanic in dictionary.mechanics"
+                                                        data-ng-bind="mechanic" value="{{mechanic}}"></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <select class="form-control" data-ng-model="workout.descriptions.params.force">
+                                                <option/>
+                                                <option data-ng-repeat="force in dictionary.force" data-ng-bind="force"
+                                                        value="{{force}}"></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1">
+                                        <a href="" class="btn yellow" data-ng-click="workout.descriptions.retrieve(workout.index)">
+                                            {{'search' | translate}} <i class="fa fa-search"></i>
+                                        </a>
+                                            </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label"
-                                           data-ng-bind="'workout.exercises' | translate"></label>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label"></label>
 
-                                    <div class="col-md-1">
-                                        <select class="form-control" data-ng-model="workout.descriptions.params.muscle">
-                                            <option/>
-                                            <option data-ng-repeat="muscle in dictionary.muscles" data-ng-bind="muscle"
-                                                    value="{{muscle}}"></option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <select class="form-control" data-ng-model="workout.descriptions.params.type">
-                                            <option/>
-                                            <option data-ng-repeat="type in dictionary.type" data-ng-bind="type"
-                                                    value="{{type}}"></option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <select class="form-control" data-ng-model="workout.descriptions.params.level">
-                                            <option/>
-                                            <option data-ng-repeat="level in dictionary.level" data-ng-bind="level"
-                                                    value="{{level}}"></option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <select class="form-control" data-ng-model="workout.descriptions.params.mechanic">
-                                            <option/>
-                                            <option data-ng-repeat="mechanic in dictionary.mechanics"
-                                                    data-ng-bind="mechanic" value="{{mechanic}}"></option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <select class="form-control" data-ng-model="workout.descriptions.params.force">
-                                            <option/>
-                                            <option data-ng-repeat="force in dictionary.force" data-ng-bind="force"
-                                                    value="{{force}}"></option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-1">
-                                    <a href="" class="btn yellow" data-ng-click="workout.descriptions.retrieve(workout.index)">
-                                        {{'dictionary.search' | translate}} <i class="fa fa-search"></i>
-                                    </a>
-                                        </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label"></label>
-
-                                    <div class="col-md-5">
-                                        <div class="dictionary-tiles">
-                                            <div class="dictionary-tile bg-blue-steel"
-                                                 data-ng-repeat="description in workout.descriptions.result.result"
-                                                 data-ng-click="workout.addExercise(description)">
-                                                <div class="dictionary-tile-body">
-                                                    <span data-ng-bind="description.names['pl']"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <ul class="pager" data-ng-if="workout.descriptions.result.result.length > 0">
-                                            <li class="previous" data-ng-if="workout.descriptions.params.firstResult > 0">
-                                                <a href="" data-ng-click="workout.descriptions.page(workout.index, -1)">← {{'prevPage' | translate}} </a>
-                                            </li>
-                                            <li class="next" data-ng-if="workout.descriptions.result.count > workout.descriptions.params.firstResult + workout.descriptions.params.maxResults">
-                                                <a href="" data-ng-click="workout.descriptions.page(workout.index, 1)">{{'nextPage' | translate}} → </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                                <div class="portlet-body">
-                                    <section data-ng-repeat="exercise in workout.exercises | orderBy : 'position'">
-                                        <div data-ng-if="workout.isFirstInSuperSet(exercise)" class="super-set-title">
-                                            <span><i class="fa fa-star-o"></i> {{'superSet' | translate}}</span>
-                                        </div>
-                                        <div class="bordered portlet light bg-inverse" data-ng-class="{'super-set' : workout.isInSuperSet(exercise)}">
-                                        <div class="portlet-title">
-                                            <div class="caption">
-                                                <i class="icon-equalizer font-red-sunglo"></i>
-                                                <span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : exercise.isValid() === true, 'font-red-sunglo' : exercise.isValid() === false}" data-ng-bind="('exercise' | translate) + ' ' + ($index +1)"></span>
-                                                <span class="caption-helper" data-ng-bind="exercise.description.names['pl']"></span>
-                                            </div>
-                                            <div class="actions">
-                                                <div class="btn-group" data-ng-if="!workout.isInSuperSet(exercise)" dropdown>
-                                                    <button class="btn btn-default btn-xs dropdown-toggle" type="button" dropdown-toggle>
-                                                        {{'superSet' | translate}} <i class="fa fa-angle-down"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li data-ng-repeat="joinEx in workout.exercises" data-ng-if="!workout.isInSuperSet(joinEx) && joinEx.position !== exercise.position">
-                                                            <a href="" data-ng-click="workout.joinToSuperSet(joinEx.position, exercise.position)" data-ng-bind="('exercise' | translate) + ' ' + (joinEx.position)"></a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="exercise.visible = !exercise.visible">
-                                                    <i class="fa fa-angle-double-down"></i>
-                                                </a>
-                                                <a data-ng-if="workout.isInSuperSet(exercise)" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.removeFromSuperSet(exercise)">
-                                                    <i class="fa fa-chain-broken"></i>
-                                                </a>
-                                                <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.removeExercise($index)">
-                                                    <i class="icon-trash"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="portlet-body" data-ng-hide="exercise.visible === false">
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label"
-                                                   data-ng-bind="'exercise.sets' | translate"></label>
-                                            <div class="col-md-9">
-                                                <div class="col-md-2" data-ng-repeat="set in exercise.sets track by $index" data-ng-class="{'has-success' : validate.isValid(planForm['exerciseSet' + exercise.index + $index]), 'has-error' : validate.isNotValid(planForm['exerciseSet' + exercise.index + $index])}">
-                                                    <div class="input-icon right">
-                                                        <i class="fa fa-times" style="cursor: pointer;" data-ng-click="exercise.removeSet($index)"></i>
-                                                        <input data-only-digits name="exerciseSet{{exercise.index}}{{$index}}" type="text" class="form-control" data-ng-model="exercise.sets[$index]" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+                                        <div class="col-md-5">
+                                            <div class="dictionary-tiles">
+                                                <div class="dictionary-tile bg-blue-steel"
+                                                     data-ng-repeat="description in workout.descriptions.result.result"
+                                                     data-ng-click="workout.addExercise(description)">
+                                                    <div class="dictionary-tile-body">
+                                                        <span data-ng-bind="description.names['pl']"></span>
                                                     </div>
                                                 </div>
-                                                <a href="" class="btn btn-icon-only" data-ng-click="exercise.addSet()">
-                                                    <i class="fa fa-plus"></i>
-                                                </a>
                                             </div>
+                                            <ul class="pager" data-ng-if="workout.descriptions.result.result.length > 0">
+                                                <li class="previous" data-ng-if="workout.descriptions.params.firstResult > 0">
+                                                    <a href="" data-ng-click="workout.descriptions.page(workout.index, -1)">← {{'prevPage' | translate}} </a>
+                                                </li>
+                                                <li class="next" data-ng-if="workout.descriptions.result.count > workout.descriptions.params.firstResult + workout.descriptions.params.maxResults">
+                                                    <a href="" data-ng-click="workout.descriptions.page(workout.index, 1)">{{'nextPage' | translate}} → </a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
-                                    </section>
+                                    <div class="portlet-body">
+                                        <section data-ng-repeat="exercise in workout.exercises | orderBy : 'position'">
+                                            <div data-ng-if="workout.isFirstInSuperSet(exercise)" class="super-set-title">
+                                                <span><i class="fa fa-star-o"></i> {{'superSet' | translate}}</span>
+                                            </div>
+                                            <div class="bordered portlet light bg-inverse" data-ng-class="{'super-set' : workout.isInSuperSet(exercise)}">
+                                            <div class="portlet-title">
+                                                <div class="caption">
+                                                    <i class="icon-equalizer font-red-sunglo"></i>
+                                                    <span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : exercise.isValid() === true, 'font-red-sunglo' : exercise.isValid() === false}" data-ng-bind="('exercise' | translate) + ' ' + ($index +1)"></span>
+                                                    <span class="caption-helper" data-ng-bind="exercise.description.names['pl']"></span>
+                                                </div>
+                                                <div class="actions">
+                                                    <div class="btn-group" data-ng-if="!workout.isInSuperSet(exercise)" dropdown>
+                                                        <button class="btn btn-default btn-xs dropdown-toggle" type="button" dropdown-toggle>
+                                                            {{'superSet' | translate}} <i class="fa fa-angle-down"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li data-ng-repeat="joinEx in workout.exercises" data-ng-if="!workout.isInSuperSet(joinEx) && joinEx.position !== exercise.position">
+                                                                <a href="" data-ng-click="workout.joinToSuperSet(joinEx.position, exercise.position)" data-ng-bind="('exercise' | translate) + ' ' + (joinEx.position)"></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="exercise.visible = !exercise.visible">
+                                                        <i class="fa fa-angle-double-down"></i>
+                                                    </a>
+                                                    <a data-ng-if="workout.isInSuperSet(exercise)" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.removeFromSuperSet(exercise)">
+                                                        <i class="fa fa-chain-broken"></i>
+                                                    </a>
+                                                    <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.removeExercise($index)">
+                                                        <i class="icon-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="portlet-body" data-ng-hide="exercise.visible === false">
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label"
+                                                       data-ng-bind="'exercise.sets' | translate"></label>
+                                                <div class="col-md-9">
+                                                    <div class="col-md-2" data-ng-repeat="set in exercise.sets track by $index" data-ng-class="{'has-success' : validate.isValid(planForm['exerciseSet' + exercise.index + $index]), 'has-error' : validate.isNotValid(planForm['exerciseSet' + exercise.index + $index])}">
+                                                        <div class="input-icon right">
+                                                            <i class="fa fa-times" style="cursor: pointer;" data-ng-click="exercise.removeSet($index)"></i>
+                                                            <input data-only-digits name="exerciseSet{{exercise.index}}{{$index}}" type="text" class="form-control" data-ng-model="exercise.sets[$index]" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+                                                        </div>
+                                                    </div>
+                                                    <a href="" class="btn btn-icon-only" data-ng-click="exercise.addSet()">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        </section>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="plan.addPhase()">
+                <i class="fa fa-plus"></i>
+            </a>
+            <div data-ng-include="'resources/tpl/form-submit.html'"></div>
         </div>
-        <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="plan.addPhase()">
-            <i class="fa fa-plus"></i>
-        </a>
-        <div data-ng-include="'resources/tpl/form-submit.html'"></div>
-    </div>
-</form>
+    </form>
+</section>

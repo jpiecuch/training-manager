@@ -13,7 +13,7 @@ import java.util.List;
 public class WorkoutDto extends Flow {
 
     private Long id;
-    private Description.PartyMuscles muscles;
+    private Description.Muscles muscles;
     private Workout.WeekDay weekDay;
     private Integer position;
     private Long phaseId;
@@ -27,11 +27,11 @@ public class WorkoutDto extends Flow {
         this.id = id;
     }
 
-    public Description.PartyMuscles getMuscles() {
+    public Description.Muscles getMuscles() {
         return muscles;
     }
 
-    public void setMuscles(Description.PartyMuscles muscles) {
+    public void setMuscles(Description.Muscles muscles) {
         this.muscles = muscles;
     }
 

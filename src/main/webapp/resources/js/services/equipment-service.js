@@ -64,6 +64,7 @@ MetronicApp.service('equipmentService', function(urlService, $http, $q, formVali
             formValidateService.validate(this.form);
             if (this.form.$valid) {
                 $http.post(urlService.apiURL('/equipments?type=' + this.type), {
+                    id: this.id,
                     type: this.type,
                     weight: this.weight,
                     length: this.length,

@@ -28,4 +28,6 @@
     <bean id="workoutDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.WorkoutDaoImpl" parent="coreDao"/>
 
     <bean id="exerciseDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.ExerciseDaoImpl" parent="coreDao"/>
+
+    <bean id="executionDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.ExecutionDaoImpl" parent="coreDao"/>
 </beans>

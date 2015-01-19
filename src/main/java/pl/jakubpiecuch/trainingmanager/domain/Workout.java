@@ -13,7 +13,7 @@ public class Workout extends CommonEntity implements Serializable {
     private WeekDay weekDay;
     private Phase phase;
     private Integer position;
-    private Description.PartyMuscles muscles;
+    private Description.Muscles muscles;
 
     public Workout() {
     }
@@ -53,11 +53,11 @@ public class Workout extends CommonEntity implements Serializable {
 
     @Column(name = "muscles")
     @Enumerated(EnumType.ORDINAL)
-    public Description.PartyMuscles getMuscles() {
+    public Description.Muscles getMuscles() {
         return muscles;
     }
 
-    public void setMuscles(Description.PartyMuscles muscles) {
+    public void setMuscles(Description.Muscles muscles) {
         this.muscles = muscles;
     }
 }

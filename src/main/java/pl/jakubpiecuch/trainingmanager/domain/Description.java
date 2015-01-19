@@ -20,16 +20,16 @@ public class Description extends CommonEntity implements RepoObject {
     private final static String NAME_PERSIST_FORMAT = "%s:%s";
     private final static String NAME_DELIMITER = ";";
 
-    public enum PartyMuscles { ABDOMINALS, TRAPS, BICEPS, CHEST, FOREARMS, QUADS, SHOULDERS, TRICEPS, NECK, CALVES, LATS, MIDDLE_BACK, LOWER_BACK, GLUTES, HAMSTRINGS, ABDUCTORS }
+    public enum Muscles {ABDUCTORS, ABS, BICEPS, CALVES, CHEST, FOREARM, GLUTES, HAMSTRINGS, LATS, LOWER_BACK, MIDDLE_BACK, NECK, QUADS, SHOULDERS, TRAPS, TRICEPS }
     public enum Type { CARDIO, OLYMPIC_WEIGHTLIFTING, PLYOMETRICS, POWERLIFTING, STRENGTH, STRETCHING, STRONMGMAN }
-    public enum Level { BEGINNER, INTERMEDIATE, EXPERT }
+    public enum Level { BEGINNER, EXPERT, INTERMEDIATE }
     public enum Mechanics { COMPOUND, ISOLATION }
-    public enum Force { PUSH, PULL, STATIC }
+    public enum Force { PULL, PUSH, STATIC }
 
     private String name;
     private String movieUrl;
     private String description;
-    private PartyMuscles partyMuscles;
+    private Muscles muscles;
     private Type type;
     private Integer equipment;
     private Level level;
@@ -63,12 +63,12 @@ public class Description extends CommonEntity implements RepoObject {
 
     @Column(name = "party_muscles")
     @Enumerated(EnumType.ORDINAL)
-    public PartyMuscles getPartyMuscles() {
-        return partyMuscles;
+    public Muscles getMuscles() {
+        return muscles;
     }
 
-    public void setPartyMuscles(PartyMuscles partyMuscles) {
-        this.partyMuscles = partyMuscles;
+    public void setMuscles(Muscles muscles) {
+        this.muscles = muscles;
     }
 
     @Column(name = "description")

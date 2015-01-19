@@ -4,7 +4,7 @@ MetronicApp.service('descriptionService', function(urlService, $http, $q, formVa
         names: { pl: null, en: null },
         movieUrl: null,
         description: null,
-        partyMuscles: null,
+        muscles: null,
         type: null,
         equipment: null,
         level: null,
@@ -15,10 +15,11 @@ MetronicApp.service('descriptionService', function(urlService, $http, $q, formVa
             formValidateService.validate(this.form);
             if (this.form.$valid) {
                 $http.post(urlService.apiURL('/descriptions/'), {
+                    id: this.id,
                     names: this.names,
                     movieUrl: this.movieUrl,
                     description: this.description,
-                    partyMuscles: this.partyMuscles,
+                    muscles: this.muscles,
                     type: this.type,
                     equipment: this.equipment,
                     level: this.level,

@@ -6,7 +6,6 @@ import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.PlanDao;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
-import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanCriteria;
 
@@ -16,7 +15,7 @@ public class PlanDaoImpl extends CoreDaoImpl implements PlanDao, RepoDao<Plan, P
 
     @Override
     public PageResult<Plan> findByCriteria(PlanCriteria criteria) {
-        final List<Object[]> result = criteria.createQuery(session()).list();
+        final List<Object[]> result = criteria.query(session()).list();
 
         return new PageResult<Plan>() {
             @Override

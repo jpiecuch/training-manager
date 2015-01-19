@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="musclesOrderResolver" class="pl.jakubpiecuch.trainingmanager.service.resolver.MusclesOrderResolver">
+        <property name="defaultLang" value="en"/>
+        <property name="langs" value="${app.langs}"/>
+        <property name="orderMap">
+            <map>
+                <entry key="en">
+                    <map>
+                        <entry key="ABDUCTORS" value="0"/>
+                        <entry key="ABS" value="1"/>
+                        <entry key="BICEPS" value="2"/>
+                        <entry key="CALVES" value="3"/>
+                        <entry key="CHEST" value="4"/>
+                        <entry key="FOREARM" value="5"/>
+                        <entry key="GLUTES" value="6"/>
+                        <entry key="HAMSTRINGS" value="7"/>
+                        <entry key="LATS" value="8"/>
+                        <entry key="LOWER_BACK" value="9"/>
+                        <entry key="MIDDLE_BACK" value="10"/>
+                        <entry key="NECK" value="11"/>
+                        <entry key="QUADS" value="12"/>
+                        <entry key="SHOULDERS" value="13"/>
+                        <entry key="TRAPS" value="14"/>
+                        <entry key="TRICEPS" value="15"/>
+                    </map>
+                </entry>
+                <entry key="pl">
+                    <map>
+                        <entry key="SHOULDERS" value="0"/>
+                        <entry key="BICEPS" value="1"/>
+                        <entry key="ABS" value="2"/>
+                        <entry key="TRAPS" value="3"/>
+                        <entry key="QUADS" value="4"/>
+                        <entry key="LOWER_BACK" value="5"/>
+                        <entry key="CHEST" value="6"/>
+                        <entry key="CALVES" value="7"/>
+                        <entry key="LATS" value="8"/>
+                        <entry key="ABDUCTORS" value="9"/>
+                        <entry key="GLUTES" value="10"/>
+                        <entry key="FOREARM" value="11"/>
+                        <entry key="HAMSTRINGS" value="12"/>
+                        <entry key="MIDDLE_BACK" value="13"/>
+                        <entry key="NECK" value="14"/>
+                        <entry key="TRICEPS" value="15"/>
+                    </map>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>

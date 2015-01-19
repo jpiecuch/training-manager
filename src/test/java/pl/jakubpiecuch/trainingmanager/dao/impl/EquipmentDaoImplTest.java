@@ -16,7 +16,7 @@ public class EquipmentDaoImplTest extends BaseDAOTestCase {
 
     @Test
     public void testFindByCriteria() throws Exception {
-        PageResult<Equipment> list = equipmentDao.findByCriteria(new EquipmentCriteria().addTypeRestriction(Equipment.Type.BAR).setMaxResultsRestriction(10).setFirstResultRestriction(0));
+        PageResult<Equipment> list = equipmentDao.findByCriteria(new EquipmentCriteria("en").addTypeRestriction(Equipment.Type.BAR).setMaxResultsRestriction(10).setFirstResultRestriction(0));
         assertEquals(1, list.getResult().size());
 
 

@@ -49,11 +49,23 @@ public class WebUtil {
         return res;
     }
 
-    public static <T> T fromJson(String data, Class<T> outputClass) throws Exception {
-        return mapper.readValue(data, outputClass);
+    public static <T> T fromJson(String data, Class<T> outputClass) throws IllegalArgumentException {
+        try {
+            return mapper.readValue(data, outputClass);
+        } catch (Exception e) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public static String toJson(Object data) throws Exception {
         return mapper.writeValueAsString(data);
+    }
+
+    public static Double[] toDoubleArray(String[] array) {
+        Double[] res = new Double[array.length];
+        for (int i = 0; i < array.length; i++) {
+            res[i] = Double.parseDouble(array[i]);
+        }
+        return res;
     }
 }

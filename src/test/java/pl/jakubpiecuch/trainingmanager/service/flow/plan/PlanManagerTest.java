@@ -37,8 +37,8 @@ public class PlanManagerTest {
 
         Mockito.when(dao.findById(ID)).thenReturn(PLAN);
         Mockito.when(dao.findById(NOT_PERSIST_ID)).thenReturn(null);
-        Mockito.when(converter.toFlowObject(PLAN, false)).thenReturn(PLAN_FLOW);
-        Mockito.when(converter.toFlowObject(null, false)).thenThrow(IllegalArgumentException.class);
+        Mockito.when(converter.fromEntity(PLAN, false)).thenReturn(PLAN_FLOW);
+        Mockito.when(converter.fromEntity(null, false)).thenThrow(IllegalArgumentException.class);
     }
 
     @Test

@@ -18,6 +18,9 @@ MetronicApp.service('tableService', function() {
             totalPage: function() {
                 return Math.ceil(this.data.count / this.count);
             },
+            sort: function() {
+                this.page = 1;
+            },
             changePage: function(increase) {
                 this.page = new Number(this.page ? this.page : 1) + increase;
                 var me = this;

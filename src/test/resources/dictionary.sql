@@ -18,6 +18,9 @@ INSERT INTO description (id, name, movie_url, description, party_muscles, type, 
 INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (1, 1, 2, '12;12;12;12', 1, 1);
 INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (2, 1, 3, '12;10;8;6', 2, 2);
 
+INSERT INTO execution (id, reps, weights, exercise, account, date, confirm, comment, remind) VALUES (1,'12;12;12;12','30;30;30;30',1,1,'2014-12-07 13:52:56.805',false,null,false);
+INSERT INTO execution (id, reps, weights, exercise, account, date, confirm, comment, remind) VALUES (2,'12;12;11;12','30;30;30.5;30',2,1,'2014-12-07 13:52:56.805',false,null,false);
+
 INSERT INTO equipment (id, type, data, length, weight, strength) VALUES (3, 4, '{"connectedLoad": false,"type":"STRAIGHT"}', 180, 8, 150);
 INSERT INTO equipment (id, type, data, length, weight, strength) VALUES (1, 0, '{"handles":6}', 120, NULL, 200);
 INSERT INTO equipment (id, type, data, length, weight, strength) VALUES (2, 1, '{"height":43}', 110, NULL, 200);

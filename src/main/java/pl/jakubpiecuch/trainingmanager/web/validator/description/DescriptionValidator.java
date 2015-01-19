@@ -38,9 +38,7 @@ public class DescriptionValidator implements Validator {
                 errors.rejectValue("names[" + lang + "]", String.format(RestrictionCode.MAX_LENGTH, maxNameLength));
             }
         }
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "movieUrl", RestrictionCode.REQUIRED);
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", RestrictionCode.REQUIRED);
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "partyMuscles", RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "muscles", RestrictionCode.REQUIRED);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "type", RestrictionCode.REQUIRED);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "equipment", RestrictionCode.REQUIRED);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "level", RestrictionCode.REQUIRED);

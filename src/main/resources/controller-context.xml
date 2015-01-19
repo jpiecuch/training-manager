@@ -37,6 +37,8 @@
 
     <bean id="equipmentController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.equipment.EquipmentController" parent="abstractController"/>
 
+    <bean id="executionController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.execution.ExecutionController" parent="abstractController"/>
+
     <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
         <property name="userServices">
             <map>
@@ -70,6 +72,12 @@
                 <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
                 <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
                 <entry key="PLAN" value-ref="planManager"/>
+            </map>
+        </property>
+        <property name="executionManager" ref="executionManager"/>
+        <property name="orderResolverMap">
+            <map>
+                <entry key="muscles" value-ref="musclesOrderResolver"/>
             </map>
         </property>
     </bean>

@@ -46,23 +46,23 @@ public class PlanConverterTest {
 
     @Test
     public void testToFlowObject() throws Exception {
-        PlanDto flow = CONVERTER.toFlowObject(PLAN, false);
+        PlanDto flow = CONVERTER.fromEntity(PLAN, false);
         assertEquals(flow, PLAN_FLOW);
     }
 
     @Test
     public void testFromFlowObject() throws Exception {
-        Plan plan = CONVERTER.fromFlowObject(PLAN_FLOW);
+        Plan plan = CONVERTER.toEntity(PLAN_FLOW);
         assertEquals(plan, PLAN);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testToFlowObjectNull() throws Exception {
-        CONVERTER.toFlowObject(null, false);
+        CONVERTER.fromEntity(null, false);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFromFlowObjectNull() throws Exception {
-        CONVERTER.fromFlowObject(null);
+        CONVERTER.toEntityList(null);
     }
 }

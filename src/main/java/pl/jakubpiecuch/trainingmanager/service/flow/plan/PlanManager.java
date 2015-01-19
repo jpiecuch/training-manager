@@ -21,7 +21,7 @@ public class PlanManager extends AbstractFlowManager<PlanDto> implements ReadRep
         return new PageResult<PlanDto>() {
             @Override
             public List<PlanDto> getResult() {
-                return converter.toFlowObjectList(result.getResult(), false);
+                return converter.fromEntityList(result.getResult(), false);
             }
 
             @Override

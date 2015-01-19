@@ -15,7 +15,7 @@ import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
 public class ExerciseConverter extends AbstractFlowConverter<ExerciseDto, Exercise> {
 
     @Override
-    protected Exercise convertFrom(ExerciseDto flowObject) throws Exception {
+    protected Exercise convertFrom(ExerciseDto flowObject) {
         Exercise entity = new Exercise();
 
         entity.setId(flowObject.getId());

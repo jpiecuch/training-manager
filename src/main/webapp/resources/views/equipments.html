@@ -20,44 +20,38 @@
                         <thead>
                         <tr>
                             <th>
-                                {{'description.name' | translate}}
-                            </th>
-                            <th >
-                                {{'description.muscles' | translate}}
+                                {{'equipment.type' | translate}}
                             </th>
                             <th>
-                                {{'description.type' | translate}}
+                                {{'equipment.weight' | translate}} (kg)
                             </th>
                             <th>
-                                {{'description.force' | translate}}
+                                {{'equipment.length' | translate}} (cm)
                             </th>
                             <th>
-                                {{'description.level' | translate}}
+                                {{'equipment.strength' | translate}} (kg)
                             </th>
                             <th>
-                                {{'description.mechanics' | translate}}
+                                {{'equipment.config' | translate}}
                             </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr data-ng-repeat="description in table.data.result">
+                        <tr data-ng-repeat="equipment in table.data.result">
                             <td>
-                                <a href="#">{{description.names['pl']}} </a>
+                                <a href="#/equipment?id={{equipment.id}}">{{equipment.type}}</a>
                             </td>
                             <td>
-                                {{description.partyMuscles | translate}}
+                                {{equipment.weight}}
                             </td>
                             <td>
-                                {{description.type}}
+                                {{equipment.length}}
                             </td>
                             <td>
-                                {{description.force}}
+                                {{equipment.strength}}
                             </td>
                             <td>
-                                {{description.level}}
-                            </td>
-                            <td>
-                                {{description.mechanics}}
+                                <div class="col-md-12" data-ng-include="'resources/tpl/equipment/' + equipment.type.toLowerCase() + '-config-row.html'"></div>
                             </td>
                         </tr>
                         </tbody>

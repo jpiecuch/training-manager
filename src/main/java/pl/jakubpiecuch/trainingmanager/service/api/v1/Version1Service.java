@@ -12,7 +12,11 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
+import pl.jakubpiecuch.trainingmanager.service.OrderResolver;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.Dictionary;
+import pl.jakubpiecuch.trainingmanager.service.execution.ExecutionDto;
+import pl.jakubpiecuch.trainingmanager.service.execution.ExecutionManager;
+import pl.jakubpiecuch.trainingmanager.service.execution.session.SessionExecutionCriteria;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.flow.FlowManager;
 import pl.jakubpiecuch.trainingmanager.service.repository.*;
@@ -50,7 +54,18 @@ public class Version1Service implements ApiVersionService {
     private Map<Repositories, Repository> repositories;
     private Map<Repositories, ReadRepository> readRepositories;
     private ObjectMapper mapper = new ObjectMapper();
+    private ExecutionManager executionManager;
+    private Map<String, OrderResolver> orderResolverMap;
 
+    @Override
+    public Map<String, OrderResolver> orderResolvers() {
+        return orderResolverMap;
+    }
+
+    @Override
+    public PageResult<ExecutionDto> executions(SessionExecutionCriteria sessionExecutionCriteria) {
+        return executionManager.read(sessionExecutionCriteria);
+    }
 
     @Override
     public PageResult retrieveFromRepository(Criteria criteria, Repositories type) {
@@ -220,6 +235,14 @@ public class Version1Service implements ApiVersionService {
 
     public void setRepositories(Map<Repositories, Repository> repositories) {
         this.repositories = repositories;
+    }
+
+    public void setExecutionManager(ExecutionManager executionManager) {
+        this.executionManager = executionManager;
+    }
+
+    public void setOrderResolverMap(Map<String, OrderResolver> orderResolverMap) {
+        this.orderResolverMap = orderResolverMap;
     }
 
     @PostConstruct

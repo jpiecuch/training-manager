@@ -134,9 +134,17 @@
         <property name="equipmentDao" ref="equipmentDao"/>
         <property name="validator" ref="equipmentValidator"/>
     </bean>
+
+    <bean id="executionConverter" class="pl.jakubpiecuch.trainingmanager.service.execution.ExecutionConverter"/>
+
+    <bean id="executionManager" class="pl.jakubpiecuch.trainingmanager.service.execution.session.SessionExecutionManager">
+        <property name="converter" ref="executionConverter"/>
+        <property name="executionDao" ref="executionDao"/>
+    </bean>
     
     <import resource="social-context.xml"/>
     <import resource="controller-context.xml"/>
     <import resource="flow-context.xml"/>
     <import resource="validator-context.xml"/>
+    <import resource="order-resolver-context.xml"/>
 </beans>

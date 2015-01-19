@@ -18,6 +18,7 @@ import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Locale;
 
 /**
  * Created by Rico on 2015-01-01.
@@ -31,14 +32,15 @@ public class EquipmentController extends AbstractController {
                                @RequestParam(value = "type", required = false) Equipment.Type[] types,
                                @RequestParam(value = "excludeId", required = false) Long[] excludedIds,
                                @RequestParam(value = "firstResult", required = false, defaultValue = "0") Integer firstResult,
-                               @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults) throws Exception {
-        return versionServices.get(version).retrieveFromRepository(new EquipmentCriteria().addTypeRestriction(types).setFirstResultRestriction(firstResult)
+                               @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults,
+                               Locale locale) throws Exception {
+        return versionServices.get(version).retrieveFromRepository(new EquipmentCriteria(locale.getLanguage()).addTypeRestriction(types).setFirstResultRestriction(firstResult)
                 .setMaxResultsRestriction(maxResults).addExcludedIdRestriction(excludedIds), Repositories.EQUIPMENT);
     }
 
     @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.GET })
-    public Equipment description(@PathVariable ApiVersionService.Version version, @PathVariable long id) {
-        return (Equipment) versionServices.get(version).retrieveFromRepository(new EquipmentCriteria().setIdRestriction(id), Repositories.EQUIPMENT).getResult().get(0);
+    public Equipment description(@PathVariable ApiVersionService.Version version, @PathVariable long id, Locale locale) {
+        return (Equipment) versionServices.get(version).retrieveFromRepository(new EquipmentCriteria(locale.getLanguage()).setIdRestriction(id), Repositories.EQUIPMENT).getResult().get(0);
     }
 
     @RequestMapping(method = { RequestMethod.POST })

@@ -12,6 +12,8 @@ import pl.jakubpiecuch.trainingmanager.service.repository.Repositories;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.flow.AbstractFlowController;
 
+import java.util.Locale;
+
 /**
  * Created by Rico on 2014-12-31.
  */
@@ -33,8 +35,9 @@ public class PlanController extends AbstractFlowController {
     public PageResult<PlanDto> plans(@PathVariable ApiVersionService.Version version,
                                                 @RequestParam(value = "goal", required = false) Plan.Goal[] goals,
                                                 @RequestParam(value = "firstResult", required = false, defaultValue = "0") Integer firstResult,
-                                                @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults) throws Exception {
-        return versionServices.get(version).retrieveFromRepository(new PlanCriteria().setFirstResultRestriction(firstResult)
+                                                @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults,
+                                                Locale locale) throws Exception {
+        return versionServices.get(version).retrieveFromRepository(new PlanCriteria(locale.getLanguage()).setFirstResultRestriction(firstResult)
                 .setMaxResultsRestriction(maxResults).addGoalRestrictions(goals), Repositories.PLAN);
     }
 }
