@@ -77,7 +77,11 @@
         <property name="executionManager" ref="executionManager"/>
         <property name="orderResolverMap">
             <map>
-                <entry key="muscles" value-ref="musclesOrderResolver"/>
+                <entry key="Description-muscles" value-ref="descriptionMusclesOrderResolver"/>
+                <entry key="Description-type" value-ref="descriptionTypeOrderResolver"/>
+                <entry key="Description-level" value-ref="descriptionLevelOrderResolver"/>
+                <entry key="Description-mechanics" value-ref="descriptionMechanicsOrderResolver"/>
+                <entry key="Description-force" value-ref="descriptionForceOrderResolver"/>
             </map>
         </property>
     </bean>

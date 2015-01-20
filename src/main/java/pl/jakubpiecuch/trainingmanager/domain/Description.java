@@ -22,7 +22,7 @@ public class Description extends CommonEntity implements RepoObject {
 
     public enum Muscles {ABDUCTORS, ABS, BICEPS, CALVES, CHEST, FOREARM, GLUTES, HAMSTRINGS, LATS, LOWER_BACK, MIDDLE_BACK, NECK, QUADS, SHOULDERS, TRAPS, TRICEPS }
     public enum Type { CARDIO, OLYMPIC_WEIGHTLIFTING, PLYOMETRICS, POWERLIFTING, STRENGTH, STRETCHING, STRONMGMAN }
-    public enum Level { BEGINNER, EXPERT, INTERMEDIATE }
+    public enum Level { BEGINNER, INTERMEDIATE, EXPERT }
     public enum Mechanics { COMPOUND, ISOLATION }
     public enum Force { PULL, PUSH, STATIC }
 

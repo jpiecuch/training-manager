@@ -111,7 +111,8 @@ public abstract class Criteria<T extends Criteria> {
 
     public T setOrderBy(String property, OrderMode mode, Map<String, OrderResolver> orderResolverMap) {
         validateProperty(property);
-        this.order = orderResolverMap.get(property) != null ? orderResolverMap.get(property).resolve(lang, alias, property, mode) : (property + " " + mode);
+        OrderResolver orderResolver = orderResolverMap.get(entity + "-" + property);
+        this.order = orderResolver != null ? orderResolver.resolve(lang, alias, property, mode) : (property + " " + mode);
         return (T) this;
     }
 

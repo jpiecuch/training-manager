@@ -3,50 +3,104 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <bean id="musclesOrderResolver" class="pl.jakubpiecuch.trainingmanager.service.resolver.MusclesOrderResolver">
+    <bean id="descriptionMusclesOrderResolver" class="pl.jakubpiecuch.trainingmanager.service.resolver.order.description.MusclesOrderResolver">
         <property name="defaultLang" value="en"/>
         <property name="langs" value="${app.langs}"/>
         <property name="orderMap">
             <map>
                 <entry key="en">
-                    <map>
-                        <entry key="ABDUCTORS" value="0"/>
-                        <entry key="ABS" value="1"/>
-                        <entry key="BICEPS" value="2"/>
-                        <entry key="CALVES" value="3"/>
-                        <entry key="CHEST" value="4"/>
-                        <entry key="FOREARM" value="5"/>
-                        <entry key="GLUTES" value="6"/>
-                        <entry key="HAMSTRINGS" value="7"/>
-                        <entry key="LATS" value="8"/>
-                        <entry key="LOWER_BACK" value="9"/>
-                        <entry key="MIDDLE_BACK" value="10"/>
-                        <entry key="NECK" value="11"/>
-                        <entry key="QUADS" value="12"/>
-                        <entry key="SHOULDERS" value="13"/>
-                        <entry key="TRAPS" value="14"/>
-                        <entry key="TRICEPS" value="15"/>
-                    </map>
+                    <list>
+                        <value>0</value><value>1</value><value>2</value><value>3</value>
+                        <value>4</value><value>5</value><value>6</value><value>7</value>
+                        <value>8</value><value>9</value><value>10</value><value>11</value>
+                        <value>12</value><value>13</value><value>14</value><value>15</value>
+                    </list>
                 </entry>
                 <entry key="pl">
-                    <map>
-                        <entry key="SHOULDERS" value="0"/>
-                        <entry key="BICEPS" value="1"/>
-                        <entry key="ABS" value="2"/>
-                        <entry key="TRAPS" value="3"/>
-                        <entry key="QUADS" value="4"/>
-                        <entry key="LOWER_BACK" value="5"/>
-                        <entry key="CHEST" value="6"/>
-                        <entry key="CALVES" value="7"/>
-                        <entry key="LATS" value="8"/>
-                        <entry key="ABDUCTORS" value="9"/>
-                        <entry key="GLUTES" value="10"/>
-                        <entry key="FOREARM" value="11"/>
-                        <entry key="HAMSTRINGS" value="12"/>
-                        <entry key="MIDDLE_BACK" value="13"/>
-                        <entry key="NECK" value="14"/>
-                        <entry key="TRICEPS" value="15"/>
-                    </map>
+                    <list>
+                        <value>9</value><value>2</value><value>1</value><value>7</value>
+                        <value>6</value><value>11</value><value>10</value><value>12</value>
+                        <value>8</value><value>5</value><value>13</value><value>14</value>
+                        <value>12</value><value>0</value><value>3</value><value>15</value>
+                    </list>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="descriptionTypeOrderResolver" class="pl.jakubpiecuch.trainingmanager.service.resolver.order.description.TypeOrderResolver">
+        <property name="defaultLang" value="en"/>
+        <property name="langs" value="${app.langs}"/>
+        <property name="orderMap">
+            <map>
+                <entry key="en">
+                    <list>
+                        <value>0</value><value>1</value><value>2</value><value>3</value>
+                        <value>4</value><value>5</value><value>6</value>
+                    </list>
+                </entry>
+                <entry key="pl">
+                    <list>
+                        <value>2</value><value>1</value><value>5</value><value>4</value>
+                        <value>6</value><value>3</value><value>0</value>
+                    </list>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="descriptionLevelOrderResolver" class="pl.jakubpiecuch.trainingmanager.service.resolver.order.description.LevelOrderResolver">
+        <property name="defaultLang" value="en"/>
+        <property name="langs" value="${app.langs}"/>
+        <property name="orderMap">
+            <map>
+                <entry key="en">
+                    <list>
+                        <value>0</value><value>2</value><value>1</value>
+                    </list>
+                </entry>
+                <entry key="pl">
+                    <list>
+                        <value>0</value><value>1</value><value>2</value>
+                    </list>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="descriptionMechanicsOrderResolver" class="pl.jakubpiecuch.trainingmanager.service.resolver.order.description.MechanicsOrderResolver">
+        <property name="defaultLang" value="en"/>
+        <property name="langs" value="${app.langs}"/>
+        <property name="orderMap">
+            <map>
+                <entry key="en">
+                    <list>
+                        <value>0</value><value>1</value>
+                    </list>
+                </entry>
+                <entry key="pl">
+                    <list>
+                        <value>1</value><value>0</value>
+                    </list>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="descriptionForceOrderResolver" class="pl.jakubpiecuch.trainingmanager.service.resolver.order.description.ForceOrderResolver">
+        <property name="defaultLang" value="en"/>
+        <property name="langs" value="${app.langs}"/>
+        <property name="orderMap">
+            <map>
+                <entry key="en">
+                    <list>
+                        <value>0</value><value>1</value><value>2</value>
+                    </list>
+                </entry>
+                <entry key="pl">
+                    <list>
+                        <value>1</value><value>0</value><value>2</value>
+                    </list>
                 </entry>
             </map>
         </property>
