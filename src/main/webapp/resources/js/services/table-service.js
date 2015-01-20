@@ -13,13 +13,24 @@ MetronicApp.service('tableService', function() {
                 params: {
                     firstResult: 0,
                     maxResults: 10
-                }
+                },
+                modes: {}
             },
             totalPage: function() {
                 return Math.ceil(this.data.count / this.count);
             },
-            sort: function() {
+            sort: function(property) {
                 this.page = 1;
+                this.filter.params.firstResult = ((this.page - 1) * this.count);
+                this.filter.params.orderby = property;
+                this.filter.modes[property] = !this.filter.modes[property] || this.filter.modes[property] === 'DESC' ? 'ASC' : 'DESC';
+                this.filter.params.ordermode = this.filter.modes[property];
+
+                var me = this;
+                this.service.retrieve(this.filter.params).then(function(data) {
+                    me.data = data.data;
+                });
+
             },
             changePage: function(increase) {
                 this.page = new Number(this.page ? this.page : 1) + increase;
