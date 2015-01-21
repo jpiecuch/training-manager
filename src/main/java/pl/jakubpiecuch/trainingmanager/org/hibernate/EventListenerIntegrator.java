@@ -1,14 +1,9 @@
 package pl.jakubpiecuch.trainingmanager.org.hibernate;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.event.service.spi.EventListenerRegistry;
 import org.hibernate.event.spi.EventType;
-import org.hibernate.integrator.spi.Integrator;
 import org.hibernate.internal.SessionFactoryImpl;
-import org.hibernate.metamodel.source.MetadataImplementor;
-import org.hibernate.service.spi.SessionFactoryServiceRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

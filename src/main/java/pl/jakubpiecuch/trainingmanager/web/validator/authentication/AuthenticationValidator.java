@@ -1,6 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.web.validator.authentication;
 
-import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

@@ -4,13 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
-import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.BaseControllerTestCase;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
@@ -18,8 +15,6 @@ import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class LanguageControllerTest extends BaseControllerTestCase {
 

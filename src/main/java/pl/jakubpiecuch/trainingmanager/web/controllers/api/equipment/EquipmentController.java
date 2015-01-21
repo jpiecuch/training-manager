@@ -2,21 +2,16 @@ package pl.jakubpiecuch.trainingmanager.web.controllers.api.equipment;
 
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.server.ServletServerHttpRequest;
-import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
-import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.repository.Repositories;
-import pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionCriteria;
 import pl.jakubpiecuch.trainingmanager.service.repository.equipment.EquipmentCriteria;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Locale;
 

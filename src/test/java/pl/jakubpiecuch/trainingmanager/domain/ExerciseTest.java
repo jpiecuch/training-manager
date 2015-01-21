@@ -1,10 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
 import junit.framework.TestCase;
-import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.HashMap;
 
 public class ExerciseTest extends TestCase {
 

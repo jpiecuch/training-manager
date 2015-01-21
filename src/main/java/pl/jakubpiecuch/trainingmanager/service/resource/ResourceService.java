@@ -2,7 +2,6 @@ package pl.jakubpiecuch.trainingmanager.service.resource;
 
 import org.springframework.http.MediaType;
 
-import java.io.OutputStream;
 import java.util.List;
 
 public interface ResourceService {

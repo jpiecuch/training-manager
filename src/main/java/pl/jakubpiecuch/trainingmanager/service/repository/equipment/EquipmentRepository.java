@@ -2,7 +2,6 @@ package pl.jakubpiecuch.trainingmanager.service.repository.equipment;
 
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
-import pl.jakubpiecuch.trainingmanager.dao.DescriptionDao;
 import pl.jakubpiecuch.trainingmanager.dao.EquipmentDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Description;

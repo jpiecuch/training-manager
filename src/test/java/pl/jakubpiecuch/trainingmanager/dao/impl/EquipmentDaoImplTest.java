@@ -7,7 +7,7 @@ import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.service.repository.equipment.EquipmentCriteria;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class EquipmentDaoImplTest extends BaseDAOTestCase {
 

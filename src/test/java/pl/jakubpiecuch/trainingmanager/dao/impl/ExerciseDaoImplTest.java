@@ -5,11 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.jakubpiecuch.trainingmanager.dao.ExerciseDao;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ExerciseDaoImplTest extends BaseDAOTestCase {
 

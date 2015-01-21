@@ -2,8 +2,6 @@ package pl.jakubpiecuch.trainingmanager.service.user.local;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class LocalUserServiceImplTest {
 
     @Test

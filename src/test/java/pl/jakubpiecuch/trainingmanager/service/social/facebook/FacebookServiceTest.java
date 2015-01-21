@@ -15,8 +15,8 @@ import org.springframework.social.connect.support.OAuth2Connection;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.WebRequest;
-import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.service.user.UserService;
+import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 
 import java.util.ArrayList;

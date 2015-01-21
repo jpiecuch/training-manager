@@ -2,12 +2,10 @@ package pl.jakubpiecuch.trainingmanager.dao.impl;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import pl.jakubpiecuch.trainingmanager.dao.EquipmentDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
-import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.service.repository.equipment.EquipmentCriteria;
 

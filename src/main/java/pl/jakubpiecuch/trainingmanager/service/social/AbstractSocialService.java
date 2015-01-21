@@ -12,9 +12,9 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
+import pl.jakubpiecuch.trainingmanager.service.user.UserService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
-import pl.jakubpiecuch.trainingmanager.service.user.UserService;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 import java.util.HashMap;

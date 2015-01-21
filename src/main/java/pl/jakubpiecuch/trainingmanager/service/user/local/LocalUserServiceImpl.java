@@ -1,7 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.user.local;
 
 import com.springcryptoutils.core.cipher.symmetric.SymmetricEncryptionException;
-import org.hibernate.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;

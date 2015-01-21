@@ -1,14 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.service.crypt;
 
 import com.springcryptoutils.core.cipher.Mode;
-import com.springcryptoutils.core.cipher.symmetric.Base64EncodedCipherer;
 import com.springcryptoutils.core.cipher.symmetric.Base64EncodedCiphererImpl;
 import com.springcryptoutils.core.cipher.symmetric.SymmetricEncryptionException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class SymmetricCryptServiceTest {
 

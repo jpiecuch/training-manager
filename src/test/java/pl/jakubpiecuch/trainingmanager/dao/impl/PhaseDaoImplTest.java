@@ -8,7 +8,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Plan;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class PhaseDaoImplTest extends BaseDAOTestCase {
 

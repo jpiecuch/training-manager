@@ -7,8 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import pl.jakubpiecuch.trainingmanager.service.encoder.password.PasswordEncoder;
-import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.service.user.local.LocalUserService;
+import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
 @Component
 public class LocalAuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {

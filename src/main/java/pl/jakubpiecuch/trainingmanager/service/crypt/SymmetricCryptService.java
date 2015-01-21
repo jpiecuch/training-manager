@@ -1,7 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.crypt;
 
 import com.springcryptoutils.core.cipher.symmetric.Base64EncodedCipherer;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class SymmetricCryptService implements CryptService {
 

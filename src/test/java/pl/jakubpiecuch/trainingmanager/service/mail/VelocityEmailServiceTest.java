@@ -15,8 +15,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Locale;
 
-import static org.junit.Assert.*;
-
 @RunWith(MockitoJUnitRunner.class)
 public class VelocityEmailServiceTest {
 

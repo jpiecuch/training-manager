@@ -2,12 +2,10 @@ package pl.jakubpiecuch.trainingmanager.dao.impl;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import org.hibernate.Query;
 import pl.jakubpiecuch.trainingmanager.dao.DescriptionDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
-import pl.jakubpiecuch.trainingmanager.domain.Description.Muscles;
 import pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionCriteria;
 
 import java.util.List;

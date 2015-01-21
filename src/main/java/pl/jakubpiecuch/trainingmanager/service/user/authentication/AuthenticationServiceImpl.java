@@ -7,10 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
+import pl.jakubpiecuch.trainingmanager.service.user.UserService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
-import pl.jakubpiecuch.trainingmanager.service.user.UserService;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 import java.util.ArrayList;

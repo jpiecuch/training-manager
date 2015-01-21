@@ -4,8 +4,6 @@ import org.springframework.util.Assert;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
-import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 

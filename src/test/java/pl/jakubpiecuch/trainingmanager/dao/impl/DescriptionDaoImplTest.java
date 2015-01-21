@@ -7,7 +7,7 @@ import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionCriteria;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class DescriptionDaoImplTest extends BaseDAOTestCase {
 

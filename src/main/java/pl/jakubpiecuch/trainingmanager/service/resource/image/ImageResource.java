@@ -3,16 +3,15 @@ package pl.jakubpiecuch.trainingmanager.service.resource.image;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.MediaType;
-import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 import javax.annotation.PostConstruct;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ImageResource implements ResourceService {

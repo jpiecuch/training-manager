@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.jakubpiecuch.trainingmanager.common.MapperService;
 
-import javax.annotation.PostConstruct;
 import java.io.InputStream;
 
 /**

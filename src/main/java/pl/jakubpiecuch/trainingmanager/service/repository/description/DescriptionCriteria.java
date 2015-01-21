@@ -2,10 +2,11 @@ package pl.jakubpiecuch.trainingmanager.service.repository.description;
 
 import org.apache.commons.lang.ArrayUtils;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
-import pl.jakubpiecuch.trainingmanager.service.OrderResolver;
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Rico on 2015-01-02.

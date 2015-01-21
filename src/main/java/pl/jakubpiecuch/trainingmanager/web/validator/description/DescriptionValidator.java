@@ -5,7 +5,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
-import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 

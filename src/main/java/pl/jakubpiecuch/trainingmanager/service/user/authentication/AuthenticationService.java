@@ -1,7 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.user.authentication;
 
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
-import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 /**
  * Created by Rico on 2014-12-13.

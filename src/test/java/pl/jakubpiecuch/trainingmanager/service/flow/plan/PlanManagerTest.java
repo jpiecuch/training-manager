@@ -11,7 +11,7 @@ import pl.jakubpiecuch.trainingmanager.dao.BaseDao;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.FlowConverter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PlanManagerTest {

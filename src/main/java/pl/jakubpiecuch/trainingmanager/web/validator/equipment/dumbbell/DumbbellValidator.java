@@ -3,7 +3,6 @@ package pl.jakubpiecuch.trainingmanager.web.validator.equipment.dumbbell;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 

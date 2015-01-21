@@ -3,7 +3,6 @@ package pl.jakubpiecuch.trainingmanager.domain;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "account")

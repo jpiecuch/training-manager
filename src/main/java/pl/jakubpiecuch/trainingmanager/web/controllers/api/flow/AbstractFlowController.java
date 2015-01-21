@@ -2,7 +2,10 @@ package pl.jakubpiecuch.trainingmanager.web.controllers.api.flow;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;

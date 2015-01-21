@@ -7,8 +7,6 @@ import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 
-import java.util.Map;
-
 /**
  * Created by Rico on 2014-12-07.
  */

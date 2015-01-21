@@ -2,8 +2,6 @@ package pl.jakubpiecuch.trainingmanager.org.hibernate;
 
 import org.hibernate.event.spi.PreInsertEvent;
 import org.hibernate.event.spi.PreInsertEventListener;
-import org.hibernate.event.spi.PreUpdateEvent;
-import org.hibernate.event.spi.PreUpdateEventListener;
 import pl.jakubpiecuch.trainingmanager.domain.VersionedEntity;
 
 import java.util.Date;

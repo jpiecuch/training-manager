@@ -5,12 +5,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.http.MediaType;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.List;

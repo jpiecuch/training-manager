@@ -2,12 +2,8 @@ package pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise
 
 import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
-import pl.jakubpiecuch.trainingmanager.domain.Phase;
 import pl.jakubpiecuch.trainingmanager.domain.Workout;
 import pl.jakubpiecuch.trainingmanager.service.flow.AbstractFlowConverter;
-import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutDto;
-import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
-import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
 
 /**
  * Created by Rico on 2014-12-31.

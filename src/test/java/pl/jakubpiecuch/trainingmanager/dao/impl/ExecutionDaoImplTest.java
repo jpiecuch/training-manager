@@ -11,11 +11,11 @@ import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.domain.Execution;
 import pl.jakubpiecuch.trainingmanager.service.execution.session.SessionExecutionCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
-import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ExecutionDaoImplTest extends BaseDAOTestCase {
 

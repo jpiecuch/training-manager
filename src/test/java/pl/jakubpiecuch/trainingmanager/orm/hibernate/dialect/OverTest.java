@@ -2,12 +2,12 @@ package pl.jakubpiecuch.trainingmanager.orm.hibernate.dialect;
 
 import org.junit.Test;
 import pl.jakubpiecuch.trainingmanager.org.hibernate.dialect.PostgreSQLDialect;
-import pl.jakubpiecuch.trainingmanager.org.hibernate.dialect.PostgreSQLDialect.*;
+import pl.jakubpiecuch.trainingmanager.org.hibernate.dialect.PostgreSQLDialect.Over;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class OverTest {
 

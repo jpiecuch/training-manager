@@ -2,17 +2,13 @@ package pl.jakubpiecuch.trainingmanager.service.repository.equipment;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Rico on 2015-01-02.

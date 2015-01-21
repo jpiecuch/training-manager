@@ -3,7 +3,6 @@ package pl.jakubpiecuch.trainingmanager.service.flow.plan.phase;
 import pl.jakubpiecuch.trainingmanager.domain.Phase;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.AbstractFlowConverter;
-import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutManager;
 
 /**
  * Created by Rico on 2014-12-31.

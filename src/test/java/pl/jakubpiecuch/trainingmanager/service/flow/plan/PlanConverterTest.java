@@ -10,7 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PlanConverterTest {

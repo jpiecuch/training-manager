@@ -1,10 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
 import pl.jakubpiecuch.trainingmanager.dao.PhaseDao;
-import pl.jakubpiecuch.trainingmanager.dao.PlanDao;
 import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Phase;
-import pl.jakubpiecuch.trainingmanager.domain.Plan;
 
 import java.util.List;
 

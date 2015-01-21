@@ -4,7 +4,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
-import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutDto;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.flow.AbstractFlowController;
