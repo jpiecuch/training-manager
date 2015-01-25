@@ -1,4 +1,4 @@
-package pl.jakubpiecuch.trainingmanager.service.execution.session;
+package pl.jakubpiecuch.trainingmanager.service.user.workout.session;
 
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
@@ -8,21 +8,20 @@ import java.util.Date;
 /**
  * Created by Rico on 2015-01-18.
  */
-public class SessionExecutionCriteria extends Criteria<SessionExecutionCriteria> {
+public class UserWorkoutCriteria extends Criteria<UserWorkoutCriteria> {
 
     private Date from;
     private Date to;
 
-    public SessionExecutionCriteria(String lang) {
-        super("e", "Execution", lang);
+    public UserWorkoutCriteria(String lang) {
+        super("u", "UserWorkout", lang);
     }
 
-    public SessionExecutionCriteria addDateRangeRestriction(Date from, Date to) {
+    public UserWorkoutCriteria addDateRangeRestriction(Date from, Date to) {
         this.from = from;
         this.to = to;
         return this;
     }
-
 
     @Override
     protected void validateProperty(String property) {

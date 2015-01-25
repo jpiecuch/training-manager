@@ -51,7 +51,7 @@ CREATE TABLE phase (
 CREATE TABLE workout (
     id bigint PRIMARY KEY NOT NULL,
     week_day integer NOT NULL,
-    muscles integer NOT NULL,
+    muscles character varying(1024) NOT NULL,
     position integer NOT NULL,
     phase bigint NOT NULL
 );
@@ -79,16 +79,23 @@ CREATE TABLE userconnection (
     expiretime bigint
 );
 
+CREATE TABLE user_workout (
+    id BIGINT PRIMARY KEY NOT NULL,
+    comment character varying(50000),
+    remind boolean DEFAULT false,
+    date timestamp without time zone DEFAULT now() NOT NULL,
+    account bigint NOT NULL,
+    workout BIGINT NOT NULL
+);
+
 CREATE TABLE execution (
     id BIGINT PRIMARY KEY NOT NULL,
     reps character varying(50),
     weights character varying(50),
     exercise bigint NOT NULL,
-    account bigint NOT NULL,
-    date timestamp without time zone DEFAULT now() NOT NULL,
     confirm boolean DEFAULT false NOT NULL,
     comment character varying(50000),
-    remind boolean DEFAULT false
+    workout BIGINT NOT NULL
 );
 
 ALTER TABLE userconnection ADD CONSTRAINT userconnection_pkey PRIMARY KEY (userid, providerid, provideruserid);
@@ -102,4 +109,6 @@ ALTER TABLE plan ADD CONSTRAINT creator_fkey FOREIGN KEY (creator) REFERENCES ac
 ALTER TABLE phase ADD CONSTRAINT plan_fkey FOREIGN KEY (plan) REFERENCES plan(id);
 ALTER TABLE workout ADD CONSTRAINT phase_fkey FOREIGN KEY (phase) REFERENCES phase(id);
 ALTER TABLE execution ADD CONSTRAINT exercise_fkey FOREIGN KEY (exercise) REFERENCES exercise(id);
-ALTER TABLE execution ADD CONSTRAINT account_fkey FOREIGN KEY (account) REFERENCES account(id);
+ALTER TABLE execution ADD CONSTRAINT execution_user_workout_fkey FOREIGN KEY (workout) REFERENCES user_workout(id);
+ALTER TABLE user_workout ADD CONSTRAINT account_fkey FOREIGN KEY (account) REFERENCES account(id);
+ALTER TABLE user_workout ADD CONSTRAINT workout_user_fkey FOREIGN KEY (workout) REFERENCES workout(id);

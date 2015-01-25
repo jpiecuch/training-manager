@@ -3,7 +3,6 @@
 MetronicApp.controller('PlanController', function($scope, $stateParams, dictionaryService, inputValidateService, planService) {
     $scope.validate = inputValidateService;
 
-
     $scope.init = function(form) {
         $scope.dictionary = {
             weekDays: [0,1,2,3,4,5,6]

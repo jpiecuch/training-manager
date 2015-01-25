@@ -7,11 +7,11 @@ import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Execution;
-import pl.jakubpiecuch.trainingmanager.service.execution.session.SessionExecutionCriteria;
+import pl.jakubpiecuch.trainingmanager.service.user.workout.session.UserWorkoutCriteria;
 
 import java.util.List;
 
-public class ExecutionDaoImpl extends CoreDaoImpl implements ExecutionDao, RepoDao<Execution, SessionExecutionCriteria> {
+public class ExecutionDaoImpl extends CoreDaoImpl implements ExecutionDao, RepoDao<Execution, UserWorkoutCriteria> {
 
 
     @Override
@@ -21,11 +21,11 @@ public class ExecutionDaoImpl extends CoreDaoImpl implements ExecutionDao, RepoD
 
     @Override
     public List<Execution> findByParentId(long parentId) {
-        return session().createQuery("SELECT e FROM Execution e WHERE e.exercise.id = :exerciseId").setParameter("exerciseId", parentId).list();
+        return session().createQuery("SELECT e FROM Execution e LEFT JOIN FETCH e.exercise ex LEFT JOIN FETCH ex.description d WHERE e.workout.id = :workoutId").setParameter("workoutId", parentId).list();
     }
 
     @Override
-    public PageResult<Execution> findByCriteria(SessionExecutionCriteria criteria) {
+    public PageResult<Execution> findByCriteria(UserWorkoutCriteria criteria) {
         final List<Object[]> result = criteria.query(session()).list();
 
         return new PageResult<Execution>() {

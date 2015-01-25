@@ -148,13 +148,13 @@
                                     <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['workoutMuscles' + workout.index]), 'has-error' : validate.isNotValid(planForm['workoutMuscles' + workout.index])}">
                                         <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['workoutMuscles' + workout.index].$touched}" data-ng-bind="'workout.muscle' | translate"></label>
                                         <div class="col-md-4">
-                                            <div class="input-icon right select-right">
-                                                <i data-ng-if="planForm['workoutMuscles' + workout.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['workoutMuscles' + workout.index]), 'fa-exclamation' : validate.isNotValid(planForm['workoutMuscles' + workout.index])}"></i>
-                                                <select name="workoutMuscles{{workout.index}}" class="form-control" data-ng-model="workout.muscles" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
-                                                <option data-ng-repeat="muscle in dictionary.muscles" data-ng-bind="muscle"
-                                                        value="{{muscle}}"></option>
-                                                </select>
-                                            </div>
+                                            <label class="checkbox">
+                                                <div class="col-md-6" data-ng-repeat="muscle in workout.muscles">
+                                                    <input id="workoutMuscles{{workout.index}}{{$index}}" name="workoutMuscles{{workout.index}}" data-ng-model="muscle.selected" type="checkbox" data-ng-required="!workout.musclesSelected()">
+                                                    <label for="workoutMuscles{{workout.index}}{{$index}}"><span></span></label>
+                                                    {{muscle.name | translate}}
+                                                </div>
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="form-group">

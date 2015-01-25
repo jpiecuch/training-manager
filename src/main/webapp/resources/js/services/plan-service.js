@@ -27,7 +27,7 @@ MetronicApp.service('planService', function($q, $http, phaseService, formValidat
         var deferred = $q.defer();
         deferred.resolve();
         return deferred.promise.then(function() {
-            return $http.post(urlService.apiURL('/plan'),  {name: plan.name, goal: plan.goal, id: plan.id, creatorId: plan.creatorId}).then(function(data) {
+            return $http.post(urlService.apiURL('/plans'),  {name: plan.name, goal: plan.goal, id: plan.id, creatorId: plan.creatorId}).then(function(data) {
                 plan.id = data.data;
                 return data;
             });
@@ -48,7 +48,7 @@ MetronicApp.service('planService', function($q, $http, phaseService, formValidat
         var deferred = $q.defer();
         deferred.resolve();
         return deferred.promise.then(function() {
-            return id ? $http.get(urlService.apiURL('/plan/' + id), {params: {full: true}}) : undefined;
+            return id ? $http.get(urlService.apiURL('/plans/' + id), {params: {full: true}}) : undefined;
         }).then(function(data) {
             var plan = {
                 id: data ? data.data.id : undefined,
@@ -95,6 +95,6 @@ MetronicApp.service('planService', function($q, $http, phaseService, formValidat
     }
 
     this.retrieve = function(params) {
-        return $http.get(urlService.apiURL('/plan'), { params: params });
+        return $http.get(urlService.apiURL('/plans'), { params: params });
     }
 });

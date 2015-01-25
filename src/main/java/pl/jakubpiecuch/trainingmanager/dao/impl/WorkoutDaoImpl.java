@@ -15,6 +15,6 @@ public class WorkoutDaoImpl extends CoreDaoImpl implements WorkoutDao {
 
     @Override
     public List<Workout> findByParentId(long phaseId) {
-        return session().createQuery("SELECT w FROM Workout w WHERE w.phase.id = :phaseId").setParameter("phaseId", phaseId).list();
+        return session().createQuery("SELECT w FROM Workout w WHERE w.phase.id = :phaseId ORDER BY w.position").setParameter("phaseId", phaseId).list();
     }
 }

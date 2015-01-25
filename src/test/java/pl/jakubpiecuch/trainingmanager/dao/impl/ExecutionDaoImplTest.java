@@ -9,7 +9,7 @@ import pl.jakubpiecuch.trainingmanager.dao.ExecutionDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.domain.Execution;
-import pl.jakubpiecuch.trainingmanager.service.execution.session.SessionExecutionCriteria;
+import pl.jakubpiecuch.trainingmanager.service.user.workout.session.UserWorkoutCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
 import java.util.Date;
@@ -40,11 +40,11 @@ public class ExecutionDaoImplTest extends BaseDAOTestCase {
     @Test
     public void testFindByCriteria() {
         SecurityContextHolder.getContext().setAuthentication( new UsernamePasswordAuthenticationToken(new SecurityUser(1l, "user", "password", null, ""), "password", AuthorityUtils.createAuthorityList("ROLE_ADMIN")));
-        PageResult result = ((RepoDao) executionDao).findByCriteria(new SessionExecutionCriteria("en").setIdRestriction(1l));
+        PageResult result = ((RepoDao) executionDao).findByCriteria(new UserWorkoutCriteria("en").setIdRestriction(1l));
         assertNotNull(result);
         assertEquals(1l, result.getCount());
 
-        result = ((RepoDao) executionDao).findByCriteria(new SessionExecutionCriteria("en").addDateRangeRestriction(new Date(0), null));
+        result = ((RepoDao) executionDao).findByCriteria(new UserWorkoutCriteria("en").addDateRangeRestriction(new Date(0), null));
         assertNotNull(result);
         assertEquals(1l, result.getCount());
     }

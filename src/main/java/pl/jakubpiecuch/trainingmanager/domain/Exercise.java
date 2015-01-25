@@ -18,6 +18,13 @@ public class Exercise extends CommonEntity {
     private Integer position;
     private Integer group;
 
+    public Exercise() {
+    }
+
+    public Exercise(Long id) {
+        super(id);
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "description")
     public Description getDescription() {

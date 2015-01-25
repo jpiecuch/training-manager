@@ -21,3 +21,6 @@ ALTER TABLE workout ALTER COLUMN id SET DEFAULT nextval('workout_id_seq');
 
 CREATE SEQUENCE execution_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
 ALTER TABLE execution ALTER COLUMN id SET DEFAULT nextval('execution_id_seq');
+
+CREATE SEQUENCE user_workout_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+ALTER TABLE user_workout ALTER COLUMN id SET DEFAULT nextval('user_workout_id_seq');

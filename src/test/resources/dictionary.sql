@@ -4,7 +4,7 @@ INSERT INTO plan (id, name, goal, creator) VALUES (1, 'Main plan', 0, 1);
 
 INSERT INTO phase (id, position, goal, description, plan, weeks) VALUES (1, 1, 1, 'Main phase', 1, 3);
 
-INSERT INTO workout (id, week_day, phase, muscles, position) VALUES (1, 1, 1, 2, 1);
+INSERT INTO workout (id, week_day, phase, muscles, position) VALUES (1, 1, 1, '2', 1);
 
 INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (1, 'pl:pl_1;en:en_1', 'url_1', NULL, 0, 0, NULL, 0, 0, 0);
 INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force) VALUES (2, 'pl:pl_2;en:en_2', 'url_2', NULL, 2, 1, NULL, 1, 1, 1);
@@ -18,8 +18,10 @@ INSERT INTO description (id, name, movie_url, description, party_muscles, type, 
 INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (1, 1, 2, '12;12;12;12', 1, 1);
 INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (2, 1, 3, '12;10;8;6', 2, 2);
 
-INSERT INTO execution (id, reps, weights, exercise, account, date, confirm, comment, remind) VALUES (1,'12;12;12;12','30;30;30;30',1,1,'2014-12-07 13:52:56.805',false,null,false);
-INSERT INTO execution (id, reps, weights, exercise, account, date, confirm, comment, remind) VALUES (2,'12;12;11;12','30;30;30.5;30',2,1,'2014-12-07 13:52:56.805',false,null,false);
+INSERT INTO user_workout (id, account, date, remind, comment, workout) VALUES (1, 1, '2014-12-07 13:52:56.805', false, null, 1);
+
+INSERT INTO execution (id, reps, weights, exercise, confirm, comment, workout) VALUES (1,'12;12;12;12','30;30;30;30',1,false,null,1);
+INSERT INTO execution (id, reps, weights, exercise, confirm, comment, workout) VALUES (2,'12;12;11;12','30;30;30.5;30',2,false,null,1);
 
 INSERT INTO equipment (id, type, data, length, weight, strength) VALUES (3, 4, '{"connectedLoad": false,"type":"STRAIGHT"}', 180, 8, 150);
 INSERT INTO equipment (id, type, data, length, weight, strength) VALUES (1, 0, '{"handles":6}', 120, NULL, 200);

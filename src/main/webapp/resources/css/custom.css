@@ -31,33 +31,15 @@
     margin: 12px 0 0 0 !important;
 }
 
-.portlet.calendar .fc-event .fc-event-title {
-    font-size: 11px !important;
+.fc-event {
+    padding: 10px 5px;
+    text-align: center;
 }
 
-.portlet.calendar .fc-event {
-    background-color: #4b77be !important;
-    padding-bottom: 5px;
-}
-
-.portlet.calendar .fc-event:hover {
+.fc-event:hover {
     background-color: #4b8df8 !important;
 }
-.portlet.calendar .fc-event:hover > div > span {
-text-decoration: underline;
-}
 
-.portlet.calendar .fc-event:hover + .fc-day-number {
-    font-weight: bold;
-}
-
-.fc-event-hori {
-    margin-bottom: 0px !important;
-}
-
-.portlet.calendar .fc-day:hover > div > .fc-day-number {
-    font-weight: bold;
-}
 
 .dashboard-stat .visual-status > i {
     margin-left: 0px !important;

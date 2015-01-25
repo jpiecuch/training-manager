@@ -1,0 +1,116 @@
+<div ng-controller="WorkoutController" data-ng-init="init()">
+	<div class="page-bar">
+		<ul class="page-breadcrumb">
+			<li>
+				<i class="fa fa-home"></i>
+				<a href="#/workout" data-ng-bind="'workout' | translate"></a>
+			</li>
+		</ul>
+	</div>
+	<h3 class="page-title" data-ng-bind="'workout' | translate"></h3>
+	<div class="row">
+		<div class="portlet light bg-inverse">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-equalizer font-red-sunglo"></i>
+					<span class="caption-subject bold uppercase" data-ng-bind="workout.date | date"></span>
+				</div>
+			</div>
+			<div class="portlet-body form">
+				<div class="row">
+					<div class="col-md-3">
+						<div class="bordered portlet light bg-inverse">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="icon-equalizer font-red-sunglo"></i>
+									<span class="caption-subject bold uppercase"  data-ng-bind="'plan' | translate"></span>
+								</div>
+							</div>
+							<div class="portlet-body" >
+								{{workout.plan.name}} ({{workout.plan.goal}})
+							</div>
+						</div>
+						<div class="bordered portlet light bg-inverse">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="icon-equalizer font-red-sunglo"></i>
+									<span class="caption-subject bold uppercase"  data-ng-bind="'phase' | translate"></span>
+								</div>
+							</div>
+							<div class="portlet-body" >
+								{{workout.phase.description}} {{workout.phase.goal}}
+							</div>
+						</div>
+						<div class="bordered portlet light bg-inverse">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="icon-equalizer font-red-sunglo"></i>
+									<span class="caption-subject bold uppercase"  data-ng-bind="'weekDay.' + workout.weekDay + '.full' | translate"></span>
+								</div>
+							</div>
+							<div class="portlet-body" >
+								{{workout.muscles}}
+							</div>
+						</div>
+					</div>
+					<div class="col-md-9">
+						<form class="form-horizontal" data-ng-repeat="execution in workout.executions | orderBy : 'position'">
+							<div data-ng-if="workout.isFirstInSuperSet(execution)" class="super-set-title">
+								<span><i class="fa fa-star-o"></i> {{'superSet' | translate}}</span>
+							</div>
+							<div class="bordered portlet light bg-inverse" data-ng-class="{'super-set' : workout.isInSuperSet(execution)}">
+								<div class="portlet-title">
+									<div class="caption">
+										<i class="icon-equalizer font-red-sunglo"></i>
+										<span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : execution.isValid() === true, 'font-red-sunglo' : execution.isValid() === false}" data-ng-bind="('exercise' | translate) + ' ' + ($index +1)"></span>
+										<span class="caption-helper" data-ng-bind="execution.description.names['pl']"></span>
+									</div>
+									<div class="actions">
+										<a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="execution.visible = !execution.visible">
+											<i class="fa fa-angle-double-down"></i>
+										</a>
+									</div>
+								</div>
+								<div class="portlet-body form" data-ng-hide="execution.visible === false">
+									<div class="form-body">
+										<div class="form-group">
+											<label class="col-md-3 control-label"
+												   data-ng-bind="'execution.sets' | translate"></label>
+											<div class="col-md-9">
+												<div class="col-md-2" data-ng-repeat="set in execution.exercise.sets track by $index" data-ng-bind="set"></div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-3 control-label"
+												   data-ng-bind="'execution.sets' | translate"></label>
+											<div class="col-md-9">
+												<div class="col-md-2" data-ng-repeat="set in execution.sets track by $index">
+													<div class="input-icon right">
+														<i class="fa fa-times" style="cursor: pointer;" data-ng-click="execution.removeSet($index)"></i>
+														<input data-only-digits name="executionSet{{execution.id}}{{$index}}" type="text" class="form-control" data-ng-model="execution.sets[$index]" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+													</div>
+												</div>
+												<a href="" class="btn btn-icon-only" data-ng-click="execution.addSet()">
+													<i class="fa fa-plus"></i>
+												</a>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-3 control-label"
+												   data-ng-bind="'execution.weights' | translate"></label>
+											<div class="col-md-9">
+												<div class="col-md-2" data-ng-repeat="weight in execution.weights track by $index">
+														<input data-only-digits name="executionWeight{{execution.id}}{{$index}}" type="text" class="form-control" data-ng-model="execution.weights[$index]" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

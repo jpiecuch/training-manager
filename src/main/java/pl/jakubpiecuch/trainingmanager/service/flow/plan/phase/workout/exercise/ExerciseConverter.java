@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise;
 
+import org.springframework.transaction.annotation.Transactional;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.domain.Workout;

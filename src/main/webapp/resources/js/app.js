@@ -12,7 +12,9 @@ var MetronicApp = angular.module("MetronicApp", [
     "ngCookies",
     'toaster',
     'textAngular',
-    'ngTable'
+    'ngTable',
+    'ui.calendar',
+    'checklist-model'
 ]);
 
 MetronicApp.config(['$animateProvider',
@@ -326,6 +328,43 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             'resources/js/services/table-service.js',
                             'resources/js/services/form-validate-service.js',
                             'resources/js/services/equipment-service.js'
+                        ]
+                    });
+                }]
+            }
+        })
+
+        .state('calendar', {
+            url: "/calendar",
+            templateUrl: "resources/views/calendar.html",
+            data: {pageTitle: 'Calendar'},
+            controller: "CalendarController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        files: [
+                            'resources/js/controllers/CalendarController.js',
+                            'resources/assets/global/plugins/fullcalendar/fullcalendar.js',
+                            'resources/assets/global/plugins/fullcalendar/fullcalendar.css',
+                        ]
+                    });
+                }]
+            }
+        })
+
+        .state('workout', {
+            url: "/workout/:id",
+            templateUrl: "resources/views/workout.html",
+            data: {pageTitle: 'Workout'},
+            controller: "WorkoutController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        files: [
+                            'resources/js/controllers/WorkoutController.js',
+                            'resources/js/services/user-workout-service.js'
                         ]
                     });
                 }]

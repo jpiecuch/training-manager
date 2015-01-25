@@ -16,9 +16,7 @@ import pl.jakubpiecuch.trainingmanager.service.OrderResolver;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.Dictionary;
-import pl.jakubpiecuch.trainingmanager.service.execution.ExecutionDto;
-import pl.jakubpiecuch.trainingmanager.service.execution.ExecutionManager;
-import pl.jakubpiecuch.trainingmanager.service.execution.session.SessionExecutionCriteria;
+import pl.jakubpiecuch.trainingmanager.service.user.workout.UserWorkoutManager;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.flow.FlowManager;
 import pl.jakubpiecuch.trainingmanager.service.locale.LocaleService;
@@ -29,6 +27,8 @@ import pl.jakubpiecuch.trainingmanager.service.user.authentication.Authenticatio
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
+import pl.jakubpiecuch.trainingmanager.service.user.plan.UserPlan;
+import pl.jakubpiecuch.trainingmanager.service.user.plan.UserPlanStarter;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 import javax.annotation.PostConstruct;
@@ -54,17 +54,17 @@ public class Version1Service implements ApiVersionService {
     private Map<Repositories, Repository> repositories;
     private Map<Repositories, ReadRepository> readRepositories;
     private ObjectMapper mapper = new ObjectMapper();
-    private ExecutionManager executionManager;
     private Map<String, OrderResolver> orderResolverMap;
+    private UserPlanStarter userPlanStarter;
+
+    @Override
+    public void startPlan(UserPlan userPlan) {
+        userPlanStarter.start(userPlan);
+    }
 
     @Override
     public Map<String, OrderResolver> orderResolvers() {
         return orderResolverMap;
-    }
-
-    @Override
-    public PageResult<ExecutionDto> executions(SessionExecutionCriteria sessionExecutionCriteria) {
-        return executionManager.read(sessionExecutionCriteria);
     }
 
     @Override
@@ -237,12 +237,12 @@ public class Version1Service implements ApiVersionService {
         this.repositories = repositories;
     }
 
-    public void setExecutionManager(ExecutionManager executionManager) {
-        this.executionManager = executionManager;
-    }
-
     public void setOrderResolverMap(Map<String, OrderResolver> orderResolverMap) {
         this.orderResolverMap = orderResolverMap;
+    }
+
+    public void setUserPlanStarter(UserPlanStarter userPlanStarter) {
+        this.userPlanStarter = userPlanStarter;
     }
 
     @PostConstruct

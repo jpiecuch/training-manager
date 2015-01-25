@@ -135,11 +135,26 @@
         <property name="validator" ref="equipmentValidator"/>
     </bean>
 
-    <bean id="executionConverter" class="pl.jakubpiecuch.trainingmanager.service.execution.ExecutionConverter"/>
+    <bean id="executionConverter" class="pl.jakubpiecuch.trainingmanager.service.user.workout.ExecutionConverter">
+        <property name="exerciseConverter" ref="exerciseConverter"/>
+    </bean>
 
-    <bean id="executionManager" class="pl.jakubpiecuch.trainingmanager.service.execution.session.SessionExecutionManager">
-        <property name="converter" ref="executionConverter"/>
+    <bean id="userWorkoutConverter" class="pl.jakubpiecuch.trainingmanager.service.user.workout.UserWorkoutConverter">
+        <property name="executionConverter" ref="executionConverter"/>
         <property name="executionDao" ref="executionDao"/>
+        <property name="phaseConverter" ref="phaseConverter"/>
+        <property name="planConverter" ref="planConverter"/>
+    </bean>
+
+    <bean id="userWorkoutManager" class="pl.jakubpiecuch.trainingmanager.service.user.workout.session.SessionUserWorkoutManager">
+        <property name="converter" ref="userWorkoutConverter"/>
+        <property name="dao" ref="userWorkoutDao"/>
+    </bean>
+
+    <bean id="sessionUserPlanStarter" class="pl.jakubpiecuch.trainingmanager.service.user.plan.SessionUserPlanStarter">
+        <property name="executionDao" ref="executionDao"/>
+        <property name="userWorkoutDao" ref="userWorkoutDao"/>
+        <property name="manager" ref="planManager"/>
     </bean>
     
     <import resource="social-context.xml"/>

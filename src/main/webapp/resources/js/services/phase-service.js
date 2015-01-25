@@ -81,7 +81,11 @@ MetronicApp.service('phaseService', function($q, $http, workoutService, urlServi
             addWorkout: function(weekDay, workout) {
                 if (!this.containsWeekDay(weekDay)) {
                     var index = '' + this.index + this.childIndex++;
-                    this.workouts.push(workoutService.get(weekDay, this.form, index, workout));
+                    var me = this;
+                    workoutService.get(weekDay, this.form, index, workout).then(function(data) {
+                        me.workouts.push(data);
+                    });
+
                 } else {
                     for(var i =0; i < this.workouts.length; i++) {
                         var removeWorkout = this.workouts[i];

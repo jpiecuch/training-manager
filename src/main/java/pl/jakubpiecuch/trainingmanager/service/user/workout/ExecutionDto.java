@@ -1,8 +1,7 @@
-package pl.jakubpiecuch.trainingmanager.service.execution;
+package pl.jakubpiecuch.trainingmanager.service.user.workout;
 
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseDto;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
-
-import java.util.Date;
 
 /**
  * Created by Rico on 2015-01-18.
@@ -12,10 +11,8 @@ public class ExecutionDto implements RepoObject {
     private Long id;
     private Integer[] sets;
     private Double[] weights;
-    private Long exerciseId;
-    private long accountId;
+    private ExerciseDto exercise;
     private Boolean confirm;
-    private Date date;
     private String comment;
 
     public Long getId() {
@@ -42,20 +39,12 @@ public class ExecutionDto implements RepoObject {
         this.weights = weights;
     }
 
-    public Long getExerciseId() {
-        return exerciseId;
+    public ExerciseDto getExercise() {
+        return exercise;
     }
 
-    public void setExerciseId(Long exerciseId) {
-        this.exerciseId = exerciseId;
-    }
-
-    public long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
+    public void setExercise(ExerciseDto exercise) {
+        this.exercise = exercise;
     }
 
     public Boolean getConfirm() {
@@ -64,14 +53,6 @@ public class ExecutionDto implements RepoObject {
 
     public void setConfirm(Boolean confirm) {
         this.confirm = confirm;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public String getComment() {

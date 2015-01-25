@@ -4,7 +4,6 @@ import org.apache.commons.lang.StringUtils;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "execution")
@@ -15,11 +14,9 @@ public class Execution extends CommonEntity {
     private String reps;
     private String weight;
     private Exercise exercise;
-    private Account account;
-    private Boolean confirm;
-    private Boolean remind;
-    private Date date;
+    private Boolean confirm = false;
     private String comment;
+    private UserWorkout workout;
 
     public Execution(Long id) {
         super(id);
@@ -57,13 +54,13 @@ public class Execution extends CommonEntity {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account")
-    public Account getAccount() {
-        return account;
+    @JoinColumn(name = "workout")
+    public UserWorkout getWorkout() {
+        return workout;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setWorkout(UserWorkout workout) {
+        this.workout = workout;
     }
 
     @Column(name = "confirm")
@@ -73,24 +70,6 @@ public class Execution extends CommonEntity {
 
     public void setConfirm(Boolean confirm) {
         this.confirm = confirm;
-    }
-
-    @Column(name = "remind")
-    public Boolean getRemind() {
-        return remind;
-    }
-
-    public void setRemind(Boolean remind) {
-        this.remind = remind;
-    }
-
-    @Column(name = "date")
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     @Column(name = "comment")
@@ -104,7 +83,7 @@ public class Execution extends CommonEntity {
 
     @Transient
     public Integer[] getSets() {
-        return WebUtil.toIntArray(StringUtils.splitByWholeSeparatorPreserveAllTokens(reps, SET_DELIMITER));
+        return StringUtils.isNotBlank(reps) ? WebUtil.toIntArray(StringUtils.splitByWholeSeparatorPreserveAllTokens(reps, SET_DELIMITER)) : null;
     }
 
     public void setSets(Integer[] sets) {
@@ -113,7 +92,7 @@ public class Execution extends CommonEntity {
 
     @Transient
     public Double[] getWeights() {
-        return WebUtil.toDoubleArray(StringUtils.splitByWholeSeparatorPreserveAllTokens(weight, SET_DELIMITER));
+        return StringUtils.isNotBlank(reps) ? WebUtil.toDoubleArray(StringUtils.splitByWholeSeparatorPreserveAllTokens(weight, SET_DELIMITER)) : null;
     }
 
     public void setWeights(Double[] sets) {

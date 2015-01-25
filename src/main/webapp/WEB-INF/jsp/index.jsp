@@ -140,6 +140,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="resources/js/modules/textAngular-sanitize.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/toaster.js" type="text/javascript"></script>
 <script src="resources/js/modules/ng-table.min.js" type="text/javascript"></script>
+<script src="resources/js/modules/calendar.js" type="text/javascript"></script>
+<script src="resources/js/modules/checklist-model.js" type="text/javascript"></script>
 <!-- END CORE ANGULARJS PLUGINS -->
 
 <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
@@ -155,6 +157,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <script src="resources/js/underscore-min.js" type="text/javascript"></script>
 <script src="resources/js/underscore.string.min.js" type="text/javascript"></script>
+<script src="resources/assets/global/plugins/moment.min.js" type="text/javascript"></script>
 </body>
 <!-- END BODY -->
 <script type="text/javascript">

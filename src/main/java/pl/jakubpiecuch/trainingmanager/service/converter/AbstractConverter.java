@@ -15,24 +15,24 @@ public abstract class AbstractConverter<T, E extends CommonEntity> implements Co
     @Override
     public List<T> fromEntityList(List<E> list, final boolean full) {
         Assert.notNull(list);
-        return Lists.transform(list, new Function<E, T>() {
+        return Lists.newArrayList(Lists.transform(list, new Function<E, T>() {
 
             @Override
             public T apply(E input) {
                 return fromEntity(input, full);
             }
-        });
+        }));
     }
 
     @Override
     public List<E> toEntityList(List<T> list) {
         Assert.notNull(list);
-        return Lists.transform(list, new Function<T, E>() {
+        return Lists.newArrayList(Lists.transform(list, new Function<T, E>() {
 
             @Override
             public E apply(T input) {
                     return toEntity(input);
             }
-        });
+        }));
     }
 }

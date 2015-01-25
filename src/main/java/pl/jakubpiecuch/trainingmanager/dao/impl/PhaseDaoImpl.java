@@ -10,7 +10,7 @@ public class PhaseDaoImpl extends CoreDaoImpl implements PhaseDao {
 
     @Override
     public List<Phase> findByParentId(long planId) {
-        return session().createQuery("SELECT p FROM Phase p WHERE p.plan.id = :planId").setParameter("planId", planId).list();
+        return session().createQuery("SELECT p FROM Phase p WHERE p.plan.id = :planId ORDER BY p.position").setParameter("planId", planId).list();
     }
 
     @Override

@@ -39,6 +39,10 @@
 
     <bean id="executionController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.execution.ExecutionController" parent="abstractController"/>
 
+    <bean id="userPlansController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.plans.UserPlansController" parent="abstractController"/>
+
+    <bean id="userWorkoutsController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.workouts.UserWorkoutsController" parent="abstractController"/>
+
     <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
         <property name="userServices">
             <map>
@@ -72,9 +76,9 @@
                 <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
                 <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
                 <entry key="PLAN" value-ref="planManager"/>
+                <entry key="WORKOUT" value-ref="userWorkoutManager"/>
             </map>
         </property>
-        <property name="executionManager" ref="executionManager"/>
         <property name="orderResolverMap">
             <map>
                 <entry key="Description-muscles" value-ref="descriptionMusclesOrderResolver"/>
@@ -84,5 +88,6 @@
                 <entry key="Description-force" value-ref="descriptionForceOrderResolver"/>
             </map>
         </property>
+        <property name="userPlanStarter" ref="sessionUserPlanStarter"/>
     </bean>
 </beans>
