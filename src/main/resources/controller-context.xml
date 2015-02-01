@@ -89,5 +89,6 @@
             </map>
         </property>
         <property name="userPlanStarter" ref="sessionUserPlanStarter"/>
+        <property name="updateManager" ref="executionUpdateManager"/>
     </bean>
 </beans>

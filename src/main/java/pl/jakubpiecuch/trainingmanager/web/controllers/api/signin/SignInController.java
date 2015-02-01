@@ -11,19 +11,17 @@ import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;
 import javax.servlet.http.HttpServletResponse;
 
 @RequestMapping("api/{version}/signin")
-@Controller
+@RestController
 public class SignInController extends AbstractController {
     
     @RequestMapping(method = { RequestMethod.POST })
-    public @ResponseBody
-    ResponseEntity signIn(@PathVariable ApiVersionService.Version version, @RequestBody Authentication authentication) throws Exception {
+    public ResponseEntity signIn(@PathVariable ApiVersionService.Version version, @RequestBody Authentication authentication) throws Exception {
         versionServices.get(version).signIn(authentication);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @RequestMapping(method = { RequestMethod.GET })
-    public @ResponseBody
-    Authentication signed(@PathVariable ApiVersionService.Version version, HttpServletResponse response) throws Exception {
+    public Authentication signed(@PathVariable ApiVersionService.Version version, HttpServletResponse response) throws Exception {
         return versionServices.get(version).signed();
     }
 }

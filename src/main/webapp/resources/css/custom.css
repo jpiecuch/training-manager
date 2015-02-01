@@ -1,3 +1,8 @@
+form.plan .form-control-static {
+    color: #26c281;
+    font-weight: 900;
+}
+
 #lang-icons ul li {
     margin-top:7px;
     margin-right: 2px;

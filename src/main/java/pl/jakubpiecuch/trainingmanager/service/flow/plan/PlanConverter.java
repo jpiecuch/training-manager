@@ -24,6 +24,7 @@ public class PlanConverter extends AbstractFlowConverter<PlanDto, Plan> {
         flow.setName(entity.getName());
         flow.setGoal(entity.getGoal());
         flow.setCreatorId(entity.getCreator().getId());
+        flow.setEditable(authenticationService.signed().getId() == entity.getCreator().getId());
         flow.setPhases(full ? manager.children(entity.getId(), true) : null);
 
         return flow;

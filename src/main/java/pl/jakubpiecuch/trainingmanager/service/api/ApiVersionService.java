@@ -25,6 +25,8 @@ import java.util.Locale;
 import java.util.Map;
 
 public interface ApiVersionService {
+    void updateExecution(ExecutionDto execution);
+
     enum Version {v1}
 
     List<String> languages();

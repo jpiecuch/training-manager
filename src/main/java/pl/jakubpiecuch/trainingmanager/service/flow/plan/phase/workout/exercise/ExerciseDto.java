@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 
@@ -73,6 +74,7 @@ public class ExerciseDto extends Flow {
     }
 
     @Override
+    @JsonIgnore
     public Hierarchy getHierarchy() {
         return Hierarchy.EXERCISE;
     }

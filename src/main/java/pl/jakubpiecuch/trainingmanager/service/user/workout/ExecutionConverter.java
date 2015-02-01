@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.user.workout;
 
+import pl.jakubpiecuch.trainingmanager.dao.ExecutionDao;
 import pl.jakubpiecuch.trainingmanager.domain.Execution;
 import pl.jakubpiecuch.trainingmanager.service.converter.AbstractConverter;
 import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
@@ -10,7 +11,8 @@ import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.
  */
 public class ExecutionConverter extends AbstractConverter<ExecutionDto, Execution> {
 
-    Converter exerciseConverter;
+    private Converter exerciseConverter;
+    private ExecutionDao executionDao;
 
     @Override
     public ExecutionDto fromEntity(Execution entity, boolean full) {
@@ -26,10 +28,19 @@ public class ExecutionConverter extends AbstractConverter<ExecutionDto, Executio
 
     @Override
     public Execution toEntity(ExecutionDto object) {
-        throw new UnsupportedOperationException();
+        Execution execution = executionDao.findById(object.getId());
+        execution.setSets(object.getSets());
+        execution.setWeights(object.getWeights());
+        execution.setComment(object.getComment());
+        execution.setConfirm(object.getConfirm());
+        return execution;
     }
 
     public void setExerciseConverter(Converter exerciseConverter) {
         this.exerciseConverter = exerciseConverter;
+    }
+
+    public void setExecutionDao(ExecutionDao executionDao) {
+        this.executionDao = executionDao;
     }
 }

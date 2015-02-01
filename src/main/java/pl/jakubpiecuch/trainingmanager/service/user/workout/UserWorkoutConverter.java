@@ -22,6 +22,7 @@ public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, User
     @Transactional
     public UserWorkoutDto fromEntity(UserWorkout entity, boolean full) {
         UserWorkoutDto result = new UserWorkoutDto();
+        result.setId(entity.getId());
         result.setDate(entity.getDate());
         result.setMuscles(entity.getWorkout().getMuscles());
         result.setPlan((PlanDto) planConverter.fromEntity(entity.getWorkout().getPhase().getPlan(), false));

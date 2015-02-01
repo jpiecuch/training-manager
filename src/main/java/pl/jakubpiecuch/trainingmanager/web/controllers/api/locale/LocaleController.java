@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @RequestMapping(ApiURI.API_LOCALE_PATH)
 @RestController
-@Controller
 public class LocaleController extends AbstractController {
     
     @RequestMapping(method = { RequestMethod.POST })

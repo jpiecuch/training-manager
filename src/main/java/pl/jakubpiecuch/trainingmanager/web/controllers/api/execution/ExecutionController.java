@@ -17,4 +17,9 @@ import java.util.Locale;
 @RequestMapping(ApiURI.API_EXECUTION_PATH)
 @RestController
 public class ExecutionController extends AbstractController {
+
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.PUT })
+    public void create(@PathVariable ApiVersionService.Version version, @PathVariable long id, @RequestBody ExecutionDto execution) {
+        versionServices.get(version).updateExecution(execution);
+    }
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-MetronicApp.controller('PlanController', function($scope, $stateParams, dictionaryService, inputValidateService, planService) {
+MetronicApp.controller('PlanController', function($scope, $stateParams, dictionaryService, inputValidateService, planService, planStarterService) {
     $scope.validate = inputValidateService;
 
     $scope.init = function(form) {
@@ -32,12 +32,14 @@ MetronicApp.controller('PlanController', function($scope, $stateParams, dictiona
             $scope.dictionary.force = data;
         });
 
+
     }
 
     $scope.$watch('planForm', function(form) {
         if ($scope.plan === undefined && form !== undefined) {
             planService.get(form, 0, $stateParams.id).then(function(data) {
                 $scope.plan = data;
+                $scope.starter = planStarterService.get($scope.plan.id);
                 if ($scope.plan.phases.length === 0) {
                     $scope.plan.addPhase();
                 }
@@ -46,3 +48,4 @@ MetronicApp.controller('PlanController', function($scope, $stateParams, dictiona
         }
     });
 });
+

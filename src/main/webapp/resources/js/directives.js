@@ -75,3 +75,26 @@ MetronicApp.directive('onlyDigits', function () {
         }
     }
 });
+
+MetronicApp.directive('onlyDecimals', function () {
+    return {
+        require: 'ngModel',
+        restrict: 'A',
+        link: function (scope, element, attrs, modelCtrl) {
+            var decimalPoint = attrs.decimalPoint || ".";
+            var decimalCount = 2;
+
+            modelCtrl.$parsers.push(function (inputValue) {
+                if (inputValue == undefined) return ''
+                var reg = new RegExp('[^0-9\\' + decimalPoint + ']');
+                var transformedInput = inputValue.replace(reg, '');
+                if (transformedInput != inputValue) {
+                    modelCtrl.$setViewValue(transformedInput);
+                    modelCtrl.$render();
+                }
+
+                return transformedInput;
+            });
+        }
+    }
+});

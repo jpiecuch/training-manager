@@ -1,9 +1,9 @@
-MetronicApp.service('userWorkoutService', function($q, $http, urlService, authenticateService) {
+MetronicApp.service('userWorkoutService', function($q, $http, urlService, authenticateService, formValidateService, alertService) {
     this.get = function(id) {
         var deferred = $q.defer();
         deferred.resolve();
         return deferred.promise.then(function() {
-            return authenticateService.signed();;
+            return authenticateService.signed();
         }).then(function(data) {
             return $http.get(urlService.apiURL('/users/' + data.id + '/workouts/' + id))
                 .then(function(data) {
@@ -34,6 +34,28 @@ MetronicApp.service('userWorkoutService', function($q, $http, urlService, authen
                             this.sets.splice(idx, 1);
                             this.weights.splice(idx,1);
                         };
+                        index.save = function(form) {
+                            this.form = form;
+                            formValidateService.validate(this.form);
+                            if (this.form.$valid) {
+                                $http.put(urlService.apiURL('/executions/' + this.id), {
+                                    id: this.id,
+                                    sets: this.sets,
+                                    weights: this.weights,
+                                    exercise: this.exercise,
+                                    confirm: this.confirm,
+                                    comment: this.comment
+                                }).then(function() {
+                                    alertService.show({type: 'success', title: 'OK', description: 'Submit'});
+                                });
+                            } else {
+                                alertService.show({type: 'warning', title: 'ERROR', description: 'Something is wrong'});
+                            }
+                        };
+                        index.saveAndConfirm = function(form) {
+                            this.confirm = true;
+                            this.save(form);
+                        }
                     });
                     return data;
                 });

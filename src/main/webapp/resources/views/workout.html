@@ -24,10 +24,16 @@
 								<div class="caption">
 									<i class="icon-equalizer font-red-sunglo"></i>
 									<span class="caption-subject bold uppercase"  data-ng-bind="'plan' | translate"></span>
-								</div>
+                                    <span class="caption-helper" data-ng-bind="workout.plan.name"></span>
+                                </div>
 							</div>
-							<div class="portlet-body" >
-								{{workout.plan.name}} ({{workout.plan.goal}})
+							<div class="portlet-body">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label"
+                                           data-ng-bind="'plan.goal' | translate"></label>
+                                    <div class="col-md-9" data-ng-bind="workout.plan.goal | translate">
+                                    </div>
+                                </div>
 							</div>
 						</div>
 						<div class="bordered portlet light bg-inverse">
@@ -35,10 +41,16 @@
 								<div class="caption">
 									<i class="icon-equalizer font-red-sunglo"></i>
 									<span class="caption-subject bold uppercase"  data-ng-bind="'phase' | translate"></span>
+                                    <span class="caption-helper" data-ng-bind="workout.phase.position"></span>
 								</div>
 							</div>
-							<div class="portlet-body" >
-								{{workout.phase.description}} {{workout.phase.goal}}
+							<div class="portlet-body">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label"
+                                           data-ng-bind="'phase.goal' | translate"></label>
+                                    <div class="col-md-9" data-ng-bind="workout.phase.goal | translate">
+                                    </div>
+                                </div>
 							</div>
 						</div>
 						<div class="bordered portlet light bg-inverse">
@@ -49,12 +61,18 @@
 								</div>
 							</div>
 							<div class="portlet-body" >
-								{{workout.muscles}}
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label"
+                                           data-ng-bind="'workout.muscle' | translate"></label>
+                                    <div class="col-md-9">
+                                        <div class="col-md-3" data-ng-repeat="muscle in workout.muscles" data-ng-bind="muscle | translate"></div>
+                                    </div>
+                                </div>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-9">
-						<form class="form-horizontal" data-ng-repeat="execution in workout.executions | orderBy : 'position'">
+						<form class="form-horizontal" data-ng-repeat="execution in workout.executions | orderBy : 'position'" name="form" data-ng-submit="execution.save(form)" novalidate>
 							<div data-ng-if="workout.isFirstInSuperSet(execution)" class="super-set-title">
 								<span><i class="fa fa-star-o"></i> {{'superSet' | translate}}</span>
 							</div>
@@ -63,7 +81,7 @@
 									<div class="caption">
 										<i class="icon-equalizer font-red-sunglo"></i>
 										<span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : execution.isValid() === true, 'font-red-sunglo' : execution.isValid() === false}" data-ng-bind="('exercise' | translate) + ' ' + ($index +1)"></span>
-										<span class="caption-helper" data-ng-bind="execution.description.names['pl']"></span>
+										<span class="caption-helper" data-ng-bind="execution.exercise.description.names['pl']"></span>
 									</div>
 									<div class="actions">
 										<a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="execution.visible = !execution.visible">
@@ -73,11 +91,39 @@
 								</div>
 								<div class="portlet-body form" data-ng-hide="execution.visible === false">
 									<div class="form-body">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label"
+                                                   data-ng-bind="'description.muscles' | translate"></label>
+                                            <div class="col-md-9">
+                                                <span class="form-control-static" data-ng-bind="execution.exercise.description.muscles | translate"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" data-ng-if="execution.exercise.description.movieUrl">
+                                            <label class="col-md-3 control-label"
+                                                   data-ng-bind="'description.movieUrl' | translate"></label>
+                                            <div class="col-md-9">
+                                                <span class="form-control-static">
+                                                <a ng-href="{{execution.exercise.description.movieUrl}}" target="_blank">Watch</a>
+                                                    </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" data-ng-if="execution.exercise.description.description">
+                                            <label class="col-md-3 control-label"
+                                                   data-ng-bind="'description.description' | translate"></label>
+                                            <div class="col-md-9">
+                                                <span class="form-control-static" data-ng-bind-html="execution.exercise.description.description">
+                                                </span>
+                                            </div>
+                                        </div>
 										<div class="form-group">
 											<label class="col-md-3 control-label"
 												   data-ng-bind="'execution.sets' | translate"></label>
 											<div class="col-md-9">
-												<div class="col-md-2" data-ng-repeat="set in execution.exercise.sets track by $index" data-ng-bind="set"></div>
+
+												<div class="col-md-2" data-ng-repeat="set in execution.exercise.sets track by $index" >
+                                                    <span class="form-control-static">{{set}}</span>
+                                                </div>
+
 											</div>
 										</div>
 										<div class="form-group">
@@ -100,12 +146,14 @@
 												   data-ng-bind="'execution.weights' | translate"></label>
 											<div class="col-md-9">
 												<div class="col-md-2" data-ng-repeat="weight in execution.weights track by $index">
-														<input data-only-digits name="executionWeight{{execution.id}}{{$index}}" type="text" class="form-control" data-ng-model="execution.weights[$index]" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+														<input data-only-decimals name="executionWeight{{execution.id}}{{$index}}" type="text" class="form-control" data-ng-model="execution.weights[$index]" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
+                                <button type="submit" class="btn default">{{'save' | translate}}</button>
+                                <button type="button" class="btn green" data-ng-click="execution.saveAndConfirm(form)">{{'confirm' | translate}}</button>
 							</div>
 						</form>
 					</div>

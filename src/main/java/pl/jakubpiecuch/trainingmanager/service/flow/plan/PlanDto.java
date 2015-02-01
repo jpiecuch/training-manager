@@ -19,6 +19,7 @@ public class PlanDto extends Flow implements RepoObject {
     private Plan.Goal goal;
     private Long creatorId;
     private List<PhaseDto> phases;
+    private Boolean editable;
 
     public Long getId() {
         return id;
@@ -58,6 +59,14 @@ public class PlanDto extends Flow implements RepoObject {
 
     public void setPhases(List<PhaseDto> phases) {
         this.phases = phases;
+    }
+
+    public Boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(Boolean editable) {
+        this.editable = editable;
     }
 
     @Override

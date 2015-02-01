@@ -1,13 +1,19 @@
 MetronicApp.service('inputValidateService', function() {
     this.isValid = function(input) {
-        return input.$valid && input.$touched;
+        if (input) {
+            return input.$valid && input.$touched;
+        }
     }
 
     this.isNotValid = function(input) {
-        return input.$invalid && input.$touched;
+        if (input) {
+            return input.$invalid && input.$touched;
+        }
     }
 
     this.status = function(input) {
-        return this.isNotValid(input) ? 'has-error' : this.isValid(input) ? 'has-success' : '';
+        if (input) {
+            return this.isNotValid(input) ? 'has-error' : this.isValid(input) ? 'has-success' : '';
+        }
     }
 });

@@ -3,7 +3,6 @@
         <ul class="page-breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
-                <i class="fa fa-home"></i>
                 <a href="#/" data-ng-bind="'dashboard' | translate"></a>
                 <i class="fa fa-angle-right"></i>
             </li>
@@ -18,12 +17,16 @@
             </li>
         </ul>
     </div>
-    <form name="planForm" class="form-horizontal" data-ng-submit="plan.create(planForm)" novalidate>
+    <form name="planForm" class="form-horizontal plan" data-ng-submit="plan.create(planForm)" novalidate>
         <div class="portlet light bg-inverse">
             <div class="portlet-title">
                 <div class="caption">
                     <i class="icon-equalizer font-red-sunglo"></i>
                     <span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : plan.isValid() === true, 'font-red-sunglo ' : plan.isValid() === false}" data-ng-bind="'plan' | translate"></span>
+
+                        <select class="form-control" data-ng-model="starter.year" required name="year" data-ng-options="year for year in starter.years">
+                        </select>
+
                 </div>
             </div>
             <div class="portlet-body form">
@@ -31,27 +34,28 @@
                     <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm.planName), 'has-error' : validate.isNotValid(planForm.planName)}">
                         <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm.planName.$touched}" data-ng-bind="'plan.name' | translate"></label>
                         <div class="col-md-4">
-                            <div class="input-icon right">
+                            <div class="input-icon right" data-ng-if="plan.editable">
                                 <i data-ng-if="planForm.planName.$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm.planName), 'fa-exclamation' : validate.isNotValid(planForm.planName)}"></i>
                                 <input name="planName" type="text" class="form-control" placeholder="{{'plan.name.placeholder' | translate}}"
                                        data-ng-model="plan.name" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
                             </div>
+                            <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.name"></span>
                         </div>
                     </div>
                     <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm.planGoal), 'has-error' : validate.isNotValid(planForm.planGoal)}">
                         <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm.planGoal.$touched}" data-ng-bind="'plan.goal' | translate"></label>
                         <div class="col-md-4">
-                            <div class="input-icon right select-right">
+                            <div class="input-icon right select-right" data-ng-if="plan.editable">
                                 <i data-ng-if="planForm.planGoal.$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm.planGoal), 'fa-exclamation' : validate.isNotValid(planForm.planGoal)}"></i>
                                 <select class="form-control" data-ng-model="plan.goal" required name="planGoal" tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
                                 <option data-ng-repeat="goal in dictionary.goals" data-ng-bind="goal"
                                         value="{{goal}}"></option>
                                 </select>
                             </div>
+                            <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.goal"></span>
                         </div>
                     </div>
                 </div>
-                <!-- END FORM-->
             </div>
 
                 <div class="bordered portlet light bg-inverse"
@@ -76,32 +80,34 @@
                             <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['phaseDescription' + phase.index].$touched}" data-ng-bind="'phase.description' | translate"></label>
 
                             <div class="col-md-4">
-                                <div class="input-icon right">
+                                <div class="input-icon right" data-ng-if="plan.editable">
                                     <i data-ng-if="planForm['phaseDescription' + phase.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['phaseDescription' + phase.index]), 'fa-exclamation' : validate.isNotValid(planForm['phaseDescription' + phase.index])}"></i>
                                     <input name="phaseDescription{{phase.index}}" type="text" class="form-control"
                                        placeholder="{{'phase.description.placeholder' | translate}}"
                                        data-ng-model="phase.description" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
                                 </div>
+                                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="phase.description"></span>
                             </div>
                         </div>
                         <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['phaseGoal' + phase.index]), 'has-error' : validate.isNotValid(planForm['phaseGoal' + phase.index])}">
                             <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['phaseGoal' + phase.index].$touched}" data-ng-bind="'phase.goal' | translate"></label>
 
                             <div class="col-md-4">
-                                <div class="input-icon right select-right">
+                                <div class="input-icon right select-right" data-ng-if="plan.editable">
                                     <i data-ng-if="planForm['phaseGoal' + phase.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['phaseGoal' + phase.index]), 'fa-exclamation' : validate.isNotValid(planForm['phaseGoal' + phase.index])}"></i>
                                     <select name="phaseGoal{{phase.index}}" class="form-control" data-ng-model="phase.goal" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
                                     <option data-ng-repeat="goal in dictionary.goals" data-ng-bind="goal"
                                             value="{{goal}}"></option>
                                     </select>
                                 </div>
+                                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="phase.goal"></span>
                             </div>
                         </div>
                         <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['phaseWeeks' + phase.index]), 'has-error' : validate.isNotValid(planForm['phaseWeeks' + phase.index])}">
                             <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['phaseWeeks' + phase.index].$touched}" data-ng-bind="'phase.weeks' | translate"></label>
 
                             <div class="col-md-4">
-                                <div class="input-icon right select-right">
+                                <div class="input-icon right select-right" data-ng-if="plan.editable">
                                     <i data-ng-if="planForm['phaseWeeks' + phase.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['phaseWeeks' + phase.index]), 'fa-exclamation' : validate.isNotValid(planForm['phaseWeeks' + phase.index])}"></i>
                                     <select name="phaseWeeks{{phase.index}}" class="form-control" data-ng-model="phase.weeks" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
                                         <option value="1">1</option>
@@ -112,11 +118,11 @@
                                         <option value="6">6</option>
                                     </select>
                                 </div>
+                                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="phase.weeks"></span>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" data-ng-if="plan.editable">
                             <label class="col-md-3 control-label" data-ng-bind="'phase.weekDays' | translate"></label>
-
                             <div class="col-md-4">
                                 <div class="small-tiles">
                                     <div class="small-tile" data-ng-repeat="weekDay in dictionary.weekDays"
@@ -148,16 +154,17 @@
                                     <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['workoutMuscles' + workout.index]), 'has-error' : validate.isNotValid(planForm['workoutMuscles' + workout.index])}">
                                         <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['workoutMuscles' + workout.index].$touched}" data-ng-bind="'workout.muscle' | translate"></label>
                                         <div class="col-md-4">
-                                            <label class="checkbox">
+                                            <label class="checkbox" data-ng-if="plan.editable">
                                                 <div class="col-md-6" data-ng-repeat="muscle in workout.muscles">
                                                     <input id="workoutMuscles{{workout.index}}{{$index}}" name="workoutMuscles{{workout.index}}" data-ng-model="muscle.selected" type="checkbox" data-ng-required="!workout.musclesSelected()">
                                                     <label for="workoutMuscles{{workout.index}}{{$index}}"><span></span></label>
                                                     {{muscle.name | translate}}
                                                 </div>
                                             </label>
+                                            <span class="form-control-static" data-ng-if="!plan.editable && muscle.selected" data-ng-repeat="muscle in workout.muscles" data-ng-bind="muscle.name | translate"></span>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" data-ng-if="plan.editable">
                                         <label class="col-md-3 control-label"
                                                data-ng-bind="'workout.exercises' | translate"></label>
 
@@ -239,7 +246,7 @@
                                                     <span class="caption-helper" data-ng-bind="exercise.description.names['pl']"></span>
                                                 </div>
                                                 <div class="actions">
-                                                    <div class="btn-group" data-ng-if="!workout.isInSuperSet(exercise)" dropdown>
+                                                    <div data-ng-if="plan.editable" class="btn-group" data-ng-if="!workout.isInSuperSet(exercise)" dropdown>
                                                         <button class="btn btn-default btn-xs dropdown-toggle" type="button" dropdown-toggle>
                                                             {{'superSet' | translate}} <i class="fa fa-angle-down"></i>
                                                         </button>
@@ -252,26 +259,51 @@
                                                     <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="exercise.visible = !exercise.visible">
                                                         <i class="fa fa-angle-double-down"></i>
                                                     </a>
-                                                    <a data-ng-if="workout.isInSuperSet(exercise)" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.removeFromSuperSet(exercise)">
+                                                    <a data-ng-if="plan.editable" data-ng-if="workout.isInSuperSet(exercise)" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.removeFromSuperSet(exercise)">
                                                         <i class="fa fa-chain-broken"></i>
                                                     </a>
-                                                    <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.removeExercise($index)">
+                                                    <a data-ng-if="plan.editable" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.removeExercise($index)">
                                                         <i class="icon-trash"></i>
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="portlet-body" data-ng-hide="exercise.visible === false">
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                           data-ng-bind="'description.muscles' | translate"></label>
+                                                    <div class="col-md-9">
+                                                        <span class="form-control-static" data-ng-bind="exercise.description.muscles | translate"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" data-ng-if="exercise.description.movieUrl">
+                                                    <label class="col-md-3 control-label"
+                                                           data-ng-bind="'description.movieUrl' | translate"></label>
+                                                    <div class="col-md-9">
+                                                <span class="form-control-static">
+                                                <a ng-href="{{exercise.description.movieUrl}}" target="_blank">Watch</a>
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" data-ng-if="exercise.description.description">
+                                                    <label class="col-md-3 control-label"
+                                                           data-ng-bind="'description.description' | translate"></label>
+                                                    <div class="col-md-9">
+                                                <span class="form-control-static" data-ng-bind-html="exercise.description.description">
+                                                </span>
+                                                    </div>
+                                                </div>
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label"
                                                        data-ng-bind="'exercise.sets' | translate"></label>
                                                 <div class="col-md-9">
                                                     <div class="col-md-2" data-ng-repeat="set in exercise.sets track by $index" data-ng-class="{'has-success' : validate.isValid(planForm['exerciseSet' + exercise.index + $index]), 'has-error' : validate.isNotValid(planForm['exerciseSet' + exercise.index + $index])}">
-                                                        <div class="input-icon right">
+                                                        <div class="input-icon right" data-ng-if="plan.editable">
                                                             <i class="fa fa-times" style="cursor: pointer;" data-ng-click="exercise.removeSet($index)"></i>
                                                             <input data-only-digits name="exerciseSet{{exercise.index}}{{$index}}" type="text" class="form-control" data-ng-model="exercise.sets[$index]" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
                                                         </div>
+                                                        <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="set"></span>
                                                     </div>
-                                                    <a href="" class="btn btn-icon-only" data-ng-click="exercise.addSet()">
+                                                    <a href="" class="btn btn-icon-only" data-ng-click="exercise.addSet()" data-ng-if="plan.editable">
                                                         <i class="fa fa-plus"></i>
                                                     </a>
                                                 </div>
@@ -286,10 +318,10 @@
                     </div>
                 </div>
             </div>
-            <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="plan.addPhase()">
+            <a data-ng-if="plan.editable" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="plan.addPhase()">
                 <i class="fa fa-plus"></i>
             </a>
-            <div data-ng-include="'resources/tpl/form-submit.html'"></div>
+            <div data-ng-if="plan.editable" data-ng-include="'resources/tpl/form-submit.html'"></div>
         </div>
     </form>
 </section>

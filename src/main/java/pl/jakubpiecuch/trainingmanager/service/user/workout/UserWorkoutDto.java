@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class UserWorkoutDto implements RepoObject {
 
+    private Long id;
     private Description.Muscles[] muscles;
     private Date date;
     private PlanDto plan;
@@ -67,5 +68,13 @@ public class UserWorkoutDto implements RepoObject {
 
     public Workout.WeekDay getWeekDay() {
         return weekDay;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

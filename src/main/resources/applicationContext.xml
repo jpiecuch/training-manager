@@ -24,7 +24,7 @@
                 <property name="paramName" value="lang" />  
             </bean>  
         </mvc:interceptor>  
-    </mvc:interceptors>  
+    </mvc:interceptors>
     
     <util:properties id="propertyConfigurer" location="classpath:${environment}.properties"/>
     <context:property-placeholder properties-ref="propertyConfigurer" />
@@ -137,6 +137,7 @@
 
     <bean id="executionConverter" class="pl.jakubpiecuch.trainingmanager.service.user.workout.ExecutionConverter">
         <property name="exerciseConverter" ref="exerciseConverter"/>
+        <property name="executionDao" ref="executionDao"/>
     </bean>
 
     <bean id="userWorkoutConverter" class="pl.jakubpiecuch.trainingmanager.service.user.workout.UserWorkoutConverter">
@@ -155,6 +156,12 @@
         <property name="executionDao" ref="executionDao"/>
         <property name="userWorkoutDao" ref="userWorkoutDao"/>
         <property name="manager" ref="planManager"/>
+    </bean>
+
+    <bean id="executionUpdateManager" class="pl.jakubpiecuch.trainingmanager.service.user.workout.session.execution.ExecutionUpdateManager">
+        <property name="converter" ref="executionConverter"/>
+        <property name="executionDao" ref="executionDao"/>
+        <property name="validator" ref="executionValidator"/>
     </bean>
     
     <import resource="social-context.xml"/>

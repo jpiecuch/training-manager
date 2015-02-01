@@ -10,7 +10,7 @@ import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 @RequestMapping(value = {"/", "/index"})
 public class IndexController {
     
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = { RequestMethod.GET, RequestMethod.HEAD})
     public String index(Model model){
         model.addAttribute("isSignIn", AuthenticatedUserUtil.getAuthenticatedUserDetails() != null);
         return "index";

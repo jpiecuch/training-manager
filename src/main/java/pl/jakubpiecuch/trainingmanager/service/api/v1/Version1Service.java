@@ -12,10 +12,12 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
+import pl.jakubpiecuch.trainingmanager.domain.Execution;
 import pl.jakubpiecuch.trainingmanager.service.OrderResolver;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.Dictionary;
+import pl.jakubpiecuch.trainingmanager.service.user.workout.ExecutionDto;
 import pl.jakubpiecuch.trainingmanager.service.user.workout.UserWorkoutManager;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.flow.FlowManager;
@@ -56,6 +58,12 @@ public class Version1Service implements ApiVersionService {
     private ObjectMapper mapper = new ObjectMapper();
     private Map<String, OrderResolver> orderResolverMap;
     private UserPlanStarter userPlanStarter;
+    private UpdateManager<ExecutionDto> updateManager;
+
+    @Override
+    public void updateExecution(ExecutionDto execution) {
+        updateManager.update(execution);
+    }
 
     @Override
     public void startPlan(UserPlan userPlan) {
@@ -243,6 +251,10 @@ public class Version1Service implements ApiVersionService {
 
     public void setUserPlanStarter(UserPlanStarter userPlanStarter) {
         this.userPlanStarter = userPlanStarter;
+    }
+
+    public void setUpdateManager(UpdateManager<ExecutionDto> updateManager) {
+        this.updateManager = updateManager;
     }
 
     @PostConstruct
