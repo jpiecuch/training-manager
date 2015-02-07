@@ -17,16 +17,42 @@
             </li>
         </ul>
     </div>
+    <form name="starterForm" class="form-horizontal" data-ng-submit="starter.start(starterForm)" novalidate>
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-8">
+                <div class="col-md-2">
+                    <label style="font-size: x-large; padding-top: 0px;" class="control-label col-md-12">Start plan</label>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Year</label>
+                        <div class="col-md-9">
+                            <select class="form-control" data-ng-model="starter.year" required name="year" data-ng-options="year for year in starter.years" data-ng-change="starter.getWeeks()"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group has-error">
+                        <label class="control-label col-md-3">Week</label>
+                        <div class="col-md-9">
+                            <select class="form-control" data-ng-model="starter.week" required name="week" data-ng-options="week for week in starter.weeks"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn green" data-ng-bind="'save' | translate"></button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </form>
     <form name="planForm" class="form-horizontal plan" data-ng-submit="plan.create(planForm)" novalidate>
         <div class="portlet light bg-inverse">
             <div class="portlet-title">
                 <div class="caption">
                     <i class="icon-equalizer font-red-sunglo"></i>
                     <span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : plan.isValid() === true, 'font-red-sunglo ' : plan.isValid() === false}" data-ng-bind="'plan' | translate"></span>
-
-                        <select class="form-control" data-ng-model="starter.year" required name="year" data-ng-options="year for year in starter.years">
-                        </select>
-
                 </div>
             </div>
             <div class="portlet-body form">
