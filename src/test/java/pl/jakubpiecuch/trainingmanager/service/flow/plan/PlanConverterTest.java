@@ -7,8 +7,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
+import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,6 +24,7 @@ public class PlanConverterTest {
     private static final Long ACCOUNT_ID = 2l;
     private static PlanDto PLAN_FLOW = new PlanDto();
     private static Plan PLAN = new Plan();
+    private static final String CONFIG = "{\"firstName\":\"first\",\"lastName\":\"last\"}";
 
     @InjectMocks
     private static PlanConverter CONVERTER;
@@ -28,9 +32,14 @@ public class PlanConverterTest {
     @Mock
     private PlanManager planManager;
 
+    @Mock
+    AuthenticationService authenticationService;
+
 
     @Before
     public void setUp() {
+        Account account = new Account(ACCOUNT_ID);
+        account.setConfig(CONFIG);
         PLAN_FLOW.setId(ID);
         PLAN_FLOW.setGoal(GOAL);
         PLAN_FLOW.setName(NAME);
@@ -39,9 +48,10 @@ public class PlanConverterTest {
         PLAN.setId(ID);
         PLAN.setGoal(GOAL);
         PLAN.setName(NAME);
-        PLAN.setCreator(new Account(ACCOUNT_ID));
+        PLAN.setCreator(account);
 
         Mockito.when(planManager.retrieve(ID, false)).thenReturn(PLAN_FLOW);
+        Mockito.when(authenticationService.signed()).thenReturn(new Authentication(account));
     }
 
     @Test
