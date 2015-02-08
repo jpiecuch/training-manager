@@ -59,7 +59,7 @@ MetronicApp.service('planService', function($q, $http, phaseService, formValidat
                 name: data ? data.data.name : null,
                 goal: data ? data.data.goal : null,
                 phases: [],
-                editable: data.editable,
+                editable: data ? data.editable : true,
                 isValid: function() {
                     return me.isValid(this);
                 },
