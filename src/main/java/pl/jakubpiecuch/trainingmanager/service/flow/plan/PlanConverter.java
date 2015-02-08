@@ -43,8 +43,9 @@ public class PlanConverter extends AbstractFlowConverter<PlanDto, Plan> {
             PlanDto persisted = planManager.retrieve(flowObject.getId(), false);
             entity.setId(flowObject.getId());
             entity.setCreator(new Account(persisted.getCreatorId()));
+            entity.setUsed(persisted.getUsed());
         }
-        entity.setUsed(flowObject.getUsed());
+
         return entity;
     }
 
