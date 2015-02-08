@@ -20,6 +20,7 @@ public class PlanDto extends Flow implements RepoObject {
     private Long creatorId;
     private List<PhaseDto> phases;
     private Boolean editable;
+    private Boolean used;
 
     public Long getId() {
         return id;
@@ -67,6 +68,14 @@ public class PlanDto extends Flow implements RepoObject {
 
     public void setEditable(Boolean editable) {
         this.editable = editable;
+    }
+
+    public Boolean getUsed() {
+        return used;
+    }
+
+    public void setUsed(Boolean used) {
+        this.used = used;
     }
 
     @Override

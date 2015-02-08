@@ -32,7 +32,7 @@ public abstract class AbstractFlowManager<T extends Flow> implements FlowManager
     }
 
     @Override
-    public long save(T element) throws Exception {
+    public long save(T element) {
         validator.validate(element, new BeanPropertyBindingResult(element, element.getHierarchy().name().toLowerCase()));
         CommonEntity entity = converter.toEntity(element);
         dao.save(entity);

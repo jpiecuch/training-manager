@@ -13,6 +13,7 @@ public class Plan extends CommonEntity implements Serializable {
     private String name;
     private Goal goal;
     private Account creator;
+    private Boolean used = false;
 
     public Plan() {
     }
@@ -48,5 +49,14 @@ public class Plan extends CommonEntity implements Serializable {
 
     public void setCreator(Account creator) {
         this.creator = creator;
+    }
+
+    @Column(name = "used")
+    public Boolean getUsed() {
+        return used;
+    }
+
+    public void setUsed(Boolean used) {
+        this.used = used;
     }
 }

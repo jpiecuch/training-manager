@@ -61,6 +61,8 @@ public class SessionUserPlanStarter implements UserPlanStarter {
                 weekIncrease++;
             }
         }
+        plan.setUsed(true);
+        manager.save(plan);
     }
 
     public void setExecutionDao(ExecutionDao executionDao) {

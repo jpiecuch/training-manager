@@ -3,6 +3,7 @@ package pl.jakubpiecuch.trainingmanager.web.controllers.api.user.plans;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
+import pl.jakubpiecuch.trainingmanager.service.repository.Repositories;
 import pl.jakubpiecuch.trainingmanager.service.user.plan.UserPlan;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;

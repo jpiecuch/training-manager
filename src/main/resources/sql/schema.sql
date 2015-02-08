@@ -36,7 +36,8 @@ CREATE TABLE plan (
     id bigint PRIMARY KEY NOT NULL,
     name character varying(50) NOT NULL,
     goal integer NOT NULL,
-    creator bigint NOT NULL
+    creator bigint NOT NULL,
+    used boolean NOT NULL
 );
 
 CREATE TABLE phase (
