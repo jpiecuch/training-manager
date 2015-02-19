@@ -24,12 +24,6 @@
 
     <bean id="planValidator" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanValidator"/>
 
-    <bean id="phaseValidator" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseValidator"/>
-
-    <bean id="workoutValidator" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutValidator"/>
-
-    <bean id="exerciseValidator" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseValidator"/>
-
     <bean id="equipmentValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.EquipmentValidator">
         <property name="validators">
             <map>

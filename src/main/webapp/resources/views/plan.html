@@ -260,35 +260,36 @@
                                     </div>
                                 </div>
                                     <div class="portlet-body">
-                                        <section data-ng-repeat="exercise in workout.exercises | orderBy : 'position'">
-                                            <div data-ng-if="workout.isFirstInSuperSet(exercise)" class="super-set-title">
-                                                <span><i class="fa fa-star-o"></i> {{'superSet' | translate}}</span>
+                                        <section data-ng-repeat="group in workout.groups | orderBy : 'id'">
+                                            <div data-ng-if="group.exercises.length > 1" class="super-set-title">
+                                                <span><i class="fa fa-star-o"></i> {{'superSet' | translate}} {{group.position}}</span>
                                             </div>
-                                            <div class="bordered portlet light bg-inverse" data-ng-class="{'super-set' : workout.isInSuperSet(exercise)}">
+                                            <section data-ng-repeat="exercise in group.exercises | orderBy : 'position'">
+                                            <div class="bordered portlet light bg-inverse" data-ng-class="{'super-set' : group.exercises.length > 1}">
                                             <div class="portlet-title">
                                                 <div class="caption">
                                                     <i class="icon-equalizer font-red-sunglo"></i>
-                                                    <span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : exercise.isValid() === true, 'font-red-sunglo' : exercise.isValid() === false}" data-ng-bind="('exercise' | translate) + ' ' + ($index +1)"></span>
+                                                    <span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : exercise.isValid() === true, 'font-red-sunglo' : exercise.isValid() === false}" data-ng-bind="'exercise' | translate"></span>
                                                     <span class="caption-helper" data-ng-bind="exercise.description.names['pl']"></span>
                                                 </div>
                                                 <div class="actions">
-                                                    <div data-ng-if="plan.editable" class="btn-group" data-ng-if="!workout.isInSuperSet(exercise)" dropdown>
+                                                    <div data-ng-if="plan.editable && group.exercises.length <= 1" class="btn-group" dropdown>
                                                         <button class="btn btn-default btn-xs dropdown-toggle" type="button" dropdown-toggle>
                                                             {{'superSet' | translate}} <i class="fa fa-angle-down"></i>
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu">
-                                                            <li data-ng-repeat="joinEx in workout.exercises" data-ng-if="!workout.isInSuperSet(joinEx) && joinEx.position !== exercise.position">
-                                                                <a href="" data-ng-click="workout.joinToSuperSet(joinEx.position, exercise.position)" data-ng-bind="('exercise' | translate) + ' ' + (joinEx.position)"></a>
+                                                            <li data-ng-repeat="joinGroup in workout.groups" data-ng-if="joinGroup.id !== group.id">
+                                                                <a href="" data-ng-click="workout.joinToSuperSet(joinGroup, group, exercise)" data-ng-bind="(joinGroup.exercises.length > 1 ? ('superSet'  | translate) : '') + ' ' + (joinGroup.exercises.length > 1 ? joinGroup.position : joinGroup.exercises[0].description.names['pl'])"></a>
                                                             </li>
                                                         </ul>
                                                     </div>
                                                     <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="exercise.visible = !exercise.visible">
                                                         <i class="fa fa-angle-double-down"></i>
                                                     </a>
-                                                    <a data-ng-if="plan.editable" data-ng-if="workout.isInSuperSet(exercise)" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.removeFromSuperSet(exercise)">
+                                                    <a data-ng-if="plan.editable" data-ng-if="group.exercises.length > 1" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.removeFromSuperSet(group, exercise)">
                                                         <i class="fa fa-chain-broken"></i>
                                                     </a>
-                                                    <a data-ng-if="plan.editable" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.removeExercise($index)">
+                                                    <a data-ng-if="plan.editable" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.removeExercise(group, exercise)">
                                                         <i class="icon-trash"></i>
                                                     </a>
                                                 </div>
@@ -336,6 +337,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                                </section>
                                         </section>
                                     </div>
                                 </div>

@@ -8,7 +8,6 @@
     <bean id="exerciseManager" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseManager">
         <property name="converter" ref="exerciseConverter"/>
         <property name="dao" ref="exerciseDao"/>
-        <property name="validator" ref="exerciseValidator"/>
     </bean>
 
     <bean id="workoutConverter" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutConverter">
@@ -18,7 +17,6 @@
     <bean id="workoutManager" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutManager">
         <property name="converter" ref="workoutConverter"/>
         <property name="dao" ref="workoutDao"/>
-        <property name="validator" ref="workoutValidator"/>
     </bean>
 
     <bean id="phaseConverter" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseConverter">
@@ -28,7 +26,6 @@
     <bean id="phaseManager" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseManager">
         <property name="converter" ref="phaseConverter"/>
         <property name="dao" ref="phaseDao"/>
-        <property name="validator" ref="phaseValidator"/>
     </bean>
 
     <bean id="planConverter" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanConverter">
@@ -41,6 +38,9 @@
         <property name="converter" ref="planConverter"/>
         <property name="dao" ref="planDao"/>
         <property name="validator" ref="planValidator"/>
+        <property name="exerciseManager" ref="exerciseManager"/>
+        <property name="phaseManager" ref="phaseManager"/>
+        <property name="workoutManager" ref="workoutManager"/>
     </bean>
 
 </beans>

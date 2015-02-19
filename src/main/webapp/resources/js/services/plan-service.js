@@ -27,19 +27,15 @@ MetronicApp.service('planService', function($q, $http, phaseService, formValidat
         var deferred = $q.defer();
         deferred.resolve();
         return deferred.promise.then(function() {
-            return $http.post(urlService.apiURL('/plans'),  {name: plan.name, goal: plan.goal, id: plan.id, creatorId: plan.creatorId}).then(function(data) {
+            var payload = {name: plan.name, goal: plan.goal, id: plan.id, creatorId: plan.creatorId, phases: []};
+            _.each(plan.phases, function(phase) {
+                payload.phases.push(phaseService.payload(phase));
+            });
+            console.log(payload);
+            return $http.post(urlService.apiURL('/plans'), payload).then(function(data) {
                 plan.id = data.data;
                 return data;
             });
-        }).then(function(data) {
-            var array = [];
-            for (var i =0; i < plan.phases.length; i++) {
-                var phase =  plan.phases[i];
-                phase.planId = data.data;
-                phase.position = i + 1;
-                array.push(phaseService.post(phase));
-            }
-            return $q.all(array);
         });
     }
 
@@ -75,7 +71,9 @@ MetronicApp.service('planService', function($q, $http, phaseService, formValidat
                     }
                 },
                 addPhase: function(phase) {
-                    this.phases.push(phaseService.get(this.form, '' + this.index + this.childIndex++, phase));
+                    var next = phaseService.get(this.form, '' + this.index + this.childIndex++, phase);
+                    next.position = this.phases.length + 1;
+                    this.phases.push(next);
                 },
                 removePhase:  function(idx) {
                     for(var i = 0; this.phases.length; i++) {

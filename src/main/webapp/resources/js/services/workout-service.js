@@ -7,15 +7,15 @@ MetronicApp.service('workoutService', function($q, $http, exerciseService, urlSe
     }
 
     this.isValid = function(workout) {
-        var result =  workout.exercises.length > 0;
-        for (var i = 0; i < workout.exercises.length; i++) {
-            var exercise = workout.exercises[i];
-            if (!exerciseService.isValid(exercise)) {
-                result = false;
-            }
-        }
+        var result =  workout.groups.length > 0;
+        _.each(workout.groups, function(group) {
+            _.each(group.exercises, function(exercise) {
+                if (!exerciseService.isValid(exercise)) {
+                    result = false;
+                }
+            });
+        });
         var validInputs = this.isValidInputs(workout);
-
         workout.valid = result && validInputs;
         return workout.valid;
     }
@@ -24,32 +24,26 @@ MetronicApp.service('workoutService', function($q, $http, exerciseService, urlSe
          return workout.form[FORM_INPUT_MUSCLE + workout.index] !== undefined
              && workout.form[FORM_INPUT_MUSCLE + workout.index].$touched
              && workout.form[FORM_INPUT_MUSCLE + workout.index].$valid;
-    }
+    };
 
-    this.post = function(workout) {
-        var deferred = $q.defer();
-        deferred.resolve();
-        return deferred.promise.then(function() {
-            var muscles = [];
-            for(var i =0; i < workout.muscles.length; i++) {
-                var muscle = workout.muscles[i];
-                if (muscle.selected) {
-                    muscles.push(muscle.name);
-                }
+    this.payload = function(workout) {
+        var muscles = [];
+        for(var i =0; i < workout.muscles.length; i++) {
+            var muscle = workout.muscles[i];
+            if (muscle.selected) {
+                muscles.push(muscle.name);
             }
-            return $http.post(urlService.apiURL('/workouts'), {weekDay: weekDaysMap[workout.weekDay], muscles: muscles, position: 1, phaseId: workout.phaseId, id: workout.id}).then(function(data) {
-                workout.id = data.data;
-                return data;
+        }
+        var payload = {weekDay: weekDaysMap[workout.weekDay], muscles: muscles, position: 1, phaseId: workout.phaseId, id: workout.id, groups: []};
+        _.each(workout.groups, function(group) {
+            var payloadGroup = {id: group.id, exercises: []};
+            _.each(group.exercises, function(exercise) {
+                exercise.group = group.id;
+                payloadGroup.exercises.push(exerciseService.payload(exercise));
             });
-        }).then(function(data) {
-            var array = [];
-            for (var i =0; i < workout.exercises.length; i++) {
-                var exercise = workout.exercises[i];
-                exercise.workoutId = data.data;
-                array.push(exerciseService.post(exercise));
-            }
-            return $q.all(array);
+            payload.groups.push(payloadGroup);
         });
+        return payload;
     }
 
     this.get = function(weekDay, form, index, workout) {
@@ -71,7 +65,7 @@ MetronicApp.service('workoutService', function($q, $http, exerciseService, urlSe
                 childIndex: 0,
                 form: form,
                 muscles: muscles,
-                exercises: [],
+                groups: [],
                 groupIndex: -1,
                 weekDay: workout ? weekDaysMap[workout.weekDay] : weekDay,
                 visible: true,
@@ -104,59 +98,74 @@ MetronicApp.service('workoutService', function($q, $http, exerciseService, urlSe
                 isValid: function() {
                     return me.isValid(this);
                 },
-                isInSuperSet: function(exercise) {
-                    for(var j = 0; j < this.exercises.length; j++) {
-                        var temp = this.exercises[j];
-                        if (exercise.position !== temp.position && exercise.group === temp.group) {
-                            return true;
+                updateSuperSetPositions: function() {
+                    _.sortBy(this.groups, 'id');
+                    var position = 1;
+                    _.each(this.groups, function(item) {
+                        if (item.exercises.length > 1) {
+                            item.position = position++;
                         }
-                    }
+                    });
                 },
-                isFirstInSuperSet: function(exercise) {
-                    for(var j = 0; j < this.exercises.length; j++) {
-                        var temp = this.exercises[j];
-                        if (exercise.position !== temp.position && exercise.group === temp.group && exercise.position < temp.position) {
-                            return true;
-                        }
-                    }
+                updateSuperSetIds: function() {
+                    _.sortBy(this.groups, 'id');
+                    var id = 1;
+                    _.each(this.groups, function(item) {
+                        item.id = id++;
+                    });
                 },
-                removeFromSuperSet: function(exercise) {
-                    var updateGroup = false;
-                    for(var j = 0; j < this.exercises.length; j++) {
-                        var temp = this.exercises[j];
-                        if (exercise.group !== temp.group && updateGroup) {
-                            temp.group++;
+                removeFromSuperSet: function(group, exercise) {
+                    group.removeExercise(exercise);
+                    group.updateExercisePositions();
+                    _.each(this.groups, function(item) {
+                        if (item.id > group.id) {
+                            item.id++;
                         }
-                        if (exercise.position !== temp.position && exercise.group === temp.group) {
-                            if (exercise.position < temp.position) {
-                                temp.group++;
-                            } else {
-                                exercise.group++;
-                            }
-                            updateGroup = true;
-                        }
-                    }
+                    });
+                    exercise.position = 1;
+
+                    this.addGroup(group.id + 1, [exercise]);
+                    this.updateSuperSetPositions();
                 },
-                joinToSuperSet: function(position1, position2) {
-                    var exercise1 = this.exercises[position1 - 1];
-                    var exercise2 = this.exercises[position2 - 1];
-                    this.exercises.splice(exercise2.position  - 1, 1);
-                    this.exercises.splice(exercise1.position > exercise2.position  - 1 ? exercise1.position - 1 : exercise1.position , 0, exercise2);
-                    exercise2.group = exercise1.group;
-                    for(var j = 0; j < this.exercises.length; j++) {
-                        this.exercises[j].position = j+1;
+                addGroup: function(id, exercises) {
+                    var group = {id: id + 1, exercises: exercises};
+                    group.updateExercisePositions = function() {
+                        _.sortBy(this.exercises, 'position');
+                        var position = 1;
+
+                        _.each(this.exercises, function(item) {
+                            item.position = position++;
+                        });
+                    };
+                    group.removeExercise = function(exercise) {
+                        this.exercises = _.filter(this.exercises, function(item) {
+                            return item.position !== exercise.position;
+                        });
                     }
+                    this.groups.push(group);
+                },
+                joinToSuperSet: function(newGroup, currentGroup, exercise) {
+                    currentGroup.removeExercise(exercise);
+                    currentGroup.updateExercisePositions();
+
+                    exercise.position = 999;
+                    newGroup.exercises.push(exercise);
+                    newGroup.updateExercisePositions();
+
+                    if (currentGroup.exercises.length === 0) {
+                        this.groups = _.filter(this.groups, function(item) {
+                            return item.id !== currentGroup.id;
+                        });
+                        this.updateSuperSetIds();
+                    }
+                    this.updateSuperSetPositions();
+
                 },
                 addExercise: function (description, exercise) {
                     var e = exerciseService.get(description, this.form, '' + this.index + this.childIndex++, exercise);
-                    if (!e.position) {
-                        e.position = this.exercises.length + 1;
-                        e.group = ++this.groupIndex;
-                    } else if (e.group > this.groupIndex){
-                        this.groupIndex = e.group;
-                    }
-                    this.exercises.push(e);
-                    var reduceDescriptions = []
+                    this.addGroup(this.groups.length + 1, [e]);
+                    this.updateSuperSetPositions();
+                    var reduceDescriptions = [];
                     for (var i = 0; i < this.descriptions.result.result.length; i++) {
                         if (description.id !== this.descriptions.result.result[i].id) {
                             reduceDescriptions.push(this.descriptions.result.result[i]);
@@ -166,24 +175,29 @@ MetronicApp.service('workoutService', function($q, $http, exerciseService, urlSe
                     }
                     this.descriptions.result.result = reduceDescriptions;
                 },
-                removeExercise:  function(idx) {
-                    for(var i = 0; this.exercises.length; i++) {
-                        if (i === idx) {
-                            var removed = this.exercises.splice(i, 1)[0];
-                            for (var j = 0; j < this.descriptions.params.excludeId.length; j++) {
-                                if (removed.description.id === this.descriptions.params.excludeId[j]) {
-                                    this.descriptions.params.excludeId.splice(j, 1);
-                                }
-                            }
-                            break;
-                        }
+                removeExercise:  function(group, exercise) {
+                    group.removeExercise(exercise);
+                    group.updateExercisePositions();
+                    if (group.exercises.length === 0) {
+                        this.groups = _.filter(this.groups, function(item) {
+                            return item.id !== group.id;
+                        });
+                        this.updateSuperSetIds();
+                        this.updateSuperSetPositions();
                     }
+                    this.descriptions.params.excludeId = _.filter(this.descriptions.params.excludeId, function(item) {
+                        return item !== exercise.description.id;
+                    });
                 }
-            }
+            };
             if (workout) {
-                for(var i = 0; i < workout.exercises.length; i++) {
-                    result.addExercise(workout.exercises[i].description, workout.exercises[i]);
-                }
+                _.each(workout.groups, function(group) {
+                    var exercises = [];
+                    _.each(group.exercises, function(exercise) {
+                        exercises.push(exerciseService.get(exercise.description, result.form, '' + result.index + result.childIndex++, exercise));
+                    });
+                    result.addGroup(group.id, exercises);
+                });
             }
             return result;
         });

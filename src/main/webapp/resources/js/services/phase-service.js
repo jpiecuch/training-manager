@@ -13,7 +13,7 @@ MetronicApp.service('phaseService', function($q, $http, workoutService, urlServi
         }
         phase.valid = result && this.isValidInputs(phase);
         return phase.valid;
-    }
+    };
 
     this.isValidInputs = function(phase) {
         return phase.form[FORM_INPUT_DESCRIPTION + phase.index] !== undefined
@@ -25,26 +25,15 @@ MetronicApp.service('phaseService', function($q, $http, workoutService, urlServi
             && phase.form[FORM_INPUT_WEEKS + phase.index] !== undefined
             && phase.form[FORM_INPUT_WEEKS + phase.index].$touched
             && phase.form[FORM_INPUT_WEEKS + phase.index].$valid;
-    }
+    };
 
-    this.post = function(phase) {
-        var deferred = $q.defer();
-        deferred.resolve();
-        return deferred.promise.then(function() {
-            return $http.post(urlService.apiURL('/phase'), { description: phase.description, goal: phase.goal, weeks: phase.weeks, planId: phase.planId, position: phase.position, id: phase.id }).then(function(data) {
-                phase.id = data.data;
-                return data;
-            });
-        }).then(function(data) {
-            var array = [];
-            for (var i =0; i < phase.workouts.length; i++) {
-                var workout = phase.workouts[i];
-                workout.phaseId = data.data;
-                array.push(workoutService.post(workout));
-            }
-            return $q.all(array);
+    this.payload = function(phase) {
+        var payload = { description: phase.description, goal: phase.goal, weeks: phase.weeks, planId: phase.planId, position: phase.position, id: phase.id, workouts: [] };
+        _.each(phase.workouts, function(workout) {
+            payload.workouts.push(workoutService.payload(workout));
         });
-    }
+        return payload;
+    };
 
     this.get = function(form, index, phase) {
         var me = this;
@@ -58,6 +47,7 @@ MetronicApp.service('phaseService', function($q, $http, workoutService, urlServi
             weeks: phase ? phase.weeks : null,
             workouts: [],
             visible: true,
+            position: phase ? phase.position : null,
             isValid: function() {
                return me.isValid(this);
             },
@@ -96,7 +86,7 @@ MetronicApp.service('phaseService', function($q, $http, workoutService, urlServi
                     }
                 }
             }
-        }
+        };
         if (phase) {
             for(var i = 0; i < phase.workouts.length; i++) {
                 result.addWorkout(i, phase.workouts[i]);

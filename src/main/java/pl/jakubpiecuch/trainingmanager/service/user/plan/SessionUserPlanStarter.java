@@ -10,6 +10,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Workout;
 import pl.jakubpiecuch.trainingmanager.service.flow.FlowManager;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.GroupDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseDto;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
@@ -51,11 +52,13 @@ public class SessionUserPlanStarter implements UserPlanStarter {
                     userWorkout.setWorkout(new Workout(workout.getId()));
                     userWorkout.setAccount(AuthenticatedUserUtil.getUser());
                     userWorkoutDao.save(userWorkout);
-                    for (ExerciseDto exercise : workout.getExercises()) {
-                        Execution execution = new Execution();
-                        execution.setExercise(new Exercise(exercise.getId()));
-                        execution.setWorkout(userWorkout);
-                        executionDao.save(execution);
+                    for (GroupDto group : workout.getGroups()) {
+                        for(ExerciseDto exercise : group.getExercises()) {
+                            Execution execution = new Execution();
+                            execution.setExercise(new Exercise(exercise.getId()));
+                            execution.setWorkout(userWorkout);
+                            executionDao.save(execution);
+                        }
                     }
                 }
                 weekIncrease++;

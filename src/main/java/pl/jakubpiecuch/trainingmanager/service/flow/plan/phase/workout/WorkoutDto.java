@@ -5,6 +5,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Workout;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public class WorkoutDto extends Flow {
     private Workout.WeekDay weekDay;
     private Integer position;
     private Long phaseId;
-    private List<ExerciseDto> exercises;
+    private List<GroupDto> groups = new ArrayList<GroupDto>();
 
     public Long getId() {
         return id;
@@ -59,12 +60,12 @@ public class WorkoutDto extends Flow {
         this.phaseId = phaseId;
     }
 
-    public List<ExerciseDto> getExercises() {
-        return exercises;
+    public List<GroupDto> getGroups() {
+        return groups;
     }
 
-    public void setExercises(List<ExerciseDto> exercises) {
-        this.exercises = exercises;
+    public void setGroups(List<GroupDto> groups) {
+        this.groups = groups;
     }
 
     @Override

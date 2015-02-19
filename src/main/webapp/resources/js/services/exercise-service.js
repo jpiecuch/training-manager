@@ -4,7 +4,7 @@ MetronicApp.service('exerciseService', function($http, urlService) {
     this.isValid = function(exercise) {
         exercise.valid = exercise.sets.length > 0 && this.isValidInputs(exercise);
         return exercise.valid;
-    }
+    };
 
     this.isValidInputs = function(exercise) {
         var validCounter = 0;
@@ -16,22 +16,18 @@ MetronicApp.service('exerciseService', function($http, urlService) {
             }
         }
         return exercise.sets.length === validCounter;
-    }
+    };
 
-    this.post = function(exercise) {
-        return $http.post(urlService.apiURL('/exercise'), {
+    this.payload = function(exercise) {
+        return {
             position: exercise.position,
             group: exercise.group,
             sets: exercise.sets,
             descriptionId: exercise.description.id,
             workoutId: exercise.workoutId,
             id: exercise.id
-        }).then(function(data) {
-            exercise.id = data.data;
-            return data;
-        });
-    }
-
+        };
+    };
 
     this.get = function(description, form, index, exercise) {
         var me = this;
@@ -61,7 +57,7 @@ MetronicApp.service('exerciseService', function($http, urlService) {
             isValid: function() {
                 return me.isValid(this);
             }
-        }
+        };
 
         return result;
     }

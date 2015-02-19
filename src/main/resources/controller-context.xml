@@ -23,13 +23,7 @@
 
     <bean id="languageController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.language.LanguageController" parent="abstractController"/>
 
-    <bean id="phaseController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.flow.plan.phase.PhaseController" parent="abstractController"/>
-
     <bean id="planController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.flow.plan.PlanController" parent="abstractController"/>
-
-    <bean id="workoutController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.flow.plan.phase.workout.WorkoutController" parent="abstractController"/>
-
-    <bean id="exerciseController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.flow.plan.phase.workout.exercise.ExerciseController" parent="abstractController"/>
 
     <bean id="dictionaryController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.dictionary.DictionaryController" parent="abstractController"/>
 
