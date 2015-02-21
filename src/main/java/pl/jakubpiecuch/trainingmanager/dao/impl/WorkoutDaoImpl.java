@@ -6,12 +6,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Workout;
 
 import java.util.List;
 
-public class WorkoutDaoImpl extends CoreDaoImpl implements WorkoutDao {
-
-    @Override
-    public Workout findById(long id) {
-        return (Workout) session().createQuery("SELECT w FROM Workout w WHERE w.id = :id").setParameter("id", id).uniqueResult();
-    }
+public class WorkoutDaoImpl extends CoreDaoImpl<Workout> implements WorkoutDao {
 
     @Override
     public List<Workout> findByParentId(long phaseId) {

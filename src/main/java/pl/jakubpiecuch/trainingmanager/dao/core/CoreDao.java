@@ -1,7 +1,10 @@
 package pl.jakubpiecuch.trainingmanager.dao.core;
 
-public interface CoreDao {
-    void save(Object o);
-    void delete(Object o);
+import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
+
+public interface CoreDao<T extends CommonEntity> {
+    void save(T o);
+    void delete(T o);
     void flush();
+    T findById(Long id);
 }

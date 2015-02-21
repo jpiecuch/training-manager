@@ -4,7 +4,6 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.dao.EquipmentDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
-import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
 
@@ -36,7 +35,7 @@ public class EquipmentRepository implements Repository<Equipment, EquipmentCrite
 
     @Override
     public void delete(long id) {
-        equipmentDao.delete(new Description(id));
+        equipmentDao.delete(equipmentDao.findById(id));
     }
 
     public void setEquipmentDao(EquipmentDao equipmentDao) {

@@ -3,6 +3,7 @@ package pl.jakubpiecuch.trainingmanager.service.user.workout.session.execution;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.dao.ExecutionDao;
+import pl.jakubpiecuch.trainingmanager.domain.Execution;
 import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
 import pl.jakubpiecuch.trainingmanager.service.repository.UpdateManager;
 import pl.jakubpiecuch.trainingmanager.service.user.workout.ExecutionDto;
@@ -12,7 +13,7 @@ import pl.jakubpiecuch.trainingmanager.service.user.workout.ExecutionDto;
  */
 public class ExecutionUpdateManager implements UpdateManager<ExecutionDto> {
 
-    private Converter converter;
+    private Converter<ExecutionDto, Execution> converter;
     private Validator validator;
     private ExecutionDao executionDao;
 

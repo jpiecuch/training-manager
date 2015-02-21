@@ -9,7 +9,7 @@ import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
 import pl.jakubpiecuch.trainingmanager.service.user.workout.UserWorkoutDto;
 import pl.jakubpiecuch.trainingmanager.service.user.workout.UserWorkoutManager;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Created by Rico on 2015-01-18.

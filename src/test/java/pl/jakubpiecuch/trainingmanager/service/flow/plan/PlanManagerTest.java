@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import pl.jakubpiecuch.trainingmanager.dao.BaseDao;
+import pl.jakubpiecuch.trainingmanager.dao.FlowDao;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.FlowConverter;
 
@@ -24,7 +24,7 @@ public class PlanManagerTest {
     private PlanManager planManager;
 
     @Mock
-    BaseDao<Plan> dao;
+    FlowDao<Plan> dao;
 
     @Mock
     FlowConverter<PlanDto, Plan> converter;

@@ -1,7 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.resolver;
 
 import org.apache.commons.lang.ArrayUtils;
-import pl.jakubpiecuch.trainingmanager.service.OrderResolver;
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
 
 import java.util.Map;
@@ -9,7 +8,7 @@ import java.util.Map;
 /**
  * Created by Rico on 2015-01-20.
  */
-public abstract class AbstractOrderResolver<T extends Enum> implements OrderResolver<T> {
+public abstract class AbstractOrderResolver<T extends Enum> implements OrderResolver {
     private String[] langs;
     private String defaultLang;
     private Map<String, Integer[]> orderMap;

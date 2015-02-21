@@ -2,7 +2,6 @@ package pl.jakubpiecuch.trainingmanager.web.controllers.api.locale;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;

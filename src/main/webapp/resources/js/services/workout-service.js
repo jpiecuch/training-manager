@@ -163,7 +163,7 @@ MetronicApp.service('workoutService', function($q, $http, exerciseService, urlSe
                 },
                 addExercise: function (description, exercise) {
                     var e = exerciseService.get(description, this.form, '' + this.index + this.childIndex++, exercise);
-                    this.addGroup(this.groups.length + 1, [e]);
+                    this.addGroup(this.groups.length + 2, [e]);
                     this.updateSuperSetPositions();
                     var reduceDescriptions = [];
                     for (var i = 0; i < this.descriptions.result.result.length; i++) {
@@ -195,6 +195,7 @@ MetronicApp.service('workoutService', function($q, $http, exerciseService, urlSe
                     var exercises = [];
                     _.each(group.exercises, function(exercise) {
                         exercises.push(exerciseService.get(exercise.description, result.form, '' + result.index + result.childIndex++, exercise));
+                        result.descriptions.params.excludeId.push(exercise.description.id);
                     });
                     result.addGroup(group.id, exercises);
                 });

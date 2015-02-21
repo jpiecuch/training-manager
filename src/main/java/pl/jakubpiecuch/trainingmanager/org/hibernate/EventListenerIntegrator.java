@@ -4,18 +4,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.event.service.spi.EventListenerRegistry;
 import org.hibernate.event.spi.EventType;
 import org.hibernate.internal.SessionFactoryImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
 /**
  * Created by Rico on 2014-12-28.
  */
-@Component
 public class EventListenerIntegrator {
 
-    @Autowired
     private SessionFactory sessionFactory;
 
     @PostConstruct
@@ -26,7 +22,6 @@ public class EventListenerIntegrator {
         registry.getEventListenerGroup(EventType.PRE_UPDATE).appendListener(new PreUpdateListener());
     }
 
-    @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

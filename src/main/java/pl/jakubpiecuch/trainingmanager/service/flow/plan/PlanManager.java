@@ -1,7 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.transaction.annotation.Transactional;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;

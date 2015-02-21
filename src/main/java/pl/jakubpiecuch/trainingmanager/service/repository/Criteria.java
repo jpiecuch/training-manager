@@ -4,7 +4,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import pl.jakubpiecuch.trainingmanager.service.OrderResolver;
+import pl.jakubpiecuch.trainingmanager.service.resolver.OrderResolver;
 
 import java.util.*;
 

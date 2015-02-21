@@ -2,7 +2,6 @@ package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.util.Assert;
-import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;

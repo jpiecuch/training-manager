@@ -5,15 +5,11 @@ import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
 import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 
-public class AccountDaoImpl extends CoreDaoImpl implements AccountDao {
+public class AccountDaoImpl extends CoreDaoImpl<Account> implements AccountDao {
 
     @Override
     public Account findByUniques(Long id, String name, String email) {
         return id != null ? findById(id) : StringUtils.isNotEmpty(name) ? findByName(name) : StringUtils.isNotEmpty(email) ? findByEmail(email) : null;
-    }
-
-    private Account findById(Long id) {
-        return (Account) session().createQuery("SELECT u FROM Account u WHERE u.id = :id").setParameter("id", id).uniqueResult();
     }
 
     private Account findByName(String name) {

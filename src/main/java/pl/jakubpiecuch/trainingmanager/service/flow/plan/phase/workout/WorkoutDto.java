@@ -3,7 +3,6 @@ package pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.domain.Workout;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
-import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseDto;
 
 import java.util.ArrayList;
 import java.util.List;

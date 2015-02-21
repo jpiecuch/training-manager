@@ -9,8 +9,8 @@ import pl.jakubpiecuch.trainingmanager.dao.ExecutionDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.domain.Execution;
-import pl.jakubpiecuch.trainingmanager.service.user.workout.session.UserWorkoutCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
+import pl.jakubpiecuch.trainingmanager.service.user.workout.session.UserWorkoutCriteria;
 
 import java.util.Date;
 

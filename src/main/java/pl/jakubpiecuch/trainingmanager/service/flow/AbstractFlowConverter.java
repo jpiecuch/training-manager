@@ -1,6 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.service.flow;
 
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.service.converter.AbstractConverter;

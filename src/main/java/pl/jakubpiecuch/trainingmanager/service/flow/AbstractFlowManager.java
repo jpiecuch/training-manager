@@ -3,7 +3,7 @@ package pl.jakubpiecuch.trainingmanager.service.flow;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
-import pl.jakubpiecuch.trainingmanager.dao.BaseDao;
+import pl.jakubpiecuch.trainingmanager.dao.FlowDao;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class AbstractFlowManager<T extends Flow> implements FlowManager<T> {
 
     protected Converter converter;
-    protected BaseDao dao;
+    protected FlowDao dao;
     private Validator validator;
 
     @Override
@@ -51,7 +51,7 @@ public abstract class AbstractFlowManager<T extends Flow> implements FlowManager
         this.converter = converter;
     }
 
-    public void setDao(BaseDao dao) {
+    public void setDao(FlowDao dao) {
         this.dao = dao;
     }
 

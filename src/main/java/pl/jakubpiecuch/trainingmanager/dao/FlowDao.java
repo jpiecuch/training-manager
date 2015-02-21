@@ -5,7 +5,6 @@ import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 
 import java.util.List;
 
-public interface BaseDao<T extends CommonEntity> extends CoreDao {
-    T findById(long id);
+public interface FlowDao<T extends CommonEntity> extends CoreDao<T> {
     List<T> findByParentId(long parentId);
 }

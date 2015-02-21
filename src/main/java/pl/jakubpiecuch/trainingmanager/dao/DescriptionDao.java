@@ -5,6 +5,4 @@ import pl.jakubpiecuch.trainingmanager.service.repository.description.Descriptio
 
 
 public interface DescriptionDao extends RepoDao<Description, DescriptionCriteria>  {
-    Description findById(Long id);
-    Long count();
 }
