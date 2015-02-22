@@ -23,8 +23,13 @@ public abstract class CoreDaoImpl<T extends CommonEntity> implements CoreDao<T> 
     }
 
     @Override
-    public void save(T o) {
-        session().saveOrUpdate(o);
+    public Long create(T o) {
+        return (Long) session().save(o);
+    }
+
+    @Override
+    public void update(T o) {
+        session().update(o);
     }
 
     @Override

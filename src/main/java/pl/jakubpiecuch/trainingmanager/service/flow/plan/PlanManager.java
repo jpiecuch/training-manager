@@ -42,19 +42,27 @@ public class PlanManager extends AbstractFlowManager<PlanDto> implements ReadRep
     }
 
     @Override
-    public long save(PlanDto element) {
-        element.setId(super.save(element));
+    public void update(PlanDto element) {
+        super.update(element);
         List<PhaseDto> phases = phaseManager.children(element.getId(), true);
         List<Long> touchedPhases = new ArrayList<Long>();
         for (PhaseDto phase : element.getPhases()) {
             phase.setPlanId(element.getId());
-            phase.setId(phaseManager.save(phase));
+            if (phase.getId() == null) {
+                phase.setId(phaseManager.create(phase));
+            } else {
+                phaseManager.update(phase);
+            }
             touchedPhases.add(phase.getId());
             List<WorkoutDto> workouts = workoutManager.children(phase.getId(), true);
             List<Long> touchedWorkouts = new ArrayList<Long>();
             for (WorkoutDto workout : phase.getWorkouts()) {
                 workout.setPhaseId(phase.getId());
-                workout.setId(workoutManager.save(workout));
+                if (workout.getId() == null) {
+                    workout.setId(workoutManager.create(workout));
+                } else {
+                    workoutManager.update(workout);
+                }
                 touchedWorkouts.add(workout.getId());
                 List<ExerciseDto> exercises = exerciseManager.children(workout.getId(), false);
                 List<Long> touchedExercises = new ArrayList<Long>();
@@ -62,7 +70,68 @@ public class PlanManager extends AbstractFlowManager<PlanDto> implements ReadRep
                     for (ExerciseDto exercise : group.getExercises()) {
                         exercise.setGroup(group.getId());
                         exercise.setWorkoutId(workout.getId());
-                        exercise.setId(exerciseManager.save(exercise));
+                        if (exercise.getId() == null) {
+                            exercise.setId(exerciseManager.create(exercise));
+                        } else {
+                            exerciseManager.update(exercise);
+                        }
+                        touchedExercises.add(exercise.getId());
+                    }
+                }
+                for (ExerciseDto exercise : exercises) {
+                    if (!touchedExercises.contains(exercise.getId())) {
+                        exerciseManager.delete(exercise);
+                    }
+                }
+            }
+            for (WorkoutDto workout : workouts) {
+                if (!touchedWorkouts.contains(workout.getId())) {
+                    for (GroupDto group : workout.getGroups()) {
+                        for (ExerciseDto exercise : group.getExercises()) {
+                            exerciseManager.delete(exercise);
+                        }
+                    }
+                    workoutManager.delete(workout);
+                }
+            }
+        }
+        for (PhaseDto phase : phases) {
+            if (!touchedPhases.contains(phase.getId())) {
+                for (WorkoutDto workout : phase.getWorkouts()) {
+                    for (GroupDto group : workout.getGroups()) {
+                        for (ExerciseDto exercise : group.getExercises()) {
+                            exerciseManager.delete(exercise);
+                        }
+                    }
+                    workoutManager.delete(workout);
+                }
+                phaseManager.delete(phase);
+            }
+        }
+    }
+
+    @Override
+    public long create(PlanDto element) {
+        element.setId(super.create(element));
+        List<PhaseDto> phases = phaseManager.children(element.getId(), true);
+        List<Long> touchedPhases = new ArrayList<Long>();
+        for (PhaseDto phase : element.getPhases()) {
+            phase.setPlanId(element.getId());
+            phase.setId(phaseManager.create(phase));
+            touchedPhases.add(phase.getId());
+            List<WorkoutDto> workouts = workoutManager.children(phase.getId(), true);
+            List<Long> touchedWorkouts = new ArrayList<Long>();
+            for (WorkoutDto workout : phase.getWorkouts()) {
+                workout.setPhaseId(phase.getId());
+                workout.setId(workoutManager.create(workout));
+                touchedWorkouts.add(workout.getId());
+                List<ExerciseDto> exercises = exerciseManager.children(workout.getId(), false);
+                List<Long> touchedExercises = new ArrayList<Long>();
+                for (GroupDto group : workout.getGroups()) {
+                    for (ExerciseDto exercise : group.getExercises()) {
+                        exercise.setGroup(group.getId());
+                        exercise.setWorkoutId(workout.getId());
+                        exercise.setId(exerciseManager.create(exercise));
                         touchedExercises.add(exercise.getId());
                     }
                 }

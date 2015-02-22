@@ -24,18 +24,23 @@ MetronicApp.service('planService', function($q, $http, phaseService, formValidat
     }
 
     this.post = function(plan) {
-        var deferred = $q.defer();
-        deferred.resolve();
-        return deferred.promise.then(function() {
-            var payload = {name: plan.name, goal: plan.goal, id: plan.id, creatorId: plan.creatorId, phases: []};
-            _.each(plan.phases, function(phase) {
-                payload.phases.push(phaseService.payload(phase));
-            });
-            console.log(payload);
-            return $http.post(urlService.apiURL('/plans'), payload).then(function(data) {
-                plan.id = data.data;
-                return data;
-            });
+        var payload = {name: plan.name, goal: plan.goal, id: plan.id, creatorId: plan.creatorId, phases: []};
+        _.each(plan.phases, function(phase) {
+            payload.phases.push(phaseService.payload(phase));
+        });
+        return $http.post(urlService.apiURL('/plans'), payload).then(function(data) {
+            plan.id = data.data;
+            return data;
+        });
+    };
+
+    this.put = function(plan) {
+        var payload = {name: plan.name, goal: plan.goal, id: plan.id, creatorId: plan.creatorId, phases: []};
+        _.each(plan.phases, function(phase) {
+            payload.phases.push(phaseService.payload(phase));
+        });
+        return $http.put(urlService.apiURL('/plans/' + plan.id), payload).then(function(data) {
+            return data;
         });
     }
 
@@ -60,12 +65,17 @@ MetronicApp.service('planService', function($q, $http, phaseService, formValidat
                     return me.isValid(this);
                 },
                 create: function(form) {
-
                     formValidateService.validate(form);
                     if (this.isValid()) {
-                        me.post(this).then(function() {
-                            alertService.show({type: 'success', title: 'OK', description: 'Submit'});
-                        });
+                        if (this.id) {
+                            me.put(this).then(function () {
+                                alertService.show({type: 'success', title: 'OK', description: 'Submit'});
+                            });
+                        } else {
+                            me.post(this).then(function () {
+                                alertService.show({type: 'success', title: 'OK', description: 'Submit'});
+                            });
+                        }
                     } else {
                         alertService.show({type: 'warning', title: 'ERROR', description: 'Something is wrong'});
                     }

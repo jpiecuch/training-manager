@@ -31,6 +31,11 @@ public class PlanController extends AbstractFlowController {
         return super.create(version, flow);
     }
 
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.PUT })
+    public void update(@PathVariable ApiVersionService.Version version, @RequestBody PlanDto flow, @PathVariable(ApiURI.ID_PARAM) Long id) throws Exception {
+        super.update(version, flow);
+    }
+
     @RequestMapping(method = { RequestMethod.GET })
     public PageResult<PlanDto> plans(@PathVariable ApiVersionService.Version version,
                                                 @RequestParam(value = "goal", required = false) Plan.Goal[] goals,

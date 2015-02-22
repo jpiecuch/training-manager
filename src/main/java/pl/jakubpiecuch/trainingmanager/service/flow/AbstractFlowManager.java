@@ -32,13 +32,22 @@ public abstract class AbstractFlowManager<T extends Flow> implements FlowManager
     }
 
     @Override
-    public long save(T element) {
+    public long create(T element) {
         if (validator != null) {
             validator.validate(element, new BeanPropertyBindingResult(element, element.getHierarchy().name().toLowerCase()));
         }
         CommonEntity entity = converter.toEntity(element);
-        dao.save(entity);
+        dao.create(entity);
         return entity.getId();
+    }
+
+    @Override
+    public void update(T element) {
+        if (validator != null) {
+            validator.validate(element, new BeanPropertyBindingResult(element, element.getHierarchy().name().toLowerCase()));
+        }
+        CommonEntity entity = converter.toEntity(element);
+        dao.update(entity);
     }
 
     @Override

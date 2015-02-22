@@ -57,7 +57,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
         account.setSalt(KeyGenerators.string().generateKey());
         account.setPassword(OAUTH_PASSWORD);
 
-        accountDao.save(account);
+        accountDao.create(account);
     }
 
     @Required

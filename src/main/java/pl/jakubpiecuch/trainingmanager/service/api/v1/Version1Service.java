@@ -109,7 +109,12 @@ public class Version1Service implements ApiVersionService {
 
     @Override
     public <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow) throws Exception {
-        return flowManagers.get(hierarchy).save(flow);
+        return flowManagers.get(hierarchy).create(flow);
+    }
+
+    @Override
+    public <T extends Flow> void updateFlow(Flow.Hierarchy hierarchy, T flow) {
+        flowManagers.get(hierarchy).update(flow);
     }
 
     @Override

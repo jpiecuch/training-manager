@@ -20,7 +20,7 @@ public class ExecutionUpdateManager implements UpdateManager<ExecutionDto> {
     @Override
     public void update(ExecutionDto element) {
         validator.validate(element, new BeanPropertyBindingResult(element, "execution"));
-        executionDao.save(converter.toEntity(element));
+        executionDao.update(converter.toEntity(element));
     }
 
     public void setValidator(Validator validator) {

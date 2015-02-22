@@ -44,7 +44,7 @@ public class PlanDaoImplTest extends BaseDAOTestCase {
 
     @Test
     public void testSave() {
-        planDao.save(PLAN);
+        planDao.create(PLAN);
         planDao.flush();
         assertNotNull(PLAN.getId());
     }

@@ -64,7 +64,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
         Account account = accountDao.findByUniques(null, null, id);
         if (account != null) {
             account.setStatus(Account.Status.RESET_PASSWORD);
-            accountDao.save(account);
+            accountDao.create(account);
             return ResetStatus.OK;
         }
         return ResetStatus.USER_NOT_EXIST;
@@ -77,7 +77,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
             Account account = accountDao.findByUniques(null, null, decrypt);
             if (account != null && Account.Status.ACTIVE != account.getStatus()) {
                 account.setStatus(Account.Status.ACTIVE);
-                accountDao.save(account);
+                accountDao.create(account);
                 return true;
             }
         } catch (SymmetricEncryptionException e) {
@@ -101,7 +101,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
         account.setStatus(Account.Status.CREATED);
         account.setSalt(KeyGenerators.string().generateKey());
         account.setPassword(passwordEncoder.encode(registration.getPassword(), account.getSalt()));
-        accountDao.save(account);
+        accountDao.create(account);
         emailService.sendEmail(new Object[] { cryptService.encrypt(account.getName(), account.getEmail()), account}, locale, EmailService.Template.REGISTER, account.getEmail());
     }
 

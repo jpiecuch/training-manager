@@ -22,6 +22,10 @@ public abstract class AbstractFlowController extends AbstractController {
         return new ResponseEntity(versionServices.get(version).createFlow(getHierarchy(), flow), HttpStatus.CREATED);
     }
 
+    public void update(ApiVersionService.Version version, Flow flow) throws Exception {
+        versionServices.get(version).updateFlow(getHierarchy(), flow);
+    }
+
     @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.GET })
     public ResponseEntity flow(@PathVariable ApiVersionService.Version version, @PathVariable Long id, @RequestParam(required = false, defaultValue = "false") boolean full) throws Exception {
         return new ResponseEntity(versionServices.get(version).flow(getHierarchy(), id, full), HttpStatus.OK);

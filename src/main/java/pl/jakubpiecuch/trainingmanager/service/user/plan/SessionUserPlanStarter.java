@@ -2,11 +2,9 @@ package pl.jakubpiecuch.trainingmanager.service.user.plan;
 
 import org.joda.time.DateTime;
 import pl.jakubpiecuch.trainingmanager.dao.ExecutionDao;
+import pl.jakubpiecuch.trainingmanager.dao.PlanDao;
 import pl.jakubpiecuch.trainingmanager.dao.UserWorkoutDao;
-import pl.jakubpiecuch.trainingmanager.domain.Execution;
-import pl.jakubpiecuch.trainingmanager.domain.Exercise;
-import pl.jakubpiecuch.trainingmanager.domain.UserWorkout;
-import pl.jakubpiecuch.trainingmanager.domain.Workout;
+import pl.jakubpiecuch.trainingmanager.domain.*;
 import pl.jakubpiecuch.trainingmanager.service.flow.FlowManager;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
@@ -32,6 +30,7 @@ public class SessionUserPlanStarter implements UserPlanStarter {
     private FlowManager<PlanDto> manager;
     private ExecutionDao executionDao;
     private UserWorkoutDao userWorkoutDao;
+    private PlanDao planDao;
 
     @Override
     public void start(UserPlan userPlan) {
@@ -51,21 +50,22 @@ public class SessionUserPlanStarter implements UserPlanStarter {
                     userWorkout.setDate(dateTime.toDate());
                     userWorkout.setWorkout(new Workout(workout.getId()));
                     userWorkout.setAccount(AuthenticatedUserUtil.getUser());
-                    userWorkoutDao.save(userWorkout);
+                    userWorkoutDao.create(userWorkout);
                     for (GroupDto group : workout.getGroups()) {
                         for(ExerciseDto exercise : group.getExercises()) {
                             Execution execution = new Execution();
                             execution.setExercise(new Exercise(exercise.getId()));
                             execution.setWorkout(userWorkout);
-                            executionDao.save(execution);
+                            executionDao.create(execution);
                         }
                     }
                 }
                 weekIncrease++;
             }
         }
-        plan.setUsed(true);
-        manager.save(plan);
+        Plan entity = planDao.findById(userPlan.getPlanId());
+        entity.setUsed(true);
+        planDao.update(entity);
     }
 
     public void setExecutionDao(ExecutionDao executionDao) {
@@ -78,5 +78,9 @@ public class SessionUserPlanStarter implements UserPlanStarter {
 
     public void setManager(FlowManager<PlanDto> manager) {
         this.manager = manager;
+    }
+
+    public void setPlanDao(PlanDao planDao) {
+        this.planDao = planDao;
     }
 }

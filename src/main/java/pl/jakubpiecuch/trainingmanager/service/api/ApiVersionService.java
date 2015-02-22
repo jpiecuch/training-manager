@@ -24,7 +24,6 @@ import java.util.Map;
 
 public interface ApiVersionService {
     void updateExecution(ExecutionDto execution);
-
     enum Version {v1}
 
     List<String> languages();
@@ -35,6 +34,7 @@ public interface ApiVersionService {
     <T extends Flow> T flow(Flow.Hierarchy hierarchy, Long id, boolean full);
     <T extends Flow> List<T> children(Flow.Hierarchy hierarchy, Long id, boolean full);
     <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow) throws Exception;
+    <T extends Flow> void updateFlow(Flow.Hierarchy hierarchy, T flow);
 
     <T extends Criteria> PageResult retrieveFromRepository(T criteria, Repositories type);
     <T extends RepoObject> long storeInRepository(T object, Repositories type);

@@ -126,13 +126,15 @@
     </bean>
 
     <bean  id="descriptionRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionRepository">
-        <property name="descriptionDao" ref="descriptionDao"/>
+        <property name="dao" ref="descriptionDao"/>
         <property name="validator" ref="descriptionValidator"/>
+        <property name="name" value="description"/>
     </bean>
 
     <bean  id="equipmentRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.equipment.EquipmentRepository">
-        <property name="equipmentDao" ref="equipmentDao"/>
+        <property name="dao" ref="equipmentDao"/>
         <property name="validator" ref="equipmentValidator"/>
+        <property name="name" value="equipment"/>
     </bean>
 
     <bean id="executionConverter" class="pl.jakubpiecuch.trainingmanager.service.user.workout.ExecutionConverter">
@@ -156,6 +158,7 @@
         <property name="executionDao" ref="executionDao"/>
         <property name="userWorkoutDao" ref="userWorkoutDao"/>
         <property name="manager" ref="planManager"/>
+        <property name="planDao" ref="planDao"/>
     </bean>
 
     <bean id="executionUpdateManager" class="pl.jakubpiecuch.trainingmanager.service.user.workout.session.execution.ExecutionUpdateManager">
