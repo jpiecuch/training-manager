@@ -1,6 +1,7 @@
 MetronicApp.service('descriptionService', function(urlService, $http, $q, formValidateService, alertService, ngTableParams) {
 
     var description = {
+        id: null,
         names: { pl: null, en: null },
         movieUrl: null,
         description: null,
@@ -14,7 +15,7 @@ MetronicApp.service('descriptionService', function(urlService, $http, $q, formVa
         create: function() {
             formValidateService.validate(this.form);
             if (this.form.$valid) {
-                $http.post(urlService.apiURL('/descriptions/'), {
+                var payload = {
                     id: this.id,
                     names: this.names,
                     movieUrl: this.movieUrl,
@@ -25,9 +26,17 @@ MetronicApp.service('descriptionService', function(urlService, $http, $q, formVa
                     level: this.level,
                     mechanics: this.mechanics,
                     force: this.force
-                }).then(function() {
-                    alertService.show({type: 'success', title: 'OK', description: 'Submit'});
-                });
+                };
+                if (this.id) {
+                    $http.put(urlService.apiURL('/descriptions/' + this.id), payload).then(function() {
+                        alertService.show({type: 'success', title: 'OK', description: 'Submit'});
+                    });
+                } else {
+                    $http.post(urlService.apiURL('/descriptions/'), payload).then(function() {
+                        alertService.show({type: 'success', title: 'OK', description: 'Submit'});
+                    });
+                }
+
             } else {
                 alertService.show({type: 'warning', title: 'ERROR', description: 'Something is wrong'});
             }
