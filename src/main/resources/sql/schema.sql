@@ -99,6 +99,12 @@ CREATE TABLE execution (
     workout BIGINT NOT NULL
 );
 
+CREATE TABLE account_record (
+    id BIGINT PRIMARY KEY NOT NULL,
+    type integer NOT NULL,
+    value character varying(50)
+)
+
 ALTER TABLE userconnection ADD CONSTRAINT userconnection_pkey PRIMARY KEY (userid, providerid, provideruserid);
 
 ALTER TABLE account ADD CONSTRAINT account_email_unique UNIQUE (email);
