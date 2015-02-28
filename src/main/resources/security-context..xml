@@ -28,7 +28,6 @@
     <beans:bean id="localUserService" class="pl.jakubpiecuch.trainingmanager.service.user.local.LocalUserServiceImpl" parent="abstractUserService">
         <beans:property name="passwordEncoder" ref="shaPasswordEncoder"/>
         <beans:property name="cryptService" ref="cryptService"/>
-        <beans:property name="mapperService" ref="mapperService"/>
         <beans:property name="validator" ref="registrationValidator"/>
     </beans:bean>
     

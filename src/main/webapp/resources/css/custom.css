@@ -63,9 +63,7 @@ input[type="checkbox"] + label span {
     height:19px;
     margin:-1px 4px 0 0;
     vertical-align:middle;
-    background-position: 0 -260px;
-    background-image: url("images/sprite.png");
-    background-repeat: no-repeat;
+    background: url("images/sprite.png") no-repeat 0 -260px;
     cursor:pointer;
 }
 

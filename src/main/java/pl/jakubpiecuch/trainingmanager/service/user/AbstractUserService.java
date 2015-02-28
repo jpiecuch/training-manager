@@ -3,7 +3,6 @@ package pl.jakubpiecuch.trainingmanager.service.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import pl.jakubpiecuch.trainingmanager.common.MapperService;
 import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.mail.EmailService;
@@ -18,7 +17,6 @@ public abstract class AbstractUserService implements UserService {
 
     protected EmailService emailService;
     protected AccountDao accountDao;
-    protected MapperService mapperService;
 
     public abstract boolean isValidCredentials(Account entity, UserDetails user) throws Exception;
 
@@ -40,10 +38,5 @@ public abstract class AbstractUserService implements UserService {
     @Autowired
     public void setAccountDao(AccountDao accountDao) {
         this.accountDao = accountDao;
-    }
-
-    @Autowired
-    public void setMapperService(MapperService mapperService) {
-        this.mapperService = mapperService;
     }
 }

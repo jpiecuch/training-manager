@@ -30,8 +30,6 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="resources/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN DYMANICLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files ) -->
@@ -42,7 +40,6 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
     <link href="resources/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
     <link href="resources/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css"
           id="style_color"/>
@@ -50,7 +47,6 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- END THEME STYLES -->
     <link href="resources/css/custom.css" rel="stylesheet" type="text/css"/>
     <link href="resources/css/toaster.css" rel="stylesheet" type="text/css"/>
-    <link href="resources/css/ng-table.min.css" rel="stylesheet" type="text/css"/>
     <link rel="shortcut icon" href="favicon.ico"/>
 </head>
 <!-- END HEAD -->
@@ -139,7 +135,6 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="resources/js/modules/textAngular.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/textAngular-sanitize.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/toaster.js" type="text/javascript"></script>
-<script src="resources/js/modules/ng-table.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/calendar.js" type="text/javascript"></script>
 <script src="resources/js/modules/checklist-model.js" type="text/javascript"></script>
 <!-- END CORE ANGULARJS PLUGINS -->

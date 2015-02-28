@@ -12,7 +12,6 @@ var MetronicApp = angular.module("MetronicApp", [
     "ngCookies",
     'toaster',
     'textAngular',
-    'ngTable',
     'ui.calendar',
     'checklist-model'
 ]);
