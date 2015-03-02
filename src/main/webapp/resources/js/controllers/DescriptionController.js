@@ -1,6 +1,6 @@
 'use strict';
 
-MetronicApp.controller('DescriptionController', function($scope, $stateParams, descriptionService, dictionaryService, inputValidateService) {
+app.controller('DescriptionController', function($scope, $stateParams, descriptionService, dictionaryService, inputValidateService) {
     $scope.validate = inputValidateService;
 
     $scope.dictionary = {};

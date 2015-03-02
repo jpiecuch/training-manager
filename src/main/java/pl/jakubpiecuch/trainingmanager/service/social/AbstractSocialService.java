@@ -39,7 +39,7 @@ public abstract class AbstractSocialService<T> implements SocialService {
     }
 
     @Override
-    public boolean createConnection(SecurityUser user) throws Exception{
+    public boolean createConnection(SecurityUser user) {
         try {
             Map<String, String> res = rest.getForObject(String.format(getRestUrl(), user.getPassword()), HashMap.class);
             String id = res.get("id");

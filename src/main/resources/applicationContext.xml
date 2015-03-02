@@ -121,7 +121,11 @@
 
     <bean id="constantsDictionary" class="pl.jakubpiecuch.trainingmanager.service.dictionary.constants.ConstantsDictionary">
         <property name="langs" value="${app.langs}"/>
+        <property name="socialSupportService" ref="supportService"/>
+        <property name="securedDictionary" ref="securedConstantsDictionary"/>
     </bean>
+
+    <bean id="securedConstantsDictionary" class="pl.jakubpiecuch.trainingmanager.service.dictionary.constants.SecuredConstantsDictionary" parent="constantsDictionary"/>
 
     <bean  id="descriptionRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionRepository">
         <property name="dao" ref="descriptionDao"/>

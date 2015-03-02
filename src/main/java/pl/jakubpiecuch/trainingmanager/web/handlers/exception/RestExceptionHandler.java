@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,7 +25,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class ErrorResource {
-        protected final static String DEFAULT_CODE = "InvalidRequest";
+        public final static String DEFAULT_CODE = "InvalidRequest";
         private String code;
         private String message;
         private List<FieldError> fieldErrors;
@@ -103,8 +104,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ NotFoundException.class})
     protected ResponseEntity<Object> handleNotFound(RuntimeException e, WebRequest request) {
-        NotFoundException ire = (NotFoundException) e;
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 

@@ -1,6 +1,6 @@
 'use strict';
 
-MetronicApp.controller('CalendarController', function($scope, $http, urlService, $filter, $location) {
+app.controller('CalendarController', function($scope, $http, urlService, $filter, $location) {
 
 
     $scope.init = function() {

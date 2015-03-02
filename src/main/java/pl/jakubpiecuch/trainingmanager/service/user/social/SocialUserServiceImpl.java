@@ -26,13 +26,13 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
     private Map<SocialProvider.SocialType, SocialService> socialServices;
 
     @Override
-    public UserDetails resolveDetails(Authentication authentication) throws Exception {
+    public UserDetails resolveDetails(Authentication authentication) {
         Assert.notNull(authentication.getSocial());
         return new SecurityUser(null, authentication.getUsername(), authentication.getPassword(), authentication.getSocial(), null);
     }
 
     @Override
-    public boolean isValidCredentials(Account entity, UserDetails user) throws Exception {
+    public boolean isValidCredentials(Account entity, UserDetails user)  {
         SecurityUser securityUser = (SecurityUser) user;
         return socialServices.get(securityUser.getSocial()).createConnection(securityUser);
     }
@@ -48,7 +48,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
     }
 
     @Override
-    public void signOn(Registration registration, Locale locale) throws Exception{
+    public void signOn(Registration registration, Locale locale) {
         Account account = new Account();
         account.setEmail(registration.getEmail());
         account.setConfig(new Account.Config.Builder().firstName(registration.getFirstName()).lastName(registration.getLastName()).build().toString());

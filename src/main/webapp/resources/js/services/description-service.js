@@ -1,4 +1,4 @@
-MetronicApp.service('descriptionService', function(urlService, $http, $q, formValidateService, alertService) {
+app.service('descriptionService', function(urlService, $http, $q, formValidateService, alertService) {
 
     var description = {
         id: null,

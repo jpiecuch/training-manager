@@ -11,7 +11,7 @@ import java.util.Locale;
  */
 public interface UserService {
 
-    public void signOn(Registration request, Locale locale) throws Exception;
-    public void signIn(UserDetails user) throws Exception;
-    public UserDetails resolveDetails(Authentication authentication) throws Exception;
+    public void signOn(Registration request, Locale locale);
+    public void signIn(UserDetails user);
+    public UserDetails resolveDetails(Authentication authentication);
 }

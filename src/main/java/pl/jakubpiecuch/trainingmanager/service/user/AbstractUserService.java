@@ -18,10 +18,10 @@ public abstract class AbstractUserService implements UserService {
     protected EmailService emailService;
     protected AccountDao accountDao;
 
-    public abstract boolean isValidCredentials(Account entity, UserDetails user) throws Exception;
+    public abstract boolean isValidCredentials(Account entity, UserDetails user);
 
     @Override
-    public void signIn(UserDetails user) throws Exception {
+    public void signIn(UserDetails user) {
         SecurityUser securityUser = (SecurityUser) user;
         String username = securityUser.getSocial() != null ? String.format("%s:%s", securityUser.getSocial().getProviderId(), securityUser.getUsername()) : securityUser.getUsername();
         Account entity = accountDao.findByUniques(null, username, null);

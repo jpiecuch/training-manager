@@ -1,6 +1,6 @@
 'use strict';
 
-MetronicApp.controller('PlanController', function($scope, $stateParams, dictionaryService, inputValidateService, planService, planStarterService) {
+app.controller('PlanController', function($scope, $stateParams, dictionaryService, inputValidateService, planService, planStarterService) {
     $scope.validate = inputValidateService;
 
     $scope.init = function(form) {

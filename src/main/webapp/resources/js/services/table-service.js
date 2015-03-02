@@ -1,4 +1,4 @@
-MetronicApp.service('tableService', function() {
+app.service('tableService', function() {
 
     this.get = function(service) {
         return {

@@ -1,4 +1,4 @@
 'use strict';
 
-MetronicApp.controller('DashboardController', function($rootScope, $scope, $http, $timeout) {
+app.controller('DashboardController', function($rootScope, $scope, $http, $timeout) {
 });

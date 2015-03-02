@@ -1,4 +1,4 @@
-MetronicApp.service('userWorkoutService', function($q, $http, urlService, authenticateService, formValidateService, alertService) {
+app.service('userWorkoutService', function($q, $http, urlService, authenticateService, formValidateService, alertService) {
     this.get = function(id) {
         var deferred = $q.defer();
         deferred.resolve();

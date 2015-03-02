@@ -1,4 +1,4 @@
-MetronicApp.service('workoutService', function($q, $http, exerciseService, urlService, descriptionService, dictionaryService) {
+app.service('workoutService', function($q, $http, exerciseService, urlService, descriptionService, dictionaryService) {
     var FORM_INPUT_MUSCLE = "workoutMuscles";
 
     var weekDaysMap = {

@@ -1,4 +1,4 @@
-MetronicApp.service('authenticateService', function($http, urlService, $q, $rootScope) {
+app.service('authenticateService', function($http, urlService, $q, $rootScope) {
     var user = null;
 
     this.getSocials = function() {
@@ -10,7 +10,7 @@ MetronicApp.service('authenticateService', function($http, urlService, $q, $root
     }
 
     this.create = function(user) {
-        return $http.post(urlService.url('/authentication/create'), user);
+        return $http.post(urlService.url('/signon'), user);
     }
 
     this.signIn = function(credentials) {

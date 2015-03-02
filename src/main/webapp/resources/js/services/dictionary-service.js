@@ -1,4 +1,4 @@
-MetronicApp.service('dictionaryService', function(urlService, $http, $q) {
+app.service('dictionaryService', function(urlService, $http, $q) {
 
     var map = {};
 

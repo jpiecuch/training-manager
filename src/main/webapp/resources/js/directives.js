@@ -3,7 +3,7 @@ GLobal Directives
 ***/
 
 // Route State Load Spinner(used on page or content load)
-MetronicApp.directive('ngSpinnerBar', ['$rootScope',
+app.directive('ngSpinnerBar', ['$rootScope',
     function($rootScope) {
         return {
             link: function(scope, element, attrs) {
@@ -44,7 +44,7 @@ MetronicApp.directive('ngSpinnerBar', ['$rootScope',
 ])
 
 // Handle global LINK click
-MetronicApp.directive('a', function() {
+app.directive('a', function() {
     return {
         restrict: 'E',
         link: function(scope, elem, attrs) {
@@ -57,7 +57,7 @@ MetronicApp.directive('a', function() {
     };
 });
 
-MetronicApp.directive('onlyDigits', function () {
+app.directive('onlyDigits', function () {
     return {
         require: 'ngModel',
         restrict: 'A',
@@ -76,7 +76,7 @@ MetronicApp.directive('onlyDigits', function () {
     }
 });
 
-MetronicApp.directive('onlyDecimals', function () {
+app.directive('onlyDecimals', function () {
     return {
         require: 'ngModel',
         restrict: 'A',
@@ -99,7 +99,7 @@ MetronicApp.directive('onlyDecimals', function () {
     }
 });
 
-MetronicApp.directive("repeatPassword", function() {
+app.directive("repeatPassword", function() {
     return {
         require: "ngModel",
         link: function(scope, elem, attrs, ctrl) {

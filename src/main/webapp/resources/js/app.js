@@ -1,9 +1,4 @@
-/***
-Metronic AngularJS App Main Script
-***/
-
-/* Metronic App */
-var MetronicApp = angular.module("MetronicApp", [
+var app = angular.module("app", [
     "ui.router", 
     "ui.bootstrap", 
     "oc.lazyLoad",  
@@ -16,13 +11,13 @@ var MetronicApp = angular.module("MetronicApp", [
     'checklist-model'
 ]);
 
-MetronicApp.config(['$animateProvider',
+app.config(['$animateProvider',
     function($animateProvider) {
         $animateProvider.classNameFilter(/has-animate/);
     }
 ])
 
-MetronicApp.run(function ($rootScope, $location, $state, authenticateService, isSignIn) {
+app.run(function ($rootScope, $location, $state, authenticateService, isSignIn) {
     $rootScope.settings = {
         isUserSignIn: isSignIn
     }
@@ -53,7 +48,7 @@ MetronicApp.run(function ($rootScope, $location, $state, authenticateService, is
 
 });
 
-MetronicApp.config(function($translateProvider, contextPath, lang) {
+app.config(function($translateProvider, contextPath, lang) {
     $translateProvider.preferredLanguage(lang);
     $translateProvider.useStaticFilesLoader({
         prefix: contextPath + '/api/v1/languages/',
@@ -62,7 +57,7 @@ MetronicApp.config(function($translateProvider, contextPath, lang) {
     $translateProvider.useCookieStorage();
 });
 
-MetronicApp.config(function ($httpProvider) {
+app.config(function ($httpProvider) {
 
     var logsOutUserOn401 = ['$q', '$location', function ($q, $location) {
         var success = function (response) {
@@ -90,14 +85,14 @@ MetronicApp.config(function ($httpProvider) {
 });
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
-MetronicApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
+app.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
     $ocLazyLoadProvider.config({
         cssFilesInsertBefore: 'ng_load_plugins_before' // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
     });
 }]);
 
 /* Setup global settings */
-MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
+app.factory('settings', ['$rootScope', function($rootScope) {
     // supported languages
 
     $rootScope.settings.layout = {
@@ -110,7 +105,7 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
+app.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
 
 }]);
 
@@ -121,7 +116,7 @@ initialization can be disabled and Layout.init() should be called on page load c
 ***/
 
 /* Setup Layout Part - Header */
-MetronicApp.controller('HeaderController', ['$scope', 'authenticateService', '$state', '$rootScope', function($scope, authenticateService, $state, $rootScope) {
+app.controller('HeaderController', ['$scope', 'authenticateService', '$state', '$rootScope', function($scope, authenticateService, $state, $rootScope) {
     $scope.header = {
         signOut: function() {
             authenticateService.signOut().then(function() {
@@ -137,31 +132,31 @@ MetronicApp.controller('HeaderController', ['$scope', 'authenticateService', '$s
 }]);
 
 /* Setup Layout Part - Sidebar */
-MetronicApp.controller('SidebarController', ['$scope', function($scope) {
+app.controller('SidebarController', ['$scope', function($scope) {
 
 }]);
 
 /* Setup Layout Part - Quick Sidebar */
-MetronicApp.controller('QuickSidebarController', ['$scope', function($scope) {    
+app.controller('QuickSidebarController', ['$scope', function($scope) {    
 
 }]);
 
 /* Setup Layout Part - Theme Panel */
-MetronicApp.controller('ThemePanelController', ['$scope', function($scope) {    
+app.controller('ThemePanelController', ['$scope', function($scope) {    
 ;
 }]);
 
 /* Setup Layout Part - Footer */
-MetronicApp.controller('FooterController', ['$scope', function($scope) {
+app.controller('FooterController', ['$scope', function($scope) {
 
 }]);
 
-MetronicApp.controller('SignOutController', ['$scope', function($scope) {
+app.controller('SignOutController', ['$scope', function($scope) {
 
 }]);
 
 /* Setup Rounting For All Pages */
-MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     // Redirect any unmatched url
     $urlRouterProvider.otherwise("/");
     
@@ -175,7 +170,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'app',
                         files: [
                             'resources/assets/admin/pages/css/login.css',
                             'resources/js/controllers/LoginController.js'
@@ -193,7 +188,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'app',
                         files: [
                              'resources/js/controllers/DashboardController.js'
                         ] 
@@ -211,7 +206,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'app',
                         files: [
                             'resources/js/controllers/PlanController.js',
                             'resources/js/services/dictionary-service.js',
@@ -236,7 +231,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'app',
                         files: [
                             'resources/js/controllers/DescriptionController.js',
                             'resources/js/services/dictionary-service.js',
@@ -256,7 +251,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'app',
                         files: [
                             'resources/js/controllers/EquipmentController.js',
                             'resources/js/services/dictionary-service.js',
@@ -277,7 +272,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'app',
                         files: [
                             'resources/js/controllers/PlansController.js',
                             'resources/js/services/table-service.js',
@@ -302,7 +297,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'app',
                         files: [
                             'resources/js/controllers/DescriptionsController.js',
                             'resources/js/services/description-service.js',
@@ -322,7 +317,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'app',
                         files: [
                             'resources/js/controllers/EquipmentsController.js',
                             'resources/js/services/table-service.js',
@@ -342,7 +337,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'app',
                         files: [
                             'resources/js/controllers/CalendarController.js',
                             'resources/assets/global/plugins/fullcalendar/fullcalendar.js',
@@ -361,7 +356,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'app',
                         files: [
                             'resources/js/controllers/WorkoutController.js',
                             'resources/js/services/user-workout-service.js',
@@ -374,7 +369,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
 }]);
 
 /* Init global settings and run the app */
-MetronicApp.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
+app.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
     $rootScope.$state = $state; // state to be accessed from view
 }]);
 

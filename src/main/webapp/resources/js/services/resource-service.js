@@ -1,4 +1,4 @@
-MetronicApp.service('resourceService', function($http, urlService) {
+app.service('resourceService', function($http, urlService) {
     this.getAll = function(path) {
         return $http.get(urlService.url(path));
     }

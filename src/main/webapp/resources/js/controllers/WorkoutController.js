@@ -1,6 +1,6 @@
 'use strict';
 
-MetronicApp.controller('WorkoutController', function($scope, $stateParams, userWorkoutService) {
+app.controller('WorkoutController', function($scope, $stateParams, userWorkoutService) {
 
 
     $scope.init = function() {

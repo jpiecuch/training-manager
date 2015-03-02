@@ -4,21 +4,27 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
-    
-    <http use-expressions="true" auto-config="true" >
+
+    <global-method-security pre-post-annotations="enabled"/>
+
+    <http use-expressions="true" auto-config="true" entry-point-ref="authenticationEntryPoint">
+        <access-denied-handler ref="accessDeniedHandler" />
         <intercept-url pattern="/" access="permitAll" />
         <intercept-url pattern="/resources/**" access="permitAll" />
         <intercept-url pattern="/api/v1/resource*" access="permitAll" />
         <intercept-url pattern="/api/v1/locale*" access="permitAll" />
         <intercept-url pattern="/api/v1/signin" access="permitAll" />
         <intercept-url pattern="/api/v1/signon" access="permitAll" />
-        <intercept-url pattern="/result/**" access="permitAll" />
-
-        <form-login login-page="/" authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-url="/"/>
-        <logout invalidate-session="true" logout-success-url="/"/>
-        <remember-me user-service-ref="localUserService" key="e37f4b31-0c45-11dd-bd0b-0800200c9a66" token-validity-seconds="864000" />
-        <access-denied-handler error-page="/"/>
     </http>
+
+    <beans:bean id="authenticationEntryPoint" class="pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationEntryPoint"></beans:bean>
+
+    <beans:bean id="accessDeniedHandler" class="pl.jakubpiecuch.trainingmanager.web.handlers.access.AccessDeniedHandler"></beans:bean>
+
+    <beans:bean id="authenticationProvider" class="pl.jakubpiecuch.trainingmanager.web.authentication.LocalAuthenticationProvider">
+        <beans:property name="localAuthenticationService" ref="localUserService"/>
+        <beans:property name="shaPasswordEncoder" ref="shaPasswordEncoder"/>
+    </beans:bean>
 
     <beans:bean abstract="true" id="abstractUserService" class="pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService">
         <beans:property name="emailService" ref="emailService"/>
@@ -33,5 +39,5 @@
     
     <beans:bean id="shaPasswordEncoder" class="pl.jakubpiecuch.trainingmanager.service.encoder.password.sha.SHAPasswordEncoder"><beans:property name="strength" value="256"/></beans:bean>
 
-    <authentication-manager><authentication-provider ref="localAuthenticationProvider"></authentication-provider></authentication-manager>
+    <authentication-manager><authentication-provider ref="authenticationProvider"></authentication-provider></authentication-manager>
 </beans:beans>

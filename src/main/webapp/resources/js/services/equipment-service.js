@@ -1,4 +1,4 @@
-MetronicApp.service('equipmentService', function(urlService, $http, $q, formValidateService, alertService) {
+app.service('equipmentService', function(urlService, $http, $q, formValidateService, alertService) {
     var equipment = {
         type: null,
         changeType: function() {

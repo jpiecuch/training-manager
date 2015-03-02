@@ -1,6 +1,6 @@
 'use strict';
 
-MetronicApp.controller('DescriptionsController', function($scope, descriptionService, tableService) {
+app.controller('DescriptionsController', function($scope, descriptionService, tableService) {
 
     $scope.init = function() {
         $scope.table = tableService.get(descriptionService);

@@ -1,4 +1,4 @@
-MetronicApp.service('planService', function($q, $http, phaseService, formValidateService, alertService, urlService) {
+app.service('planService', function($q, $http, phaseService, formValidateService, alertService, urlService) {
     var FORM_INPUT_NAME = "planName";
     var FORM_INPUT_GOAL = "planGoal";
 

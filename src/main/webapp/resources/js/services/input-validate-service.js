@@ -1,4 +1,4 @@
-MetronicApp.service('inputValidateService', function() {
+app.service('inputValidateService', function() {
     this.isValid = function(input) {
         if (input) {
             return input.$valid && input.$touched;

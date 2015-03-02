@@ -18,21 +18,12 @@ public class SocialSignInAdapter implements SignInAdapter {
     protected final static Logger LOGGER = LoggerFactory.getLogger(SocialSignInAdapter.class);
     
     private SocialUserService userService;
-    private RequestCache requestCache;
-    
+
     @Override
     public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {
         SecurityUser userDetails = new SecurityUser(null, userId, null, SocialProvider.SocialType.valueOf(StringUtils.upperCase(connection.getKey().getProviderId())), null);
-
-        try {
-            userService.signIn(userDetails);
-        } catch(Exception e) {
-
-        }
-        
-        SavedRequest savedRequest = requestCache.getRequest((HttpServletRequest) request.getNativeRequest(), null);
-        
-        return savedRequest != null ? savedRequest.getRedirectUrl() : null;
+        userService.signIn(userDetails);
+        return "/";
     }
 
     @Autowired
@@ -40,8 +31,4 @@ public class SocialSignInAdapter implements SignInAdapter {
         this.userService = userService;
     }
 
-    @Autowired
-    public void setRequestCache(RequestCache requestCache) {
-        this.requestCache = requestCache;
-    }
 }

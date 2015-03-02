@@ -1,4 +1,4 @@
-MetronicApp.service('urlService', function(contextPath, version) {
+app.service('urlService', function(contextPath, version) {
     this.url = function(suffix) {
         return contextPath + '/' + suffix;
     }

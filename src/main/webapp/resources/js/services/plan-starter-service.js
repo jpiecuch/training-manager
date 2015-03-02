@@ -1,4 +1,4 @@
-MetronicApp.service('planStarterService', function(formValidateService, $http, authenticateService, urlService, alertService, $location) {
+app.service('planStarterService', function(formValidateService, $http, authenticateService, urlService, alertService, $location) {
     this.get = function(planId) {
         var currentYear = moment().year();
 

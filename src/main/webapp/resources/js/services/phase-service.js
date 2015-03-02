@@ -1,4 +1,4 @@
-MetronicApp.service('phaseService', function($q, $http, workoutService, urlService) {
+app.service('phaseService', function($q, $http, workoutService, urlService) {
     var FORM_INPUT_DESCRIPTION = "phaseDescription";
     var FORM_INPUT_GOAL = "phaseGoal";
     var FORM_INPUT_WEEKS = "phaseWeeks";

@@ -35,12 +35,12 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
 
 
     @Override
-    public SecurityUser resolveDetails(Authentication authentication) throws Exception {
+    public SecurityUser resolveDetails(Authentication authentication)  {
         return new SecurityUser(null, authentication.getUsername(), authentication.getPassword(), null, null);
     }
 
     @Override
-    public boolean isValidCredentials(Account entity, UserDetails user) throws Exception {
+    public boolean isValidCredentials(Account entity, UserDetails user) {
         if (entity == null || Account.Status.ACTIVE != entity.getStatus()) {
             throw new NotFoundException();
         }
@@ -92,7 +92,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
     }
 
     @Override
-    public void signOn(Registration registration, Locale locale) throws Exception {
+    public void signOn(Registration registration, Locale locale) {
         validator.validate(registration, new BeanPropertyBindingResult(registration, "registration"));
         Account account = new Account();
         account.setName(registration.getUsername());

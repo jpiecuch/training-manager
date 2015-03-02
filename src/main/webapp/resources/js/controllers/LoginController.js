@@ -1,6 +1,6 @@
 'use strict';
 
-MetronicApp.controller('LoginController', function($state, $scope, $http, $rootScope, urlService, authenticateService, resourceService, inputValidateService, policyService) {
+app.controller('LoginController', function($state, $scope, $http, $rootScope, urlService, authenticateService, resourceService, inputValidateService, policyService) {
     $scope.login = {
         tab: {
             idx: 0,
@@ -8,7 +8,6 @@ MetronicApp.controller('LoginController', function($state, $scope, $http, $rootS
                 this.idx = idx;
             }
         },
-        bgs: '',
         social: {
             providers:  [],
             url: ''
@@ -32,7 +31,7 @@ MetronicApp.controller('LoginController', function($state, $scope, $http, $rootS
         credentials: {
             username: null,
             password: null,
-            provider: "LOCAL"
+            provider: 'LOCAL'
         },
         signIn: function(form) {
           authenticateService.signIn($scope.login.credentials).then(function(data) {
@@ -57,14 +56,6 @@ MetronicApp.controller('LoginController', function($state, $scope, $http, $rootS
     };
 
     $scope.init = function() {
-        resourceService.getAll('/resource/names/image/start-bg').then(function(response) {
-            var bgs = [];
-            for(var i = 0; i < response.data.length; i++) {
-                bgs.push(urlService.url('resource/content/start-bg/') + response.data[i]);
-            }
-            $scope.login.bgs = bgs.join();
-        });
-
         authenticateService.getSocials().then(function(data) {
             $scope.login.social.providers = data.data;
             $scope.login.social.url = urlService.url('/signin');

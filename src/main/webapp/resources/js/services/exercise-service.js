@@ -1,4 +1,4 @@
-MetronicApp.service('exerciseService', function($http, urlService) {
+app.service('exerciseService', function($http, urlService) {
     var FORM_INPUT_SET = "exerciseSet";
 
     this.isValid = function(exercise) {
