@@ -33,7 +33,7 @@
     <!-- END THEME STYLES -->
     <link href="resources/css/custom.css" rel="stylesheet" type="text/css"/>
     <link href="resources/css/toaster.css" rel="stylesheet" type="text/css"/>
-    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="shortcut icon" href="resources/favicon.ico"/>
 </head>
 
 <body ng-controller="AppController"
