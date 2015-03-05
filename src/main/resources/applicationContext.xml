@@ -28,7 +28,12 @@
     
     <util:properties id="propertyConfigurer" location="classpath:${environment}.properties"/>
     <context:property-placeholder properties-ref="propertyConfigurer" />
-    
+
+    <bean id="socialSignOnAdapter" class="pl.jakubpiecuch.trainingmanager.service.user.social.SocialSignOnAdapter">
+        <property name="accountDao" ref="usersDao"/>
+        <property name="userService" ref="socialUserService"/>
+    </bean>
+
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basenames" >
             <list>

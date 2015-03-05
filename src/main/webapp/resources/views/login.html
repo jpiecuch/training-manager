@@ -5,7 +5,7 @@
 <div class="logo"><a href="index.html"><img src="resources/img/logo-big.png" alt=""/></a></div>
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->
-<div class="content">
+<div class="content" data-ng-init="init()">
 <!-- BEGIN LOGIN FORM -->
 <form data-ng-show="login.tab.idx === 0" data-ng-submit="login.signIn(loginForm)" name="loginForm" class="login-form" novalidate>
     <h3 class="form-title" data-ng-bind="'signIn' | translate"></h3>
@@ -23,17 +23,23 @@
         <label class="rememberme check"><input type="checkbox" name="remember" value="1"/>Remember </label>
         <a href="" data-ng-click="login.tab.setIdx(1)" id="forget-password" class="forget-password">Forgot Password?</a>
     </div>
+</form>
     <div class="login-options">
         <h4>Or login with</h4>
         <ul class="social-icons">
             <li><a class="social-icon-color facebook" data-original-title="facebook" href="#"></a></li>
-            <li><a class="social-icon-color googleplus" data-original-title="Goole Plus" href="#"></a></li>
+            <li ng-repeat="s in login.social.providers">
+                <form id="{{s.id}}-form" action="{{login.social.url + '/' + s.id}}" method="post">
+                    <input ng-if="s.scope" type="hidden" name="scope" value="{{s.scope}}">
+                    <input type="submit" class="social-icon-color {{s.id}}"  value=""></a>
+                </form>
+            </li>
         </ul>
     </div>
     <div class="create-account">
         <p><a href="" data-ng-click="login.tab.setIdx(2)" id="register-btn" class="uppercase">Create an account</a></p>
     </div>
-</form>
+
 <!-- END LOGIN FORM -->
 <!-- BEGIN FORGOT PASSWORD FORM -->
 <form data-ng-show="login.tab.idx === 1" class="forget-form" action="index.html" method="post">

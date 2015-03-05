@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class SocialUserServiceImpl extends AbstractUserService implements SocialUserService {
 
-    private static final String OAUTH_PASSWORD = "oauth";
+    public static final String OAUTH_PASSWORD = "oauth";
     private Map<SocialProvider.SocialType, SocialService> socialServices;
 
     @Override

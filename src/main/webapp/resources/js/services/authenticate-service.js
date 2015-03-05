@@ -2,7 +2,7 @@ app.service('authenticateService', function($http, urlService, $q, $rootScope) {
     var user = null;
 
     this.getSocials = function() {
-        return $http.get(urlService.apiURL('/dictionary/social'));
+        return $http.get(urlService.apiURL('/dictionary/10'));
     }
 
     this.resetPassword = function(email) {

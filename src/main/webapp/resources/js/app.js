@@ -34,13 +34,13 @@ app.run(function ($rootScope, $location, $state, authenticateService, isSignIn) 
     };
 
     $rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
-        // if route requires auth and user is not logged in
+
         if (to.name !== 'login' && !$rootScope.settings.isUserSignIn) {
             $state.transitionTo('login');
             ev.preventDefault();
             $rootScope.settings.isAccessDenied = true;
         } else if (to.name === 'login' && $rootScope.settings.isUserSignIn) {
-            $state.transitionTo(from.name);
+            $state.transitionTo(from.name === '' ? 'index' : from.name);
             ev.preventDefault();
             $rootScope.settings.isAccessDenied = true;
         }

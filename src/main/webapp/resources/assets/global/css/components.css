@@ -4184,7 +4184,7 @@ Social Icons
   margin-bottom: 5px;
   text-indent: -9999px;
 }
-.social-icons li > a {
+.social-icons li > form > input {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
@@ -4200,8 +4200,9 @@ Social Icons
   -ms-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
+    border:none;
 }
-.social-icons li:hover > a {
+.social-icons li:hover > form > input {
   background-position: 0 -38px;
 }
 .social-icons li .amazon {
@@ -4315,14 +4316,14 @@ Social Icons
 .social-icons li .quora {
   background: url(../img/social/quora.png) no-repeat;
 }
-.social-icons.social-icons-color > li > a {
+.social-icons.social-icons-color > form > input {
   opacity: 0.7;
   background-position: 0 -38px !important;
 }
-.social-icons.social-icons-color > li > a:hover {
+.social-icons.social-icons-color > form > input:hover {
   opacity: 1;
 }
-.social-icons.social-icons-circle > li > a {
+.social-icons.social-icons-circle > form > input {
   border-radius: 25px !important;
 }
 

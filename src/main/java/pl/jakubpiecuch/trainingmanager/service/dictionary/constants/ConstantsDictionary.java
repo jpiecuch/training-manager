@@ -39,7 +39,7 @@ public class ConstantsDictionary implements Dictionary {
 
     private String[] langs;
 
-    private static Map<Long, List> MAP = new HashMap<Long, List>() {
+    protected static Map<Long, List> MAP = new HashMap<Long, List>() {
         {
             put(GOAL_MAP_ID, Arrays.asList(Plan.Goal.values()));
             put(EXERCISE_MUSCLES_MAP_ID, Arrays.asList(Description.Muscles.values()));
