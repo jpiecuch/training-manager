@@ -29,7 +29,7 @@ public class SocialSignOnAdapter {
            UserProfile profile = connection.fetchUserProfile();
 
            Registration registration = new Registration();
-           registration.setUsername(String.format(SecurityUser.SOCIAL_USRENAME_FORMAT, connection.getKey().getProviderId(), connection.getKey().getProviderUserId()));
+           registration.setUsername(String.format(SecurityUser.SOCIAL_USERNAME_FORMAT, connection.getKey().getProviderId(), connection.getKey().getProviderUserId()));
            registration.setEmail(profile.getEmail());
            registration.setFirstName(profile.getFirstName());
            registration.setLastName(profile.getLastName());
@@ -38,7 +38,7 @@ public class SocialSignOnAdapter {
 
            userService.signOn(registration, locale);
            providerSignInUtils.doPostSignUp(profile.getName(), request);
-           Account entity = accountDao.findByUniques(null, String.format(SecurityUser.SOCIAL_USRENAME_FORMAT, connection.getKey().getProviderId(), connection.getKey().getProviderUserId()), null);
+           Account entity = accountDao.findByUniques(null, String.format(SecurityUser.SOCIAL_USERNAME_FORMAT, connection.getKey().getProviderId(), connection.getKey().getProviderUserId()), null);
            WebUtil.authenticate(new SecurityUser(entity.getId(), entity.getName(), entity.getPassword(), null, null));
        }
    }

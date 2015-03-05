@@ -22,7 +22,6 @@ import java.util.Map;
  */
 public class SocialUserServiceImpl extends AbstractUserService implements SocialUserService {
 
-    public static final String OAUTH_PASSWORD = "oauth";
     private Map<SocialProvider.SocialType, SocialService> socialServices;
 
     @Override
@@ -55,7 +54,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
         account.setName(registration.getUsername());
         account.setStatus(Account.Status.ACTIVE);
         account.setSalt(KeyGenerators.string().generateKey());
-        account.setPassword(OAUTH_PASSWORD);
+        account.setPassword(SecurityUser.OAUTH);
 
         accountDao.create(account);
     }

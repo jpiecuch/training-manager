@@ -83,7 +83,6 @@ public class Account extends VersionedEntity {
         private String lastName;
 
         protected Config() {
-
         }
 
         private Config(Builder builder) {
@@ -123,7 +122,7 @@ public class Account extends VersionedEntity {
             try {
                 return WebUtil.toJson(this);
             } catch (Exception e) {
-                return null;
+                return "";
             }
         }
     }

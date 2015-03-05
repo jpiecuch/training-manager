@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class SecurityUser extends SocialUser {
 
     public static final String SOCIAL_USER_DELIMITER = ":";
-    public static final String SOCIAL_USRENAME_FORMAT = "%s" + SOCIAL_USER_DELIMITER + "%s";
-    public static final String OAUTH_PASSWORD = "oauth";
+    public static final String SOCIAL_USERNAME_FORMAT = "%s" + SOCIAL_USER_DELIMITER + "%s";
+    public static final String OAUTH = "oauth";
 
     private Long id;
     private SocialProvider.SocialType social;
