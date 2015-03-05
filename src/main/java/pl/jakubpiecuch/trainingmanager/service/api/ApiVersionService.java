@@ -27,13 +27,13 @@ public interface ApiVersionService {
     enum Version {v1}
 
     List<String> languages();
-    ResponseEntity resource(ResourceService.Type type, String key) throws Exception;
+    ResponseEntity resource(ResourceService.Type type, String key) throws IOException;
     Object language(String lang) throws Exception;
     void locale(HttpServletRequest request, HttpServletResponse response, String locale);
 
     <T extends Flow> T flow(Flow.Hierarchy hierarchy, Long id, boolean full);
     <T extends Flow> List<T> children(Flow.Hierarchy hierarchy, Long id, boolean full);
-    <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow) throws Exception;
+    <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow);
     <T extends Flow> void updateFlow(Flow.Hierarchy hierarchy, T flow);
 
     <T extends Criteria> PageResult retrieveFromRepository(T criteria, Repositories type);
@@ -47,9 +47,9 @@ public interface ApiVersionService {
 
     Map<String,OrderResolver> orderResolvers();
 
-    void signIn(Authentication authentication) throws Exception;
+    void signIn(Authentication authentication);
     void signOut();
-    void signOn(Registration registration, Locale locale) throws Exception;
+    void signOn(Registration registration, Locale locale);
     Authentication signed() throws Exception;
     void startPlan(UserPlan userPlan);
 

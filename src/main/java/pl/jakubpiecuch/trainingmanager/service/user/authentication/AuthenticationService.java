@@ -7,7 +7,7 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
  */
 public interface AuthenticationService {
 
-    public void signIn(Authentication authentication) throws Exception;
+    public void signIn(Authentication authentication);
     public void signOut();
     public Authentication signed();
 }

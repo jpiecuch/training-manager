@@ -108,7 +108,7 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Override
-    public <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow) throws Exception {
+    public <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow) {
         return flowManagers.get(hierarchy).create(flow);
     }
 
@@ -139,7 +139,7 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Override
-    public void signIn(Authentication authentication) throws Exception {
+    public void signIn(Authentication authentication) {
         authenticationService.signIn(authentication);
     }
 
@@ -149,7 +149,7 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Override
-    public void signOn(Registration registration, Locale locale) throws Exception {
+    public void signOn(Registration registration, Locale locale) {
         userServices.get(registration.getProvider()).signOn(registration, locale);
     }
 
@@ -159,7 +159,7 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Override
-    public ResponseEntity resource(ResourceService.Type type, String key) throws Exception {
+    public ResponseEntity resource(ResourceService.Type type, String key) throws IOException {
         final String handler = cryptService.decrypt(key, null);
         final ResourceService resourceService = resourceServices.get(type);
         if (resourceService.isCatalog(handler)) {

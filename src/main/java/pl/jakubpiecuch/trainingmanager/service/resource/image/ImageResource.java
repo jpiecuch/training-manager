@@ -19,7 +19,7 @@ public class ImageResource implements ResourceService {
     private String root;
 
     @Override
-    public MediaType getMediaType(String handler) throws Exception {
+    public MediaType getMediaType(String handler) throws IOException {
         File file = new File(root + handler);
         if (!file.exists() || file.isDirectory()) {
             throw new NotFoundException();
@@ -52,7 +52,7 @@ public class ImageResource implements ResourceService {
     }
 
     @Override
-    public byte[] read(String handler) throws Exception {
+    public byte[] read(String handler) throws IOException {
         File file = new File(root + handler);
         if (!file.exists() || file.isDirectory()) {
             throw new NotFoundException();

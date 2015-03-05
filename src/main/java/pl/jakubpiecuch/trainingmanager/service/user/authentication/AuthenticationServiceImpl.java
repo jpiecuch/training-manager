@@ -41,7 +41,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private AccountDao accountDao;
 
     @Override
-    public void signIn(Authentication authentication) throws Exception {
+    public void signIn(Authentication authentication) {
         validator.validate(authentication, new BeanPropertyBindingResult(authentication, Authentication.BEAN_NAME));
         UserDetails details = userServices.get(authentication.getProvider()).resolveDetails(authentication);
         userServices.get(authentication.getProvider()).signIn(details);
