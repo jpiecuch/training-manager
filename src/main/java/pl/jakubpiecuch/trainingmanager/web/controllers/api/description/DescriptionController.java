@@ -31,7 +31,7 @@ public class DescriptionController extends AbstractController {
                                @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults,
                                @RequestParam(value = "orderby", required = false, defaultValue = "id") String orderBy,
                                @RequestParam(value = "ordermode", required = false, defaultValue = "ASC") Criteria.OrderMode orderMode,
-                               Locale locale) throws Exception {
+                               Locale locale) {
         return versionServices.get(version).retrieveFromRepository(new DescriptionCriteria(locale.getLanguage()).addForceRestriction(forces).addLevelRestriction(levels)
                 .addMechanicsRestriction(mechanics).addMuscleRestriction(muscles).addTypeRestriction(types).setFirstResultRestriction(firstResult)
                 .setMaxResultsRestriction(maxResults).addExcludedIdRestriction(excludedIds).setOrderBy(orderBy,orderMode, versionServices.get(version).orderResolvers()), Repositories.DESCRIPTION);

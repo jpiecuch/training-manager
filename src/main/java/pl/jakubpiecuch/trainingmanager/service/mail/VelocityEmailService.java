@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.util.Assert;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.HashMap;
 import java.util.Locale;
@@ -31,7 +32,7 @@ public class VelocityEmailService implements EmailService {
         Assert.notNull(template); Assert.notNull(locale);
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
             @Override
-            public void prepare(MimeMessage mimeMessage) throws Exception {
+            public void prepare(MimeMessage mimeMessage) throws MessagingException {
 
                 MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, encoding);
                 message.setTo(recipients);

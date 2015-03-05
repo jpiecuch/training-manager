@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LocaleController extends AbstractController {
     
     @RequestMapping(method = { RequestMethod.POST })
-    public ResponseEntity signIn(@PathVariable ApiVersionService.Version version, HttpServletRequest request, HttpServletResponse response, @RequestBody String locale) throws Exception {
+    public ResponseEntity signIn(@PathVariable ApiVersionService.Version version, HttpServletRequest request, HttpServletResponse response, @RequestBody String locale) {
         versionServices.get(version).locale(request, response, locale);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

@@ -28,7 +28,7 @@ public class EquipmentController extends AbstractController {
                                @RequestParam(value = "excludeId", required = false) Long[] excludedIds,
                                @RequestParam(value = "firstResult", required = false, defaultValue = "0") Integer firstResult,
                                @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults,
-                               Locale locale) throws Exception {
+                               Locale locale) {
         return versionServices.get(version).retrieveFromRepository(new EquipmentCriteria(locale.getLanguage()).addTypeRestriction(types).setFirstResultRestriction(firstResult)
                 .setMaxResultsRestriction(maxResults).addExcludedIdRestriction(excludedIds), Repositories.EQUIPMENT);
     }

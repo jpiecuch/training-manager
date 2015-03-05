@@ -105,11 +105,11 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
     }
 
     @Transient
-    public T getConfig() throws Exception {
+    public T getConfig() {
         return StringUtils.isNotEmpty(this.data) ? (T) WebUtil.fromJson(this.data, getConfigClass()) : null;
     }
 
-    public void setConfig(T config) throws Exception {
+    public void setConfig(T config) {
         this.data = WebUtil.toJson(config);
     }
 

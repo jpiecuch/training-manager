@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 public class SignInController extends AbstractController {
     
     @RequestMapping(method = { RequestMethod.POST })
-    public ResponseEntity signIn(@PathVariable ApiVersionService.Version version, @RequestBody Authentication authentication) throws Exception {
+    public ResponseEntity signIn(@PathVariable ApiVersionService.Version version, @RequestBody Authentication authentication) {
         versionServices.get(version).signIn(authentication);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @RequestMapping(method = { RequestMethod.GET })
-    public Authentication signed(@PathVariable ApiVersionService.Version version, HttpServletResponse response) throws Exception {
+    public Authentication signed(@PathVariable ApiVersionService.Version version) {
         return versionServices.get(version).signed();
     }
 }

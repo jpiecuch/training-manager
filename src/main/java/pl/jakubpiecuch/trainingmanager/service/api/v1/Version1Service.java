@@ -1,6 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.api.v1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
@@ -37,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.*;
 
 public class Version1Service implements ApiVersionService {
@@ -154,7 +156,7 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Override
-    public Authentication signed() throws Exception {
+    public Authentication signed() {
         return authenticationService.signed();
     }
 
@@ -178,7 +180,7 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Override
-    public Object language(final String lang) throws Exception {
+    public Object language(final String lang) {
         final PropertiesConfiguration propertiesConfiguration = propertiesConfigurations.get(lang);
         if(propertiesConfiguration == null) {
             throw new NotFoundException();
@@ -261,7 +263,7 @@ public class Version1Service implements ApiVersionService {
     }
 
     @PostConstruct
-    public void afterPropertiesSet() throws Exception{
+    public void afterPropertiesSet() throws URISyntaxException, ConfigurationException {
         this.propertiesConfigurations = new HashMap<String, PropertiesConfiguration>() {
             {
                 for(String lang : langs) {

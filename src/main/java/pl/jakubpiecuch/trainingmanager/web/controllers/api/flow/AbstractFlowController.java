@@ -18,21 +18,21 @@ public abstract class AbstractFlowController extends AbstractController {
 
     protected abstract Flow.Hierarchy getHierarchy();
 
-    public ResponseEntity create(ApiVersionService.Version version, Flow flow) throws Exception {
+    public ResponseEntity create(ApiVersionService.Version version, Flow flow) {
         return new ResponseEntity(versionServices.get(version).createFlow(getHierarchy(), flow), HttpStatus.CREATED);
     }
 
-    public void update(ApiVersionService.Version version, Flow flow) throws Exception {
+    public void update(ApiVersionService.Version version, Flow flow) {
         versionServices.get(version).updateFlow(getHierarchy(), flow);
     }
 
     @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.GET })
-    public ResponseEntity flow(@PathVariable ApiVersionService.Version version, @PathVariable Long id, @RequestParam(required = false, defaultValue = "false") boolean full) throws Exception {
+    public ResponseEntity flow(@PathVariable ApiVersionService.Version version, @PathVariable Long id, @RequestParam(required = false, defaultValue = "false") boolean full) {
         return new ResponseEntity(versionServices.get(version).flow(getHierarchy(), id, full), HttpStatus.OK);
     }
 
     @RequestMapping(value = ApiURI.ID_PATH_PARAM_CHILDREN, method = { RequestMethod.GET })
-    public ResponseEntity children(@PathVariable ApiVersionService.Version version, @PathVariable Long id, @RequestParam(required = false, defaultValue = "false") boolean full) throws Exception {
+    public ResponseEntity children(@PathVariable ApiVersionService.Version version, @PathVariable Long id, @RequestParam(required = false, defaultValue = "false") boolean full) {
         return new ResponseEntity(versionServices.get(version).children(getHierarchy(), id, full), HttpStatus.OK);
     }
 }

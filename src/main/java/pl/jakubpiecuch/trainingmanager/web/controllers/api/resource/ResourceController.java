@@ -12,13 +12,14 @@ import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 @RequestMapping(ApiURI.API_RESOURCE_PATH)
 public class ResourceController extends AbstractController {
 
     @RequestMapping(value = ApiURI.KEY_PATH_PARAM, method = RequestMethod.GET)
-    public ResponseEntity resource(@PathVariable ApiVersionService.Version version, @PathVariable ResourceService.Type type, @PathVariable String key, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ResponseEntity resource(@PathVariable ApiVersionService.Version version, @PathVariable ResourceService.Type type, @PathVariable String key) throws IOException {
         return versionServices.get(version).resource(type, key);
     }
 }

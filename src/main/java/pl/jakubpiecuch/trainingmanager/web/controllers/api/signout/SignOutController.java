@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SignOutController extends AbstractController {
     
     @RequestMapping(method = { RequestMethod.POST })
-    public ResponseEntity signOut(@PathVariable ApiVersionService.Version version, HttpServletResponse response) throws Exception {
+    public ResponseEntity signOut(@PathVariable ApiVersionService.Version version) {
         versionServices.get(version).signOut();
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

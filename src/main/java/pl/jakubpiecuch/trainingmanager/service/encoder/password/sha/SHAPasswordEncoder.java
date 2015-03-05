@@ -26,7 +26,7 @@ public class SHAPasswordEncoder implements PasswordEncoder, InitializingBean {
     }
   
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         passwordEncoder = new ShaPasswordEncoder(strength);
     }
 

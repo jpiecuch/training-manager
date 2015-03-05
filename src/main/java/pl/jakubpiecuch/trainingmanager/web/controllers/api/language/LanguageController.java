@@ -15,12 +15,12 @@ import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 public class LanguageController extends AbstractController {
     
     @RequestMapping(method = { RequestMethod.GET })
-    public ResponseEntity langs(@PathVariable ApiVersionService.Version version) throws Exception {
+    public ResponseEntity langs(@PathVariable ApiVersionService.Version version) {
         return new ResponseEntity(versionServices.get(version).languages(), HttpStatus.OK);
     }
 
     @RequestMapping(value = ApiURI.KEY_PATH_PARAM, method = { RequestMethod.GET })
-    public ResponseEntity lang(@PathVariable ApiVersionService.Version version, @PathVariable String key) throws Exception {
+    public ResponseEntity lang(@PathVariable ApiVersionService.Version version, @PathVariable String key) {
         return new ResponseEntity(versionServices.get(version).language(key), HttpStatus.OK);
     }
 

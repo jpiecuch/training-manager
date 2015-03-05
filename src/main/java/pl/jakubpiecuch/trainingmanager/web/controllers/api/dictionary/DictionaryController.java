@@ -19,7 +19,7 @@ import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 public class DictionaryController extends AbstractController {
 
     @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.GET })
-    public ResponseEntity flow(@PathVariable ApiVersionService.Version version, @PathVariable Long id) throws Exception {
+    public ResponseEntity flow(@PathVariable ApiVersionService.Version version, @PathVariable Long id) {
         return new ResponseEntity(versionServices.get(version).dictionary(id), HttpStatus.OK);
     }
 }

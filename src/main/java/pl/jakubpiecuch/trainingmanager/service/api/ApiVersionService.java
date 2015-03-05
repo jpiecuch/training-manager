@@ -28,7 +28,7 @@ public interface ApiVersionService {
 
     List<String> languages();
     ResponseEntity resource(ResourceService.Type type, String key) throws IOException;
-    Object language(String lang) throws Exception;
+    Object language(String lang);
     void locale(HttpServletRequest request, HttpServletResponse response, String locale);
 
     <T extends Flow> T flow(Flow.Hierarchy hierarchy, Long id, boolean full);
@@ -50,7 +50,7 @@ public interface ApiVersionService {
     void signIn(Authentication authentication);
     void signOut();
     void signOn(Registration registration, Locale locale);
-    Authentication signed() throws Exception;
+    Authentication signed();
     void startPlan(UserPlan userPlan);
 
 

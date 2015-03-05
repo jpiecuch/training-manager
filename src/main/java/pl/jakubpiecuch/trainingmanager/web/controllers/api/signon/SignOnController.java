@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SignOnController extends AbstractController {
     
     @RequestMapping(method = { RequestMethod.POST })
-    public ResponseEntity signOn(@PathVariable ApiVersionService.Version version, HttpServletRequest request, @RequestBody Registration registration) throws Exception {
+    public ResponseEntity signOn(@PathVariable ApiVersionService.Version version, HttpServletRequest request, @RequestBody Registration registration) {
         versionServices.get(version).signOn(registration, request.getLocale());
         return new ResponseEntity(HttpStatus.CREATED);
     }

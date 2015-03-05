@@ -27,12 +27,12 @@ public class PlanController extends AbstractFlowController {
     }
 
     @RequestMapping(method = { RequestMethod.POST })
-    public ResponseEntity create(@PathVariable ApiVersionService.Version version, @RequestBody PlanDto flow) throws Exception {
+    public ResponseEntity create(@PathVariable ApiVersionService.Version version, @RequestBody PlanDto flow) {
         return super.create(version, flow);
     }
 
     @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.PUT })
-    public void update(@PathVariable ApiVersionService.Version version, @RequestBody PlanDto flow, @PathVariable(ApiURI.ID_PARAM) Long id) throws Exception {
+    public void update(@PathVariable ApiVersionService.Version version, @RequestBody PlanDto flow, @PathVariable(ApiURI.ID_PARAM) Long id) {
         super.update(version, flow);
     }
 
@@ -41,7 +41,7 @@ public class PlanController extends AbstractFlowController {
                                                 @RequestParam(value = "goal", required = false) Plan.Goal[] goals,
                                                 @RequestParam(value = "firstResult", required = false, defaultValue = "0") Integer firstResult,
                                                 @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults,
-                                                Locale locale) throws Exception {
+                                                Locale locale) {
         return versionServices.get(version).retrieveFromRepository(new PlanCriteria(locale.getLanguage()).setFirstResultRestriction(firstResult)
                 .setMaxResultsRestriction(maxResults).addGoalRestrictions(goals), Repositories.PLAN);
     }

@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.web.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -57,8 +58,12 @@ public class WebUtil {
         }
     }
 
-    public static String toJson(Object data) throws Exception {
-        return mapper.writeValueAsString(data);
+    public static String toJson(Object data) {
+        try {
+            return mapper.writeValueAsString(data);
+        } catch (JsonProcessingException e) {
+            return null;
+        }
     }
 
     public static Double[] toDoubleArray(String[] array) {

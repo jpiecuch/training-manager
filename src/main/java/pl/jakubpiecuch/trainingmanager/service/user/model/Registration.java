@@ -11,7 +11,7 @@ public class Registration extends Authentication {
         super();
     }
 
-    public Registration(Account account) throws Exception {
+    public Registration(Account account) {
         super(account);
     }
 
