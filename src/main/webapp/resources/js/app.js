@@ -15,25 +15,14 @@ app.config(['$animateProvider',
     function($animateProvider) {
         $animateProvider.classNameFilter(/has-animate/);
     }
-])
+]);
 
 app.run(function ($rootScope, $location, $state, authenticateService, isSignIn) {
     $rootScope.settings = {
         isUserSignIn: isSignIn
-    }
-
-    // enumerate routes that don't need authentication
-    var routesThatDontRequireAuth = ['/'];
-
-    // check if current location matches route
-    var routeClean = function (route) {
-        return _.find(routesThatDontRequireAuth,
-            function (noAuthRoute) {
-                return _.str.startsWith(route, noAuthRoute);
-            });
     };
 
-    $rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
+    $rootScope.$on('$stateChangeStart', function (ev, to, toParams, from) {
 
         if (to.name !== 'login' && !$rootScope.settings.isUserSignIn) {
             $state.transitionTo('login');
@@ -47,6 +36,31 @@ app.run(function ($rootScope, $location, $state, authenticateService, isSignIn) 
     });
 
 });
+
+/* Setup Layout Part - Sidebar */
+app.controller('SidebarController', ['$scope', function($scope) {
+
+}]);
+
+/* Setup Layout Part - Quick Sidebar */
+app.controller('QuickSidebarController', ['$scope', function($scope) {
+
+}]);
+
+/* Setup Layout Part - Theme Panel */
+app.controller('ThemePanelController', ['$scope', function($scope) {
+    ;
+}]);
+
+/* Setup Layout Part - Footer */
+app.controller('FooterController', ['$scope', function($scope) {
+
+}]);
+
+app.controller('SignOutController', ['$scope', function($scope) {
+
+}]);
+
 
 app.config(function($translateProvider, contextPath, lang) {
     $translateProvider.preferredLanguage(lang);
@@ -99,7 +113,7 @@ app.factory('settings', ['$rootScope', function($rootScope) {
         pageSidebarClosed: false, // sidebar menu state
         pageBodySolid: false, // solid body color state
         pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
-    }
+    };
 
     return $rootScope.settings;
 }]);
@@ -129,30 +143,6 @@ app.controller('HeaderController', ['$scope', 'authenticateService', '$state', '
             }
         }
     }
-}]);
-
-/* Setup Layout Part - Sidebar */
-app.controller('SidebarController', ['$scope', function($scope) {
-
-}]);
-
-/* Setup Layout Part - Quick Sidebar */
-app.controller('QuickSidebarController', ['$scope', function($scope) {    
-
-}]);
-
-/* Setup Layout Part - Theme Panel */
-app.controller('ThemePanelController', ['$scope', function($scope) {    
-;
-}]);
-
-/* Setup Layout Part - Footer */
-app.controller('FooterController', ['$scope', function($scope) {
-
-}]);
-
-app.controller('SignOutController', ['$scope', function($scope) {
-
 }]);
 
 /* Setup Rounting For All Pages */
@@ -236,7 +226,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             'resources/js/controllers/DescriptionController.js',
                             'resources/js/services/dictionary-service.js',
                             'resources/js/services/description-service.js',
-                            'resources/js/services/form-validate-service.js',
+                            'resources/js/services/form-validate-service.js'
                         ]
                     });
                 }]
@@ -256,7 +246,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             'resources/js/controllers/EquipmentController.js',
                             'resources/js/services/dictionary-service.js',
                             'resources/js/services/equipment-service.js',
-                            'resources/js/services/form-validate-service.js',
+                            'resources/js/services/form-validate-service.js'
                         ]
                     });
                 }]
@@ -282,7 +272,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             'resources/js/services/workout-service.js',
                             'resources/js/services/exercise-service.js',
                             'resources/js/services/dictionary-service.js',
-                            'resources/js/services/description-service.js',
+                            'resources/js/services/description-service.js'
                         ]
                     });
                 }]
@@ -341,7 +331,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                         files: [
                             'resources/js/controllers/CalendarController.js',
                             'resources/assets/global/plugins/fullcalendar/fullcalendar.js',
-                            'resources/assets/global/plugins/fullcalendar/fullcalendar.css',
+                            'resources/assets/global/plugins/fullcalendar/fullcalendar.css'
                         ]
                     });
                 }]
@@ -372,58 +362,3 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 app.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
     $rootScope.$state = $state; // state to be accessed from view
 }]);
-
-/*
-var angulardecimals = angular.module("angular-decimals", []);
-angulardecimals.directive("decimals", function ($filter) {
-    return {
-        restrict: "A", // Only usable as an attribute of another HTML element
-        require: "?ngModel",
-        scope: {
-            decimals: "@",
-            decimalPoint: "@"
-        },
-        link: function (scope, element, attr, ngModel) {
-            var decimalCount = parseInt(scope.decimals) || 2;
-            var decimalPoint = scope.decimalPoint || ".";
-
-            // Run when the model is first rendered and when the model is changed from code
-            ngModel.$render = function() {
-                if (ngModel.$modelValue != null && ngModel.$modelValue >= 0) {
-                    if (typeof decimalCount === "number") {
-                        element.val(ngModel.$modelValue.toFixed(decimalCount).toString().replace(".", ","));
-                    } else {
-                        element.val(ngModel.$modelValue.toString().replace(".", ","));
-                    }
-                }
-            }
-
-            // Run when the view value changes - after each keypress
-            // The returned value is then written to the model
-            ngModel.$parsers.unshift(function(newValue) {
-                if (typeof decimalCount === "number") {
-                    var floatValue = parseFloat(newValue.replace(",", "."));
-                    if (decimalCount === 0) {
-                        return parseInt(floatValue);
-                    }
-                    return parseFloat(floatValue.toFixed(decimalCount));
-                }
-
-                return parseFloat(newValue.replace(",", "."));
-            });
-
-            // Formats the displayed value when the input field loses focus
-            element.on("change", function(e) {
-                var floatValue = parseFloat(element.val().replace(",", "."));
-                if (!isNaN(floatValue) && typeof decimalCount === "number") {
-                    if (decimalCount === 0) {
-                        element.val(parseInt(floatValue));
-                    } else {
-                        var strValue = floatValue.toFixed(decimalCount);
-                        element.val(strValue.replace(".", decimalPoint));
-                    }
-                }
-            });
-        }
-    }
-});*/
