@@ -32,55 +32,43 @@ public class DescriptionCriteria extends Criteria<DescriptionCriteria> {
     }
 
     public DescriptionCriteria addMuscleRestriction(Description.Muscles... muscle) {
-        try {
+        if(ArrayUtils.isNotEmpty(muscle)) {
             this.muscles.addAll(Arrays.asList(muscle));
-        } catch (NullPointerException ex) {
-
         }
         return this;
     }
 
     public DescriptionCriteria addForceRestriction(Description.Force... force) {
-        try {
+        if(ArrayUtils.isNotEmpty(force)) {
             this.force.addAll(Arrays.asList(force));
-        } catch (NullPointerException ex) {
-
         }
         return this;
     }
 
     public DescriptionCriteria addLevelRestriction(Description.Level... level) {
-        try {
+        if(ArrayUtils.isNotEmpty(level)) {
             this.level.addAll(Arrays.asList(level));
-        } catch (NullPointerException ex) {
-
         }
         return this;
     }
 
     public DescriptionCriteria addMechanicsRestriction(Description.Mechanics... mechanics) {
-        try {
+        if(ArrayUtils.isNotEmpty(mechanics)) {
             this.mechanics.addAll(Arrays.asList(mechanics));
-        } catch (NullPointerException ex) {
-
         }
         return this;
     }
 
     public DescriptionCriteria addTypeRestriction(Description.Type... type) {
-        try {
+        if(ArrayUtils.isNotEmpty(type)) {
             this.type.addAll(Arrays.asList(type));
-        } catch (NullPointerException ex) {
-
         }
         return this;
     }
 
     public DescriptionCriteria addExcludedIdRestriction(Long... ids) {
-        try {
+        if(ArrayUtils.isNotEmpty(ids)) {
             this.excludedIds.addAll(Arrays.asList(ids));
-        } catch (NullPointerException ex) {
-
         }
         return this;
     }

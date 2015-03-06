@@ -29,10 +29,8 @@ public class EquipmentCriteria extends Criteria<EquipmentCriteria> {
     }
 
     public EquipmentCriteria addTypeRestriction(Equipment.Type... types) {
-        try {
+        if(ArrayUtils.isNotEmpty(types)) {
             this.types.addAll(Arrays.asList(types));
-        } catch (NullPointerException ex) {
-
         }
         return this;
     }

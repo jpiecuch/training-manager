@@ -27,10 +27,8 @@ public class PlanCriteria extends Criteria<PlanCriteria> {
     }
 
     public PlanCriteria addGoalRestrictions(Plan.Goal... goal) {
-        try {
+        if(ArrayUtils.isNotEmpty(goal)) {
             this.goals.addAll(Arrays.asList(goal));
-        } catch (NullPointerException ex) {
-
         }
         return this;
     }
