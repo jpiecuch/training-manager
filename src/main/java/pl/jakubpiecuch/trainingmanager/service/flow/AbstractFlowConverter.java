@@ -28,5 +28,6 @@ public abstract class AbstractFlowConverter<T extends Flow, E extends CommonEnti
     }
 
     protected abstract E convertFrom(T flowObject);
+
     protected abstract T convertTo(E entity, boolean full);
 }

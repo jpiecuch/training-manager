@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Rico on 2014-12-31.
  */
-@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class PlanDto extends Flow implements RepoObject {
 
     private Long id;

@@ -12,5 +12,6 @@ public abstract class Flow {
             return childId < Hierarchy.values().length ? Hierarchy.values()[childId] : null;
         }
     }
+
     public abstract Hierarchy getHierarchy();
 }

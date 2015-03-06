@@ -14,7 +14,7 @@ import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 /**
  * Created by Rico on 2014-11-29.
  */
-public class PlanValidator implements Validator  {
+public class PlanValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -48,18 +48,18 @@ public class PlanValidator implements Validator  {
                         ValidationUtils.rejectIfEmptyOrWhitespace(errors, phaseName + workoutName + "groups", RestrictionCode.REQUIRED);
 
                         if (CollectionUtils.isNotEmpty(workout.getGroups())) {
-                            for(int k = 0; k < workout.getGroups().size(); k++) {
+                            for (int k = 0; k < workout.getGroups().size(); k++) {
                                 GroupDto group = workout.getGroups().get(k);
                                 String groupName = "groups[" + k + "].";
-                                ValidationUtils.rejectIfEmptyOrWhitespace(errors, phaseName + workoutName +  groupName + "id", RestrictionCode.REQUIRED);
-                                ValidationUtils.rejectIfEmptyOrWhitespace(errors, phaseName + workoutName +  groupName + "exercises", RestrictionCode.REQUIRED);
+                                ValidationUtils.rejectIfEmptyOrWhitespace(errors, phaseName + workoutName + groupName + "id", RestrictionCode.REQUIRED);
+                                ValidationUtils.rejectIfEmptyOrWhitespace(errors, phaseName + workoutName + groupName + "exercises", RestrictionCode.REQUIRED);
 
                                 if (CollectionUtils.isNotEmpty(group.getExercises())) {
                                     for (int l = 0; l < group.getExercises().size(); l++) {
                                         String exerciseName = "exercises[" + l + "].";
-                                        ValidationUtils.rejectIfEmptyOrWhitespace(errors, phaseName + workoutName +  groupName + exerciseName + "descriptionId", RestrictionCode.REQUIRED);
-                                        ValidationUtils.rejectIfEmptyOrWhitespace(errors, phaseName + workoutName +  groupName + exerciseName + "sets", RestrictionCode.REQUIRED);
-                                        ValidationUtils.rejectIfEmptyOrWhitespace(errors, phaseName + workoutName +  groupName + exerciseName + "position", RestrictionCode.REQUIRED);
+                                        ValidationUtils.rejectIfEmptyOrWhitespace(errors, phaseName + workoutName + groupName + exerciseName + "descriptionId", RestrictionCode.REQUIRED);
+                                        ValidationUtils.rejectIfEmptyOrWhitespace(errors, phaseName + workoutName + groupName + exerciseName + "sets", RestrictionCode.REQUIRED);
+                                        ValidationUtils.rejectIfEmptyOrWhitespace(errors, phaseName + workoutName + groupName + exerciseName + "position", RestrictionCode.REQUIRED);
                                     }
                                 }
                             }

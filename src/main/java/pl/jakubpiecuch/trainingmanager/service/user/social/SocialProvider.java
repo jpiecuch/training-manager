@@ -54,8 +54,13 @@ public class SocialProvider extends LocalProvider {
         private String id;
         private String scope;
 
-        public Builder id(String id) {this.id = id; return this;}
-        public Builder scope(String scope) {this.scope = scope; return this;}
+        public Builder id(String id) {
+            this.id = id; return this;
+        }
+        public Builder scope(String scope) {
+            this.scope = scope;
+            return this;
+        }
 
         public SocialProvider build() {
             return new SocialProvider(this);

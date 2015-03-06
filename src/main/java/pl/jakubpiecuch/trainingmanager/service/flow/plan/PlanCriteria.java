@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Rico on 2015-01-15.
  */
 public class PlanCriteria extends Criteria<PlanCriteria> {
-    private static final String[] PROPERTIES = new String[] {"id","goal"};
+    private static final String[] PROPERTIES = new String[]{"id", "goal"};
     private List<Plan.Goal> goals = new ArrayList<Plan.Goal>();
 
     public PlanCriteria(String lang) {
@@ -27,7 +27,7 @@ public class PlanCriteria extends Criteria<PlanCriteria> {
     }
 
     public PlanCriteria addGoalRestrictions(Plan.Goal... goal) {
-        if(ArrayUtils.isNotEmpty(goal)) {
+        if (ArrayUtils.isNotEmpty(goal)) {
             this.goals.addAll(Arrays.asList(goal));
         }
         return this;
