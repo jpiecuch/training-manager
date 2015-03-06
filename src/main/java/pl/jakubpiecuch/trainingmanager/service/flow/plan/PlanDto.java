@@ -100,7 +100,6 @@ public class PlanDto extends Flow implements RepoObject {
         }
         PlanDto rhs = (PlanDto) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
                 .append(this.id, rhs.id)
                 .append(this.name, rhs.name)
                 .append(this.goal, rhs.goal)
@@ -114,7 +113,6 @@ public class PlanDto extends Flow implements RepoObject {
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
                 .append(id)
                 .append(name)
                 .append(goal)

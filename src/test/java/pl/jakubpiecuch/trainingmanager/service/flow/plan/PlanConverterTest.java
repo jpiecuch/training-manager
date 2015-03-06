@@ -23,6 +23,7 @@ public class PlanConverterTest {
     private static final Plan.Goal GOAL = Plan.Goal.MUSCLES;
     private static final String NAME = "name";
     private static final Long ACCOUNT_ID = 2l;
+    private static final Boolean USED = false;
     private static PlanDto PLAN_FLOW = new PlanDto();
     private static Plan PLAN = new Plan();
     private static final String CONFIG = "{\"firstName\":\"first\",\"lastName\":\"last\"}";
@@ -45,11 +46,14 @@ public class PlanConverterTest {
         PLAN_FLOW.setGoal(GOAL);
         PLAN_FLOW.setName(NAME);
         PLAN_FLOW.setCreatorId(ACCOUNT_ID);
+        PLAN_FLOW.setUsed(USED);
+        PLAN_FLOW.setEditable(true);
 
         PLAN.setId(ID);
         PLAN.setGoal(GOAL);
         PLAN.setName(NAME);
         PLAN.setCreator(account);
+        PLAN.setUsed(USED);
 
         Mockito.when(planManager.retrieve(ID, false)).thenReturn(PLAN_FLOW);
         Mockito.when(authenticationService.signed()).thenReturn(new Authentication(account));
