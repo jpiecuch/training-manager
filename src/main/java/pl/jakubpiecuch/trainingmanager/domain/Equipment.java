@@ -6,6 +6,7 @@ import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
+import java.io.IOException;
 
 @Entity
 @Table(name = "equipment")
@@ -105,7 +106,7 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
     }
 
     @Transient
-    public T getConfig() {
+    public T getConfig() throws IOException {
         return StringUtils.isNotEmpty(this.data) ? (T) WebUtil.fromJson(this.data, getConfigClass()) : null;
     }
 

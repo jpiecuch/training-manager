@@ -12,6 +12,8 @@ import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -36,7 +38,7 @@ public class PlanConverterTest {
 
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         Account account = new Account(ACCOUNT_ID);
         account.setConfig(CONFIG);
         PLAN_FLOW.setId(ID);

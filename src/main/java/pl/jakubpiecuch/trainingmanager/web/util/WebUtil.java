@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.web.util;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.ArrayUtils;
@@ -13,27 +14,11 @@ import org.springframework.web.servlet.HandlerMapping;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 public class WebUtil {
 
     private static final ObjectMapper mapper = new ObjectMapper();
-
-    public static String extractPathFromPattern(final HttpServletRequest request) {
-        String path = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
-        String bestMatchPattern = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
-
-        AntPathMatcher apm = new AntPathMatcher();
-        return apm.extractPathWithinPattern(bestMatchPattern, path);
-    }
-
-    public static ResourceService.Type resolveResourceType(String extension) {
-        for (ResourceService.Type t : ResourceService.Type.values()) {
-            if (ArrayUtils.contains(t.extensions, extension)) {
-                return t;
-            }
-        }
-        return null;
-    }
 
     public static void authenticate(UserDetails userDetails) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -50,12 +35,9 @@ public class WebUtil {
         return res;
     }
 
-    public static <T> T fromJson(String data, Class<T> outputClass) throws IllegalArgumentException {
-        try {
-            return mapper.readValue(data, outputClass);
-        } catch (Exception e) {
-            throw new IllegalArgumentException();
-        }
+    public static <T> T fromJson(String data, Class<T> outputClass) throws IOException {
+        return mapper.readValue(data, outputClass);
+
     }
 
     public static String toJson(Object data) {

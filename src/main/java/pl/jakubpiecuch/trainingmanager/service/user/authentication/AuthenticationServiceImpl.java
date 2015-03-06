@@ -13,6 +13,7 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +54,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public Authentication signed() {
+    public Authentication signed() throws IOException {
         Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (object instanceof String) {
             throw new NotFoundException();

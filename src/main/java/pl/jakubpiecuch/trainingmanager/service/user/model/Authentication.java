@@ -5,6 +5,8 @@ import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
+import java.io.IOException;
+
 /**
  * Created by Rico on 2014-11-22.
  */
@@ -24,7 +26,7 @@ public class Authentication {
 
     }
 
-    public Authentication(Account account) {
+    public Authentication(Account account) throws IOException {
         this.id = account.getId();
         this.email = account.getEmail();
         this.username = account.getName();
