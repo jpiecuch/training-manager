@@ -42,13 +42,21 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             fieldErrors.add(error);
         }
 
-        public String getCode() { return code; }
+        public String getCode() {
+            return code;
+        }
 
-        public void setCode(String code) { this.code = code; }
+        public void setCode(String code) {
+            this.code = code;
+        }
 
-        public String getMessage() { return message; }
+        public String getMessage() {
+            return message;
+        }
 
-        public void setMessage(String message) { this.message = message; }
+        public void setMessage(String message) {
+            this.message = message;
+        }
 
         public List<FieldError> getFieldErrors() {
             return fieldErrors;
