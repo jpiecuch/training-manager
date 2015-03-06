@@ -81,7 +81,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
                 return true;
             }
         } catch (SymmetricEncryptionException e) {
-            log.warn("Wrong activate value {}", id);
+            log.warn("Wrong activate value " + id, e);
         }
         return false;
     }

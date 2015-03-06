@@ -1,6 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.service.user.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
@@ -13,6 +15,7 @@ import java.io.IOException;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Authentication {
     public static final String BEAN_NAME = "authentication";
+    protected final static Logger LOGGER = LoggerFactory.getLogger(Authentication.class);
     private Long id;
     private String username;
     private String password;
@@ -36,6 +39,7 @@ public class Authentication {
             this.firstName = config.getFirstName();
             this.lastName = config.getLastName();
         } catch (IOException ex) {
+            LOGGER.warn("", ex);
             throw new IllegalArgumentException("Config has wrong format");
         }
 

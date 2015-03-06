@@ -1,5 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.social;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
@@ -22,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractSocialService<T> implements SocialService {
+    protected final static Logger LOGGER = LoggerFactory.getLogger(AbstractSocialService.class);
+
     private ConnectionRepository connectionRepository;
     private UsersConnectionRepository usersConnectionRepository;
     private ConnectionFactoryRegistry connectionFactoryRegistry;
@@ -79,6 +83,7 @@ public abstract class AbstractSocialService<T> implements SocialService {
                 throw new NotFoundException();
             }
         } catch(HttpClientErrorException e) {
+            LOGGER.warn("", e);
             throw new NotFoundException();
         }
     }

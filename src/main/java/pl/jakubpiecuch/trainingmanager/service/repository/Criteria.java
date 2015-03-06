@@ -1,6 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.repository;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -117,10 +118,8 @@ public abstract class Criteria<T extends Criteria> {
     }
 
     public T addExcludedIdRestriction(Long... ids) {
-        try {
+        if (ArrayUtils.isNotEmpty(ids)) {
             this.excludedIds.addAll(Arrays.asList(ids));
-        } catch (NullPointerException ex) {
-
         }
         return (T) this;
     }

@@ -119,11 +119,7 @@ public class Account extends VersionedEntity {
 
         @Override
         public String toString() {
-            try {
-                return WebUtil.toJson(this);
-            } catch (Exception e) {
-                return "";
-            }
+            return WebUtil.toJson(this);
         }
     }
 }

@@ -66,13 +66,10 @@ public class ImageResource implements ResourceService {
     }
 
     @PostConstruct
-    protected void afterPropertiesSet() {
+    protected void afterPropertiesSet() throws IOException {
         File directory = new File(root);
         if (!directory.exists()) {
-            try {
-                FileUtils.forceMkdir(directory);
-            } catch (IOException ex) {
-            }
+            FileUtils.forceMkdir(directory);
         }
     }
 }

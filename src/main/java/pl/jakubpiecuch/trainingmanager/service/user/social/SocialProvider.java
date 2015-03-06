@@ -40,7 +40,7 @@ public class SocialProvider extends LocalProvider {
         try {
             return SocialType.valueOf(StringUtils.upperCase(id));
         } catch (IllegalArgumentException e) {
-            LOGGER.error("Not matching social: {}", id);
+            LOGGER.error("Not matching social: " +  id, e);
             return null;
         }
     }
