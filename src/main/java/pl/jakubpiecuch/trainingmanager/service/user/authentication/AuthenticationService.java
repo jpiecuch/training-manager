@@ -11,5 +11,5 @@ public interface AuthenticationService {
 
     public void signIn(Authentication authentication);
     public void signOut();
-    public Authentication signed() throws IOException;
+    public Authentication signed();
 }

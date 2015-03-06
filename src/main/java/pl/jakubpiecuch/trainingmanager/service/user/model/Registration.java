@@ -2,8 +2,6 @@ package pl.jakubpiecuch.trainingmanager.service.user.model;
 
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 
-import java.io.IOException;
-
 /**
  * Created by Rico on 2014-12-06.
  */
@@ -13,7 +11,7 @@ public class Registration extends Authentication {
         super();
     }
 
-    public Registration(Account account) throws IOException {
+    public Registration(Account account) {
         super(account);
     }
 

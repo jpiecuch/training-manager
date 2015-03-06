@@ -26,15 +26,19 @@ public class Authentication {
 
     }
 
-    public Authentication(Account account) throws IOException {
+    public Authentication(Account account) {
         this.id = account.getId();
         this.email = account.getEmail();
         this.username = account.getName();
         this.password = account.getPassword();
+        try {
+            Account.Config config = WebUtil.fromJson(account.getConfig(), Account.Config.class);
+            this.firstName = config.getFirstName();
+            this.lastName = config.getLastName();
+        } catch (IOException ex) {
+            throw new IllegalArgumentException("Config has wrong format");
+        }
 
-        Account.Config config = WebUtil.fromJson(account.getConfig(), Account.Config.class);
-        this.firstName = config.getFirstName();
-        this.lastName = config.getLastName();
 
     }
 
