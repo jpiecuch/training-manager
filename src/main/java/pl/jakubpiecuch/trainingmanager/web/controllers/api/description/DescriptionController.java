@@ -49,6 +49,7 @@ public class DescriptionController extends AbstractController {
 
     @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.PUT })
     public void update(@PathVariable ApiVersionService.Version version, @PathVariable long id, @RequestBody Description description) {
+        description.setId(id);
         versionServices.get(version).updateInRepository(description, Repositories.DESCRIPTION);
     }
 

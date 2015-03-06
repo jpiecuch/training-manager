@@ -14,7 +14,7 @@ import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 public class UserPlansController extends AbstractController {
 
     @RequestMapping(method = { RequestMethod.POST })
-    public void create(@PathVariable ApiVersionService.Version version, @PathVariable long id, @RequestBody UserPlan userPlan) {
+    public void create(@PathVariable ApiVersionService.Version version, @RequestBody UserPlan userPlan) {
         versionServices.get(version).startPlan(userPlan);
     }
 }

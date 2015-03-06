@@ -49,6 +49,7 @@ public class EquipmentController extends AbstractController {
     public void update(@PathVariable ApiVersionService.Version version, @PathVariable long id, HttpServletRequest request, @RequestParam(value = "type") Equipment.Type type) throws IOException {
         HttpInputMessage message = new ServletServerHttpRequest(request);
         Equipment equipment = versionServices.get(version).resolve(message.getBody(), type);
+        equipment.setId(id);
         versionServices.get(version).updateInRepository(equipment, Repositories.EQUIPMENT);
     }
 

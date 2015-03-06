@@ -15,6 +15,7 @@ public class ExecutionController extends AbstractController {
 
     @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.PUT })
     public void create(@PathVariable ApiVersionService.Version version, @PathVariable long id, @RequestBody ExecutionDto execution) {
+        execution.setId(id);
         versionServices.get(version).updateExecution(execution);
     }
 }

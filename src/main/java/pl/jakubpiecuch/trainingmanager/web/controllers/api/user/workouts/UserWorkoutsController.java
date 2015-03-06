@@ -20,7 +20,7 @@ import java.util.Locale;
 public class UserWorkoutsController extends AbstractController {
 
     @RequestMapping(method = { RequestMethod.GET })
-    public PageResult create(@PathVariable ApiVersionService.Version version, @PathVariable long id,
+    public PageResult create(@PathVariable ApiVersionService.Version version,
                        @RequestParam(value = "from", required = false) Date from,
                        @RequestParam(value = "to", required = false) Date to, Locale locale) {
         return versionServices.get(version).retrieveFromRepository(new UserWorkoutCriteria(locale.getLanguage()).addDateRangeRestriction(from, to), Repositories.WORKOUT);
