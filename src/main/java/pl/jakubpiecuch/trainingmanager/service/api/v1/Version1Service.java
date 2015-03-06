@@ -3,6 +3,7 @@ package pl.jakubpiecuch.trainingmanager.service.api.v1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -186,15 +187,12 @@ public class Version1Service implements ApiVersionService {
         if(propertiesConfiguration == null) {
             throw new NotFoundException();
         }
-        return  new HashMap<String, String>() {
-            {
-                Iterator<String> keys = propertiesConfiguration.getKeys();
-                while (keys.hasNext()) {
-                    String key = keys.next();
-                    put(key, propertiesConfiguration.getString(key));
-                }
+        return Maps.toMap(propertiesConfiguration.getKeys(), new Function<String, String>() {
+            @Override
+            public String apply(String input) {
+                return propertiesConfiguration.getString(input);
             }
-        };
+        });
     }
 
 
@@ -265,12 +263,9 @@ public class Version1Service implements ApiVersionService {
 
     @PostConstruct
     public void afterPropertiesSet() throws URISyntaxException, ConfigurationException {
-        this.propertiesConfigurations = new HashMap<String, PropertiesConfiguration>() {
-            {
-                for(String lang : langs) {
-                    put(lang, new PropertiesConfiguration(new File(getClass().getResource(String.format(messageSourceFile, lang)).toURI())));
-                }
-            }
-        };
+        this.propertiesConfigurations = new HashMap<String, PropertiesConfiguration>();
+        for (String lang : langs) {
+            this.propertiesConfigurations.put(lang, new PropertiesConfiguration(new File(getClass().getResource(String.format(messageSourceFile, lang)).toURI())));
+        }
     }
 }

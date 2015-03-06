@@ -16,16 +16,13 @@ public class HSQLDialect extends PostgreSQL82Dialect {
 
     public final static String OVER = "over";
     private final static String COUNT = "count(*)";
-    private final static Map<String, String> REPLACE_MAP = new HashMap<String, String>() {
-        {
-            put(COUNT, "ROW_NUMBER()");
-        }
-    };
+    private static Map<String, String> REPLACE_MAP = new HashMap<String, String>();
     public final static String OVER_FORMAT = "%s " + OVER + "(%s)";
 
     public HSQLDialect() {
         super();
         registerTypesAndFunctions();
+        REPLACE_MAP.put(COUNT, "ROW_NUMBER()");
     }
 
     protected void registerTypesAndFunctions() {
