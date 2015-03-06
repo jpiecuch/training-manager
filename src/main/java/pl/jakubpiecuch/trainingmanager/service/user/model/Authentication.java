@@ -15,7 +15,7 @@ import java.io.IOException;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Authentication {
     public static final String BEAN_NAME = "authentication";
-    protected final static Logger LOGGER = LoggerFactory.getLogger(Authentication.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Authentication.class);
     private Long id;
     private String username;
     private String password;

@@ -17,7 +17,7 @@ import java.util.Locale;
 
 public class SocialSignOnAdapter {
 
-    protected final static Logger LOGGER = LoggerFactory.getLogger(SocialSignOnAdapter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SocialSignOnAdapter.class);
 
     private ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
     private AccountDao accountDao;

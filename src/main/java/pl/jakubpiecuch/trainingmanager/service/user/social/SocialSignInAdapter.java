@@ -11,8 +11,8 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 public class SocialSignInAdapter implements SignInAdapter {
-    
-    protected final static Logger LOGGER = LoggerFactory.getLogger(SocialSignInAdapter.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SocialSignInAdapter.class);
     
     private SocialUserService userService;
 

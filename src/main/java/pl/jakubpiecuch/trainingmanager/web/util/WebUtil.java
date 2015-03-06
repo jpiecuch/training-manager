@@ -1,9 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.web.util;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -11,16 +9,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.AntPathMatcher;
-import org.springframework.web.servlet.HandlerMapping;
-import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
-
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class WebUtil {
 
-    protected final static Logger LOGGER = LoggerFactory.getLogger(WebUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebUtil.class);
     private static final ObjectMapper mapper = new ObjectMapper();
 
     public static void authenticate(UserDetails userDetails) {

@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class BarValidator implements Validator {
 
-    protected final static Logger LOGGER = LoggerFactory.getLogger(BarValidator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BarValidator.class);
 
     @Override
     public boolean supports(Class<?> clazz) {

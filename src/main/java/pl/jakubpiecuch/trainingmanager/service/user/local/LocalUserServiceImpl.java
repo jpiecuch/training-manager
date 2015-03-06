@@ -26,7 +26,7 @@ import java.util.Locale;
  */
 public class LocalUserServiceImpl extends AbstractUserService implements LocalUserService {
 
-    private final static Logger log = LoggerFactory.getLogger(LocalUserServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocalUserServiceImpl.class);
     private static final int EMAIL_CRYPT_POSITION = 1;
 
     private PasswordEncoder passwordEncoder;
@@ -81,7 +81,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
                 return true;
             }
         } catch (SymmetricEncryptionException e) {
-            log.warn("Wrong activate value " + id, e);
+            LOGGER.warn("Wrong activate value " + id, e);
         }
         return false;
     }

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractSocialService<T> implements SocialService {
-    protected final static Logger LOGGER = LoggerFactory.getLogger(AbstractSocialService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSocialService.class);
 
     private ConnectionRepository connectionRepository;
     private UsersConnectionRepository usersConnectionRepository;

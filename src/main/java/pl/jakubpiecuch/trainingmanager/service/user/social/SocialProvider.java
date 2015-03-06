@@ -9,7 +9,7 @@ import pl.jakubpiecuch.trainingmanager.service.user.local.LocalProvider;
  * Created by Rico on 2014-11-22.
  */
 public class SocialProvider extends LocalProvider {
-    protected final static Logger LOGGER = LoggerFactory.getLogger(SocialProvider.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SocialProvider.class);
 
     public enum SocialType {
         FACEBOOK("facebook"), GOOGLE("google"), TWITTER("twitter");
