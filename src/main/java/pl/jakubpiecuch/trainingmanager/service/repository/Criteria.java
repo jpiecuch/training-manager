@@ -15,7 +15,7 @@ public abstract class Criteria<T extends Criteria> {
 
     protected final String alias;
     protected final String entity;
-    protected final String RESTRICTION_FORMAT;
+    protected final String restrictionFormat;
     protected final String lang;
 
     protected List<String> restrictions = new ArrayList<String>();
@@ -33,12 +33,12 @@ public abstract class Criteria<T extends Criteria> {
         this.alias = alias;
         this.entity = entity;
         this.lang = lang;
-        this.RESTRICTION_FORMAT = alias + ".%s %s (:%s) ";
+        this.restrictionFormat = alias + ".%s %s (:%s) ";
     }
 
     protected void collection(Collection collection, String property, String clause) {
         if (CollectionUtils.isNotEmpty(collection)) {
-            restrictions.add(String.format(RESTRICTION_FORMAT, property, clause, property));
+            restrictions.add(String.format(restrictionFormat, property, clause, property));
             params.put(property, collection);
         }
     }

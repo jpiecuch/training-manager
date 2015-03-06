@@ -1,6 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.service.api.v1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,13 +167,12 @@ public class Version1Service implements ApiVersionService {
         final String handler = cryptService.decrypt(key, null);
         final ResourceService resourceService = resourceServices.get(type);
         if (resourceService.isCatalog(handler)) {
-            return new ResponseEntity(new ArrayList<String>() {
-                {
-                    for(String path : resourceService.resources(handler)) {
-                        add(cryptService.encrypt(path));
-                    }
+            return new ResponseEntity(Lists.transform(resourceService.resources(handler), new Function<String, String>() {
+                @Override
+                public String apply(String input) {
+                    return cryptService.encrypt(input);
                 }
-            }, HttpStatus.OK);
+            }), HttpStatus.OK);
         } else {
             final HttpHeaders headers = new HttpHeaders();
             headers.setContentType(resourceService.getMediaType(handler));

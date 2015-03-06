@@ -22,6 +22,7 @@ public class PlanDto extends Flow implements RepoObject {
     private Boolean editable;
     private Boolean used;
 
+    @Override
     public Long getId() {
         return id;
     }
