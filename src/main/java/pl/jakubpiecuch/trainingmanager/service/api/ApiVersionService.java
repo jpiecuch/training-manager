@@ -24,7 +24,9 @@ import java.util.Map;
 
 public interface ApiVersionService {
     void updateExecution(ExecutionDto execution);
-    enum Version {v1}
+    enum Version {
+        v1
+    }
 
     List<String> languages();
     ResponseEntity resource(ResourceService.Type type, String key) throws IOException;

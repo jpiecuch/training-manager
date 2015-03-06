@@ -5,4 +5,5 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "exercise_comment")
-public class ExerciseComment extends BaseComment<Description> {}
+public class ExerciseComment extends BaseComment<Description> {
+}

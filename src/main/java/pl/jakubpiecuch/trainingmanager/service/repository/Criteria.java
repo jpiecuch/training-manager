@@ -23,7 +23,9 @@ public abstract class Criteria<T extends Criteria> {
     protected Map<String, Object> params = new HashMap<String, Object>();
     private List<Long> excludedIds = new ArrayList<Long>();
 
-    public enum OrderMode { ASC,DESC }
+    public enum OrderMode {
+        ASC,DESC
+    }
 
     protected Long id;
     protected Integer firstResult;

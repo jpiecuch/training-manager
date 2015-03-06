@@ -8,7 +8,9 @@ import java.io.Serializable;
 public class Plan extends CommonEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public enum Goal {MUSCLES, STRENGTH}
+    public enum Goal {
+        MUSCLES, STRENGTH
+    }
 
     private String name;
     private Goal goal;

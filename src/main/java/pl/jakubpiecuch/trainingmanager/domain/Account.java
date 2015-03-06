@@ -7,7 +7,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "account")
 public class Account extends VersionedEntity {
-    public enum Status { ACTIVE, RESET_PASSWORD, EXPIRED, CREATED }
+    public enum Status {
+        ACTIVE, RESET_PASSWORD, EXPIRED, CREATED
+    }
 
     private String name;
     private String password;

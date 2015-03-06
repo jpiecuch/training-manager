@@ -12,7 +12,9 @@ public class Workout extends CommonEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final String MUSCLE_DELIMITER = ";";
 
-    public enum WeekDay { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY }
+    public enum WeekDay {
+        SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
+    }
 
     private WeekDay weekDay;
     private Phase phase;

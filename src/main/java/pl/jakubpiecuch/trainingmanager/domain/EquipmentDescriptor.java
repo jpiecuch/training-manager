@@ -12,7 +12,9 @@ public interface EquipmentDescriptor {
     }
 
     public class  NeckConfig {
-        public enum Type {STRAIGHT, EZ}
+        public enum Type {
+            STRAIGHT, EZ
+        }
         private boolean connectedLoad;
         private Type type;
 

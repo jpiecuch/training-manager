@@ -5,7 +5,9 @@ package pl.jakubpiecuch.trainingmanager.service.user;
  */
 public interface UserManageService {
 
-    enum ResetStatus { OK,USER_NOT_EXIST }
+    enum ResetStatus {
+        OK,USER_NOT_EXIST
+    }
 
     ResetStatus password(String id);
     boolean activate(String id);
