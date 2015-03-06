@@ -1,6 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
@@ -84,25 +86,42 @@ public class PlanDto extends Flow implements RepoObject {
         return Hierarchy.PLAN;
     }
 
+
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        PlanDto planDto = (PlanDto) o;
-
-        if (goal != planDto.goal) return false;
-        if (id != null ? !id.equals(planDto.id) : planDto.id != null) return false;
-        if (name != null ? !name.equals(planDto.name) : planDto.name != null) return false;
-
-        return true;
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        PlanDto rhs = (PlanDto) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.id, rhs.id)
+                .append(this.name, rhs.name)
+                .append(this.goal, rhs.goal)
+                .append(this.creatorId, rhs.creatorId)
+                .append(this.phases, rhs.phases)
+                .append(this.editable, rhs.editable)
+                .append(this.used, rhs.used)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (goal != null ? goal.hashCode() : 0);
-        return result;
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(id)
+                .append(name)
+                .append(goal)
+                .append(creatorId)
+                .append(phases)
+                .append(editable)
+                .append(used)
+                .toHashCode();
     }
 }

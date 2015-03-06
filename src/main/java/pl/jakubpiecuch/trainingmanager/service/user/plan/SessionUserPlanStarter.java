@@ -23,7 +23,13 @@ public class SessionUserPlanStarter implements UserPlanStarter {
 
     private static final Map<Integer, Integer> DAY_OF_WEEK_MAPPER = new HashMap<Integer, Integer>() {
         {
-            put(0, 7);put(1, 1);put(2, 2);put(3,3);put(4,4);put(5,5);put(6,6);
+            put(0, 7);
+            put(1, 1);
+            put(2, 2);
+            put(3,3);
+            put(4,4);
+            put(5,5);
+            put(6,6);
         }
     };
 
