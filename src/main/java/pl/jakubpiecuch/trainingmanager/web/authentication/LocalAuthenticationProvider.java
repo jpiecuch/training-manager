@@ -4,25 +4,28 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.AuthorityUtils;
+import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
+import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.encoder.password.PasswordEncoder;
 import pl.jakubpiecuch.trainingmanager.service.user.local.LocalUserService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
 public class LocalAuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {
     
-    private LocalUserService localAuthenticationService;
+    private AccountDao accountDao;
     private PasswordEncoder shaPasswordEncoder;
 
     @Override
     public Authentication authenticate(Authentication a) throws AuthenticationException {
-        SecurityUser user = (SecurityUser) localAuthenticationService.loadUserByUsername(a.getName());
-        if (user == null) {
+        Account account = accountDao.findByUniques(null, a.getName(), null);
+        if (account == null) {
             throw new BadCredentialsException("Username not found.");
         }
-        if (!shaPasswordEncoder.encode((String) a.getCredentials(), user.getSalt()).equals(user.getPassword())) {
+        if (!shaPasswordEncoder.encode((String) a.getCredentials(), account.getSalt()).equals(account.getPassword())) {
             throw new BadCredentialsException("Wrong password.");
         }
-        return new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(new SecurityUser(account.getId(), account.getName(), account.getPassword(), null), account.getPassword(), AuthorityUtils.NO_AUTHORITIES);
     }
 
     @Override
@@ -30,11 +33,12 @@ public class LocalAuthenticationProvider implements org.springframework.security
         return true;
     }
 
-    public void setLocalAuthenticationService(LocalUserService localAuthenticationService) {
-        this.localAuthenticationService = localAuthenticationService;
-    }
 
     public void setShaPasswordEncoder(PasswordEncoder shaPasswordEncoder) {
         this.shaPasswordEncoder = shaPasswordEncoder;
+    }
+
+    public void setAccountDao(AccountDao accountDao) {
+        this.accountDao = accountDao;
     }
 }

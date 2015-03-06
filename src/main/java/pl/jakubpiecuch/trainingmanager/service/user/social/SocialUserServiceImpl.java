@@ -27,7 +27,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
     @Override
     public UserDetails resolveDetails(Authentication authentication) {
         Assert.notNull(authentication.getSocial());
-        return new SecurityUser(null, authentication.getUsername(), authentication.getPassword(), authentication.getSocial(), null);
+        return new SecurityUser(null, authentication.getUsername(), authentication.getPassword(), authentication.getSocial());
     }
 
     @Override
@@ -42,7 +42,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
         if (account == null || Account.Status.ACTIVE != account.getStatus()) {
             throw new UsernameNotFoundException("User not exists");
         }
-        return new SecurityUser(account.getId(), account.getName(), account.getPassword(), null, account.getSalt());
+        return new SecurityUser(account.getId(), account.getName(), account.getPassword(), null);
 
     }
 

@@ -26,7 +26,7 @@ public abstract class AbstractUserService implements UserService {
         String username = securityUser.getSocial() != null ? String.format("%s:%s", securityUser.getSocial().getProviderId(), securityUser.getUsername()) : securityUser.getUsername();
         Account entity = accountDao.findByUniques(null, username, null);
         if (isValidCredentials(entity, user)) {
-            WebUtil.authenticate(new SecurityUser(entity.getId(), entity.getName(), entity.getPassword(), null, null));
+            WebUtil.authenticate(new SecurityUser(entity.getId(), entity.getName(), entity.getPassword(), null));
         }
     }
 

@@ -15,9 +15,8 @@ public class SecurityUser extends SocialUser {
 
     private Long id;
     private SocialProvider.SocialType social;
-    private String salt;
 
-    public SecurityUser(Long id, String username, String password, SocialProvider.SocialType social, String salt) {
+    public SecurityUser(Long id, String username, String password, SocialProvider.SocialType social) {
         super(username, password, AuthorityUtils.NO_AUTHORITIES);
         this.social = social;
         this.id = id;
@@ -37,13 +36,5 @@ public class SecurityUser extends SocialUser {
 
     public void setSocial(SocialProvider.SocialType social) {
         this.social = social;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 }

@@ -39,7 +39,7 @@ public class SocialSignOnAdapter {
            userService.signOn(registration, locale);
            providerSignInUtils.doPostSignUp(profile.getName(), request);
            Account entity = accountDao.findByUniques(null, String.format(SecurityUser.SOCIAL_USERNAME_FORMAT, connection.getKey().getProviderId(), connection.getKey().getProviderUserId()), null);
-           WebUtil.authenticate(new SecurityUser(entity.getId(), entity.getName(), entity.getPassword(), null, null));
+           WebUtil.authenticate(new SecurityUser(entity.getId(), entity.getName(), entity.getPassword(), null));
        }
    }
 

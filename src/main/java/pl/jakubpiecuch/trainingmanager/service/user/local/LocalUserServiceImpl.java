@@ -36,7 +36,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
 
     @Override
     public SecurityUser resolveDetails(Authentication authentication)  {
-        return new SecurityUser(null, authentication.getUsername(), authentication.getPassword(), null, null);
+        return new SecurityUser(null, authentication.getUsername(), authentication.getPassword(), null);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
         if (account == null || Account.Status.ACTIVE != account.getStatus()) {
             throw new UsernameNotFoundException("User not exists");
         }
-        return new SecurityUser(account.getId(), account.getName(), account.getPassword(), null, account.getSalt());
+        return new SecurityUser(account.getId(), account.getName(), account.getPassword(), null);
     }
 
     @Override

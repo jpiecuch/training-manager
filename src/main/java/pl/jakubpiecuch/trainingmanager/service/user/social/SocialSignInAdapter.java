@@ -18,7 +18,7 @@ public class SocialSignInAdapter implements SignInAdapter {
 
     @Override
     public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {
-        SecurityUser userDetails = new SecurityUser(null, connection.createData().getProviderUserId(), SecurityUser.OAUTH, SocialProvider.SocialType.valueOf(StringUtils.upperCase(connection.getKey().getProviderId())), null);
+        SecurityUser userDetails = new SecurityUser(null, connection.createData().getProviderUserId(), SecurityUser.OAUTH, SocialProvider.SocialType.valueOf(StringUtils.upperCase(connection.getKey().getProviderId())));
         WebUtil.authenticate(userDetails);
         return "/";
     }

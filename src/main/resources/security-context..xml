@@ -22,7 +22,7 @@
     <beans:bean id="accessDeniedHandler" class="pl.jakubpiecuch.trainingmanager.web.handlers.access.AccessDeniedHandler"></beans:bean>
 
     <beans:bean id="authenticationProvider" class="pl.jakubpiecuch.trainingmanager.web.authentication.LocalAuthenticationProvider">
-        <beans:property name="localAuthenticationService" ref="localUserService"/>
+        <beans:property name="accountDao" ref="usersDao"/>
         <beans:property name="shaPasswordEncoder" ref="shaPasswordEncoder"/>
     </beans:bean>
 
