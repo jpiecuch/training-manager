@@ -10,6 +10,6 @@ public class SecuredConstantsDictionary extends ConstantsDictionary{
     @Override
     @PreAuthorize("isAuthenticated()")
     public Object retrieve(long id) {
-        return MAP.get(id);
+        return map.get(id);
     }
 }
