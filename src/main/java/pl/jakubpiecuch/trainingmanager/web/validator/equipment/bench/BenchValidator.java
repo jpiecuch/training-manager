@@ -1,5 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.web.validator.equipment.bench;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -7,10 +9,14 @@ import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 
+import java.io.IOException;
+
 /**
  * Created by Rico on 2014-12-07.
  */
 public class BenchValidator implements Validator {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BenchValidator.class);
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -29,7 +35,8 @@ public class BenchValidator implements Validator {
             } else if (object.getConfig().getHeight() == null) {
                 errors.rejectValue("config.height", RestrictionCode.REQUIRED);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
+            LOGGER.warn("", e);
             errors.rejectValue("config", RestrictionCode.INVALID);
         }
         if (errors.hasErrors()) {
