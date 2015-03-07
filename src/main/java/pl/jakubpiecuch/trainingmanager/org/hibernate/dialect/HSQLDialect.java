@@ -14,10 +14,10 @@ import java.util.Map;
 
 public class HSQLDialect extends PostgreSQL82Dialect {
 
-    public final static String OVER = "over";
-    private final static String COUNT = "count(*)";
+    public static final String OVER = "over";
+    public static final String OVER_FORMAT = "%s " + OVER + "(%s)";
+    private static final String COUNT = "count(*)";
     private static Map<String, String> REPLACE_MAP = new HashMap<String, String>();
-    public final static String OVER_FORMAT = "%s " + OVER + "(%s)";
 
     public HSQLDialect() {
         super();
