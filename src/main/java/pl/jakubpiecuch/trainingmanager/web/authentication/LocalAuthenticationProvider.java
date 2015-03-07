@@ -8,7 +8,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.encoder.password.PasswordEncoder;
-import pl.jakubpiecuch.trainingmanager.service.user.local.LocalUserService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
 public class LocalAuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {

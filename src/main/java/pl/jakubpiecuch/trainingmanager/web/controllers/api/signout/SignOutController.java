@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;
 
-import javax.servlet.http.HttpServletResponse;
-
 @RequestMapping("api/{version}/signout")
 @RestController
 public class SignOutController extends AbstractController {

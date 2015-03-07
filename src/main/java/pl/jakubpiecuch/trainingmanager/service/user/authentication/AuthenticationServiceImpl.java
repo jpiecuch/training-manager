@@ -1,7 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.user.authentication;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,8 +13,6 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**

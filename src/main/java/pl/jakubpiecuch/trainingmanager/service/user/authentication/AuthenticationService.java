@@ -2,8 +2,6 @@ package pl.jakubpiecuch.trainingmanager.service.user.authentication;
 
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 
-import java.io.IOException;
-
 /**
  * Created by Rico on 2014-12-13.
  */

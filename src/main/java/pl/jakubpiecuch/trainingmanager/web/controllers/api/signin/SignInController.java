@@ -7,8 +7,6 @@ import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;
 
-import javax.servlet.http.HttpServletResponse;
-
 @RequestMapping("api/{version}/signin")
 @RestController
 public class SignInController extends AbstractController {
