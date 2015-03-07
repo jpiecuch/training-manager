@@ -10,8 +10,12 @@ public interface ResourceService {
     public enum Type { 
         image("jpg", "png");
         
-        public String[] extensions;
-        
+        private String[] extensions;
+
+        public String[] getExtensions() {
+            return extensions;
+        }
+
         private Type(String... extensions) {
             this.extensions = extensions;
         }

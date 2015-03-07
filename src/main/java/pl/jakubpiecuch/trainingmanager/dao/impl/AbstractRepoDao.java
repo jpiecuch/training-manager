@@ -33,7 +33,7 @@ public abstract class AbstractRepoDao<E extends CommonEntity, C extends Criteria
 
             @Override
             public long getCount() {
-                return result.size() > 0 ? (Long)result.get(0)[1] : 0;
+                return !result.isEmpty() ? (Long)result.get(0)[1] : 0;
             }
         };
     }

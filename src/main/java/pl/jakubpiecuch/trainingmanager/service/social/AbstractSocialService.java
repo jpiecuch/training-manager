@@ -77,7 +77,7 @@ public abstract class AbstractSocialService<T> implements SocialService {
                     providerSignInUtils.doPostSignUp(registration.getUsername(), request);
                     return true;
                 } else {
-                    throw new RuntimeException("Multiple oauth connections for single user");
+                    throw new IllegalArgumentException("Multiple oauth connections for single user");
                 }
             } else {
                 throw new NotFoundException();
