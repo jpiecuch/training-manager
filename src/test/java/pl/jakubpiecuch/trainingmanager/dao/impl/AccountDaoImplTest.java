@@ -45,6 +45,35 @@ public class AccountDaoImplTest extends BaseDAOTestCase {
     private AccountDao accountDao;
 
     @Test
+    public void testDelete() {
+        Account account = new Account();
+        account.setName(NAME + "delete");
+        account.setSalt(SALT);
+        account.setPassword(PASSWORD);
+        account.setStatus(Account.Status.CREATED);
+        accountDao.create(account);
+        accountDao.flush();
+        assertNotNull(account.getId());
+        accountDao.delete(account);
+        assertNull(accountDao.findByUniques(account.getId(), null, null));
+    }
+
+    @Test
+    public void testUpdate() {
+        Account account = new Account();
+        account.setName(NAME + "update");
+        account.setSalt(SALT);
+        account.setPassword(PASSWORD);
+        account.setStatus(Account.Status.CREATED);
+        accountDao.create(account);
+        accountDao.flush();
+        assertNull(accountDao.findByUniques(null, null, "email"));
+        account.setEmail("email");
+        accountDao.update(account);
+        assertNotNull(accountDao.findByUniques(null, null, "email"));
+    }
+
+    @Test
     public void testSave() {
         Account account = new Account();
         account.setName(NAME + "new");
@@ -80,14 +109,14 @@ public class AccountDaoImplTest extends BaseDAOTestCase {
 
     @Test
     public void testSaveValidity() {
-        int countrer = 0;
+        int counter = 0;
 
         //null name
         try {
             Account account = new Account();
             accountDao.create(account);
         } catch (ConstraintViolationException ex) {
-            countrer++; //1
+            counter++; //1
         }
 
         //null password
@@ -96,7 +125,7 @@ public class AccountDaoImplTest extends BaseDAOTestCase {
             account.setName(NAME);
             accountDao.create(account);
         } catch (ConstraintViolationException ex) {
-            countrer++; //2
+            counter++; //2
         }
 
         //null salt
@@ -106,7 +135,7 @@ public class AccountDaoImplTest extends BaseDAOTestCase {
             account.setPassword(PASSWORD);
             accountDao.create(account);
         } catch (ConstraintViolationException ex) {
-            countrer++; //3
+            counter++; //3
         }
 
         //null status
@@ -117,7 +146,7 @@ public class AccountDaoImplTest extends BaseDAOTestCase {
             account.setSalt(SALT);
             accountDao.create(account);
         } catch (ConstraintViolationException ex) {
-            countrer++; //4
+            counter++; //4
         }
 
         //not unique name
@@ -129,7 +158,7 @@ public class AccountDaoImplTest extends BaseDAOTestCase {
             account.setStatus(STATUS);
             accountDao.create(account);
         } catch (ConstraintViolationException ex) {
-            countrer++; //5
+            counter++; //5
         }
 
         //unique name
@@ -142,7 +171,7 @@ public class AccountDaoImplTest extends BaseDAOTestCase {
 
         assertNotNull(account.getId());
         assertNotNull(account.getCreated());
-        assertEquals(5, countrer);
+        assertEquals(5, counter);
     }
 
 

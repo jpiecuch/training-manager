@@ -8,6 +8,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionCriteria;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class DescriptionDaoImplTest extends BaseDAOTestCase {
 
@@ -15,9 +16,10 @@ public class DescriptionDaoImplTest extends BaseDAOTestCase {
     private DescriptionDao descriptionDao;
 
     @Test
-    public void testFindBYCriteria() {
+    public void testFindByCriteria() {
         PageResult<Description> list = descriptionDao.findByCriteria(new DescriptionCriteria("en").addMuscleRestriction(Description.Muscles.ABS).addMuscleRestriction(Description.Muscles.BICEPS).setMaxResultsRestriction(10).setFirstResultRestriction(1));
         assertEquals(2, list.getResult().size());
+        assertNotNull(list.getCount());
 
         list = descriptionDao.findByCriteria(new DescriptionCriteria("en").addMuscleRestriction(Description.Muscles.ABS).addMuscleRestriction(Description.Muscles.BICEPS));
         assertEquals(3, list.getResult().size());
