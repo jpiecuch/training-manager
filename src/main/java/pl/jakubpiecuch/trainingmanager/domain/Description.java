@@ -137,17 +137,17 @@ public class Description extends CommonEntity implements RepoObject {
 
     @Transient
     public Map<String, String> getNames() {
-        return new HashMap<String, String>() {
-            {
-                if (StringUtils.isNotEmpty(name)) {
-                    for (String s : StringUtils.splitByWholeSeparatorPreserveAllTokens(name, NAME_DELIMITER)) {
-                        String[] result = StringUtils.splitPreserveAllTokens(s, ":");
-                        put(result[0], result[1]);
-                    }
-                }
+        Map<String, String> result = null;
+        if (StringUtils.isNotEmpty(name)) {
+            result = new HashMap<String, String>();
+            for (String s : StringUtils.splitByWholeSeparatorPreserveAllTokens(name, NAME_DELIMITER)) {
+                String[] tokens = StringUtils.splitPreserveAllTokens(s, ":");
+                result.put(tokens[0], tokens[1]);
             }
-        };
+        }
+        return result;
     }
+
     @JsonDeserialize(using = NamesDeserializer.class)
     protected void setNames(Map<String, String> names) {
         for (Map.Entry<String, String> e : names.entrySet()) {
@@ -162,7 +162,7 @@ public class Description extends CommonEntity implements RepoObject {
     public static class NamesDeserializer extends JsonDeserializer<Map> {
 
         @Override
-        public Map deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+        public Map deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
             Map result = new HashMap();
 
             jsonParser.nextToken();
