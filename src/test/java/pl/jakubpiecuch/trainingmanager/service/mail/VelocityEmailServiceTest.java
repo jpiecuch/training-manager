@@ -12,7 +12,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.mail.MailPreparationException;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 
+import javax.mail.internet.MimeMessage;
 import java.util.Locale;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,7 +43,9 @@ public class VelocityEmailServiceTest {
     @Before
     public void setUp() {
         Mockito.when(messageSource.getMessage("mail." + VALID_TEMPLATE + ".subject", null, VALID_LOCALE)).thenReturn(VALID_SUBJECT);
-        emailService.setMailSender(mailSender);
+        JavaMailSenderImpl spy = Mockito.spy(mailSender);
+        Mockito.doNothing().when(spy).send(Mockito.any(MimeMessage[].class));
+        emailService.setMailSender(spy);
         emailService.setSender(VALID_SENDER);
         emailService.setEncoding(VALID_ENCODING);
         emailService.setTemplateLocation(TEMPLATE_LOCATION);
@@ -57,13 +61,7 @@ public class VelocityEmailServiceTest {
         emailService.sendEmail(null, VALID_LOCALE, null, null);
     }
 
-    @Test(expected = MailPreparationException.class)
-    public void testSendEmailNullRecipients() throws Exception {
-        emailService.sendEmail(null, VALID_LOCALE, VALID_TEMPLATE, null);
-    }
-
-    //FIXME - should not throw exception but successfully send message. Need to somehow mock SMTP server.
-    @Test(expected = MailSendException.class)
+    @Test
     public void testSendEmail() throws Exception {
         emailService.sendEmail(null, VALID_LOCALE, VALID_TEMPLATE, VALID_RECIPIENT);
     }

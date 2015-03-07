@@ -28,22 +28,7 @@ public class HSQLDialect extends PostgreSQL82Dialect {
         registerFunction(OVER, new Over());
     }
 
-    public static class Over implements SQLFunction {
-        @Override
-        public boolean hasArguments() {
-            return true;
-        }
-
-        @Override
-        public boolean hasParenthesesIfNoArguments() {
-            return false;
-        }
-
-        @Override
-        public Type getReturnType(Type firstArgumentType, Mapping mapping) {
-            return firstArgumentType;
-        }
-
+    public static class Over extends AbstractOver {
         @Override
         public String render(Type firstArgumentType, List arguments, SessionFactoryImplementor factory) {
             return String.format(OVER_FORMAT, REPLACE_MAP.get(arguments.get(0)), arguments.size() == 2 ? arguments.get(1) : "");
