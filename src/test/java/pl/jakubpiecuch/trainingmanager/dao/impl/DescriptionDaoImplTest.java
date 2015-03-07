@@ -19,12 +19,15 @@ public class DescriptionDaoImplTest extends BaseDAOTestCase {
     public void testFindByCriteria() {
         PageResult<Description> list = descriptionDao.findByCriteria(new DescriptionCriteria("en").addMuscleRestriction(Description.Muscles.ABS).addMuscleRestriction(Description.Muscles.BICEPS).setMaxResultsRestriction(10).setFirstResultRestriction(1));
         assertEquals(2, list.getResult().size());
+        assertNotNull(list.getResult().get(0));
         assertNotNull(list.getCount());
 
         list = descriptionDao.findByCriteria(new DescriptionCriteria("en").addMuscleRestriction(Description.Muscles.ABS).addMuscleRestriction(Description.Muscles.BICEPS));
         assertEquals(3, list.getResult().size());
+        assertNotNull(list.getCount());
 
         list = descriptionDao.findByCriteria(new DescriptionCriteria("en").addMuscleRestriction(Description.Muscles.ABS).addForceRestriction(Description.Force.PULL));
         assertEquals(0, list.getResult().size());
+        assertEquals(0, list.getCount());
     }
 }

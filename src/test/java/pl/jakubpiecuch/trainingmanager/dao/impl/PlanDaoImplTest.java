@@ -48,4 +48,9 @@ public class PlanDaoImplTest extends BaseDAOTestCase {
         planDao.flush();
         assertNotNull(PLAN.getId());
     }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testFindByParentId() {
+        planDao.findByParentId(1l);
+    }
 }

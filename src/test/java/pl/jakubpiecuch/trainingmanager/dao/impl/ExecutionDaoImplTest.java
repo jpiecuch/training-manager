@@ -14,8 +14,7 @@ import pl.jakubpiecuch.trainingmanager.service.user.workout.session.UserWorkoutC
 
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class ExecutionDaoImplTest extends BaseDAOTestCase {
 
@@ -34,7 +33,7 @@ public class ExecutionDaoImplTest extends BaseDAOTestCase {
 
     @Test
     public void testFindByParentId() throws Exception {
-
+        assertFalse(executionDao.findByParentId(1l).isEmpty());
     }
 
     @Test
