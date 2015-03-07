@@ -13,6 +13,7 @@ import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutDt
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseDto;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,8 +79,9 @@ public class SessionUserPlanStarter implements UserPlanStarter {
     public void setPlanDao(PlanDao planDao) {
         this.planDao = planDao;
     }
-    
-    private void afterPropertiesSet() {
+
+    @PostConstruct
+    protected void afterPropertiesSet() {
         dayOfWeekMapper.put(0, 7);
         dayOfWeekMapper.put(1, 1);
         dayOfWeekMapper.put(2, 2);

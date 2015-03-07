@@ -262,7 +262,7 @@ public class Version1Service implements ApiVersionService {
     }
 
     @PostConstruct
-    private void afterPropertiesSet() throws URISyntaxException, ConfigurationException {
+    protected void afterPropertiesSet() throws URISyntaxException, ConfigurationException {
         this.propertiesConfigurations = new HashMap<String, PropertiesConfiguration>();
         for (String lang : langs) {
             this.propertiesConfigurations.put(lang, new PropertiesConfiguration(new File(getClass().getResource(String.format(messageSourceFile, lang)).toURI())));
