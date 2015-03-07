@@ -12,20 +12,10 @@ import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 public class SocialSignInAdapter implements SignInAdapter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SocialSignInAdapter.class);
-    
-    private SocialUserService userService;
-
     @Override
     public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {
         SecurityUser userDetails = new SecurityUser(null, connection.createData().getProviderUserId(), SecurityUser.OAUTH, SocialProvider.SocialType.valueOf(StringUtils.upperCase(connection.getKey().getProviderId())));
         WebUtil.authenticate(userDetails);
         return "/";
     }
-
-    @Autowired
-    public void setUserService(SocialUserService userService) {
-        this.userService = userService;
-    }
-
 }

@@ -1,7 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.service.user.social;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.web.ProviderSignInUtils;
@@ -16,9 +14,6 @@ import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 import java.util.Locale;
 
 public class SocialSignOnAdapter {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SocialSignOnAdapter.class);
-
     private ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
     private AccountDao accountDao;
     private UserService userService;

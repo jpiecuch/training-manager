@@ -35,7 +35,7 @@ public interface EquipmentDescriptor {
         }
     }
 
-    public class LoadConfig {
+    public interface LoadConfig {
     }
 
     public class StandConfig {
@@ -50,7 +50,7 @@ public interface EquipmentDescriptor {
             return height;
         }
     }
-    public class RackConfig {
+    public interface RackConfig {
     }
 
     public class DumbbellConfig {

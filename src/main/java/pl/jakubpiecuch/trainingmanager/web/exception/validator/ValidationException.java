@@ -6,7 +6,7 @@ import org.springframework.validation.Errors;
  * Created by Rico on 2014-12-21.
  */
 public class ValidationException extends RuntimeException {
-    private Errors errors;
+    private final Errors errors;
 
     public ValidationException(Errors errors) {
         this.errors = errors;

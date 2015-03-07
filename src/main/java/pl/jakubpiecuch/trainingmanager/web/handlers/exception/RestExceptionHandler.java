@@ -63,8 +63,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         public static class FieldError {
-            private String field;
-            private String code;
+            private final String field;
+            private final String code;
 
             public FieldError(String field, String code) {
                 this.field = field;
