@@ -1,6 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.org.hibernate.dialect;
 
-import org.hibernate.QueryException;
 import org.hibernate.dialect.PostgreSQL82Dialect;
 import org.hibernate.dialect.function.SQLFunction;
 import org.hibernate.dialect.function.StandardSQLFunction;

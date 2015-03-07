@@ -1,11 +1,10 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "plan")
-public class Plan extends CommonEntity implements Serializable {
+public class Plan extends CommonEntity {
     private static final long serialVersionUID = 1L;
 
     public enum Goal {

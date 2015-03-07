@@ -36,6 +36,9 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
         protected static final String PRESS = "5";
         protected static final String STAND = "6";
         protected static final String RACK = "7";
+
+        private DiscriminatorType() {
+        }
     }
 
     private int type;

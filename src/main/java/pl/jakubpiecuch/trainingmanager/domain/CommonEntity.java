@@ -1,9 +1,10 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @MappedSuperclass
-public class CommonEntity {
+public class CommonEntity implements Serializable {
 
     private Long id;
 

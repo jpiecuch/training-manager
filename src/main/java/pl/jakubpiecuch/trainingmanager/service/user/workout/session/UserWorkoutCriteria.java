@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.user.workout.session;
 
+import org.apache.commons.lang.ArrayUtils;
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
@@ -9,7 +10,7 @@ import java.util.Date;
  * Created by Rico on 2015-01-18.
  */
 public class UserWorkoutCriteria extends Criteria<UserWorkoutCriteria> {
-
+    private static final String[] PROPERTIES = new String[]{"date"};
     private Date from;
     private Date to;
 
@@ -25,7 +26,9 @@ public class UserWorkoutCriteria extends Criteria<UserWorkoutCriteria> {
 
     @Override
     protected void validateProperty(String property) {
-
+        if (!ArrayUtils.contains(PROPERTIES, property)) {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
