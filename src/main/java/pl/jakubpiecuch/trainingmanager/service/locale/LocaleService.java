@@ -16,5 +16,5 @@ public interface LocaleService {
      * @param request the request to be used for locale modification
      * @param response the response to be used for locale modification
      */
-    public void update(HttpServletRequest request, HttpServletResponse response, Locale locale) throws IllegalArgumentException ;
+    public void update(HttpServletRequest request, HttpServletResponse response, Locale locale);
 }

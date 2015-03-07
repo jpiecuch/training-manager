@@ -39,12 +39,12 @@ public class PostgreSQLDialect extends PostgreSQL82Dialect {
         }
 
         @Override
-        public Type getReturnType(Type firstArgumentType, Mapping mapping) throws QueryException {
+        public Type getReturnType(Type firstArgumentType, Mapping mapping) {
             return firstArgumentType;
         }
 
         @Override
-        public String render(Type firstArgumentType, List arguments, SessionFactoryImplementor factory) throws QueryException {
+        public String render(Type firstArgumentType, List arguments, SessionFactoryImplementor factory) {
             return String.format(OVER_FORMAT, arguments.get(0), arguments.size() == 2 ? arguments.get(1) : "");
         }
     }

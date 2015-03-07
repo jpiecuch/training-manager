@@ -1,7 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.user.social;
 
 import org.springframework.beans.factory.annotation.Required;
-import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.keygen.KeyGenerators;
@@ -37,7 +36,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
     }
 
     @Override
-    public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException, DataAccessException {
+    public SocialUserDetails loadUserByUserId(String userId) {
         Account account = accountDao.findByUniques(null, userId, null);
         if (account == null || Account.Status.ACTIVE != account.getStatus()) {
             throw new UsernameNotFoundException("User not exists");

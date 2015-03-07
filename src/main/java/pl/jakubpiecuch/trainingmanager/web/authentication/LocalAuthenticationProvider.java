@@ -16,7 +16,7 @@ public class LocalAuthenticationProvider implements org.springframework.security
     private PasswordEncoder shaPasswordEncoder;
 
     @Override
-    public Authentication authenticate(Authentication a) throws AuthenticationException {
+    public Authentication authenticate(Authentication a) {
         Account account = accountDao.findByUniques(null, a.getName(), null);
         if (account == null) {
             throw new BadCredentialsException("Username not found.");

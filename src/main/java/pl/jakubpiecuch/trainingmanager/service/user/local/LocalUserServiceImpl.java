@@ -51,7 +51,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         Account account = accountDao.findByUniques(null, username, null);
         if (account == null || Account.Status.ACTIVE != account.getStatus()) {
             throw new UsernameNotFoundException("User not exists");

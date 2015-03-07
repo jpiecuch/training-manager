@@ -24,7 +24,7 @@ public class ResolverLocaleService implements LocaleService {
      * @see pl.jakubpiecuch.trainingmanager.service.locale.LocaleService#update(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.util.Locale)
      */
     @Override
-    public void update(HttpServletRequest request, HttpServletResponse response, Locale locale) throws IllegalArgumentException {
+    public void update(HttpServletRequest request, HttpServletResponse response, Locale locale) {
         Assert.notNull(locale);
         validateIfLocaleIsSupported(locale);
         localeResolver.setLocale(request, response, locale);
