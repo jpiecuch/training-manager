@@ -14,11 +14,11 @@ import java.io.IOException;
 
 public class WebUtil {
 
-    private WebUtil() {
-    }
-
     private static final Logger LOGGER = LoggerFactory.getLogger(WebUtil.class);
     private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    private WebUtil() {
+    }
 
     public static void authenticate(UserDetails userDetails) {
         SecurityContext securityContext = SecurityContextHolder.getContext();

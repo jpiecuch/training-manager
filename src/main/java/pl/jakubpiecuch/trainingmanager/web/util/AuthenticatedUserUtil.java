@@ -6,10 +6,10 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
 public class AuthenticatedUserUtil {
 
+    private static final String NOT_AUTHENTICATED = "anonymousUser";
+
     private AuthenticatedUserUtil() {
     }
-    
-    private static final String NOT_AUTHENTICATED = "anonymousUser";
 
     public static SecurityUser getAuthenticatedUserDetails() {
         Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

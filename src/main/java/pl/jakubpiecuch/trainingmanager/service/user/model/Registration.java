@@ -7,6 +7,8 @@ import pl.jakubpiecuch.trainingmanager.domain.Account;
  */
 public class Registration extends Authentication {
 
+    private String repeat;
+
     public Registration() {
         super();
     }
@@ -14,8 +16,6 @@ public class Registration extends Authentication {
     public Registration(Account account) {
         super(account);
     }
-
-    private String repeat;
 
     public String getRepeat() {
         return repeat;

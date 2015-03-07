@@ -19,23 +19,22 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
         private Type(Class clazz){
             this.clazz = clazz;
         }
-
-        Class clazz;
+        private Class clazz;
 
         public Class getTypeClass() {
             return this.clazz;
         }
     }
 
-    private interface DiscriminatorType {
-        String BAR = "0";
-        String BENCH = "1";
-        String DUMBBELL = "2";
-        String LOAD = "3";
-        String NECK = "4";
-        String PRESS = "5";
-        String STAND = "6";
-        String RACK = "7";
+    private static final class DiscriminatorType {
+        protected static final String BAR = "0";
+        protected static final String BENCH = "1";
+        protected static final String DUMBBELL = "2";
+        protected static final String LOAD = "3";
+        protected static final String NECK = "4";
+        protected static final String PRESS = "5";
+        protected static final String STAND = "6";
+        protected static final String RACK = "7";
     }
 
     private int type;
