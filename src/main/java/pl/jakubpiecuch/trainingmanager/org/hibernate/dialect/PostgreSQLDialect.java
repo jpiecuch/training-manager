@@ -13,9 +13,9 @@ import java.util.List;
 
 public class PostgreSQLDialect extends PostgreSQL82Dialect {
 
-    public final static String OVER = "over";
-    protected final static String PARTITION = "partition";
-    public final static String OVER_FORMAT = "%s " + OVER + "(%s)";
+    public static final String OVER = "over";
+    protected static final String PARTITION = "partition";
+    public static final String OVER_FORMAT = "%s " + OVER + "(%s)";
 
     public PostgreSQLDialect() {
         super();

@@ -16,10 +16,11 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
         BAR(Bar.class), BENCH(Bench.class), DUMBBELL(Dumbbell.class), LOAD(Load.class),
         NECK(Neck.class), PRESS(Press.class), STAND(Stand.class), RACK(Rack.class);
 
+        private Class clazz;
+
         private Type(Class clazz){
             this.clazz = clazz;
         }
-        private Class clazz;
 
         public Class getTypeClass() {
             return this.clazz;

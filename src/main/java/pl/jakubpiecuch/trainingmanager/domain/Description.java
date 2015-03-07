@@ -16,8 +16,8 @@ import java.util.Map;
 @Table(name = "description")
 public class Description extends CommonEntity implements RepoObject {
 
-    private final static String NAME_PERSIST_FORMAT = "%s:%s";
-    private final static String NAME_DELIMITER = ";";
+    private static final String NAME_PERSIST_FORMAT = "%s:%s";
+    private static final String NAME_DELIMITER = ";";
 
     public enum Muscles {
         ABDUCTORS, ABS, BICEPS, CALVES, CHEST, FOREARM, GLUTES, HAMSTRINGS, LATS, LOWER_BACK, MIDDLE_BACK, NECK, QUADS, SHOULDERS, TRAPS, TRICEPS

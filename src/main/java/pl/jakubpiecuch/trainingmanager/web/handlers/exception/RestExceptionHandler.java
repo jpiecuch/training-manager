@@ -24,7 +24,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class ErrorResource {
-        public final static String DEFAULT_CODE = "InvalidRequest";
+        public static final String DEFAULT_CODE = "InvalidRequest";
         private String code;
         private String message;
         private List<FieldError> fieldErrors;
