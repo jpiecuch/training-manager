@@ -17,7 +17,7 @@ public class WebUtil {
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebUtil.class);
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     public static void authenticate(UserDetails userDetails) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -35,13 +35,13 @@ public class WebUtil {
     }
 
     public static <T> T fromJson(String data, Class<T> outputClass) throws IOException {
-        return mapper.readValue(data, outputClass);
+        return MAPPER.readValue(data, outputClass);
 
     }
 
     public static String toJson(Object data) {
         try {
-            return mapper.writeValueAsString(data);
+            return MAPPER.writeValueAsString(data);
         } catch (JsonProcessingException e) {
             LOGGER.warn("", e);
             return null;

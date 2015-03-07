@@ -40,14 +40,12 @@ public class VelocityEmailService implements EmailService {
                 message.setFrom(sender);
                 message.setSubject(messageSource.getMessage("mail." + template + ".subject", null, locale));
 
-                Map<String, Object> model = new HashMap<String, Object>() {
-                    {
-                        put("messageSource", messageSource);
-                        put("locale", locale);
-                        put("data", data);
-                        put("date", new DateTool());
-                    }
-                };
+                Map<String, Object> model = new HashMap<String, Object>();
+                model.put("messageSource", messageSource);
+                model.put("locale", locale);
+                model.put("data", data);
+                model.put("date", new DateTool());
+
 
                 message.setText(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, String.format(templateLocation, template.toString().toLowerCase()), encoding, model), true);
 
