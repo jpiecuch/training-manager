@@ -21,18 +21,7 @@ import java.util.Map;
  */
 public class SessionUserPlanStarter implements UserPlanStarter {
 
-    private static final Map<Integer, Integer> DAY_OF_WEEK_MAPPER = new HashMap<Integer, Integer>() {
-        {
-            put(0, 7);
-            put(1, 1);
-            put(2, 2);
-            put(3,3);
-            put(4,4);
-            put(5,5);
-            put(6,6);
-        }
-    };
-
+    private Map<Integer, Integer> dayOfWeekMapper = new HashMap<Integer, Integer>();
     private FlowManager<PlanDto> manager;
     private ExecutionDao executionDao;
     private UserWorkoutDao userWorkoutDao;
@@ -51,7 +40,7 @@ public class SessionUserPlanStarter implements UserPlanStarter {
                         dateTime = dateTime.plusYears(1);
                         currentWeek = currentWeek - dateTime.weekOfWeekyear().getMaximumValue();
                     }
-                    dateTime = dateTime.withWeekOfWeekyear(currentWeek).withDayOfWeek(DAY_OF_WEEK_MAPPER.get(workout.getWeekDay().ordinal()));
+                    dateTime = dateTime.withWeekOfWeekyear(currentWeek).withDayOfWeek(dayOfWeekMapper.get(workout.getWeekDay().ordinal()));
                     UserWorkout userWorkout = new UserWorkout();
                     userWorkout.setDate(dateTime.toDate());
                     userWorkout.setWorkout(new Workout(workout.getId()));
@@ -88,5 +77,15 @@ public class SessionUserPlanStarter implements UserPlanStarter {
 
     public void setPlanDao(PlanDao planDao) {
         this.planDao = planDao;
+    }
+    
+    private void afterPropertiesSet() {
+        dayOfWeekMapper.put(0, 7);
+        dayOfWeekMapper.put(1, 1);
+        dayOfWeekMapper.put(2, 2);
+        dayOfWeekMapper.put(3, 3);
+        dayOfWeekMapper.put(4, 4);
+        dayOfWeekMapper.put(5, 5);
+        dayOfWeekMapper.put(6, 6);
     }
 }

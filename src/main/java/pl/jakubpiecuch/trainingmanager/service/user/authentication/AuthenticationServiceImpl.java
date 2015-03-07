@@ -2,6 +2,7 @@ package pl.jakubpiecuch.trainingmanager.service.user.authentication;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -25,16 +26,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private static final String ANONYMOUS_USER_PRINCIPAL = "anonymousUser";
     private static final String ANONYMOUS_USER_KEY = "anonymousKey";
     private static final String ANONYMOUS_ROLE = "ROLE_ANONYMOUS";
-    private static final List<GrantedAuthority> ANONYMOUS_USER_AUTHORITY = new ArrayList<GrantedAuthority>() {
-        {
-            add(new GrantedAuthority() {
-                @Override
-                public String getAuthority() {
-                    return ANONYMOUS_ROLE;
-                }
-            });
-        }
-    };
 
     private Validator validator;
     private Map<Provider.Type, UserService> userServices;
@@ -49,7 +40,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public void signOut() {
-        SecurityContextHolder.getContext().setAuthentication(new AnonymousAuthenticationToken(ANONYMOUS_USER_KEY, ANONYMOUS_USER_PRINCIPAL, ANONYMOUS_USER_AUTHORITY));
+        SecurityContextHolder.getContext().setAuthentication(new AnonymousAuthenticationToken(ANONYMOUS_USER_KEY, ANONYMOUS_USER_PRINCIPAL, AuthorityUtils.createAuthorityList(ANONYMOUS_ROLE)));
     }
 
     @Override

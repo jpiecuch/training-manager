@@ -1,5 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.resource.image;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.MediaType;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ImageResource implements ResourceService {
@@ -42,13 +45,12 @@ public class ImageResource implements ResourceService {
         if (!directory.exists() || !directory.isDirectory() || directory.list().length == 0) {
             throw new NotFoundException();
         }
-        return new ArrayList<String>() {
-            {
-                for(String s : directory.list()) {
-                    add(handler + "/" + s);
-                }
+        return Lists.transform(Arrays.asList(directory.list()), new Function<String, String>() {
+            @Override
+            public String apply(String input) {
+                return handler + "/" + input;
             }
-        };
+        });
     }
 
     @Override
