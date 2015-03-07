@@ -15,6 +15,7 @@ public class ExecutionDto implements RepoObject {
     private Boolean confirm;
     private String comment;
 
+    @Override
     public Long getId() {
         return id;
     }

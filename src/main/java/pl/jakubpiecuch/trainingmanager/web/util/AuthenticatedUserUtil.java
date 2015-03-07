@@ -5,6 +5,9 @@ import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
 public class AuthenticatedUserUtil {
+
+    private AuthenticatedUserUtil() {
+    }
     
     private static final String NOT_AUTHENTICATED = "anonymousUser";
 

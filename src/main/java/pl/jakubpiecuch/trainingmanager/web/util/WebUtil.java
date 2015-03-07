@@ -13,6 +13,9 @@ import java.io.IOException;
 
 public class WebUtil {
 
+    private WebUtil() {
+    }
+
     private static final Logger LOGGER = LoggerFactory.getLogger(WebUtil.class);
     private static final ObjectMapper mapper = new ObjectMapper();
 

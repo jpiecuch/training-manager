@@ -66,13 +66,6 @@ public class DescriptionCriteria extends Criteria<DescriptionCriteria> {
         return this;
     }
 
-    public DescriptionCriteria addExcludedIdRestriction(Long... ids) {
-        if(ArrayUtils.isNotEmpty(ids)) {
-            this.excludedIds.addAll(Arrays.asList(ids));
-        }
-        return this;
-    }
-
     @Override
     protected void appendRestrictions() {
         if (this.id == null) {

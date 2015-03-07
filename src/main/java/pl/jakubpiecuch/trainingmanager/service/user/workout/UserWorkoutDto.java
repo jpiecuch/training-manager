@@ -70,6 +70,7 @@ public class UserWorkoutDto implements RepoObject {
         return weekDay;
     }
 
+    @Override
     public Long getId() {
         return id;
     }

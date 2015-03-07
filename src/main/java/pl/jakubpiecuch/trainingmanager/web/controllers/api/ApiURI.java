@@ -5,6 +5,9 @@ package pl.jakubpiecuch.trainingmanager.web.controllers.api;
  */
 public class ApiURI {
 
+    private ApiURI() {
+    }
+
     public static final String API_VERSION_PATH = "/api/{version}";
 
     public static final String LOCALE_PATH = "/locale";
