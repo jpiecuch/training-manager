@@ -15,6 +15,7 @@ public class VersionedEntity extends CommonEntity {
     private Date updated;
 
     public VersionedEntity() {
+        super();
     }
     
     public VersionedEntity(Long id) {

@@ -1,5 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
@@ -19,10 +21,11 @@ public class Account extends VersionedEntity {
     private String config;
 
     public Account() {
+        super();
     }
 
     public Account(Long id) {
-        this.setId(id);
+        super(id);
     }
 
     @Column(name = "name")
@@ -123,5 +126,54 @@ public class Account extends VersionedEntity {
         public String toString() {
             return WebUtil.toJson(this);
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Account rhs = (Account) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.name, rhs.name)
+                .append(this.password, rhs.password)
+                .append(this.email, rhs.email)
+                .append(this.salt, rhs.salt)
+                .append(this.status, rhs.status)
+                .append(this.config, rhs.config)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(name)
+                .append(password)
+                .append(email)
+                .append(salt)
+                .append(status)
+                .append(config)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Account{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", salt='").append(salt).append('\'');
+        sb.append(", status=").append(status);
+        sb.append(", config='").append(config).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

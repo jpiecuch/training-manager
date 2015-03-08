@@ -1,5 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -25,21 +28,29 @@ public class CommonEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof CommonEntity)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        CommonEntity other = (CommonEntity) object;
-        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        CommonEntity rhs = (CommonEntity) obj;
+        return new EqualsBuilder()
+                .append(this.id, rhs.id)
+                .isEquals();
     }
 
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(id)
+                .toHashCode();
+    }
 }
