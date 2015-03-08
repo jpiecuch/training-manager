@@ -2,6 +2,7 @@ package pl.jakubpiecuch.trainingmanager.domain;
 
 import org.junit.Before;
 import org.junit.Test;
+import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import java.util.Date;
 
@@ -18,6 +19,8 @@ public class AccountTest extends AbstractEntityTest<Account> {
     private static final String PASSWORD = "pass";
     private static final String SALT = "salt";
     private static final Date UPDATED = new Date();
+    private static final String FIRST_NAME = "firstName";
+    private static final String LAST_NAME = "lastName";
 
     private Account account = new Account();
 
@@ -39,6 +42,20 @@ public class AccountTest extends AbstractEntityTest<Account> {
     @Test
     public void testAccount() {
         testEntity();
+    }
+
+    @Test
+    public void testConfig() {
+        Account.Config config = new Account.Config();
+        assertNull(config.getFirstName());
+        assertNull(config.getLastName());
+
+        Account.Config.Builder builder = new Account.Config.Builder();
+        config = builder.firstName(FIRST_NAME).lastName(LAST_NAME).build();
+        assertEquals(FIRST_NAME, config.getFirstName());
+        assertEquals(LAST_NAME, config.getLastName());
+
+        assertEquals(WebUtil.toJson(config), config.toString());
     }
 
     @Override

@@ -168,7 +168,6 @@ public class Account extends VersionedEntity {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Account{");
         sb.append("name='").append(name).append('\'');
-        sb.append(", password='").append(password).append('\'');
         sb.append(", email='").append(email).append('\'');
         sb.append(", salt='").append(salt).append('\'');
         sb.append(", status=").append(status);
