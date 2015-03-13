@@ -17,9 +17,10 @@ app.config(['$animateProvider',
     }
 ]);
 
-app.run(function ($rootScope, $location, $state, authenticateService, isSignIn) {
+app.run(function ($rootScope, $location, $state, authenticateService, isSignIn, lang) {
     $rootScope.settings = {
-        isUserSignIn: isSignIn
+        isUserSignIn: isSignIn,
+        lang: lang
     };
 
     $rootScope.$on('$stateChangeStart', function (ev, to, toParams, from) {

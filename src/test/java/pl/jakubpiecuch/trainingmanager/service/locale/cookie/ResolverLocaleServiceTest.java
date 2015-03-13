@@ -57,4 +57,9 @@ public class ResolverLocaleServiceTest {
     public void testUpdateWithNotSuppoertedLocale() {
         service.update(request, response, new Locale("de"));
     }
+
+    @Test
+    public void testUpdate()  {
+        service.update(request, response, LOCALE);
+    }
 }

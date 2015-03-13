@@ -42,7 +42,7 @@
                         <tbody>
                         <tr data-ng-repeat="description in table.data.result">
                             <td>
-                                <a href="#/description?id={{description.id}}">{{description.names['pl']}}</a>
+                                <a href="#/description?id={{description.id}}">{{description.names[settings.lang]}}</a>
                             </td>
                             <td>
                                 {{description.muscles | translate}}
