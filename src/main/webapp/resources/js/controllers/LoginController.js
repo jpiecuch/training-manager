@@ -31,7 +31,8 @@ app.controller('LoginController', function($state, $scope, $http, $rootScope, ur
         credentials: {
             username: null,
             password: null,
-            provider: 'LOCAL'
+            provider: 'LOCAL',
+            rememberMe: undefined
         },
         signIn: function(form) {
           authenticateService.signIn($scope.login.credentials).then(function(data) {

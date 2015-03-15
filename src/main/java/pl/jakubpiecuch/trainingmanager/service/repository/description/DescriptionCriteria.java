@@ -3,16 +3,18 @@ package pl.jakubpiecuch.trainingmanager.service.repository.description;
 import org.apache.commons.lang.ArrayUtils;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
+import pl.jakubpiecuch.trainingmanager.service.resolver.OrderResolver;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Rico on 2015-01-02.
  */
 public class DescriptionCriteria extends Criteria<DescriptionCriteria> {
-    private static final String[] PROPERTIES = new String[] {"id","type","muscles","mechanics","force","level"};
+    private static final String[] PROPERTIES = new String[] {"id","type","muscles","mechanics","force","level", Description.PROPERTY_NAME};
     private List<Description.Muscles> muscles = new ArrayList<Description.Muscles>();
     private List<Description.Force> force = new ArrayList<Description.Force>();
     private List<Description.Level> level = new ArrayList<Description.Level>();

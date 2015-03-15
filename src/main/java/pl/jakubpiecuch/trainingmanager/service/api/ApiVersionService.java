@@ -49,7 +49,7 @@ public interface ApiVersionService {
 
     Map<String,OrderResolver> orderResolvers();
 
-    void signIn(Authentication authentication);
+    void signIn(HttpServletRequest request, HttpServletResponse response, Authentication authentication);
     void signOut();
     void signOn(Registration registration, Locale locale);
     Authentication signed();

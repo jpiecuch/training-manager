@@ -30,18 +30,18 @@
             </div>
             <div class="portlet-body form">
                 <div class="form-body">
-                    <div data-ng-repeat="lang in dictionary.langs" class="form-group"
-                         data-ng-class="{'has-success' : validate.isValid(form['name' + lang]), 'has-error' : validate.isNotValid(form['name' + lang])}">
-                        <label class="col-md-3 control-label" data-ng-class="{'bold' : form['name' + lang].$touched}"
-                               data-ng-bind="('description.name' | translate) + ' ' + (lang | translate)"></label>
+                    <div class="form-group"
+                         data-ng-class="{'has-success' : validate.isValid(form['name']), 'has-error' : validate.isNotValid(form['name'])}">
+                        <label class="col-md-3 control-label" data-ng-class="{'bold' : form['name'].$touched}"
+                               data-ng-bind="('description.name' | translate)"></label>
 
                         <div class="col-md-5">
                             <div class="input-icon right">
-                                <i data-ng-if="form['name' + lang].$touched" class="fa"
-                                   data-ng-class="{'fa-check' : validate.isValid(form['name' + lang]), 'fa-exclamation' : validate.isNotValid(form['name' + lang])}"></i>
-                                <input name="name{{lang}}" type="text" class="form-control"
+                                <i data-ng-if="form['name'].$touched" class="fa"
+                                   data-ng-class="{'fa-check' : validate.isValid(form['name']), 'fa-exclamation' : validate.isNotValid(form['name'])}"></i>
+                                <input name="name" type="text" class="form-control"
                                        placeholder="{{'description.name.placeholder' | translate}}"
-                                       data-ng-model="description.names[lang]" required
+                                       data-ng-model="description.name" required
                                        tooltip="{{'field.required' | translate}}" tooltip-placement="right">
                             </div>
                         </div>

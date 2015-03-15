@@ -2,7 +2,7 @@ app.service('descriptionService', function(urlService, $http, $q, formValidateSe
 
     var description = {
         id: null,
-        names: { pl: null, en: null },
+        name: null,
         movieUrl: null,
         description: null,
         muscles: null,
@@ -17,7 +17,7 @@ app.service('descriptionService', function(urlService, $http, $q, formValidateSe
             if (this.form.$valid) {
                 var payload = {
                     id: this.id,
-                    names: this.names,
+                    name: this.name,
                     movieUrl: this.movieUrl,
                     description: this.description,
                     muscles: this.muscles,
@@ -50,7 +50,7 @@ app.service('descriptionService', function(urlService, $http, $q, formValidateSe
     this.get = function(form, id) {
         var deferred = $q.defer();
         deferred.resolve();
-        var result = angular.extend({}, description);
+        var result = angular.extend({}, angular.copy(description));
         angular.extend(result, {form: form});
         return deferred.promise.then(function() {
             if (id) {

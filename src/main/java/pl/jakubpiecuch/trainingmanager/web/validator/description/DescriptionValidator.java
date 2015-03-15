@@ -8,6 +8,8 @@ import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 
+import java.io.IOException;
+
 /**
  * Created by Rico on 2014-12-07.
  */
@@ -16,7 +18,6 @@ public class DescriptionValidator implements Validator {
 
     private int minNameLength;
     private int maxNameLength;
-    private String[] langs;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -27,15 +28,12 @@ public class DescriptionValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Description object = (Description) target;
 
-        for (String lang : langs) {
-            String name = object.getNames().get(lang);
-            if (StringUtils.isEmpty(name)) {
-                errors.rejectValue("names[" + lang + "]", RestrictionCode.REQUIRED);
-            } else if (minNameLength > name.length()) {
-                errors.rejectValue("names[" + lang + "]", String.format(RestrictionCode.MIN_LENGTH, minNameLength));
-            } else if (maxNameLength < name.length()) {
-                errors.rejectValue("names[" + lang + "]", String.format(RestrictionCode.MAX_LENGTH, maxNameLength));
-            }
+        if (StringUtils.isEmpty(object.getName())) {
+            errors.rejectValue("name", RestrictionCode.REQUIRED);
+        } else if (minNameLength > object.getName().length()) {
+            errors.rejectValue("name", String.format(RestrictionCode.MIN_LENGTH, minNameLength));
+        } else if (maxNameLength < object.getName().length()) {
+            errors.rejectValue("name", String.format(RestrictionCode.MAX_LENGTH, maxNameLength));
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "muscles", RestrictionCode.REQUIRED);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "type", RestrictionCode.REQUIRED);
@@ -46,10 +44,6 @@ public class DescriptionValidator implements Validator {
         if (errors.hasErrors()) {
             throw new ValidationException(errors);
         }
-    }
-
-    public void setLangs(String[] langs) {
-        this.langs = langs;
     }
 
     public void setMinNameLength(int minNameLength) {

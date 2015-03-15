@@ -1,23 +1,14 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import org.apache.commons.lang.StringUtils;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 
 import javax.persistence.*;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Entity
 @Table(name = "description")
 public class Description extends CommonEntity implements RepoObject {
 
-    private static final String NAME_PERSIST_FORMAT = "%s:%s";
-    private static final String NAME_DELIMITER = ";";
+    public static final String PROPERTY_NAME  = "name";
 
     public enum Muscles {
         ABDUCTORS, ABS, BICEPS, CALVES, CHEST, FOREARM, GLUTES, HAMSTRINGS, LATS, LOWER_BACK, MIDDLE_BACK, NECK, QUADS, SHOULDERS, TRAPS, TRICEPS
@@ -52,12 +43,12 @@ public class Description extends CommonEntity implements RepoObject {
     public Description() {
     }
 
-    @Column(name = "name")
-    protected String getName() {
+    @Column(name = PROPERTY_NAME)
+    public String getName() {
         return name;
     }
 
-    protected void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -133,43 +124,4 @@ public class Description extends CommonEntity implements RepoObject {
     public void setForce(Force force) {
         this.force = force;
     }
-
-    @Transient
-    public Map<String, String> getNames() {
-        Map<String, String> result = null;
-        if (StringUtils.isNotEmpty(name)) {
-            result = new HashMap<String, String>();
-            for (String s : StringUtils.splitByWholeSeparatorPreserveAllTokens(name, NAME_DELIMITER)) {
-                String[] tokens = StringUtils.splitPreserveAllTokens(s, ":");
-                result.put(tokens[0], tokens[1]);
-            }
-        }
-        return result;
-    }
-
-    @JsonDeserialize(using = NamesDeserializer.class)
-    protected void setNames(Map<String, String> names) {
-        for (Map.Entry<String, String> e : names.entrySet()) {
-            addName(e.getKey(), e.getValue());
-        }
-    }
-
-    public void addName(String lang, String name) {
-        this.name = (StringUtils.isNotEmpty(this.name) ? this.name + NAME_DELIMITER : "") + String.format(NAME_PERSIST_FORMAT, lang, name);
-    }
-
-    public static class NamesDeserializer extends JsonDeserializer<Map> {
-
-        @Override
-        public Map deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-            Map result = new HashMap();
-
-            jsonParser.nextToken();
-            while (!jsonParser.nextToken().isStructEnd()) {
-                result.put(jsonParser.getCurrentName(), jsonParser.getValueAsString());
-            }
-            return result;
-        }
-    }
-
 }

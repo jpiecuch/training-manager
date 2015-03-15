@@ -17,6 +17,8 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -43,6 +45,12 @@ public class Version1ServiceTest {
 
     @Mock
     private AuthenticationService authenticationService;
+
+    @Mock
+    private HttpServletRequest request;
+
+    @Mock
+    private HttpServletResponse response;
 
 
     @Before
@@ -84,26 +92,26 @@ public class Version1ServiceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testSignInWithNullAuthentication() throws Exception {
-        Mockito.doThrow(IllegalArgumentException.class).when(authenticationService).signIn(null);
-        service.signIn(null);
+        Mockito.doThrow(IllegalArgumentException.class).when(authenticationService).signIn(request, response, null);
+        service.signIn(request, response, null);
     }
 
     @Test(expected = ValidationException.class)
     public void testSignInWithNotValidAuthentication() throws Exception {
-        Mockito.doThrow(ValidationException.class).when(authenticationService).signIn(NOT_VALID_AUTHENTICATION);
-        service.signIn(NOT_VALID_AUTHENTICATION);
+        Mockito.doThrow(ValidationException.class).when(authenticationService).signIn(request, response, NOT_VALID_AUTHENTICATION);
+        service.signIn(request, response, NOT_VALID_AUTHENTICATION);
     }
 
     @Test(expected = ObjectNotFoundException.class)
     public void testSignInWithNotPersistedUser() throws Exception {
-        Mockito.doThrow(ObjectNotFoundException.class).when(authenticationService).signIn(NOT_PERSISTED_USER_AUTHENTICATION);
-        service.signIn(NOT_PERSISTED_USER_AUTHENTICATION);
+        Mockito.doThrow(ObjectNotFoundException.class).when(authenticationService).signIn(request, response, NOT_PERSISTED_USER_AUTHENTICATION);
+        service.signIn(request, response, NOT_PERSISTED_USER_AUTHENTICATION);
     }
 
     @Test(expected = NotFoundException.class)
     public void testSignInWithNotFoundSocialUser() throws Exception {
-        Mockito.doThrow(NotFoundException.class).when(authenticationService).signIn(NOT_FOUND_SOCIAL_USER_AUTHENTICATION);
-        service.signIn(NOT_FOUND_SOCIAL_USER_AUTHENTICATION);
+        Mockito.doThrow(NotFoundException.class).when(authenticationService).signIn(request, response, NOT_FOUND_SOCIAL_USER_AUTHENTICATION);
+        service.signIn(request, response, NOT_FOUND_SOCIAL_USER_AUTHENTICATION);
     }
 
     @Test

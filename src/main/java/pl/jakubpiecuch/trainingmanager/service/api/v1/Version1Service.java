@@ -144,8 +144,8 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Override
-    public void signIn(Authentication authentication) {
-        authenticationService.signIn(authentication);
+    public void signIn(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        authenticationService.signIn(request, response, authentication);
     }
 
     @Override

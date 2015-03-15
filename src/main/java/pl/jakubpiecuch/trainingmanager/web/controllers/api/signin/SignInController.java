@@ -7,13 +7,16 @@ import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @RequestMapping("api/{version}/signin")
 @RestController
 public class SignInController extends AbstractController {
     
     @RequestMapping(method = { RequestMethod.POST })
-    public ResponseEntity signIn(@PathVariable ApiVersionService.Version version, @RequestBody Authentication authentication) {
-        versionServices.get(version).signIn(authentication);
+    public ResponseEntity signIn(@PathVariable ApiVersionService.Version version, @RequestBody Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
+        versionServices.get(version).signIn(request, response, authentication);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 

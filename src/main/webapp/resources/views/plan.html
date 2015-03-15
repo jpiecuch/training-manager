@@ -17,7 +17,7 @@
             </li>
         </ul>
     </div>
-    <form name="starterForm" class="form-horizontal" data-ng-submit="starter.start(starterForm)" novalidate>
+    <form data-ng-if="plan.id" name="starterForm" class="form-horizontal" data-ng-submit="starter.start(starterForm)" novalidate>
         <div class="form-body">
             <div class="row">
                 <div class="col-md-8">

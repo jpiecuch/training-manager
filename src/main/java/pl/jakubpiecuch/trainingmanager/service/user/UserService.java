@@ -4,6 +4,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
 /**
@@ -12,6 +14,6 @@ import java.util.Locale;
 public interface UserService {
 
     public void signOn(Registration request, Locale locale);
-    public void signIn(UserDetails user);
+    public void signIn(HttpServletRequest request, HttpServletResponse response, UserDetails user);
     public UserDetails resolveDetails(Authentication authentication);
 }

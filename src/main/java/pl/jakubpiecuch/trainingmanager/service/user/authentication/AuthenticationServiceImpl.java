@@ -13,6 +13,8 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -29,10 +31,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private AccountDao accountDao;
 
     @Override
-    public void signIn(Authentication authentication) {
+    public void signIn(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         validator.validate(authentication, new BeanPropertyBindingResult(authentication, Authentication.BEAN_NAME));
         UserDetails details = userServices.get(authentication.getProvider()).resolveDetails(authentication);
-        userServices.get(authentication.getProvider()).signIn(details);
+        userServices.get(authentication.getProvider()).signIn(request, response, details);
     }
 
     @Override

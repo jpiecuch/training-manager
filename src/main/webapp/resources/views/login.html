@@ -20,7 +20,7 @@
     </div>
     <div class="form-actions">
         <button type="submit" class="btn btn-success uppercase">Login</button>
-        <label class="rememberme check"><input type="checkbox" name="remember" value="1"/>Remember </label>
+        <label class="rememberme check"><input id="rememberMe" name="rememberMe" type="checkbox" data-ng-model="login.credentials.rememberMe"><label for="rememberMe"><span></span></label> <span data-ng-bind="'user.remember.me' | translate" class="ng-binding"></span> </label>
         <a href="" data-ng-click="login.tab.setIdx(1)" id="forget-password" class="forget-password">Forgot Password?</a>
     </div>
 </form>

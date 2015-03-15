@@ -17,7 +17,6 @@
     </bean>
 
     <bean id="descriptionValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.description.DescriptionValidator">
-        <property name="langs" value="${app.langs}"/>
         <property name="minNameLength" value="${description.name.minLength}"/>
         <property name="maxNameLength" value="${description.name.maxLength}"/>
     </bean>

@@ -16,6 +16,8 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +47,12 @@ public class AuthenticationServiceImplTest {
     @Mock
     private UserService socialUserService;
 
+    @Mock
+    private HttpServletRequest request;
+
+    @Mock
+    private HttpServletResponse response;
+
     private Map<Provider.Type, UserService> userServices;
 
     @Before
@@ -69,17 +77,17 @@ public class AuthenticationServiceImplTest {
 
     @Test(expected = ValidationException.class)
     public void testSignInNotValidAuthenitcation() throws Exception {
-        authenticationService.signIn(NOT_VALID_AUTHENTICATION);
+        authenticationService.signIn(request, response, NOT_VALID_AUTHENTICATION);
     }
 
     @Test(expected = NullPointerException.class)
     public void testSignInNullProvider() throws Exception {
-        authenticationService.signIn(NULL_PROVIDER_AUTHENTICATION);
+        authenticationService.signIn(request, response, NULL_PROVIDER_AUTHENTICATION);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testSignInNullSocial() throws Exception {
-        authenticationService.signIn(NULL_SOCIAL_AUTHENTICATION);
+        authenticationService.signIn(request, response, NULL_SOCIAL_AUTHENTICATION);
     }
 
 }
