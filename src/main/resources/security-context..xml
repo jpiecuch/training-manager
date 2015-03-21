@@ -7,8 +7,8 @@
 
     <global-method-security pre-post-annotations="enabled"/>
 
-    <http use-expressions="true" auto-config="true" entry-point-ref="authenticationEntryPoint">
-        <remember-me services-ref="rememberMeServices"/>
+    <http use-expressions="true" auto-config="true" entry-point-ref="authenticationEntryPoint" >
+        <remember-me services-ref="rememberMeServices" />
         <access-denied-handler ref="accessDeniedHandler" />
         <intercept-url pattern="/" access="permitAll" />
         <intercept-url pattern="/resources/**" access="permitAll" />
@@ -23,6 +23,7 @@
         <beans:constructor-arg name="userDetailsService" ref="localUserService"/>
         <beans:property name="cookieName" value="remember-me"/>
         <beans:property name="parameter" value="rememberMe"/>
+        <beans:property name="tokenValiditySeconds" value="864000"/>
     </beans:bean>
 
     <beans:bean id="authenticationEntryPoint" class="pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationEntryPoint"></beans:bean>
@@ -31,7 +32,6 @@
 
     <beans:bean id="authenticationProvider" class="pl.jakubpiecuch.trainingmanager.web.authentication.LocalAuthenticationProvider">
         <beans:property name="accountDao" ref="usersDao"/>
-        <beans:property name="shaPasswordEncoder" ref="shaPasswordEncoder"/>
     </beans:bean>
 
     <beans:bean abstract="true" id="abstractUserService" class="pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService">
