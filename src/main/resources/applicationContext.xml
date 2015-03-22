@@ -122,6 +122,7 @@
             </map>
         </property>
         <property name="validator" ref="authenticationValidator"/>
+        <property name="logoutHandler" ref="rememberMeServices"/>
     </bean>
 
     <bean id="constantsDictionary" class="pl.jakubpiecuch.trainingmanager.service.dictionary.constants.ConstantsDictionary">

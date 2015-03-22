@@ -4,6 +4,8 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
@@ -29,6 +31,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private Validator validator;
     private Map<Provider.Type, UserService> userServices;
     private AccountDao accountDao;
+    private LogoutHandler logoutHandler;
 
     @Override
     public void signIn(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
@@ -38,8 +41,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void signOut() {
+    public void signOut(HttpServletRequest request, HttpServletResponse response) {
+        logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
         SecurityContextHolder.getContext().setAuthentication(new AnonymousAuthenticationToken(ANONYMOUS_USER_KEY, ANONYMOUS_USER_PRINCIPAL, AuthorityUtils.createAuthorityList(ANONYMOUS_ROLE)));
+
     }
 
     @Override
@@ -61,5 +66,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     public void setAccountDao(AccountDao accountDao) {
         this.accountDao = accountDao;
+    }
+
+    public void setLogoutHandler(LogoutHandler logoutHandler) {
+        this.logoutHandler = logoutHandler;
     }
 }

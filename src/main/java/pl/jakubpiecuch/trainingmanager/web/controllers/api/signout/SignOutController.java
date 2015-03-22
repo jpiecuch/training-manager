@@ -9,13 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @RequestMapping("api/{version}/signout")
 @RestController
 public class SignOutController extends AbstractController {
     
     @RequestMapping(method = { RequestMethod.POST })
-    public ResponseEntity signOut(@PathVariable ApiVersionService.Version version) {
-        versionServices.get(version).signOut();
+    public ResponseEntity signOut(@PathVariable ApiVersionService.Version version, HttpServletRequest request, HttpServletResponse response) {
+        versionServices.get(version).signOut(request, response);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

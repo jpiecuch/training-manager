@@ -15,10 +15,10 @@ app.service('authenticateService', function($http, urlService, $q, $rootScope) {
 
     this.signIn = function(credentials) {
         var rememberMe = credentials.rememberMe;
-        delete credentials.rememberMe;
         return $http.post(urlService.apiURL('/signin'  + (rememberMe ? '?rememberMe=true' : '')), credentials).then(function(data) {
             if (data.status === 201) {
                 $rootScope.settings.isUserSignIn = true;
+                delete credentials.rememberMe;
             }
             return data;
         });

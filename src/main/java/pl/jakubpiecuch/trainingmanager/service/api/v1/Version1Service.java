@@ -149,8 +149,8 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Override
-    public void signOut() {
-        authenticationService.signOut();
+    public void signOut(HttpServletRequest request, HttpServletResponse response) {
+        authenticationService.signOut(request, response);
     }
 
     @Override

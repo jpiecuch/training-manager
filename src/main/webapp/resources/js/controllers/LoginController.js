@@ -36,6 +36,7 @@ app.controller('LoginController', function($state, $scope, $http, $rootScope, ur
         },
         signIn: function(form) {
           authenticateService.signIn($scope.login.credentials).then(function(data) {
+              console.log($scope.login.credentials);
               if (data.status === 201) {
                     $state.go('index');
                 }

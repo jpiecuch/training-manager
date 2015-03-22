@@ -50,7 +50,7 @@ public interface ApiVersionService {
     Map<String,OrderResolver> orderResolvers();
 
     void signIn(HttpServletRequest request, HttpServletResponse response, Authentication authentication);
-    void signOut();
+    void signOut(HttpServletRequest request, HttpServletResponse response);
     void signOn(Registration registration, Locale locale);
     Authentication signed();
     void startPlan(UserPlan userPlan);
