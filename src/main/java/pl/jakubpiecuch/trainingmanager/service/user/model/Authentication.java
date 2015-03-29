@@ -1,13 +1,17 @@
 package pl.jakubpiecuch.trainingmanager.service.user.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.domain.Role;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Rico on 2014-11-22.
@@ -24,6 +28,7 @@ public class Authentication {
     private String email;
     private Provider.Type provider;
     private SocialProvider.SocialType social;
+    private List<String> authorities;
 
     public Authentication() {
 
@@ -34,6 +39,7 @@ public class Authentication {
         this.email = account.getEmail();
         this.username = account.getName();
         this.password = account.getPassword();
+        this.authorities = account.getGrantedPermissions();
         try {
             Account.Config config = WebUtil.fromJson(account.getConfig(), Account.Config.class);
             this.firstName = config.getFirstName();
@@ -108,5 +114,13 @@ public class Authentication {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<String> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<String> authorities) {
+        this.authorities = authorities;
     }
 }

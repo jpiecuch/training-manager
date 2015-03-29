@@ -56,4 +56,8 @@
     <bean id="userWorkoutDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.UserWorkoutDaoImpl" parent="repoDao">
         <property name="clazz" value="pl.jakubpiecuch.trainingmanager.domain.UserWorkout"/>
     </bean>
+
+    <bean id="roleDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.RoleDaoImpl" parent="repoDao">
+        <property name="clazz" value="pl.jakubpiecuch.trainingmanager.domain.Role"/>
+    </bean>
 </beans>

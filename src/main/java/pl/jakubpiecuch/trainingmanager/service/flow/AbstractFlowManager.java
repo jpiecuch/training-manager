@@ -8,6 +8,7 @@ import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanDto;
+import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 import java.util.List;
 
@@ -23,7 +24,11 @@ public abstract class AbstractFlowManager<T extends Flow> implements FlowManager
     @Override
     @Transactional
     public T retrieve(long id, boolean full) {
-        return (T) converter.fromEntity(dao.findById(id), full);
+        CommonEntity flow = dao.findById(id);
+        if (flow == null) {
+            throw new NotFoundException();
+        }
+        return (T) converter.fromEntity(flow, full);
     }
 
     @Override

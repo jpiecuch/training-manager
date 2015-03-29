@@ -47,7 +47,13 @@ public abstract class Criteria<T extends Criteria> {
     }
 
 
-    protected abstract void validateProperty(String property);
+    protected void validateProperty(String property) {
+        if (!ArrayUtils.contains(getValidFields(), property)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    protected abstract String[] getValidFields();
     protected abstract void appendRestrictions();
 
     public Query query(Session session) {

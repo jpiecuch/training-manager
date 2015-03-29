@@ -38,7 +38,7 @@ public class ExecutionDaoImplTest extends BaseDAOTestCase {
 
     @Test
     public void testFindByCriteria() {
-        SecurityContextHolder.getContext().setAuthentication( new UsernamePasswordAuthenticationToken(new SecurityUser(1l, "user", "password", null), "password", AuthorityUtils.createAuthorityList("ROLE_ADMIN")));
+        SecurityContextHolder.getContext().setAuthentication( new UsernamePasswordAuthenticationToken(new SecurityUser(1l, "user", "password", null, AuthorityUtils.createAuthorityList("ROLE_ADMIN")), "password", AuthorityUtils.createAuthorityList("ROLE_ADMIN")));
         PageResult result = ((RepoDao) executionDao).findByCriteria(new UserWorkoutCriteria("en").setIdRestriction(1l));
         assertNotNull(result);
         assertEquals(1l, result.getCount());

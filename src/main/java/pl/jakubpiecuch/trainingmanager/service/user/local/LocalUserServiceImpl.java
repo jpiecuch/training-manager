@@ -1,8 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.service.user.local;
 
 import com.springcryptoutils.core.cipher.symmetric.SymmetricEncryptionException;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.keygen.KeyGenerators;
@@ -19,6 +22,7 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 import javax.validation.ValidationException;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -40,7 +44,8 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
         if (account == null || Account.Status.ACTIVE != account.getStatus()) {
             throw new UsernameNotFoundException("User not exists");
         }
-        return new SecurityUser(null, authentication.getUsername(), passwordEncoder.encode(authentication.getPassword(), account.getSalt()), null);
+        List<GrantedAuthority> authorities = CollectionUtils.isNotEmpty(account.getGrantedPermissions()) ? AuthorityUtils.createAuthorityList(account.getGrantedPermissions().toArray(new String[account.getGrantedPermissions().size()])) : AuthorityUtils.NO_AUTHORITIES;
+        return new SecurityUser(null, authentication.getUsername(), passwordEncoder.encode(authentication.getPassword(), account.getSalt()), null, authorities);
     }
 
     @Override
@@ -60,7 +65,8 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
         if (account == null || Account.Status.ACTIVE != account.getStatus()) {
             throw new UsernameNotFoundException("User not exists");
         }
-        return new SecurityUser(account.getId(), account.getName(), account.getPassword(), null);
+        List<GrantedAuthority> authorities = CollectionUtils.isNotEmpty(account.getGrantedPermissions()) ? AuthorityUtils.createAuthorityList(account.getGrantedPermissions().toArray(new String[account.getGrantedPermissions().size()])) : AuthorityUtils.NO_AUTHORITIES;
+        return new SecurityUser(account.getId(), account.getName(), account.getPassword(), null, authorities);
     }
 
     @Override

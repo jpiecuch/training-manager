@@ -34,10 +34,11 @@ app.controller('LoginController', function($state, $scope, $http, $rootScope, ur
             provider: 'LOCAL',
             rememberMe: undefined
         },
-        signIn: function(form) {
+        signIn: function() {
+            console.log('test');
           authenticateService.signIn($scope.login.credentials).then(function(data) {
-              console.log($scope.login.credentials);
               if (data.status === 201) {
+                    console.log($rootScope.settings.user);
                     $state.go('index');
                 }
           });

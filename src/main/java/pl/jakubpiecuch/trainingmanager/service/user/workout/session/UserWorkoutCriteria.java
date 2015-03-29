@@ -1,6 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.service.user.workout.session;
 
-import org.apache.commons.lang.ArrayUtils;
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
@@ -18,17 +17,15 @@ public class UserWorkoutCriteria extends Criteria<UserWorkoutCriteria> {
         super("u", "UserWorkout", lang);
     }
 
+    @Override
+    protected String[] getValidFields() {
+        return PROPERTIES;
+    }
+
     public UserWorkoutCriteria addDateRangeRestriction(Date from, Date to) {
         this.from = from;
         this.to = to;
         return this;
-    }
-
-    @Override
-    protected void validateProperty(String property) {
-        if (!ArrayUtils.contains(PROPERTIES, property)) {
-            throw new IllegalArgumentException();
-        }
     }
 
     @Override

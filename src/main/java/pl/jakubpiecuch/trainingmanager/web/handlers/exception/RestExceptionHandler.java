@@ -1,6 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.web.handlers.exception;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +23,8 @@ import java.util.List;
  */
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestExceptionHandler.class);
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class ErrorResource {
@@ -83,6 +87,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ ValidationException.class})
     protected ResponseEntity<Object> handleValidation(RuntimeException e, WebRequest request) {
+        LOGGER.error("",e);
         ValidationException ire = (ValidationException) e;
 
         ErrorResource error = new ErrorResource(ErrorResource.DEFAULT_CODE, ire.getMessage());
@@ -99,6 +104,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ IllegalArgumentException.class})
     protected ResponseEntity<Object> handleInvalidRequest(RuntimeException e, WebRequest request) {
+        LOGGER.error("",e);
         IllegalArgumentException ire = (IllegalArgumentException) e;
 
         ErrorResource error = new ErrorResource(ErrorResource.DEFAULT_CODE, ire.getMessage());
@@ -111,6 +117,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ NotFoundException.class})
     protected ResponseEntity<Object> handleNotFound(RuntimeException e, WebRequest request) {
+        LOGGER.error("",e);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -119,6 +126,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        LOGGER.error("",ex);
         headers.setContentType(MediaType.APPLICATION_JSON);
         return super.handleExceptionInternal(ex, body == null ? new ErrorResource(ErrorResource.DEFAULT_CODE, ex.getMessage()) : body, headers, status, request);
     }

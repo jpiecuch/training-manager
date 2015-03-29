@@ -10,6 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import pl.jakubpiecuch.trainingmanager.dao.FlowDao;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.FlowConverter;
+import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -47,7 +48,7 @@ public class PlanManagerTest {
         assertEquals(flow, PLAN_FLOW);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NotFoundException.class)
     public void testGetElementNotPersist() {
         planManager.retrieve(NOT_PERSIST_ID, false);
     }

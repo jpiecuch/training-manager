@@ -12,7 +12,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Description;
  */
 public abstract class AbstractRepository<E extends RepoObject, C extends Criteria> implements Repository<E, C> {
 
-    private RepoDao dao;
+    protected RepoDao dao;
     private Validator validator;
     private String name;
 

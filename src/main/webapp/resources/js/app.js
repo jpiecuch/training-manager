@@ -17,10 +17,20 @@ app.config(['$animateProvider',
     }
 ]);
 
-app.run(function ($rootScope, $location, $state, authenticateService, isSignIn, lang) {
+app.run(function ($rootScope, $location, $state, authenticateService, user, lang) {
+
+    if (user != null && user.authorities) {
+        user.authorities = user.authorities.replace('[', '').replace(']', '');
+        user.authorities = user.authorities.split(', ');
+    }
+
     $rootScope.settings = {
-        isUserSignIn: isSignIn,
-        lang: lang
+        isUserSignIn: user != null,
+        user: user,
+        lang: lang,
+        hasPermission: function(permission) {
+            return this.user && _.contains(this.user.authorities, permission);
+        }
     };
 
     $rootScope.$on('$stateChangeStart', function (ev, to, toParams, from) {

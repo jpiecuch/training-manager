@@ -27,3 +27,6 @@ ALTER TABLE user_workout ALTER COLUMN id SET DEFAULT nextval('user_workout_id_se
 
 CREATE SEQUENCE account_record_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
 ALTER TABLE account_record ALTER COLUMN id SET DEFAULT nextval('account_record_id_seq');
+
+CREATE SEQUENCE role_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+ALTER TABLE role ALTER COLUMN id SET DEFAULT nextval('role_id_seq');

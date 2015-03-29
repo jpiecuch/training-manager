@@ -23,7 +23,7 @@
 
     <bean id="languageController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.language.LanguageController" parent="abstractController"/>
 
-    <bean id="planController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.flow.plan.PlanController" parent="abstractController"/>
+    <bean id="planController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.plan.PlanController" parent="abstractController"/>
 
     <bean id="dictionaryController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.dictionary.DictionaryController" parent="abstractController"/>
 
@@ -36,6 +36,8 @@
     <bean id="userPlansController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.plans.UserPlansController" parent="abstractController"/>
 
     <bean id="userWorkoutsController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.workouts.UserWorkoutsController" parent="abstractController"/>
+
+    <bean id="roleController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.role.RoleController" parent="abstractController"/>
 
     <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
         <property name="userServices">
@@ -63,6 +65,7 @@
             <map>
                 <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
                 <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
+                <entry key="ROLE" value-ref="roleRepository"/>
             </map>
         </property>
         <property name="readRepositories">
@@ -71,6 +74,7 @@
                 <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
                 <entry key="PLAN" value-ref="planManager"/>
                 <entry key="WORKOUT" value-ref="userWorkoutManager"/>
+                <entry key="ROLE" value-ref="roleRepository"/>
             </map>
         </property>
         <property name="orderResolverMap">

@@ -1,6 +1,9 @@
 package pl.jakubpiecuch.trainingmanager.service.user.social;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.keygen.KeyGenerators;
@@ -13,6 +16,7 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -26,7 +30,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
     @Override
     public UserDetails resolveDetails(Authentication authentication) {
         Assert.notNull(authentication.getSocial());
-        return new SecurityUser(null, authentication.getUsername(), authentication.getPassword(), authentication.getSocial());
+        return new SecurityUser(null, authentication.getUsername(), authentication.getPassword(), authentication.getSocial(), AuthorityUtils.NO_AUTHORITIES);
     }
 
     @Override
@@ -41,7 +45,8 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
         if (account == null || Account.Status.ACTIVE != account.getStatus()) {
             throw new UsernameNotFoundException("User not exists");
         }
-        return new SecurityUser(account.getId(), account.getName(), account.getPassword(), null);
+        List<GrantedAuthority> authorities = CollectionUtils.isNotEmpty(account.getGrantedPermissions()) ? AuthorityUtils.createAuthorityList(account.getGrantedPermissions().toArray(new String[account.getGrantedPermissions().size()])) : AuthorityUtils.NO_AUTHORITIES;
+        return new SecurityUser(account.getId(), account.getName(), account.getPassword(), null, authorities);
 
     }
 

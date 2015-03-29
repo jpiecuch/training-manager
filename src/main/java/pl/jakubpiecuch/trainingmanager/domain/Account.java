@@ -1,10 +1,13 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "account")
@@ -19,6 +22,7 @@ public class Account extends VersionedEntity {
     private String salt;
     private Status status;
     private String config;
+    private List<Role> roles;
 
     public Account() {
         super();
@@ -81,6 +85,30 @@ public class Account extends VersionedEntity {
 
     public void setConfig(String config) {
         this.config = config;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "account_role", joinColumns = {@JoinColumn(name = "account") }, inverseJoinColumns = { @JoinColumn(name = "role") })
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Transient
+    public List<String> getGrantedPermissions() {
+        List<String> authorities = null;
+        if (CollectionUtils.isNotEmpty(this.roles)) {
+            authorities = new ArrayList<String>();
+            for (Role role : this.roles) {
+                for (String permission : role.getGrantedPermissions()) {
+                    authorities.add(permission);
+                }
+            }
+        }
+        return authorities;
     }
 
     public static class Config {

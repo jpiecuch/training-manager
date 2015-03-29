@@ -10,12 +10,6 @@
     <http use-expressions="true" auto-config="true" entry-point-ref="authenticationEntryPoint" >
         <remember-me services-ref="rememberMeServices" />
         <access-denied-handler ref="accessDeniedHandler" />
-        <intercept-url pattern="/" access="permitAll" />
-        <intercept-url pattern="/resources/**" access="permitAll" />
-        <intercept-url pattern="/api/v1/resource*" access="permitAll" />
-        <intercept-url pattern="/api/v1/locale*" access="permitAll" />
-        <intercept-url pattern="/api/v1/signin" access="permitAll" />
-        <intercept-url pattern="/api/v1/signon" access="permitAll" />
     </http>
 
     <beans:bean id="rememberMeServices" class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">

@@ -53,7 +53,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (object instanceof String) {
             throw new NotFoundException();
         }
-        return new Authentication(accountDao.findByUniques(((SecurityUser) object).getId(), null, null));
+        return new Authentication(accountDao.findByUniques(((SecurityUser) object).getId(), ((SecurityUser) object).getUsername(), null));
     }
 
     public void setUserServices(Map<Provider.Type, UserService> userServices) {

@@ -9,7 +9,7 @@
 <h3 class="page-title" data-ng-bind="'dashboard' | translate"></h3>
 <div ng-controller="DashboardController">
 	<div class="row">
-		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-ng-if="settings.hasPermission('PLAN_V')">
 			<div class="dashboard-stat blue-madison">
 				<div class="visual"><i class="fa fa-list"></i></div>
 				<div class="details">
@@ -20,7 +20,7 @@
 				</a>
 			</div>
 		</div>
-		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-ng-if="settings.hasPermission('DESCRIPTION_V')">
 			<div class="dashboard-stat red-flamingo">
 				<div class="visual"><i class="fa fa-list"></i></div>
 				<div class="details">
@@ -31,7 +31,7 @@
 				</a>
 			</div>
 		</div>
-		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-ng-if="settings.hasPermission('EQUIPMENT_V')">
 			<div class="dashboard-stat green-jungle">
 				<div class="visual"><i class="fa fa-list"></i></div>
 				<div class="details">
@@ -44,7 +44,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-ng-if="settings.hasPermission('PLAN_C')">
 			<div class="dashboard-stat blue-madison">
 				<div class="visual"><i class="icon-plus"></i></div>
 				<div class="details">
@@ -55,7 +55,7 @@
 				</a>
 			</div>
 		</div>
-		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-ng-if="settings.hasPermission('DESCRIPTION_C')">
 			<div class="dashboard-stat red-flamingo">
 				<div class="visual"><i class="icon-plus"></i></div>
 				<div class="details">
@@ -66,7 +66,7 @@
 				</a>
 			</div>
 		</div>
-		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-ng-if="settings.hasPermission('EQUIPMENT_C')">
 			<div class="dashboard-stat green-jungle">
 				<div class="visual"><i class="icon-plus"></i></div>
 				<div class="details">

@@ -37,6 +37,8 @@
         </property>
     </bean>
 
+    <bean id="roleValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.role.RoleValidator"/>
+
     <bean id="barValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.bar.BarValidator"/>
 
     <bean id="benchValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.bench.BenchValidator"/>

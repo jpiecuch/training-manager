@@ -133,6 +133,12 @@
 
     <bean id="securedConstantsDictionary" class="pl.jakubpiecuch.trainingmanager.service.dictionary.constants.SecuredConstantsDictionary" parent="constantsDictionary"/>
 
+    <bean  id="roleRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.role.RoleRepository">
+        <property name="dao" ref="roleDao"/>
+        <property name="validator" ref="roleValidator"/>
+        <property name="name" value="role"/>
+    </bean>
+
     <bean  id="descriptionRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionRepository">
         <property name="dao" ref="descriptionDao"/>
         <property name="validator" ref="descriptionValidator"/>

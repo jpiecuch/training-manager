@@ -110,6 +110,6 @@
     app.constant('contextPath', '${pageContext.request.contextPath}')
             .constant('lang', '${pageContext.response.locale.language}')
             .constant('version', 'v1')
-            .constant('isSignIn', ${isSignIn});
+            .constant('user', ${not empty user} === true ? { username: '${user.username}', authorities: '${user.authorities}' } : null);
 </script>
 </html>

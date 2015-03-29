@@ -24,6 +24,7 @@ public class AccountDaoImplTest extends BaseDAOTestCase {
     private static final Long NOT_EXISTS_ID = 99l;
     private static final String NOT_EXISTS_NAME = "not.exists";
     private static final String NOT_EXISTS_EMAIL = "not@exists.com";
+    private static final String ROLE_NAME = "ADMIN";
     private static Date CREATED;
     private static final String UPDATED_STRING = "2014-12-07 13:53:16.062";
     private static Date UPDATED;
@@ -198,5 +199,7 @@ public class AccountDaoImplTest extends BaseDAOTestCase {
         assertEquals(STATUS, account.getStatus());
         assertEquals(EMAIL, account.getEmail());
         assertEquals(CONFIG, account.getConfig());
+        assertNotNull(account.getRoles());
+        assertEquals(ROLE_NAME, account.getRoles().get(0).getName());
     }
 }

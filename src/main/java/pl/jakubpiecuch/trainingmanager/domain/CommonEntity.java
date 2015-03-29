@@ -9,6 +9,8 @@ import java.io.Serializable;
 @MappedSuperclass
 public class CommonEntity implements Serializable {
 
+    public static final String ID_FIELD_NAME = "id";
+
     private Long id;
 
     public CommonEntity() {

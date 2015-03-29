@@ -10,6 +10,18 @@ CREATE TABLE account (
     config character varying(50000)
 );
 
+CREATE TABLE role (
+  id bigint PRIMARY KEY NOT NULL,
+  name character varying(50) NOT NULL,
+  permissions character varying(255),
+  modifiable boolean NOT NULL
+);
+
+CREATE TABLE account_role (
+  account bigint NOT NULL,
+  role bigint NOT NULL
+);
+
 CREATE TABLE equipment (
     id bigint PRIMARY KEY NOT NULL,
     type integer NOT NULL,
@@ -103,7 +115,7 @@ CREATE TABLE account_record (
     id BIGINT PRIMARY KEY NOT NULL,
     type integer NOT NULL,
     value character varying(50)
-)
+);
 
 ALTER TABLE userconnection ADD CONSTRAINT userconnection_pkey PRIMARY KEY (userid, providerid, provideruserid);
 
@@ -119,3 +131,5 @@ ALTER TABLE execution ADD CONSTRAINT exercise_fkey FOREIGN KEY (exercise) REFERE
 ALTER TABLE execution ADD CONSTRAINT execution_user_workout_fkey FOREIGN KEY (workout) REFERENCES user_workout(id);
 ALTER TABLE user_workout ADD CONSTRAINT account_fkey FOREIGN KEY (account) REFERENCES account(id);
 ALTER TABLE user_workout ADD CONSTRAINT workout_user_fkey FOREIGN KEY (workout) REFERENCES workout(id);
+ALTER TABLE account_role ADD CONSTRAINT account_role_role_fkey FOREIGN KEY (role) REFERENCES role(id);
+ALTER TABLE account_role ADD CONSTRAINT account_role_account_fkey FOREIGN KEY (account) REFERENCES account(id);

@@ -9,6 +9,7 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.social.connect.*;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
 import org.springframework.social.connect.support.OAuth2Connection;
@@ -99,7 +100,7 @@ public class FacebookServiceTest {
 
     @Before
     public void setUp() {
-        VALID_USER = new SecurityUser(null,FACEBOOK_ID, FACEBOOK_KEY, SocialProvider.SocialType.FACEBOOK);
+        VALID_USER = new SecurityUser(null,FACEBOOK_ID, FACEBOOK_KEY, SocialProvider.SocialType.FACEBOOK, AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
         Mockito.when(restTemplate.getForObject(String.format(facebookService.getRestUrl(), FACEBOOK_KEY), HashMap.class)).thenReturn(FACEBOOK_RESPONSE);
         Mockito.when(connectionFactoryRegistry.getConnectionFactory(SocialProvider.SocialType.FACEBOOK.getProviderId())).thenReturn(connectionFactory);
         Mockito.when(connectionFactory.createConnection(Matchers.any(ConnectionData.class))).thenReturn(oAuth2Connection);
@@ -113,7 +114,7 @@ public class FacebookServiceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testCreateConnectionWithEmptyUser() throws Exception {
-        facebookService.createConnection(new SecurityUser(null, "", "", SocialProvider.SocialType.FACEBOOK));
+        facebookService.createConnection(new SecurityUser(null, "", "", SocialProvider.SocialType.FACEBOOK, AuthorityUtils.createAuthorityList("ROLE_ADMIN")));
     }
 
     @Test(expected = RuntimeException.class)

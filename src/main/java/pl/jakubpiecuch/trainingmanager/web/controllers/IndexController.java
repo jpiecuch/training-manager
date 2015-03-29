@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
+import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialSignOnAdapter;
+import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
 import java.util.Locale;
@@ -17,18 +19,28 @@ import java.util.Locale;
 public class IndexController {
 
     private SocialSignOnAdapter socialSignOnAdapter;
+    private AuthenticationService authenticationService;
     
     @RequestMapping(method = { RequestMethod.GET, RequestMethod.HEAD})
     public String index(Model model, @RequestParam(required = false, value = "social", defaultValue = "false") Boolean social, WebRequest request, Locale locale){
         if (social) {
             socialSignOnAdapter.signOn(request, locale);
         }
-        model.addAttribute("isSignIn", AuthenticatedUserUtil.getAuthenticatedUserDetails() != null);
+        try {
+            model.addAttribute("user", authenticationService.signed());
+        } catch(NotFoundException ex) {
+
+        }
         return "index";
     }
 
     @Autowired
     public void setSocialSignOnAdapter(SocialSignOnAdapter socialSignOnAdapter) {
         this.socialSignOnAdapter = socialSignOnAdapter;
+    }
+
+    @Autowired
+    public void setAuthenticationService(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 }

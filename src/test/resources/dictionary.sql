@@ -1,5 +1,9 @@
 INSERT INTO account (id, name, password, salt, created, updated, status, email, config) VALUES (1, 'test.user', 'f0e734ab8910dee9762d0ee07964288dd8ffd95be9ab646af02ba1c1256e5037', '3994c7aea794c1cf', '2014-12-07 13:52:56.805', '2014-12-07 13:53:16.062', 0, 'test.user@test.com', '{"firstName":"Test","lastName":"User"}');
 
+INSERT INTO role (id, name, permissions, modifiable) VALUES (1, 'ADMIN', '0,1,2', true);
+
+INSERT INTO account_role (account, role) VALUES (1,1);
+
 INSERT INTO plan (id, name, goal, creator, used) VALUES (1, 'Main plan', 0, 1, true);
 
 INSERT INTO phase (id, position, goal, description, plan, weeks) VALUES (1, 1, 1, 'Main phase', 1, 3);

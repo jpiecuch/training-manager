@@ -22,10 +22,8 @@ public class EquipmentCriteria extends Criteria<EquipmentCriteria> {
     }
 
     @Override
-    protected void validateProperty(String property) {
-        if (!ArrayUtils.contains(PROPERTIES, property)) {
-            throw new IllegalArgumentException();
-        }
+    protected String[] getValidFields() {
+        return PROPERTIES;
     }
 
     public EquipmentCriteria addTypeRestriction(Equipment.Type... types) {

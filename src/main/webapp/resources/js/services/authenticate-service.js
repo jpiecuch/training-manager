@@ -14,20 +14,33 @@ app.service('authenticateService', function($http, urlService, $q, $rootScope) {
     }
 
     this.signIn = function(credentials) {
-        var rememberMe = credentials.rememberMe;
-        return $http.post(urlService.apiURL('/signin'  + (rememberMe ? '?rememberMe=true' : '')), credentials).then(function(data) {
+        var deferred = $q.defer();
+        deferred.resolve();
+        return deferred.promise.then(function() {
+            var rememberMe = credentials.rememberMe;
+            return $http.post(urlService.apiURL('/signin' + (rememberMe ? '?rememberMe=true' : '')), credentials).then(function (data) {
+                if (data.status === 201) {
+                    $rootScope.settings.isUserSignIn = true;
+                    delete credentials.rememberMe;
+                }
+                return data;
+            });
+        }).then(function(data) {
             if (data.status === 201) {
-                $rootScope.settings.isUserSignIn = true;
-                delete credentials.rememberMe;
+                return $http.get(urlService.apiURL('/signin')).then(function (user) {
+                    $rootScope.settings.user = user.data;
+                    return data;
+                });
             }
             return data;
         });
-    }
+    };
 
     this.signOut = function() {
         return $http.post(urlService.apiURL('/signout')).then(function() {
             user = null;
             $rootScope.settings.isUserSignIn = false;
+            $rootScope.settings.user = null;
         });
     }
 

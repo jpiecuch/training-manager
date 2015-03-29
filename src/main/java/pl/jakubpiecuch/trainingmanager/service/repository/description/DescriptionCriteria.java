@@ -27,10 +27,8 @@ public class DescriptionCriteria extends Criteria<DescriptionCriteria> {
     }
 
     @Override
-    protected void validateProperty(String property) {
-        if (!ArrayUtils.contains(PROPERTIES, property)) {
-            throw new IllegalArgumentException();
-        }
+    protected String[] getValidFields() {
+        return PROPERTIES;
     }
 
     public DescriptionCriteria addMuscleRestriction(Description.Muscles... muscle) {

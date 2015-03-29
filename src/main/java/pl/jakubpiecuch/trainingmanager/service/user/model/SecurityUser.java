@@ -1,8 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.service.user.model;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.social.security.SocialUser;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
+
+import java.util.Collection;
 
 public class SecurityUser extends SocialUser {
 
@@ -13,8 +16,8 @@ public class SecurityUser extends SocialUser {
     private Long id;
     private SocialProvider.SocialType social;
 
-    public SecurityUser(Long id, String username, String password, SocialProvider.SocialType social) {
-        super(username, password, AuthorityUtils.NO_AUTHORITIES);
+    public SecurityUser(Long id, String username, String password, SocialProvider.SocialType social, Collection<GrantedAuthority> authorities) {
+        super(username, password, authorities);
         this.social = social;
         this.id = id;
     }

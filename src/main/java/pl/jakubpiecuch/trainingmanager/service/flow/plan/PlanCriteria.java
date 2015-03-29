@@ -20,10 +20,8 @@ public class PlanCriteria extends Criteria<PlanCriteria> {
     }
 
     @Override
-    protected void validateProperty(String property) {
-        if (!ArrayUtils.contains(PROPERTIES, property)) {
-            throw new IllegalArgumentException();
-        }
+    protected String[] getValidFields() {
+        return PROPERTIES;
     }
 
     public PlanCriteria addGoalRestrictions(Plan.Goal... goal) {

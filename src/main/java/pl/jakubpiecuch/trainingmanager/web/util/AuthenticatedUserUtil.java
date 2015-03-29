@@ -1,12 +1,15 @@
 package pl.jakubpiecuch.trainingmanager.web.util;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.domain.Role;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
-public class AuthenticatedUserUtil {
+import java.util.ArrayList;
+import java.util.List;
 
-    private static final String NOT_AUTHENTICATED = "anonymousUser";
+public class AuthenticatedUserUtil {
 
     private AuthenticatedUserUtil() {
     }
@@ -16,8 +19,17 @@ public class AuthenticatedUserUtil {
         return object instanceof String ? null : (SecurityUser) object;
     }
 
-    public static boolean isAuthenticated() {
-        return !SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString().equals(NOT_AUTHENTICATED);
+    public static List<String> getGrantedPermissions(Account account) {
+        List<String> authorities = null;
+        if (CollectionUtils.isNotEmpty(account.getRoles())) {
+            authorities = new ArrayList<String>();
+            for (Role role : account.getRoles()) {
+                for (String permission : role.getGrantedPermissions()) {
+                    authorities.add(permission);
+                }
+            }
+        }
+        return authorities;
     }
     
     public static Account getUser() {
