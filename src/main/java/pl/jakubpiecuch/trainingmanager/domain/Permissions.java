@@ -41,6 +41,8 @@ public class Permissions {
             WORKOUT_VIEWER,
             EXECUTION_CREATOR };
 
+    public static final String[] USER_ROLE_PERMISSIONS = new String[] { PLAN_VIEWER, DESCRIPTION_VIEWER };
+
 
     private Permissions() {
     }

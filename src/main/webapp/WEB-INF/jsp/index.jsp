@@ -65,7 +65,7 @@
 
 <div data-ng-if="settings.isUserSignIn" data-ng-include="'resources/tpl/footer.html'" data-ng-controller="FooterController" class="page-footer">
 </div>
-
+<script src="https://www.youtube.com/iframe_api"></script>
 <!--[if lt IE 9]>
 <script src="resources/assets/global/plugins/respond.min.js"></script>
 <script src="resources/assets/global/plugins/excanvas.min.js"></script>
@@ -90,6 +90,7 @@
 <script src="resources/js/modules/toaster.js" type="text/javascript"></script>
 <script src="resources/js/modules/calendar.js" type="text/javascript"></script>
 <script src="resources/js/modules/checklist-model.js" type="text/javascript"></script>
+<script src="resources/js/modules/angular-youtube-embed.js" type="text/javascript"></script>
 
 <script src="resources/js/app.js" type="text/javascript"></script>
 <script src="resources/js/services/url-service.js" type="text/javascript"></script>

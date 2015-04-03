@@ -244,7 +244,7 @@
                                                      data-ng-repeat="description in workout.descriptions.result.result"
                                                      data-ng-click="workout.addExercise(description)">
                                                     <div class="dictionary-tile-body">
-                                                        <span data-ng-bind="description.names['pl']"></span>
+                                                        <span data-ng-bind="description.name"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -270,7 +270,7 @@
                                                 <div class="caption">
                                                     <i class="icon-equalizer font-red-sunglo"></i>
                                                     <span class="caption-subject bold uppercase" data-ng-class="{'font-green-jungle' : exercise.isValid() === true, 'font-red-sunglo' : exercise.isValid() === false}" data-ng-bind="'exercise' | translate"></span>
-                                                    <span class="caption-helper" data-ng-bind="exercise.description.names['pl']"></span>
+                                                    <span class="caption-helper" data-ng-bind="exercise.description.name"></span>
                                                 </div>
                                                 <div class="actions">
                                                     <div data-ng-if="plan.editable && group.exercises.length <= 1" class="btn-group" dropdown>
@@ -279,7 +279,7 @@
                                                         </button>
                                                         <ul class="dropdown-menu" role="menu">
                                                             <li data-ng-repeat="joinGroup in workout.groups" data-ng-if="joinGroup.id !== group.id">
-                                                                <a href="" data-ng-click="workout.joinToSuperSet(joinGroup, group, exercise)" data-ng-bind="(joinGroup.exercises.length > 1 ? ('superSet'  | translate) : '') + ' ' + (joinGroup.exercises.length > 1 ? joinGroup.position : joinGroup.exercises[0].description.names['pl'])"></a>
+                                                                <a href="" data-ng-click="workout.joinToSuperSet(joinGroup, group, exercise)" data-ng-bind="(joinGroup.exercises.length > 1 ? ('superSet'  | translate) : '') + ' ' + (joinGroup.exercises.length > 1 ? joinGroup.position : joinGroup.exercises[0].description.name)"></a>
                                                             </li>
                                                         </ul>
                                                     </div>

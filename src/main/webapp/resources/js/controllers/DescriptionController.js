@@ -1,7 +1,9 @@
 'use strict';
 
-app.controller('DescriptionController', function($scope, $stateParams, descriptionService, dictionaryService, inputValidateService) {
+app.controller('DescriptionController', function($scope, $stateParams, descriptionService, dictionaryService, inputValidateService, videoProviderService) {
     $scope.validate = inputValidateService;
+
+    $scope.videoProvider = videoProviderService;
 
     $scope.dictionary = {};
 

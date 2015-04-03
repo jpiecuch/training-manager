@@ -31,14 +31,14 @@ public class RoleController extends AbstractController {
                                @RequestParam(value = "orderby", required = false, defaultValue = "id") String orderBy,
                                @RequestParam(value = "ordermode", required = false, defaultValue = "ASC") Criteria.OrderMode orderMode,
                                Locale locale) {
-        return versionServices.get(version).retrieveFromRepository(new RoleCriteria(locale.getLanguage()).addNameRestrictions(names).setFirstResultRestriction(firstResult)
+        return versionServices.get(version).retrieveFromRepository(new RoleCriteria().addNameRestrictions(names).setFirstResultRestriction(firstResult)
                 .setMaxResultsRestriction(maxResults).addExcludedIdRestriction(excludedIds).setOrderBy(orderBy, orderMode, versionServices.get(version).orderResolvers()), Repositories.ROLE);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.ROLE_VIEWER + Permissions.HAS_ROLE_SUFFIX)
     @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.GET })
     public Role role(@PathVariable ApiVersionService.Version version, @PathVariable long id, Locale locale) {
-        return (Role) versionServices.get(version).retrieveFromRepository(new RoleCriteria(locale.getLanguage()).setIdRestriction(id), Repositories.ROLE).getResult().get(0);
+        return (Role) versionServices.get(version).retrieveFromRepository(new RoleCriteria().setIdRestriction(id), Repositories.ROLE).getResult().get(0);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.ROLE_CREATOR + Permissions.HAS_ROLE_SUFFIX)

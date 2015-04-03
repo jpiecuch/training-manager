@@ -18,8 +18,8 @@ public class RoleCriteria extends Criteria<RoleCriteria> {
 
     private List<String> names = new ArrayList<String>();
 
-    public RoleCriteria(String lang) {
-        super("r", "Role", lang);
+    public RoleCriteria() {
+        super("r", "Role", null);
     }
 
     public RoleCriteria addNameRestrictions(String... name) {

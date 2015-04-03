@@ -8,7 +8,8 @@ var app = angular.module("app", [
     'toaster',
     'textAngular',
     'ui.calendar',
-    'checklist-model'
+    'checklist-model',
+    'youtube-embed'
 ]);
 
 app.config(['$animateProvider',
@@ -237,7 +238,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             'resources/js/controllers/DescriptionController.js',
                             'resources/js/services/dictionary-service.js',
                             'resources/js/services/description-service.js',
-                            'resources/js/services/form-validate-service.js'
+                            'resources/js/services/form-validate-service.js',
+                            'resources/js/services/video-provider-service.js'
                         ]
                     });
                 }]

@@ -55,6 +55,12 @@
                                    data-ng-model="description.movieUrl">
                         </div>
                     </div>
+                    <div class="form-group" data-ng-if="videoProvider.getProvider(description.movieUrl) === 'youtube'">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-5">
+                            <youtube-video video-url="description.movieUrl" player-width="'100%'"></youtube-video>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" data-ng-bind="'description.description' | translate"></label>
 

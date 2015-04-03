@@ -7,6 +7,8 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.domain.Permissions;
 import pl.jakubpiecuch.trainingmanager.domain.Role;
+import pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository;
+import pl.jakubpiecuch.trainingmanager.service.repository.role.RoleCriteria;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 
@@ -14,6 +16,8 @@ import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
  * Created by Rico on 2015-03-28.
  */
 public class RoleValidator implements Validator {
+
+    private ReadRepository<Role, RoleCriteria> readRepository;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -25,16 +29,25 @@ public class RoleValidator implements Validator {
         Role object = (Role) target;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, Role.NAME_FIELD_NAME, RestrictionCode.REQUIRED);
         if (ArrayUtils.isNotEmpty(object.getGrantedPermissions())) {
-            int i = 0;
-            for (String permission : object.getGrantedPermissions()) {
-                if (!ArrayUtils.contains(Permissions.ALL, permission)) {
+            for (int i = 0; i < object.getGrantedPermissions().length; i++) {
+                if (!ArrayUtils.contains(Permissions.ALL, object.getGrantedPermissions()[i])) {
                     errors.rejectValue(Role.GRANTED_PERMISSIONS_FIELD_NAME + "[" + i + "]", RestrictionCode.INVALID);
                 }
-                i++;
             }
+        }
+        RoleCriteria criteria = new RoleCriteria().addNameRestrictions(object.getName());
+        if (object.getId() != null) {
+            criteria.addExcludedIdRestriction(object.getId());
+        }
+        if (!readRepository.read(criteria).getResult().isEmpty()) {
+            errors.rejectValue(Role.NAME_FIELD_NAME, RestrictionCode.UNIQUE);
         }
         if (errors.hasErrors()) {
             throw new ValidationException(errors);
         }
+    }
+
+    public void setReadRepository(ReadRepository<Role, RoleCriteria> readRepository) {
+        this.readRepository = readRepository;
     }
 }

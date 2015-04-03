@@ -104,7 +104,9 @@ public class Account extends VersionedEntity {
             authorities = new ArrayList<String>();
             for (Role role : this.roles) {
                 for (String permission : role.getGrantedPermissions()) {
-                    authorities.add(permission);
+                    if (!authorities.contains(permission)) {
+                        authorities.add(permission);
+                    }
                 }
             }
         }

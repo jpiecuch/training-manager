@@ -11,6 +11,7 @@ public class RestrictionCode {
     public static final String MAX_LENGTH = "maxLength: %s";
     public static final String INVALID = "invalid";
     public static final String LOWER = "lower than: %s";
+    public static final String UNIQUE = "unique";
 
     private RestrictionCode() {
     }

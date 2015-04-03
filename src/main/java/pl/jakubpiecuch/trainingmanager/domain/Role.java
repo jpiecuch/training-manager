@@ -14,6 +14,7 @@ public class Role extends CommonEntity implements RepoObject {
     public static final String GRANTED_PERMISSIONS_FIELD_NAME = "grantedPermissions";
     private static final String PERMISSIONS_SEPARATOR = ";";
     public static final String ADMIN_ROLE = "ADMIN";
+    public static final String USER_ROLE = "USER";
 
     private String name;
     private String permissions;
@@ -46,11 +47,11 @@ public class Role extends CommonEntity implements RepoObject {
 
     @Transient
     public String[] getGrantedPermissions() {
-        return ADMIN_ROLE.equals(name) ? Permissions.ALL : StringUtils.splitByWholeSeparatorPreserveAllTokens(permissions, PERMISSIONS_SEPARATOR);
+        return ADMIN_ROLE.equals(name) ? Permissions.ALL : USER_ROLE.equals(name) ? Permissions.USER_ROLE_PERMISSIONS : StringUtils.splitByWholeSeparatorPreserveAllTokens(permissions, PERMISSIONS_SEPARATOR);
     }
 
     public void setGrantedPermissions(String[] grantedPermissions) {
-        Assert.isTrue(!ADMIN_ROLE.equals(name));
+        Assert.isTrue(!ADMIN_ROLE.equals(name) && !USER_ROLE.equals(name));
         this.permissions = StringUtils.join(grantedPermissions, PERMISSIONS_SEPARATOR);
     }
 

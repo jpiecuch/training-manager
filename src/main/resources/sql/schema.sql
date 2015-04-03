@@ -122,6 +122,8 @@ ALTER TABLE userconnection ADD CONSTRAINT userconnection_pkey PRIMARY KEY (useri
 ALTER TABLE account ADD CONSTRAINT account_email_unique UNIQUE (email);
 ALTER TABLE account ADD CONSTRAINT account_name_unique UNIQUE (name);
 
+ALTER TABLE role ADD CONSTRAINT role_name_unique UNIQUE (name);
+
 ALTER TABLE exercise ADD CONSTRAINT description_fkey FOREIGN KEY (description) REFERENCES description(id);
 ALTER TABLE exercise ADD CONSTRAINT workout_fkey FOREIGN KEY (workout) REFERENCES workout(id);
 ALTER TABLE plan ADD CONSTRAINT creator_fkey FOREIGN KEY (creator) REFERENCES account(id);
