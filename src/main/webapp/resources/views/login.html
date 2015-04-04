@@ -36,7 +36,7 @@
         <ul class="social-icons">
             <li><a class="social-icon-color facebook" data-original-title="facebook" href="#"></a></li>
             <li ng-repeat="s in login.social.providers">
-                <form id="{{s.id}}-form" action="{{login.social.url + '/' + s.id}}" method="post">
+                <form id="{{s.id}}-form" action="{{login.social.getUrl(s.id)}}" method="post">
                     <input ng-if="s.scope" type="hidden" name="scope" value="{{s.scope}}">
                     <input type="submit" class="social-icon-color {{s.id}}"  value=""></a>
                 </form>
