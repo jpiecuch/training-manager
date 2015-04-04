@@ -10,9 +10,8 @@ app.controller('LoginController', function($sce, $state, $scope, $http, $rootSco
         },
         social: {
             providers:  [],
-            url: '',
             getUrl: function(id) {
-                return $sce.trustAsResourceUrl(this.url + '/' + id);
+                return $sce.trustAsResourceUrl(urlService.url('signin') + '/' + id);
             }
         },
         reset: {
@@ -62,7 +61,6 @@ app.controller('LoginController', function($sce, $state, $scope, $http, $rootSco
     $scope.init = function() {
         authenticateService.getSocials().then(function(data) {
             $scope.login.social.providers = data.data;
-            $scope.login.social.url = urlService.url('/signin');
         });
     };
 });
