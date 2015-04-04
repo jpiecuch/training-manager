@@ -50,8 +50,42 @@ app.run(function ($rootScope, $location, $state, authenticateService, user, lang
 });
 
 /* Setup Layout Part - Sidebar */
-app.controller('SidebarController', ['$scope', function($scope) {
-
+app.controller('SidebarController', ['$scope', '$location', function($scope, $location) {
+    $scope.sidebar = {
+        elements: [
+            {name: 'dashboard', href: '/', icon: 'icon-home'},
+            {name: 'plans', collapsed: true, children: [{name:'view', href: '/plans'}, {name:'create', href: '/plan'}]},
+            {name: 'descriptions', collapsed: true, children: [{name:'view', href: '/descriptions'}, {name:'create', href: '/description'}]},
+            {name: 'equipments', collapsed: true, children: [{name:'view', href: '/equipments'}, {name:'create', href: '/equipment'}]}
+        ],
+        isActive: function(element) {
+            if (element.children) {
+                for (var i = 0; i < element.children.length; i++) {
+                    var el = element.children[i];
+                    if ($location.url() === el.href){
+                        return true
+                    }
+                }
+            } else {
+                return $location.url() === element.href;
+            }
+            return false;
+        },
+        collapse: function(element) {
+            if (element.collapsed !== undefined) {
+                element.collapsed = !element.collapsed;
+                if (!element.collapsed) {
+                    angular.forEach(this.elements, function(item) {
+                        if (item.name !== element.name && item.children) {
+                            item.collapsed = true;
+                        }
+                    });
+                }
+            } else {
+                $location.url(element.href);
+            }
+        }
+    }
 }]);
 
 /* Setup Layout Part - Quick Sidebar */
@@ -61,7 +95,6 @@ app.controller('QuickSidebarController', ['$scope', function($scope) {
 
 /* Setup Layout Part - Theme Panel */
 app.controller('ThemePanelController', ['$scope', function($scope) {
-    ;
 }]);
 
 /* Setup Layout Part - Footer */

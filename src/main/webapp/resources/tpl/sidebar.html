@@ -8,11 +8,21 @@
 	<!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
 	<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
 		<!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
-		<li class="start">
-			<a href="#/">
-			<i class="icon-home"></i>
-			<span class="title" data-ng-bind="'dashboard' | translate"></span>
+		<li class="start" data-ng-repeat="element in sidebar.elements" data-ng-class="{'open' : element.children && !element.collapsed, 'active' : sidebar.isActive(element)}">
+			<a href="#{{element.href}}" data-ng-click="sidebar.collapse(element, $event)">
+				<i class="{{element.icon}}"></i>
+				<span class="title" data-ng-bind="element.name | translate"></span>
+				<span class="arrow" data-ng-if="element.children" data-ng-class="{'open' : !element.collapsed}"></span>
+				<span data-ng-if="sidebar.isActive(element)" class="selected"/>
 			</a>
+			<ul data-ng-if="element.children" class="sub-menu" collapse="element.collapsed" >
+				<li data-ng-repeat="child in element.children">
+					<a href="#{{child.href}}">
+						<i class="{{child.icon}}"></i>
+						<span class="title" data-ng-bind="child.name | translate"></span>
+					</a>
+				</li>
+			</ul>
 		</li>
 	</ul>
 	<!-- END SIDEBAR MENU -->
