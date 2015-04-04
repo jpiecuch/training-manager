@@ -16,4 +16,7 @@
        <mvc:annotation-driven />
 
        <import resource="validator-context.xml"/>
+
+       <!-- only for mocking purpose -->
+       <bean id="roleRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.role.RoleRepository"/>
 </beans>
