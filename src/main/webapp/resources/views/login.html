@@ -6,6 +6,13 @@
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->
 <div class="content" data-ng-init="init()">
+    <div id="lang-icons" class="pull-right" data-ng-controller="LocaleController" data-ng-init="locale.init()">
+        <ul class="nav navbar-nav">
+            <li data-ng-repeat="lang in locale.langs" id="lang-{{lang}}" >
+                <a data-ng-click="locale.update(lang)" ng-class="{selected: locale.current === lang}" href=""></a>
+            </li>
+        </ul>
+    </div>
 <!-- BEGIN LOGIN FORM -->
 <form data-ng-show="login.tab.idx === 0" data-ng-submit="login.signIn(loginForm)" name="loginForm" class="login-form" novalidate>
     <h3 class="form-title" data-ng-bind="'signIn' | translate"></h3>

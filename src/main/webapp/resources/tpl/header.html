@@ -37,6 +37,13 @@
 			</li>
 			<!-- END USER LOGIN DROPDOWN -->
 		</ul>
+		<div id="lang-icons" class="pull-right" data-ng-controller="LocaleController" data-ng-init="locale.init()">
+			<ul class="nav navbar-nav">
+				<li data-ng-repeat="lang in locale.langs" id="lang-{{lang}}" >
+					<a data-ng-click="locale.update(lang)" ng-class="{selected: locale.current === lang}" href=""></a>
+				</li>
+			</ul>
+		</div>
 	</div>
 	<!-- END TOP NAVIGATION MENU -->
 </div>

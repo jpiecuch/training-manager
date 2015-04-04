@@ -93,6 +93,7 @@
 <script src="resources/js/modules/angular-youtube-embed.js" type="text/javascript"></script>
 
 <script src="resources/js/app.js" type="text/javascript"></script>
+<script src="resources/js/controllers/LocaleController.js" type="text/javascript"></script>
 <script src="resources/js/services/url-service.js" type="text/javascript"></script>
 <script src="resources/js/services/authenticate-service.js" type="text/javascript"></script>
 <script src="resources/js/services/resource-service.js" type="text/javascript"></script>

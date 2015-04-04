@@ -80,7 +80,6 @@ app.config(function($translateProvider, contextPath, lang) {
         prefix: contextPath + '/api/v1/languages/',
         suffix: ''
     });
-    $translateProvider.useCookieStorage();
 });
 
 app.config(function ($httpProvider) {
