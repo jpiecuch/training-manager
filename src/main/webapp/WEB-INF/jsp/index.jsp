@@ -82,7 +82,6 @@
 <script src="resources/js/modules/angular-translate.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/angular-translate-loader-static-files.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/angular-translate-loader-url.min.js" type="text/javascript"></script>
-<script src="resources/js/modules/angular-translate-storage-cookie.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/angular-translate-storage-local.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/ui-bootstrap-tpls-0.12.0.min.js" type="text/javascript"></script>
 <script src="resources/js/modules/textAngular.min.js" type="text/javascript"></script>

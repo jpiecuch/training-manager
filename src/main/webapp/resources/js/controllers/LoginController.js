@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('LoginController', function($state, $scope, $http, $rootScope, urlService, authenticateService, resourceService, inputValidateService, policyService) {
+app.controller('LoginController', function($sce, $state, $scope, $http, $rootScope, urlService, authenticateService, resourceService, inputValidateService, policyService) {
     $scope.login = {
         tab: {
             idx: 0,
@@ -10,7 +10,10 @@ app.controller('LoginController', function($state, $scope, $http, $rootScope, ur
         },
         social: {
             providers:  [],
-            url: ''
+            url: '',
+            getUrl: function(id) {
+                return $sce.trustAsResourceUrl(this.url + '/' + id);
+            }
         },
         reset: {
             post: function() {
@@ -35,10 +38,8 @@ app.controller('LoginController', function($state, $scope, $http, $rootScope, ur
             rememberMe: undefined
         },
         signIn: function() {
-            console.log('test');
           authenticateService.signIn($scope.login.credentials).then(function(data) {
               if (data.status === 201) {
-                    console.log($rootScope.settings.user);
                     $state.go('index');
                 }
           });
