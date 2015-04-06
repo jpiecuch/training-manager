@@ -36,9 +36,7 @@
     <link rel="shortcut icon" href="resources/favicon.ico"/>
 </head>
 
-<body ng-controller="AppController"
-
-      ng-class="{'page-container-bg-solid': (settings.layout.pageBodySolid && settings.isUserSignIn), 'page-sidebar-closed': settings.layout.pageSidebarClosed && settings.isUserSignIn, 'login': !settings.isUserSignIn, 'page-header-fixed page-sidebar-closed-hide-logo page-quick-sidebar-over-content page-on-load' : settings.isUserSignIn}">
+<body ng-controller="AppController" ng-class="{'page-container-bg-solid': (settings.layout.pageBodySolid && settings.isUserSignIn), 'page-sidebar-closed': settings.layout.pageSidebarClosed && settings.isUserSignIn, 'login': !settings.isUserSignIn, 'page-header-fixed page-sidebar-closed-hide-logo page-quick-sidebar-over-content page-on-load' : settings.isUserSignIn}">
 
 <div ng-spinner-bar class="page-spinner-bar">
     <div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>
@@ -90,6 +88,7 @@
 <script src="resources/js/modules/calendar.js" type="text/javascript"></script>
 <script src="resources/js/modules/checklist-model.js" type="text/javascript"></script>
 <script src="resources/js/modules/angular-youtube-embed.js" type="text/javascript"></script>
+<script src="resources/js/modules/tmhDynamicLocale.js" type="text/javascript"></script>
 
 <script src="resources/js/app.js" type="text/javascript"></script>
 <script src="resources/js/controllers/LocaleController.js" type="text/javascript"></script>

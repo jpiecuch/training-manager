@@ -19,11 +19,9 @@ app.service('planStarterService', function(formValidateService, $http, authentic
                 var me = this;
                 formValidateService.validate(form);
                 if (form.$valid) {
-                    authenticateService.signed().then(function(data) {
-                        $http.post(urlService.apiURL('/users/' + data.id + '/plans'),  {year: me.year, week: me.week, planId: me.planId}).then(function(data) {
-                            alertService.show({type: 'success', title: 'OK', description: 'Submit'});
-                            $location.path('/calendar');
-                        });
+                    $http.post(urlService.apiURL('/users/' + authenticateService.signed().id + '/plans'),  {year: me.year, week: me.week, planId: me.planId}).then(function(data) {
+                        alertService.show({type: 'success', title: 'OK', description: 'Submit'});
+                        $location.path('/calendar');
                     });
                 } else {
                     alertService.show({type: 'warning', title: 'ERROR', description: 'Something is wrong'});

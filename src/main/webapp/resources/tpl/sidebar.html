@@ -1,4 +1,4 @@
-<div class="page-sidebar navbar-collapse collapse">
+<div class="page-sidebar" collapse="windowWidth > 991 ? false : sidebar.collapsed" resizable>
 	<!-- BEGIN SIDEBAR MENU -->
 	<!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
 	<!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
@@ -6,7 +6,7 @@
 	<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
 	<!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
 	<!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-	<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
+	<ul class="page-sidebar-menu" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
 		<!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
 		<li class="start" data-ng-repeat="element in sidebar.elements" data-ng-class="{'open' : element.children && !element.collapsed, 'active' : sidebar.isActive(element)}">
 			<a href="#{{element.href}}" data-ng-click="sidebar.collapse(element, $event)">
@@ -16,7 +16,7 @@
 				<span data-ng-if="sidebar.isActive(element)" class="selected"/>
 			</a>
 			<ul data-ng-if="element.children" class="sub-menu" collapse="element.collapsed" >
-				<li data-ng-repeat="child in element.children">
+				<li data-ng-repeat="child in element.children" data-ng-class="{'active' : sidebar.isActive(child)}">
 					<a href="#{{child.href}}">
 						<i class="{{child.icon}}"></i>
 						<span class="title" data-ng-bind="child.name | translate"></span>

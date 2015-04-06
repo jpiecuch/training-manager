@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('LocaleController', function($scope, $http, lang, $translate, urlService) {
+app.controller('LocaleController', function($scope, $http, lang, $translate, urlService, tmhDynamicLocale) {
     $scope.locale = {
         langs: ['pl', 'en'],
         current: null,
@@ -9,6 +9,7 @@ app.controller('LocaleController', function($scope, $http, lang, $translate, url
             $http.post(urlService.apiURL('/locale'), lang).success(function() {
                 me.current = lang;
                 $translate.use(lang);
+                tmhDynamicLocale.set(lang);
             });
         },
         init: function() {

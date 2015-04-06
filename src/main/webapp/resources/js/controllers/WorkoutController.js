@@ -1,7 +1,8 @@
 'use strict';
 
-app.controller('WorkoutController', function($scope, $stateParams, userWorkoutService) {
+app.controller('WorkoutController', function($scope, $stateParams, userWorkoutService, videoProviderService) {
 
+    $scope.videoProvider = videoProviderService;
 
     $scope.init = function() {
         userWorkoutService.get($stateParams.id).then(function(data) {
@@ -10,19 +11,4 @@ app.controller('WorkoutController', function($scope, $stateParams, userWorkoutSe
         });
     };
 
-    /*$scope.$watch('workout', function(workout) {
-        if (workout) {
-            for (var i = 0; i < workout.executions.length; i++) {
-                var execution = workout.executions[i];
-                console.log(execution.id);
-                $scope.$watch('execution-form' + execution.id, function(executionForm) {
-                    console.log(executionForm);
-                });
-            }
-        }
-    });*/
-
-    $scope.$watch('form', function(executionForm) {
-        console.log(executionForm);
-    });
 });

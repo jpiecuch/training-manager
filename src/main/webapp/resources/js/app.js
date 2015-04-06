@@ -9,7 +9,8 @@ var app = angular.module("app", [
     'textAngular',
     'ui.calendar',
     'checklist-model',
-    'youtube-embed'
+    'youtube-embed',
+    'tmh.dynamicLocale'
 ]);
 
 app.config(['$animateProvider',
@@ -18,7 +19,7 @@ app.config(['$animateProvider',
     }
 ]);
 
-app.run(function ($rootScope, $location, $state, authenticateService, user, lang) {
+app.run(function ($rootScope, $location, $state, authenticateService, user, lang, tmhDynamicLocale) {
 
     if (user != null && user.authorities) {
         user.authorities = user.authorities.replace('[', '').replace(']', '');
@@ -33,6 +34,8 @@ app.run(function ($rootScope, $location, $state, authenticateService, user, lang
             return this.user && _.contains(this.user.authorities, permission);
         }
     };
+
+    tmhDynamicLocale.set(lang);
 
     $rootScope.$on('$stateChangeStart', function (ev, to, toParams, from) {
 
@@ -51,12 +54,18 @@ app.run(function ($rootScope, $location, $state, authenticateService, user, lang
 
 /* Setup Layout Part - Sidebar */
 app.controller('SidebarController', ['$scope', '$location', function($scope, $location) {
+    $scope.$on('collapseSidebar', function() {
+        $scope.sidebar.collapsed = !$scope.sidebar.collapsed;
+    });
+
     $scope.sidebar = {
+        collapsed: false,
         elements: [
             {name: 'dashboard', href: '/', icon: 'icon-home'},
-            {name: 'plans', collapsed: true, children: [{name:'view', href: '/plans'}, {name:'create', href: '/plan'}]},
-            {name: 'descriptions', collapsed: true, children: [{name:'view', href: '/descriptions'}, {name:'create', href: '/description'}]},
-            {name: 'equipments', collapsed: true, children: [{name:'view', href: '/equipments'}, {name:'create', href: '/equipment'}]}
+            {name: 'plans', collapsed: true, icon: 'fa fa-cogs', children: [{name:'view', href: '/plans'}, {name:'create', href: '/plan'}]},
+            {name: 'descriptions', collapsed: true, icon: 'fa fa-folder-open-o', children: [{name:'view', href: '/descriptions'}, {name:'create', href: '/description'}]},
+            {name: 'equipments', collapsed: true, icon: 'fa fa-wrench', children: [{name:'view', href: '/equipments'}, {name:'create', href: '/equipment'}]},
+            {name: 'calendar', href: '/calendar', icon: 'fa fa-calendar'}
         ],
         isActive: function(element) {
             if (element.children) {
@@ -164,7 +173,6 @@ app.factory('settings', ['$rootScope', function($rootScope) {
 
 /* Setup App Main Controller */
 app.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
-
 }]);
 
 /***
@@ -185,6 +193,9 @@ app.controller('HeaderController', ['$scope', 'authenticateService', '$state', '
             collapse: function() {
                 $rootScope.settings.layout.pageSidebarClosed = !$rootScope.settings.layout.pageSidebarClosed;
             }
+        },
+        collapseSidebar: function() {
+            $rootScope.$broadcast('collapseSidebar');
         }
     }
 }]);
@@ -224,7 +235,10 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                     return $ocLazyLoad.load({
                         name: 'app',
                         files: [
-                             'resources/js/controllers/DashboardController.js'
+                             'resources/js/controllers/DashboardController.js',
+                             'resources/assets/admin/pages/css/todo.css',
+                            'resources/js/services/user-workout-service.js',
+                            'resources/js/services/form-validate-service.js'
                         ] 
                     });
                 }]
@@ -375,6 +389,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                         name: 'app',
                         files: [
                             'resources/js/controllers/CalendarController.js',
+                            'resources/js/services/user-workout-service.js',
+                            'resources/js/services/form-validate-service.js',
                             'resources/assets/global/plugins/fullcalendar/fullcalendar.js',
                             'resources/assets/global/plugins/fullcalendar/fullcalendar.css'
                         ]
@@ -395,7 +411,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                         files: [
                             'resources/js/controllers/WorkoutController.js',
                             'resources/js/services/user-workout-service.js',
-                            'resources/js/services/form-validate-service.js'
+                            'resources/js/services/form-validate-service.js',
+                            'resources/js/services/video-provider-service.js'
                         ]
                     });
                 }]

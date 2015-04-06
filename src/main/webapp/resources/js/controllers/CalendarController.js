@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('CalendarController', function($scope, $http, urlService, $filter, $location) {
+app.controller('CalendarController', function($scope, $http, urlService, $filter, $location, userWorkoutService) {
 
 
     $scope.init = function() {
@@ -10,12 +10,11 @@ app.controller('CalendarController', function($scope, $http, urlService, $filter
                     header: {left: 'title', center: '', right: 'prev, next,today'},
                     disableResizing: true
                 },
-                viewRender: function(view, element) {
-                    $http.get(urlService.apiURL('/users/1/workouts'), {params: {from: moment(view.start).format('YYYY-MM-DD'),  to: moment(view.end).format('YYYY-MM-DD')}}).then(function(data) {
+                viewRender: function(view) {
+                    userWorkoutService.retrieve({from: moment(view.start).format('YYYY-MM-DD'),  to: moment(view.end).format('YYYY-MM-DD')}).then(function(data) {
                         var events = [];
                         for ( var i = 0; i < data.data.result.length; i++) {
                             var event = data.data.result[i];
-                            console.log(event);
                             var title = [];
                             angular.forEach(event.muscles ,function(index) {
                                 title.push($filter('translate')(index));
@@ -25,7 +24,7 @@ app.controller('CalendarController', function($scope, $http, urlService, $filter
                         $scope.calendar.events[0] = events;
                     });
                 },
-                eventClick: function(event, jsEvent, view) {
+                eventClick: function(event) {
                     $location.path('workout/' + event.id);
                 }
             },

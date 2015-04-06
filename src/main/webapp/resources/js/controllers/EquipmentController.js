@@ -19,7 +19,6 @@ app.controller('EquipmentController', function($scope, $stateParams, dictionaryS
         if ($scope.equipment === undefined && form !== undefined) {
             equipmentService.get(form, $stateParams.id).then(function(data) {
                 $scope.equipment = data;
-                console.log($scope.equipment);
             });
         }
     });

@@ -45,19 +45,6 @@ app.service('authenticateService', function($http, urlService, $q, $rootScope) {
     }
 
     this.signed = function() {
-        var deferred = $q.defer();
-        deferred.resolve();
-        return deferred.promise.then(function() {
-            return user !== null ? user : null;
-        }).then(function(data) {
-            if ($rootScope.settings.isUserSignIn && !data) {
-                return $http.get(urlService.apiURL('/signin')).then(function (data) {
-                    user = data.data;
-                    $rootScope.settings.isUserSignIn = true;
-                    return user;
-                });
-            }
-            return $rootScope.settings.isUserSignIn ? user : null;
-        });
+        return $rootScope.settings.user;
     }
 });

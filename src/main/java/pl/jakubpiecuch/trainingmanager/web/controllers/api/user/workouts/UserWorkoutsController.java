@@ -25,8 +25,8 @@ public class UserWorkoutsController extends AbstractController {
     @RequestMapping(method = { RequestMethod.GET })
     public PageResult executions(@PathVariable ApiVersionService.Version version,
                        @RequestParam(value = "from", required = false) Date from,
-                       @RequestParam(value = "to", required = false) Date to, Locale locale) {
-        return versionServices.get(version).retrieveFromRepository(new UserWorkoutCriteria(locale.getLanguage()).addDateRangeRestriction(from, to), Repositories.WORKOUT);
+                       @RequestParam(value = "to", required = false) Date to, @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults, Locale locale) {
+        return versionServices.get(version).retrieveFromRepository(new UserWorkoutCriteria(locale.getLanguage()).addDateRangeRestriction(from, to).setMaxResultsRestriction(maxResults), Repositories.WORKOUT);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.WORKOUT_VIEWER + Permissions.HAS_ROLE_SUFFIX)
