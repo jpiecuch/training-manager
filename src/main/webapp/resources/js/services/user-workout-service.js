@@ -24,12 +24,12 @@ app.service('userWorkoutService', function($q, $http, urlService, authenticateSe
                     }
                 },
                     angular.forEach(data.data.executions, function (index) {
-                        index.sets = index.sets ? index.sets : [];
+                        index.sets = index.sets ? index.sets : angular.copy(index.exercise.sets);
                         index.addSet = function () {
                             this.sets.push(0);
                             this.weights.push(0)
                         };
-                        index.weights = index.weights ? index.weights : [];
+                        index.weights = index.weights ? index.weights : new Array(index.exercise.sets.length);
                         index.removeSet = function (idx) {
                             this.sets.splice(idx, 1);
                             this.weights.splice(idx, 1);

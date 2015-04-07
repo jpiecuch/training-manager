@@ -197,14 +197,14 @@
                                         <div class="col-md-1">
                                             <select class="form-control" data-ng-model="workout.descriptions.params.muscle">
                                                 <option/>
-                                                <option data-ng-repeat="muscle in dictionary.muscles" data-ng-bind="muscle"
+                                                <option data-ng-repeat="muscle in dictionary.muscles" data-ng-bind="muscle | translate"
                                                         value="{{muscle}}"></option>
                                             </select>
                                         </div>
                                         <div class="col-md-1">
                                             <select class="form-control" data-ng-model="workout.descriptions.params.type">
                                                 <option/>
-                                                <option data-ng-repeat="type in dictionary.type" data-ng-bind="type"
+                                                <option data-ng-repeat="type in dictionary.type" data-ng-bind="type | translate"
                                                         value="{{type}}"></option>
                                             </select>
                                         </div>
