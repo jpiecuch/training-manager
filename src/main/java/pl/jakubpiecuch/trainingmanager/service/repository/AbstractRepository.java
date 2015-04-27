@@ -13,8 +13,8 @@ import pl.jakubpiecuch.trainingmanager.domain.Description;
 public abstract class AbstractRepository<E extends RepoObject, C extends Criteria> implements Repository<E, C> {
 
     protected RepoDao dao;
-    private Validator validator;
-    private String name;
+    protected Validator validator;
+    protected String name;
 
     @Override
     public PageResult<E> read(C criteria) {

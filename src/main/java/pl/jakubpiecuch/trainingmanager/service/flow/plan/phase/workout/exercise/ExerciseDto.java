@@ -12,7 +12,7 @@ public class ExerciseDto extends Flow {
     private Long id;
     private Long workoutId;
     private Long descriptionId;
-    private Integer[] sets;
+    private String[] sets;
     private Description description;
     private Integer position;
     private Integer group;
@@ -41,11 +41,11 @@ public class ExerciseDto extends Flow {
         this.descriptionId = descriptionId;
     }
 
-    public Integer[] getSets() {
+    public String[] getSets() {
         return sets;
     }
 
-    public void setSets(Integer[] sets) {
+    public void setSets(String[] sets) {
         this.sets = sets;
     }
 

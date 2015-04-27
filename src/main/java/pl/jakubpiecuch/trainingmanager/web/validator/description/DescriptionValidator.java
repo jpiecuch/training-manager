@@ -40,6 +40,8 @@ public class DescriptionValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "level", RestrictionCode.REQUIRED);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mechanics", RestrictionCode.REQUIRED);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "force", RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lateral", RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sets", RestrictionCode.REQUIRED);
 
         if (errors.hasErrors()) {
             throw new ValidationException(errors);

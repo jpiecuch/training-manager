@@ -2,6 +2,7 @@ package pl.jakubpiecuch.trainingmanager.web.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -35,9 +36,13 @@ public class WebUtil {
         return res;
     }
 
-    public static <T> T fromJson(String data, Class<T> outputClass) throws IOException {
-        return MAPPER.readValue(data, outputClass);
-
+    public static <T> T fromJson(String data, Class<T> outputClass) {
+        try {
+            return StringUtils.isNotBlank(data) ? MAPPER.readValue(data, outputClass) : null;
+        } catch (IOException e) {
+            LOGGER.error("", e);
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     public static String toJson(Object data) {
@@ -52,7 +57,7 @@ public class WebUtil {
     public static Double[] toDoubleArray(String[] array) {
         Double[] res = new Double[array.length];
         for (int i = 0; i < array.length; i++) {
-            res[i] = Double.parseDouble(array[i]);
+            res[i] = StringUtils.isNotBlank(array[i]) ? Double.parseDouble(array[i]) : null;
         }
         return res;
     }

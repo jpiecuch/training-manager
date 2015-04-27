@@ -25,7 +25,9 @@ app.service('descriptionService', function(urlService, $http, $q, formValidateSe
                     equipment: this.equipment,
                     level: this.level,
                     mechanics: this.mechanics,
-                    force: this.force
+                    force: this.force,
+                    sets: this.sets,
+                    lateral: this.lateral
                 };
                 if (this.id) {
                     $http.put(urlService.apiURL('/descriptions/' + this.id), payload).then(function() {

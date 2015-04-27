@@ -66,6 +66,7 @@
                 <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
                 <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
                 <entry key="ROLE" value-ref="roleRepository"/>
+                <entry key="WORKOUT" value-ref="userWorkoutManager"/>
             </map>
         </property>
         <property name="readRepositories">

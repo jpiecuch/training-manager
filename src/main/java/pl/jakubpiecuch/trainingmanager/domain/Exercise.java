@@ -11,6 +11,7 @@ import javax.persistence.*;
 public class Exercise extends CommonEntity {
 
     private static final String SET_DELIMITER = ";";
+    public static final String FAIL_KEY = "FAIL";
 
     private Description description;
     private Workout workout;
@@ -74,11 +75,11 @@ public class Exercise extends CommonEntity {
     }
 
     @Transient
-    public Integer[] getSets() {
-        return WebUtil.toIntArray(StringUtils.splitByWholeSeparatorPreserveAllTokens(reps, SET_DELIMITER));
+    public String[] getSets() {
+        return StringUtils.splitByWholeSeparatorPreserveAllTokens(reps, SET_DELIMITER);
     }
 
-    public void setSets(Integer[] sets) {
+    public void setSets(String[] sets) {
         this.reps = StringUtils.join(sets, SET_DELIMITER);
     }
 }

@@ -13,6 +13,15 @@
 				<div class="caption">
 					<i class="icon-equalizer font-red-sunglo"></i>
 					<span class="caption-subject bold uppercase" data-ng-bind="workout.date | date"></span>
+						<button data-ng-if="workout.state === 'PLANNED'" type="button" class="btn btn-sm" data-ng-class="states['IN_PROGRESS'].color.name" data-ng-click="workout.start()">
+							<i data-ng-class="states['IN_PROGRESS'].icon" class="fa-spin"></i> {{'start' | translate}}
+						</button>
+						<button data-ng-if="workout.state === 'IN_PROGRESS' && workout.hasExecutionsDone()" type="button" class="btn btn-sm" data-ng-class="states['COMPLETED'].color.name" data-ng-click="workout.complete()">
+							<i data-ng-class="states['COMPLETED'].icon"></i> {{'confirm' | translate}}
+						</button>
+						<button data-ng-if="workout.state !== 'REJECTED' && workout.state !== 'COMPLETED'" type="button" class="btn btn-sm" data-ng-class="states['REJECTED'].color.name" data-ng-click="workout.reject()">
+							<i data-ng-class="states['REJECTED'].icon"></i> {{'reject' | translate}}
+						</button>
 				</div>
 			</div>
 			<div class="portlet-body form">
@@ -71,7 +80,7 @@
 						</div>
 					</div>
 					<div class="col-md-9">
-						<form class="form-horizontal" data-ng-repeat="execution in workout.executions | orderBy : 'exercise.group'" name="form" data-ng-submit="execution.save(form)" novalidate>
+						<form class="form-horizontal" data-ng-repeat="execution in workout.executions | orderBy : ['exercise.group', 'exercise.position']" name="form" data-ng-submit="execution.save(form)" novalidate>
 							<div data-ng-if="workout.isFirstInSuperSet(execution)" class="super-set-title">
 								<span><i class="fa fa-star-o"></i> {{'superSet' | translate}}</span>
 							</div>
@@ -118,44 +127,33 @@
                                             </div>
                                         </div>
 										<div class="form-group">
-											<label class="col-md-3 control-label"
-												   data-ng-bind="'execution.sets' | translate"></label>
+											<label class="col-md-3 control-label">
+													{{'exercise.sets' | translate}}&nbsp;{{execution.exercise.description.lateral === 'UNILATERAL' ? ('(' + ('exercise.eachSide' | translate) + ')') : ''}}
+											</label>
 											<div class="col-md-9">
-
 												<div class="col-md-2" data-ng-repeat="set in execution.exercise.sets track by $index" >
                                                     <span class="form-control-static">{{set}}</span>
                                                 </div>
 
 											</div>
 										</div>
-										<div class="form-group">
-											<label class="col-md-3 control-label"
-												   data-ng-bind="'execution.sets' | translate"></label>
-											<div class="col-md-9">
-												<div class="col-md-2" data-ng-repeat="set in execution.sets track by $index">
-													<div class="input-icon right">
-														<i class="fa fa-times" style="cursor: pointer;" data-ng-click="execution.removeSet($index)"></i>
-														<input data-only-digits name="executionSet{{execution.id}}{{$index}}" type="text" class="form-control" data-ng-model="execution.sets[$index]" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
-													</div>
-												</div>
-												<a href="" class="btn btn-icon-only" data-ng-click="execution.addSet()">
-													<i class="fa fa-plus"></i>
-												</a>
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-md-3 control-label"
-												   data-ng-bind="'execution.weights' | translate"></label>
-											<div class="col-md-9">
-												<div class="col-md-2" data-ng-repeat="weight in execution.weights track by $index">
-														<input data-only-decimals name="executionWeight{{execution.id}}{{$index}}" type="text" class="form-control" data-ng-model="execution.weights[$index]" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
-												</div>
-											</div>
-										</div>
+										<section data-ng-include="'resources/tpl/execution/'+execution.exercise.description.lateral.toLowerCase()+'-sets.html'"></section>
 									</div>
 								</div>
-                                <button type="submit" class="btn default">{{'save' | translate}}</button>
-                                <button type="button" class="btn green" data-ng-click="execution.saveAndConfirm(form)">{{'confirm' | translate}}</button>
+								<section data-ng-if="workout.state === 'IN_PROGRESS'">
+									<button data-ng-if="execution.state === 'PLANNED'" type="button" class="btn btn-sm" data-ng-class="states['IN_PROGRESS'].color.name" data-ng-click="execution.start(form)">
+										<i data-ng-class="states['IN_PROGRESS'].icon" class="fa-spin"></i> {{'start' | translate}}
+									</button>
+									<button data-ng-if="execution.state === 'IN_PROGRESS'" type="submit" class="btn btn-sm" data-ng-class="states['PLANNED'].color.name">
+										<i data-ng-class="states['PLANNED'].icon"></i> {{'save' | translate}}
+									</button>
+									<button data-ng-if="execution.state === 'IN_PROGRESS'" type="button" class="btn btn-sm" data-ng-class="states['COMPLETED'].color.name" data-ng-click="execution.confirm(form)">
+										<i data-ng-class="states['COMPLETED'].icon"></i> {{'confirm' | translate}}
+									</button>
+									<button data-ng-if="execution.state !== 'REJECTED' && execution.state !== 'COMPLETED'" type="button" class="btn btn-sm" data-ng-class="states['REJECTED'].color.name" data-ng-click="execution.reject(form)">
+										<i data-ng-class="states['REJECTED'].icon"></i> {{'reject' | translate}}
+									</button>
+								</section>
 							</div>
 						</form>
 					</div>

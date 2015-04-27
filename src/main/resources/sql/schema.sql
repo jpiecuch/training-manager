@@ -41,7 +41,9 @@ CREATE TABLE description (
     equipment integer,
     level integer NOT NULL,
     mechanics integer NOT NULL,
-    force integer NOT NULL
+    force integer NOT NULL,
+    sets integer NOT NULL,
+    sides integer NOT NULL
 );
 
 CREATE TABLE plan (
@@ -98,7 +100,8 @@ CREATE TABLE user_workout (
     remind boolean DEFAULT false,
     date timestamp without time zone DEFAULT now() NOT NULL,
     account bigint NOT NULL,
-    workout BIGINT NOT NULL
+    workout BIGINT NOT NULL,
+    state integer NOT NULL
 );
 
 CREATE TABLE execution (
@@ -108,7 +111,9 @@ CREATE TABLE execution (
     exercise bigint NOT NULL,
     confirm boolean DEFAULT false NOT NULL,
     comment character varying(50000),
-    workout BIGINT NOT NULL
+    workout BIGINT NOT NULL,
+    state integer NOT NULL,
+    result character varying(1024)
 );
 
 CREATE TABLE account_record (

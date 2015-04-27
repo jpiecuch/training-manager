@@ -15,12 +15,14 @@ app.service('planService', function($q, $http, phaseService, formValidateService
     }
 
     this.isValidInputs = function(plan) {
-        return plan.form[FORM_INPUT_NAME] !== undefined
-            && plan.form[FORM_INPUT_NAME].$touched
-            && plan.form[FORM_INPUT_NAME].$valid
-            && plan.form[FORM_INPUT_GOAL] !== undefined
-            && plan.form[FORM_INPUT_GOAL].$touched
-            && plan.form[FORM_INPUT_GOAL].$valid
+        if (plan.form) {
+            return plan.form[FORM_INPUT_NAME] !== undefined
+                && plan.form[FORM_INPUT_NAME].$touched
+                && plan.form[FORM_INPUT_NAME].$valid
+                && plan.form[FORM_INPUT_GOAL] !== undefined
+                && plan.form[FORM_INPUT_GOAL].$touched
+                && plan.form[FORM_INPUT_GOAL].$valid;
+        }
     }
 
     this.post = function(plan) {

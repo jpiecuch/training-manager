@@ -21,9 +21,11 @@ app.service('workoutService', function($q, $http, exerciseService, urlService, d
     }
 
     this.isValidInputs = function(workout) {
-         return workout.form[FORM_INPUT_MUSCLE + workout.index] !== undefined
-             && workout.form[FORM_INPUT_MUSCLE + workout.index].$touched
-             && workout.form[FORM_INPUT_MUSCLE + workout.index].$valid;
+        if (workout.form) {
+            return workout.form[FORM_INPUT_MUSCLE + workout.index] !== undefined
+                && workout.form[FORM_INPUT_MUSCLE + workout.index].$touched
+                && workout.form[FORM_INPUT_MUSCLE + workout.index].$valid;
+        }
     };
 
     this.payload = function(workout) {
@@ -70,7 +72,7 @@ app.service('workoutService', function($q, $http, exerciseService, urlService, d
                 weekDay: workout ? weekDaysMap[workout.weekDay] : weekDay,
                 visible: true,
                 descriptions: {
-                    params: { firstResult: 0, maxResults: 10, excludeId: [] },
+                    params: { firstResult: 0, maxResults: 30, excludeId: [] },
                     result: {result: [], count: 0},
                     retrieve: function() {
                         this.params.firstResult = 0;
@@ -192,10 +194,10 @@ app.service('workoutService', function($q, $http, exerciseService, urlService, d
                 }
             };
             if (workout) {
-                _.each(workout.groups, function(group) {
+                angular.forEach(workout.groups, function(group) {
                     var exercises = [];
-                    _.each(group.exercises, function(exercise) {
-                        exercises.push(exerciseService.get(exercise.description, result.form, '' + result.index + result.childIndex++, exercise));
+                    angular.forEach(group.exercises, function(exercise) {
+                        exercises.push(exerciseService.get(result.form, '' + result.index + result.childIndex++, exercise));
                         result.descriptions.params.excludeId.push(exercise.description.id);
                     });
                     result.addGroup(group.id, exercises);

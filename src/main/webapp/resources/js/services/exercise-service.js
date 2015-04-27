@@ -7,15 +7,17 @@ app.service('exerciseService', function($http, urlService) {
     };
 
     this.isValidInputs = function(exercise) {
-        var validCounter = 0;
-        for (var i = 0; i < exercise.sets.length; i++) {
-            if (exercise.form[FORM_INPUT_SET + exercise.index + i] !== undefined
-                && exercise.form[FORM_INPUT_SET + exercise.index + i].$touched
-                && exercise.form[FORM_INPUT_SET + exercise.index + i].$valid) {
-                validCounter++;
+        if (exercise.form) {
+            var validCounter = 0;
+            for (var i = 0; i < exercise.sets.length; i++) {
+                if (exercise.form[FORM_INPUT_SET + exercise.index + i] !== undefined
+                    && exercise.form[FORM_INPUT_SET + exercise.index + i].$touched
+                    && exercise.form[FORM_INPUT_SET + exercise.index + i].$valid) {
+                    validCounter++;
+                }
             }
+            return exercise.sets.length === validCounter;
         }
-        return exercise.sets.length === validCounter;
     };
 
     this.payload = function(exercise) {
@@ -29,7 +31,7 @@ app.service('exerciseService', function($http, urlService) {
         };
     };
 
-    this.get = function(description, form, index, exercise) {
+    this.get = function(form, index, exercise) {
         var me = this;
         var array = [];
         if (exercise) {
@@ -43,7 +45,7 @@ app.service('exerciseService', function($http, urlService) {
             id: exercise ? exercise.id : undefined,
             index: index,
             form: form,
-            description: description,
+            description: exercise.description,
             visible: true,
             sets: array,
             group: exercise ? exercise.group : null,
@@ -53,6 +55,12 @@ app.service('exerciseService', function($http, urlService) {
             },
             removeSet: function(idx) {
                 this.sets.splice(idx, 1);
+            },
+            toFail: function(idx) {
+                this.sets[idx] = 'FAIL';
+            },
+            reps: function(idx) {
+                this.sets[idx] = null;
             },
             isValid: function() {
                 return me.isValid(this);

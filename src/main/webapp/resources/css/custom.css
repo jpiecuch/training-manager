@@ -39,10 +39,11 @@ form.plan .form-control-static {
 .fc-event {
     padding: 10px 5px;
     text-align: center;
+    opacity: 0.8;
 }
 
 .fc-event:hover {
-    background-color: #4b8df8 !important;
+    opacity: 1.0;
 }
 
 
@@ -410,6 +411,7 @@ small-tiles(new in v1.1.1)
 .small-tiles .small-tile .small-tile-object:after {
     clear: both;
 }
+
 .small-tiles .small-tile .small-tile-object > .name {
     position: absolute;
     bottom: 0;
@@ -483,19 +485,20 @@ dictionary-tiles(new in v1.1.1)
     display: block;
     letter-spacing: 0.02em;
     float: left;
-    height: 20px;
-    width:100% !important;
+    height: 30px;
     cursor: pointer;
     text-decoration: none;
     color: #ffffff;
     position: relative;
     font-weight: 300;
-    font-size: 12px;
+    font-size: 13px;
     letter-spacing: 0.02em;
-    line-height: 20px;
+    line-height: 30px;
     overflow: hidden;
     border: 2px solid transparent;
     margin: 0 10px 5px 0;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 .dictionary-tiles .dictionary-tile:after, .dictionary-tiles .dictionary-tile:before {
     content: "";
@@ -554,7 +557,7 @@ dictionary-tiles(new in v1.1.1)
 .dictionary-tiles .dictionary-tile .dictionary-tile-body {
     height: 100%;
     vertical-align: top;
-    padding: 2px 2px;
+    padding: 5px 2px;
     overflow: hidden;
     position: relative;
     font-weight: 400;
@@ -602,8 +605,8 @@ dictionary-tiles(new in v1.1.1)
 
 .dictionary-tiles .dictionary-tile .dictionary-tile-body > span {
     display: block;
-    font-size: 12px;
-    line-height: 12px;
+    font-size: 14px;
+    line-height: 14px;
     text-align: center;
 }
 

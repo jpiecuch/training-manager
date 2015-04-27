@@ -1,0 +1,77 @@
+<div class="bordered portlet light bg-inverse" data-ng-class="{'super-set' : group.exercises.length > 1}">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-equalizer font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase" data-ng-bind="'exercise' | translate"></span>
+            <span class="caption-helper" data-ng-bind="exercise.description.name"></span>
+        </div>
+        <div class="actions">
+            <div data-ng-if="plan.editable && group.exercises.length <= 1" class="btn-group" dropdown>
+                <button class="btn btn-default btn-xs dropdown-toggle" type="button" dropdown-toggle>
+                    {{'superSet' | translate}} <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li data-ng-repeat="joinGroup in workout.groups" data-ng-if="joinGroup.id !== group.id">
+                        <a href="" data-ng-click="workout.joinToSuperSet(joinGroup, group, exercise)" data-ng-bind="(joinGroup.exercises.length > 1 ? ('superSet'  | translate) : '') + ' ' + (joinGroup.exercises.length > 1 ? joinGroup.position : joinGroup.exercises[0].description.name)"></a>
+                    </li>
+                </ul>
+            </div>
+            <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="exercise.visible = !exercise.visible">
+                <i class="fa fa-angle-double-down"></i>
+            </a>
+            <a data-ng-if="plan.editable" data-ng-if="group.exercises.length > 1" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.removeFromSuperSet(group, exercise)">
+                <i class="fa fa-chain-broken"></i>
+            </a>
+            <a data-ng-if="plan.editable" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.removeExercise(group, exercise)">
+                <i class="icon-trash"></i>
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body" data-ng-hide="exercise.visible === false">
+        <div class="form-group">
+            <label class="col-md-3 control-label"
+                   data-ng-bind="'description.muscles' | translate"></label>
+            <div class="col-md-9">
+                <span class="form-control-static" data-ng-bind="exercise.description.muscles | translate"></span>
+            </div>
+        </div>
+        <div class="form-group" data-ng-if="exercise.description.movieUrl">
+            <label class="col-md-3 control-label"
+                   data-ng-bind="'description.movieUrl' | translate"></label>
+            <div class="col-md-9">
+                <span class="form-control-static">
+                    <a ng-href="{{exercise.description.movieUrl}}" target="_blank">Watch</a>
+                </span>
+            </div>
+        </div>
+        <div class="form-group" data-ng-if="exercise.description.description">
+            <label class="col-md-3 control-label"
+                   data-ng-bind="'description.description' | translate"></label>
+            <div class="col-md-9">
+                <span class="form-control-static" data-ng-bind-html="exercise.description.description"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">
+                {{'exercise.sets' | translate}}&nbsp;{{exercise.description.lateral === 'UNILATERAL' ? ('(' + ('exercise.eachSide' | translate) + ')') : ''}}
+            </label>
+            <div class="col-md-9">
+                <div class="col-md-2" data-ng-repeat="set in exercise.sets track by $index" data-ng-class="{'has-success' : validate.isValid(planForm['exerciseSet' + exercise.index + $index]), 'has-error' : validate.isNotValid(planForm['exerciseSet' + exercise.index + $index])}">
+                    <div class="input-icon right" data-ng-if="plan.editable" dropdown>
+                        <i class="fa fa-angle-down" style="cursor: pointer;"  dropdown-toggle></i>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a data-ng-click="exercise.removeSet($index)">Remove</a></li>
+                            <li data-ng-if="set !== 'FAIL'"><a data-ng-click="exercise.toFail($index)">To fail</a></li>
+                            <li data-ng-if="set === 'FAIL'"><a data-ng-click="exercise.reps($index)">Reps</a></li>
+                        </ul>
+                        <input data-ng-disabled="set === 'FAIL'" data-only-digits name="exerciseSet{{exercise.index}}{{$index}}" type="text" class="form-control" data-ng-model="exercise.sets[$index]" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+                    </div>
+                    <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="set"></span>
+                </div>
+                <a href="" class="btn btn-icon-only" data-ng-click="exercise.addSet()" data-ng-if="plan.editable">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

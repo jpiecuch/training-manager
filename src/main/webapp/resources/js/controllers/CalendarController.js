@@ -11,7 +11,7 @@ app.controller('CalendarController', function($scope, $http, urlService, $filter
                     disableResizing: true
                 },
                 viewRender: function(view) {
-                    userWorkoutService.retrieve({from: moment(view.start).format('YYYY-MM-DD'),  to: moment(view.end).format('YYYY-MM-DD')}).then(function(data) {
+                    userWorkoutService.retrieve({from: moment(view.start).format('YYYY-MM-DD'),  to: moment(view.end).format('YYYY-MM-DD'), maxResults: 50}).then(function(data) {
                         var events = [];
                         for ( var i = 0; i < data.data.result.length; i++) {
                             var event = data.data.result[i];
@@ -19,7 +19,7 @@ app.controller('CalendarController', function($scope, $http, urlService, $filter
                             angular.forEach(event.muscles ,function(index) {
                                 title.push($filter('translate')(index));
                             });
-                            events.push({title: title.join(', '), date: event.date, allDay: true, id: event.id});
+                            events.push({title: title.join(', '), date: event.date, allDay: true, id: event.id, color: userWorkoutService.state(event.state).color.code, borderColor: userWorkoutService.state(event.state).color.code});
                         }
                         $scope.calendar.events[0] = events;
                     });

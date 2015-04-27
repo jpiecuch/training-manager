@@ -1,7 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.service.user.workout;
 
+import pl.jakubpiecuch.trainingmanager.domain.Execution;
+import pl.jakubpiecuch.trainingmanager.domain.UserWorkout;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseDto;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
+
+import java.util.List;
 
 /**
  * Created by Rico on 2015-01-18.
@@ -9,11 +13,10 @@ import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 public class ExecutionDto implements RepoObject {
 
     private Long id;
-    private Integer[] sets;
-    private Double[] weights;
     private ExerciseDto exercise;
-    private Boolean confirm;
     private String comment;
+    private UserWorkout.State state;
+    private List<Execution.Result> results;
 
     @Override
     public Long getId() {
@@ -24,22 +27,6 @@ public class ExecutionDto implements RepoObject {
         this.id = id;
     }
 
-    public Integer[] getSets() {
-        return sets;
-    }
-
-    public void setSets(Integer[] sets) {
-        this.sets = sets;
-    }
-
-    public Double[] getWeights() {
-        return weights;
-    }
-
-    public void setWeights(Double[] weights) {
-        this.weights = weights;
-    }
-
     public ExerciseDto getExercise() {
         return exercise;
     }
@@ -48,19 +35,27 @@ public class ExecutionDto implements RepoObject {
         this.exercise = exercise;
     }
 
-    public Boolean getConfirm() {
-        return confirm;
-    }
-
-    public void setConfirm(Boolean confirm) {
-        this.confirm = confirm;
-    }
-
     public String getComment() {
         return comment;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public UserWorkout.State getState() {
+        return state;
+    }
+
+    public void setState(UserWorkout.State state) {
+        this.state = state;
+    }
+
+    public List<Execution.Result> getResults() {
+        return results;
+    }
+
+    public void setResults(List<Execution.Result> results) {
+        this.results = results;
     }
 }

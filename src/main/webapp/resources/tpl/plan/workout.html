@@ -1,0 +1,36 @@
+<div class="portlet-title">
+    <div class="caption">
+        <i class="icon-equalizer font-red-sunglo"></i>
+        <span class="caption-subject bold uppercase" data-ng-bind="'weekDay.' + workout.weekDay + '.full' | translate"></span>
+    </div>
+    <div class="actions">
+        <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.visible = !workout.visible">
+            <i class="fa fa-angle-down"></i>
+        </a>
+    </div>
+</div>
+<div class="portlet-body" collapse="workout.visible === false">
+    <div class="form-body">
+        <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['workoutMuscles' + workout.index]), 'has-error' : validate.isNotValid(planForm['workoutMuscles' + workout.index])}">
+            <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['workoutMuscles' + workout.index].$touched}" data-ng-bind="'workout.muscle' | translate"></label>
+            <div class="col-md-4">
+                <div data-ng-if="plan.editable">
+                    <div class="col-md-6" data-ng-repeat="muscle in workout.muscles">
+                        <input id="workoutMuscles{{workout.index}}{{$index}}" name="workoutMuscles{{workout.index}}" data-ng-model="muscle.selected" type="checkbox" data-ng-required="!workout.musclesSelected()">
+                        <label for="workoutMuscles{{workout.index}}{{$index}}"><span></span>{{muscle.name | translate}}</label>
+                    </div>
+                </div>
+                <span class="form-control-static" data-ng-if="!plan.editable && muscle.selected" data-ng-repeat="muscle in workout.muscles" data-ng-bind="muscle.name | translate"></span>
+            </div>
+        </div>
+        <section data-ng-if="plan.editable" data-ng-include="'resources/tpl/plan/search.html'"></section>
+    </div>
+    <div class="portlet-body">
+        <section data-ng-repeat="group in workout.groups | orderBy : 'id'">
+            <div data-ng-if="group.exercises.length > 1" class="super-set-title">
+                <span><i class="fa fa-star-o"></i> {{'superSet' | translate}} {{group.position}}</span>
+            </div>
+            <section data-ng-repeat="exercise in group.exercises | orderBy : 'position'" data-ng-include="'resources/tpl/plan/exercise.html'"></section>
+        </section>
+    </div>
+</div>

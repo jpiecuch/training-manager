@@ -1,22 +1,20 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-import org.apache.commons.lang.StringUtils;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "execution")
 public class Execution extends CommonEntity {
 
-    private static final String SET_DELIMITER = ";";
-
-    private String reps;
-    private String weight;
     private Exercise exercise;
-    private Boolean confirm = false;
     private String comment;
     private UserWorkout workout;
+    private UserWorkout.State state;
+    private String result;
 
     public Execution(Long id) {
         super(id);
@@ -25,22 +23,13 @@ public class Execution extends CommonEntity {
     public Execution() {
     }
 
-    @Column(name = "reps")
-    protected String getReps() {
-        return reps;
+    @Column(name = "result")
+    protected String getResult() {
+        return result;
     }
 
-    protected void setReps(String reps) {
-        this.reps = reps;
-    }
-
-    @Column(name = "weights")
-    protected String getWeight() {
-        return weight;
-    }
-
-    protected void setWeight(String weight) {
-        this.weight = weight;
+    protected void setResult(String result) {
+        this.result = result;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -63,15 +52,6 @@ public class Execution extends CommonEntity {
         this.workout = workout;
     }
 
-    @Column(name = "confirm")
-    public Boolean getConfirm() {
-        return confirm;
-    }
-
-    public void setConfirm(Boolean confirm) {
-        this.confirm = confirm;
-    }
-
     @Column(name = "comment")
     public String getComment() {
         return comment;
@@ -81,21 +61,75 @@ public class Execution extends CommonEntity {
         this.comment = comment;
     }
 
+    @Column(name = "state")
+    @Enumerated(value = EnumType.ORDINAL)
+    public UserWorkout.State getState() {
+        return state;
+    }
+
+    public void setState(UserWorkout.State state) {
+        this.state = state;
+    }
+
     @Transient
-    public Integer[] getSets() {
-        return StringUtils.isNotBlank(reps) ? WebUtil.toIntArray(StringUtils.splitByWholeSeparatorPreserveAllTokens(reps, SET_DELIMITER)) : null;
+    public List<Result> getResults() {
+        return WebUtil.fromJson(result, ResultContainer.class).getResults();
     }
 
-    public void setSets(Integer[] sets) {
-        this.reps = StringUtils.join(sets, SET_DELIMITER);
+    public void setResults(List<Result> results) {
+        result = WebUtil.toJson(new ResultContainer(results));
     }
 
-    @Transient
-    public Double[] getWeights() {
-        return StringUtils.isNotBlank(reps) ? WebUtil.toDoubleArray(StringUtils.splitByWholeSeparatorPreserveAllTokens(weight, SET_DELIMITER)) : null;
+    public static class ResultContainer {
+        private List<Result> results;
+
+        public ResultContainer() {
+        }
+
+        public ResultContainer(List<Result> results) {
+            this.results = results;
+        }
+
+        public List<Result> getResults() {
+            return results;
+        }
+
+        public void setResults(List<Result> results) {
+            this.results = results;
+        }
     }
 
-    public void setWeights(Double[] sets) {
-        this.weight = StringUtils.join(sets, SET_DELIMITER);
+    public static class Result {
+
+        public static final String LEFT_SIDE_CODE = "LEFT";
+        public static final String RIGHT_SIDE_CODE = "RIGHT";
+
+        private String side;
+        private List<Double> weights = new ArrayList<Double>();
+        private List<Integer> sets = new ArrayList<Integer>();
+
+        public String getSide() {
+            return side;
+        }
+
+        public void setSide(String side) {
+            this.side = side;
+        }
+
+        public List<Double> getWeights() {
+            return weights;
+        }
+
+        public void setWeights(List<Double> weights) {
+            this.weights = weights;
+        }
+
+        public List<Integer> getSets() {
+            return sets;
+        }
+
+        public void setSets(List<Integer> sets) {
+            this.sets = sets;
+        }
     }
 }

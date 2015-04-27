@@ -16,15 +16,17 @@ app.service('phaseService', function($q, $http, workoutService, urlService) {
     };
 
     this.isValidInputs = function(phase) {
-        return phase.form[FORM_INPUT_DESCRIPTION + phase.index] !== undefined
-            && phase.form[FORM_INPUT_DESCRIPTION + phase.index].$touched
-            && phase.form[FORM_INPUT_DESCRIPTION + phase.index].$valid
-            && phase.form[FORM_INPUT_GOAL + phase.index] !== undefined
-            && phase.form[FORM_INPUT_GOAL + phase.index].$touched
-            && phase.form[FORM_INPUT_GOAL + phase.index].$valid
-            && phase.form[FORM_INPUT_WEEKS + phase.index] !== undefined
-            && phase.form[FORM_INPUT_WEEKS + phase.index].$touched
-            && phase.form[FORM_INPUT_WEEKS + phase.index].$valid;
+        if (phase.form) {
+            return phase.form[FORM_INPUT_DESCRIPTION + phase.index] !== undefined
+                && phase.form[FORM_INPUT_DESCRIPTION + phase.index].$touched
+                && phase.form[FORM_INPUT_DESCRIPTION + phase.index].$valid
+                && phase.form[FORM_INPUT_GOAL + phase.index] !== undefined
+                && phase.form[FORM_INPUT_GOAL + phase.index].$touched
+                && phase.form[FORM_INPUT_GOAL + phase.index].$valid
+                && phase.form[FORM_INPUT_WEEKS + phase.index] !== undefined
+                && phase.form[FORM_INPUT_WEEKS + phase.index].$touched
+                && phase.form[FORM_INPUT_WEEKS + phase.index].$valid;
+        }
     };
 
     this.payload = function(phase) {

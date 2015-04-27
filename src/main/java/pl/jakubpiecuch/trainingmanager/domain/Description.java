@@ -25,6 +25,12 @@ public class Description extends CommonEntity implements RepoObject {
     public enum Force {
         PULL, PUSH, STATIC
     }
+    public enum Sets {
+        REPS, TIME
+    }
+    public enum Lateral {
+        UNILATERAL, BILATERAL
+    }
 
     private String name;
     private String movieUrl;
@@ -35,6 +41,8 @@ public class Description extends CommonEntity implements RepoObject {
     private Level level;
     private Mechanics mechanics;
     private Force force;
+    private Lateral lateral;
+    private Sets sets;
 
     public Description(Long id) {
         super(id);
@@ -124,4 +132,23 @@ public class Description extends CommonEntity implements RepoObject {
     public void setForce(Force force) {
         this.force = force;
     }
+
+    @Column(name = "sides")
+    public Lateral getLateral() {
+        return lateral;
+    }
+
+    public void setLateral(Lateral lateral) {
+        this.lateral = lateral;
+    }
+
+    @Column(name = "sets")
+    public Sets getSets() {
+        return sets;
+    }
+
+    public void setSets(Sets sets) {
+        this.sets = sets;
+    }
 }
+

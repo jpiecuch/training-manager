@@ -23,7 +23,6 @@ public class ApiURI {
     public static final String KEY_PATH_PARAM = "/{"+ KEY_PARAM +"}";
     public static final String ID_PARAM = "id";
     public static final String ID_PATH_PARAM = "/{"+ ID_PARAM +"}";
-    public static final String ID_PATH_PARAM_CHILDREN = ID_PATH_PARAM + CHILDREN_PATH;
     public static final String API_LOCALE_PATH = API_VERSION_PATH + LOCALE_PATH;
     public static final String API_SIGN_IN_PATH = API_VERSION_PATH + SIGN_IN_PATH;
     public static final String API_RESOURCE_PATH = API_VERSION_PATH + RESOURCE_PATH;
@@ -37,6 +36,8 @@ public class ApiURI {
     public static final String API_USERS_PLANS_PATH = API_USERS_PATH + ID_PATH_PARAM + PLANS_PATH;
     public static final String API_USERS_WORKOUTS_PATH = API_USERS_PATH + ID_PATH_PARAM + WORKOUTS_PATH;
     public static final String API_ROLE_PATH = API_VERSION_PATH + ROLE_PATH;
+    public static final String WORKOUT_ID_PARAM = "workoutId";
+    public static final String WORKOUT_ID_PATH_PARAM = "/{" + WORKOUT_ID_PARAM + "}";
 
     private ApiURI() {
     }

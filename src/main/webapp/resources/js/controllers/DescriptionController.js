@@ -35,6 +35,14 @@ app.controller('DescriptionController', function($scope, $stateParams, descripti
         dictionaryService.retrieve(7).then(function(data) {
             $scope.dictionary.langs = data;
         });
+
+        dictionaryService.retrieve(11).then(function(data) {
+            $scope.dictionary.sets = data;
+        });
+
+        dictionaryService.retrieve(12).then(function(data) {
+            $scope.dictionary.lateral = data;
+        });
     }
 
     $scope.$watch('form', function(form) {

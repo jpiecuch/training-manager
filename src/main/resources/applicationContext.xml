@@ -158,11 +158,14 @@
         <property name="executionDao" ref="executionDao"/>
         <property name="phaseConverter" ref="phaseConverter"/>
         <property name="planConverter" ref="planConverter"/>
+        <property name="userWorkoutDao" ref="userWorkoutDao"/>
     </bean>
 
     <bean id="userWorkoutManager" class="pl.jakubpiecuch.trainingmanager.service.user.workout.session.SessionUserWorkoutManager">
         <property name="converter" ref="userWorkoutConverter"/>
         <property name="dao" ref="userWorkoutDao"/>
+        <property name="validator" ref="userWorkoutValidator"/>
+        <property name="name" value="userWorkout"/>
     </bean>
 
     <bean id="sessionUserPlanStarter" class="pl.jakubpiecuch.trainingmanager.service.user.plan.SessionUserPlanStarter">

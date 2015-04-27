@@ -32,10 +32,16 @@ app.controller('PlanController', function($scope, $stateParams, dictionaryServic
             $scope.dictionary.force = data;
         });
 
+        planService.get(form, 0, $stateParams.id).then(function(data) {
+            $scope.starter = planStarterService.get(data.id);
+            $scope.plan = data;
+            if ($scope.plan.phases.length === 0) {
+                $scope.plan.addPhase();
+            }
+        });
+    };
 
-    }
-
-    $scope.$watch('planForm', function(form) {
+    /*$scope.$watch('planForm', function(form) {
         if ($scope.plan === undefined && form !== undefined) {
             planService.get(form, 0, $stateParams.id).then(function(data) {
                 $scope.plan = data;
@@ -46,6 +52,6 @@ app.controller('PlanController', function($scope, $stateParams, dictionaryServic
             });
 
         }
-    });
+    });*/
 });
 

@@ -1,6 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.user.workout;
 
 import pl.jakubpiecuch.trainingmanager.domain.Description;
+import pl.jakubpiecuch.trainingmanager.domain.UserWorkout;
 import pl.jakubpiecuch.trainingmanager.domain.Workout;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
@@ -21,6 +22,8 @@ public class UserWorkoutDto implements RepoObject {
     private PhaseDto phase;
     private List<ExecutionDto> executions;
     private Workout.WeekDay weekDay;
+    private UserWorkout.State state;
+    private String comment;
 
     public Description.Muscles[] getMuscles() {
         return muscles;
@@ -77,5 +80,21 @@ public class UserWorkoutDto implements RepoObject {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public UserWorkout.State getState() {
+        return state;
+    }
+
+    public void setState(UserWorkout.State state) {
+        this.state = state;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

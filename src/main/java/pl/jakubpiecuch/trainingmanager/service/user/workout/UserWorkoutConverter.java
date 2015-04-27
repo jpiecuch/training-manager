@@ -2,6 +2,7 @@ package pl.jakubpiecuch.trainingmanager.service.user.workout;
 
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakubpiecuch.trainingmanager.dao.ExecutionDao;
+import pl.jakubpiecuch.trainingmanager.dao.UserWorkoutDao;
 import pl.jakubpiecuch.trainingmanager.domain.UserWorkout;
 import pl.jakubpiecuch.trainingmanager.service.converter.AbstractConverter;
 import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
@@ -17,6 +18,7 @@ public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, User
     private Converter phaseConverter;
     private Converter executionConverter;
     private ExecutionDao executionDao;
+    private UserWorkoutDao userWorkoutDao;
 
     @Override
     @Transactional
@@ -29,12 +31,17 @@ public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, User
         result.setPhase((PhaseDto) phaseConverter.fromEntity(entity.getWorkout().getPhase(), false));
         result.setExecutions(full ? executionConverter.fromEntityList(executionDao.findByParentId(entity.getId()), full) : null);
         result.setWeekDay(entity.getWorkout().getWeekDay());
+        result.setState(entity.getState());
+        result.setComment(entity.getComment());
         return result;
     }
 
     @Override
     public UserWorkout toEntity(UserWorkoutDto object) {
-        throw new UnsupportedOperationException();
+        UserWorkout entity = userWorkoutDao.findById(object.getId());
+        entity.setComment(object.getComment());
+        entity.setState(object.getState());
+        return entity;
     }
 
     public void setPlanConverter(Converter planConverter) {
@@ -51,5 +58,9 @@ public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, User
 
     public void setExecutionDao(ExecutionDao executionDao) {
         this.executionDao = executionDao;
+    }
+
+    public void setUserWorkoutDao(UserWorkoutDao userWorkoutDao) {
+        this.userWorkoutDao = userWorkoutDao;
     }
 }

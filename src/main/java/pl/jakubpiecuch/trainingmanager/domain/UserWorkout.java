@@ -10,11 +10,16 @@ import java.util.Date;
 @Table(name = "user_workout")
 public class UserWorkout extends CommonEntity {
 
+    public enum State {
+        PLANNED, IN_PROGRESS, REJECTED, COMPLETED
+    }
+
     private String comment;
     private Account account;
     private Boolean remind;
     private Date date;
     private Workout workout;
+    private State state;
 
     public UserWorkout() {
         super();
@@ -69,5 +74,15 @@ public class UserWorkout extends CommonEntity {
 
     public void setWorkout(Workout workout) {
         this.workout = workout;
+    }
+
+    @Column(name = "state")
+    @Enumerated(EnumType.ORDINAL)
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }

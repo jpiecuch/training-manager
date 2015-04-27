@@ -24,6 +24,7 @@ public class DescriptionController extends AbstractController {
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.DESCRIPTION_VIEWER + Permissions.HAS_ROLE_SUFFIX)
     @RequestMapping(method = { RequestMethod.GET })
     public PageResult<Description> descriptions(@PathVariable ApiVersionService.Version version,
+                                                @RequestParam(value = "name", required = false) String name,
                                @RequestParam(value = "muscle", required = false) Description.Muscles[] muscles,
                                @RequestParam(value = "force", required = false) Description.Force[] forces,
                                @RequestParam(value = "level", required = false) Description.Level[] levels,
@@ -35,7 +36,7 @@ public class DescriptionController extends AbstractController {
                                @RequestParam(value = "orderby", required = false, defaultValue = "id") String orderBy,
                                @RequestParam(value = "ordermode", required = false, defaultValue = "ASC") Criteria.OrderMode orderMode,
                                Locale locale) {
-        return versionServices.get(version).retrieveFromRepository(new DescriptionCriteria(locale.getLanguage()).addForceRestriction(forces).addLevelRestriction(levels)
+        return versionServices.get(version).retrieveFromRepository(new DescriptionCriteria(locale.getLanguage()).addNameLikeRestriction(name).addForceRestriction(forces).addLevelRestriction(levels)
                 .addMechanicsRestriction(mechanics).addMuscleRestriction(muscles).addTypeRestriction(types).setFirstResultRestriction(firstResult)
                 .setMaxResultsRestriction(maxResults).addExcludedIdRestriction(excludedIds).setOrderBy(orderBy,orderMode, versionServices.get(version).orderResolvers()), Repositories.DESCRIPTION);
     }

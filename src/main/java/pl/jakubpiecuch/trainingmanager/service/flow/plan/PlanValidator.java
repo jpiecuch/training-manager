@@ -1,10 +1,12 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.util.Assert;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.GroupDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutDto;
@@ -60,6 +62,12 @@ public class PlanValidator implements Validator {
                                         ValidationUtils.rejectIfEmptyOrWhitespace(errors, phaseName + workoutName + groupName + exerciseName + "descriptionId", RestrictionCode.REQUIRED);
                                         ValidationUtils.rejectIfEmptyOrWhitespace(errors, phaseName + workoutName + groupName + exerciseName + "sets", RestrictionCode.REQUIRED);
                                         ValidationUtils.rejectIfEmptyOrWhitespace(errors, phaseName + workoutName + groupName + exerciseName + "position", RestrictionCode.REQUIRED);
+                                        for (int m = 0; m < group.getExercises().get(l).getSets().length; m++) {
+                                            String set = group.getExercises().get(l).getSets()[m];
+                                            if (!Exercise.FAIL_KEY.equals(set) && !NumberUtils.isNumber(set)) {
+                                                errors.rejectValue(phaseName + workoutName + groupName + exerciseName + "sets[" + m + "]", RestrictionCode.INVALID);
+                                            }
+                                        }
                                     }
                                 }
                             }

@@ -1,6 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "plan")
@@ -15,6 +16,7 @@ public class Plan extends CommonEntity {
     private Goal goal;
     private Account creator;
     private Boolean used = false;
+    private List<Phase> phases;
 
     public Plan() {
     }

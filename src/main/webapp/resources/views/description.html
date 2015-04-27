@@ -68,7 +68,40 @@
                             <div text-angular data-ng-model="description.description"></div>
                         </div>
                     </div>
+                    <div class="form-group"
+                         data-ng-class="{'has-success' : validate.isValid(form.lateral), 'has-error' : validate.isNotValid(form.lateral)}">
+                        <label class="col-md-3 control-label" data-ng-class="{'bold' : form.lateral.$touched}"
+                               data-ng-bind="'description.lateral' | translate"></label>
 
+                        <div class="col-md-5">
+                            <div class="input-icon right select-right">
+                                <i data-ng-if="form.lateral.$touched" class="fa"
+                                   data-ng-class="{'fa-check' : validate.isValid(form.lateral), 'fa-exclamation' : validate.isNotValid(form.lateral)}"></i>
+                                <select name="lateral" data-ng-model="description.lateral" class="form-control" required
+                                        tooltip="{{'field.required' | translate}}" tooltip-placement="right">
+                                    <option data-ng-repeat="set in dictionary.lateral" data-ng-bind="set"
+                                            value="{{set}}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group"
+                         data-ng-class="{'has-success' : validate.isValid(form.sets), 'has-error' : validate.isNotValid(form.sets)}">
+                        <label class="col-md-3 control-label" data-ng-class="{'bold' : form.sets.$touched}"
+                               data-ng-bind="'description.sets' | translate"></label>
+
+                        <div class="col-md-5">
+                            <div class="input-icon right select-right">
+                                <i data-ng-if="form.sets.$touched" class="fa"
+                                   data-ng-class="{'fa-check' : validate.isValid(form.sets), 'fa-exclamation' : validate.isNotValid(form.sets)}"></i>
+                                <select name="sets" data-ng-model="description.sets" class="form-control" required
+                                        tooltip="{{'field.required' | translate}}" tooltip-placement="right">
+                                    <option data-ng-repeat="set in dictionary.sets" data-ng-bind="set"
+                                            value="{{set}}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group"
                          data-ng-class="{'has-success' : validate.isValid(form.muscle), 'has-error' : validate.isNotValid(form.muscle)}">
                         <label class="col-md-3 control-label" data-ng-class="{'bold' : form.muscle.$touched}"

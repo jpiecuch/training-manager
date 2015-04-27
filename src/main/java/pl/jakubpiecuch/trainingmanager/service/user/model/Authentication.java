@@ -40,16 +40,9 @@ public class Authentication {
         this.username = account.getName();
         this.password = account.getPassword();
         this.authorities = account.getGrantedPermissions();
-        try {
-            Account.Config config = WebUtil.fromJson(account.getConfig(), Account.Config.class);
-            this.firstName = config.getFirstName();
-            this.lastName = config.getLastName();
-        } catch (IOException ex) {
-            LOGGER.warn("", ex);
-            throw new IllegalArgumentException("Config has wrong format");
-        }
-
-
+        Account.Config config = WebUtil.fromJson(account.getConfig(), Account.Config.class);
+        this.firstName = config.getFirstName();
+        this.lastName = config.getLastName();
     }
 
     public SocialProvider.SocialType getSocial() {

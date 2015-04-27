@@ -56,4 +56,6 @@
     <bean id="standValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.stand.StandValidator"/>
 
     <bean id="executionValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.execution.ExecutionValidator"/>
+
+    <bean id="userWorkoutValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.userworkout.UserWorkoutValidator"/>
 </beans>

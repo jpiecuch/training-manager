@@ -1,0 +1,30 @@
+<div class="form-group">
+    <label class="col-md-3 control-label"
+           data-ng-bind="'execution.sets' | translate"></label>
+    <div class="col-md-9">
+        <div data-ng-if="workout.state === 'IN_PROGRESS' && execution.state === 'IN_PROGRESS'" class="col-md-2" data-ng-repeat="set in execution.results[0].sets track by $index">
+            <div class="input-icon right">
+                <i class="fa fa-times" style="cursor: pointer;" data-ng-click="execution.removeSet($index)"></i>
+                <input data-only-digits name="executionSet{{execution.id}}{{$index}}" type="text" class="form-control" data-ng-model="execution.results[0].sets[$index]" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+            </div>
+        </div>
+        <div data-ng-if="execution.state === 'COMPLETED'" class="col-md-2" data-ng-repeat="set in execution.results[0].sets track by $index" >
+            <span class="form-control-static">{{set}}</span>
+        </div>
+        <a data-ng-if="workout.state === 'IN_PROGRESS' && execution.state === 'IN_PROGRESS'" href="" class="btn btn-icon-only" data-ng-click="execution.addSet()">
+            <i class="fa fa-plus"></i>
+        </a>
+    </div>
+</div>
+<div class="form-group" >
+    <label class="col-md-3 control-label"
+           data-ng-bind="'execution.weights' | translate"></label>
+    <div class="col-md-9">
+        <div data-ng-if="workout.state === 'IN_PROGRESS' && execution.state === 'IN_PROGRESS'" class="col-md-2" data-ng-repeat="weight in execution.results[0].weights track by $index">
+            <input data-only-decimals name="executionWeight{{execution.id}}{{$index}}" type="text" class="form-control" data-ng-model="execution.results[0].weights[$index]" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+        </div>
+        <div data-ng-if="execution.state === 'COMPLETED'" class="col-md-2" data-ng-repeat="set in execution.results[0].weights track by $index" >
+            <span class="form-control-static">{{set}}</span>
+        </div>
+    </div>
+</div>

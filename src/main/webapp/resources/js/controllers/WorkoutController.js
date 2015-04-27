@@ -4,6 +4,8 @@ app.controller('WorkoutController', function($scope, $stateParams, userWorkoutSe
 
     $scope.videoProvider = videoProviderService;
 
+    $scope.states = userWorkoutService.allStates();
+
     $scope.init = function() {
         userWorkoutService.get($stateParams.id).then(function(data) {
             $scope.workout = data.data;

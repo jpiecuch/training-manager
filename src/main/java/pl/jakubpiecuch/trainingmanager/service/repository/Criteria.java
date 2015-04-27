@@ -1,6 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.repository;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
@@ -120,7 +121,7 @@ public abstract class Criteria<T extends Criteria> {
 
     public T setOrderBy(String property, OrderMode mode, Map<String, OrderResolver> orderResolverMap) {
         validateProperty(property);
-        OrderResolver orderResolver = orderResolverMap.get(entity + "-" + property);
+        OrderResolver orderResolver = MapUtils.isNotEmpty(orderResolverMap) ? orderResolverMap.get(entity + "-" + property) : null;
         this.order = orderResolver != null ? orderResolver.resolve(lang, alias, property, mode) : (property + " " + mode);
         return (T) this;
     }

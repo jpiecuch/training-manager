@@ -1,6 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.repository.description;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
 import pl.jakubpiecuch.trainingmanager.service.resolver.OrderResolver;
@@ -21,6 +22,7 @@ public class DescriptionCriteria extends Criteria<DescriptionCriteria> {
     private List<Description.Mechanics> mechanics = new ArrayList<Description.Mechanics>();
     private List<Description.Type> type = new ArrayList<Description.Type>();
     private List<Long> excludedIds = new ArrayList<Long>();
+    private String name;
 
     public DescriptionCriteria(String lang) {
         super("d", "Description", lang);
@@ -29,6 +31,11 @@ public class DescriptionCriteria extends Criteria<DescriptionCriteria> {
     @Override
     protected String[] getValidFields() {
         return PROPERTIES;
+    }
+
+    public DescriptionCriteria addNameLikeRestriction(String name) {
+        this.name = name;
+        return this;
     }
 
     public DescriptionCriteria addMuscleRestriction(Description.Muscles... muscle) {
@@ -75,6 +82,10 @@ public class DescriptionCriteria extends Criteria<DescriptionCriteria> {
             collection(this.mechanics, "mechanics", "IN");
             collection(this.type, "type", "IN");
             collection(this.excludedIds, "id", "NOT IN");
+            if (StringUtils.isNotEmpty(name)) {
+                restrictions.add("lower("  + alias + ".name) LIKE :name ");
+                params.put("name", "%" + name.toLowerCase() + "%");
+            }
         }
     }
 }

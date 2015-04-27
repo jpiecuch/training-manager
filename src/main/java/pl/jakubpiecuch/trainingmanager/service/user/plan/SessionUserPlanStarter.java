@@ -14,7 +14,9 @@ import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,12 +48,29 @@ public class SessionUserPlanStarter implements UserPlanStarter {
                     userWorkout.setDate(dateTime.toDate());
                     userWorkout.setWorkout(new Workout(workout.getId()));
                     userWorkout.setAccount(AuthenticatedUserUtil.getUser());
+                    userWorkout.setState(UserWorkout.State.PLANNED);
                     userWorkoutDao.create(userWorkout);
                     for (GroupDto group : workout.getGroups()) {
                         for(ExerciseDto exercise : group.getExercises()) {
                             Execution execution = new Execution();
                             execution.setExercise(new Exercise(exercise.getId()));
                             execution.setWorkout(userWorkout);
+                            execution.setState(UserWorkout.State.PLANNED);
+                            List<Execution.Result> results = new ArrayList<Execution.Result>();
+                            if (exercise.getDescription().getLateral() == Description.Lateral.BILATERAL) {
+                                Execution.Result result = new Execution.Result();
+                                result.setSide(null);
+                                results.add(result);
+                            } else {
+                                Execution.Result leftResult = new Execution.Result();
+                                leftResult.setSide(Execution.Result.LEFT_SIDE_CODE);
+                                results.add(leftResult);
+
+                                Execution.Result rightResult = new Execution.Result();
+                                rightResult.setSide(Execution.Result.RIGHT_SIDE_CODE);
+                                results.add(rightResult);
+                            }
+                            execution.setResults(results);
                             executionDao.create(execution);
                         }
                     }
