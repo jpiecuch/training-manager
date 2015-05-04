@@ -27,13 +27,14 @@ app.service('phaseService', function($q, $http, workoutService, urlService, inpu
     };
 
     this.addWorkout = function(phase, weekDay, workout) {
-        var index = '' + phase.index + phase.childIndex++;
+        phase.touched = true;
         var newWorkout = workoutService.get(weekDay, workout);
         phase.workouts.push(newWorkout);
         phase.activateWorkout(newWorkout);
     };
 
     this.removeWorkout = function(phase, weekDay) {
+        phase.touched = true;
         for (var i =0; i < phase.workouts.length; i++) {
             var removeWorkout = phase.workouts[i];
             if (removeWorkout.weekDay === weekDay) {
@@ -63,7 +64,7 @@ app.service('phaseService', function($q, $http, workoutService, urlService, inpu
                 hasErrors = false;
             }
         }
-        return hasErrors !== undefined ? phase.workouts.length === 0 : hasErrors;
+        return hasErrors !== undefined || phase.touched ? hasErrors || phase.workouts.length === 0 : hasErrors;
     }
 
     this.get = function(phase) {
@@ -75,6 +76,7 @@ app.service('phaseService', function($q, $http, workoutService, urlService, inpu
             weeks: inputService.get(phase ? phase.weeks : null),
             workouts: [],
             position: phase ? phase.position : null,
+            touched: false,
             isValid: function() {
                return me.isValid(this);
             },
