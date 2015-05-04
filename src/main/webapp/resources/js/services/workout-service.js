@@ -87,7 +87,8 @@ app.service('workoutService', function($q, $http, exerciseService, urlService, d
     };
 
     this.hasErrors = function(workout) {
-        var hasErrors = workout.muscles.isValid();
+        var musclesValidation = workout.muscles.isValid();
+        var hasErrors = musclesValidation === undefined ? undefined : !musclesValidation;
 
         for (var i = 0; i < workout.groups.length; i++) {
             if (workout.groups[i].hasErrors()) {
