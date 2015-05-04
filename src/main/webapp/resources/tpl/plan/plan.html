@@ -7,24 +7,24 @@
     </div>
     <div class="portlet-body form">
         <div class="form-body">
-            <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm.planName), 'has-error' : validate.isNotValid(planForm.planName)}">
-                <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm.planName.$touched}" data-ng-bind="'plan.name' | translate"></label>
+            <div class="form-group" data-ng-class="{'has-success' : plan.name.isValid(), 'has-error' : plan.name.isValid() === false}">
+                <label class="col-md-3 control-label" data-ng-class="{'bold' : plan.name.isTouched()}"><span data-ng-bind="'plan.name' | translate" tooltip="{{'field.required' | translate}}"  tooltip-placement="top"></span></label>
                 <div class="col-md-4">
                     <div class="input-icon right" data-ng-if="plan.editable">
-                        <i data-ng-if="planForm.planName.$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm.planName), 'fa-exclamation' : validate.isNotValid(planForm.planName)}"></i>
+                        <i data-ng-if="plan.name.isTouched()" class="fa" data-ng-class="{'fa-check' : plan.name.isValid(), 'fa-exclamation' : !plan.name.isValid()}"></i>
                         <input name="planName" type="text" class="form-control" placeholder="{{'plan.name.placeholder' | translate}}"
-                               data-ng-model="plan.name" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+                               data-ng-model="plan.name.value" required data-ng-blur="plan.name.touch()">
                     </div>
                     <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.name"></span>
                 </div>
             </div>
-            <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm.planGoal), 'has-error' : validate.isNotValid(planForm.planGoal)}">
-                <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm.planGoal.$touched}" data-ng-bind="'plan.goal' | translate"></label>
+            <div class="form-group">
+                <label class="col-md-3 control-label"><span data-ng-bind="'plan.goal' | translate" tooltip="{{'field.required' | translate}}"  tooltip-placement="top"></span></label>
                 <div class="col-md-4">
                     <div class="input-icon right select-right" data-ng-if="plan.editable">
-                        <i data-ng-if="planForm.planGoal.$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm.planGoal), 'fa-exclamation' : validate.isNotValid(planForm.planGoal)}"></i>
-                        <select class="form-control" data-ng-model="plan.goal" required name="planGoal" tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
-                            <option data-ng-repeat="goal in dictionary.goals" data-ng-bind="goal"
+                        <i data-ng-if="plan.goal.isTouched()" class="fa" data-ng-class="{'fa-check' : plan.goal.isValid(), 'fa-exclamation' : !plan.goal.isValid()}"></i>
+                        <select class="form-control" data-ng-model="plan.goal.value" required name="planGoal" data-ng-blur="plan.goal.touch()">
+                            <option data-ng-repeat="goal in dictionary.goals track by $index" data-ng-bind="goal"
                                     value="{{goal}}"></option>
                         </select>
                     </div>
@@ -33,7 +33,15 @@
             </div>
         </div>
     </div>
-    <div class="bordered portlet light bg-inverse" data-ng-repeat="phase in plan.phases" data-ng-include="'resources/tpl/plan/phase.html'" ></div>
+    <div class="tabbable tabbable-custom" data-ng-if="plan.phase">
+        <ul class="nav nav-tabs">
+            <li ng-repeat="phase in plan.phases" ng-class="{'active' : plan.isActive(phase)}"><a ng-click="plan.activatePhase(phase)">{{('phase' | translate) + ' ' + ($index +1)}} <i data-ng-if="phase.hasErrors()" class="fa fa-exclamation-circle text-danger"></i></a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="portlet tab-pane active" data-ng-include="'resources/tpl/plan/phase.html'"></div>
+        </div>
+    </div>
     <a data-ng-if="plan.editable" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="plan.addPhase()">
         <i class="fa fa-plus"></i>
     </a>

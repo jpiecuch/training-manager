@@ -47,6 +47,10 @@ public class ConstantsDictionary implements Dictionary {
         return ArrayUtils.contains(SECURED_IDS, id) ? securedDictionary.retrieve(id) : map.get(id);
     }
 
+    @Override
+    public Object retrieve(Long[] ids) {
+        return securedDictionary.retrieve(ids);
+    }
 
     public void setLangs(String[] langs) {
         this.langs = langs;

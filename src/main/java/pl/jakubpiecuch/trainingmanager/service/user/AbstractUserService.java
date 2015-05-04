@@ -36,7 +36,8 @@ public abstract class AbstractUserService implements UserService {
     @Override
     public void signIn(HttpServletRequest request, HttpServletResponse response, UserDetails user) {
         SecurityUser securityUser = (SecurityUser) user;
-        String username = securityUser.getSocial() != null ? String.format("%s:%s", securityUser.getSocial().getProviderId(), securityUser.getUsername()) : securityUser.getUsername();
+        //TODO: this is not good enough
+        String username = securityUser.getSocial() != null ? String.format(SecurityUser.SOCIAL_USERNAME_FORMAT, securityUser.getSocial().getProviderId(), securityUser.getUsername()) : securityUser.getUsername();
         Account entity = accountDao.findByUniques(null, username, null);
         if (isValidCredentials(entity, user)) {
             List<String> roles = new ArrayList<String>();

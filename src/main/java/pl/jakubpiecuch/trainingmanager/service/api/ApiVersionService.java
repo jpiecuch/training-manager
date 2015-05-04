@@ -24,6 +24,7 @@ import java.util.Map;
 
 public interface ApiVersionService {
     void updateExecution(ExecutionDto execution);
+
     enum Version {
         v1
     }
@@ -46,6 +47,7 @@ public interface ApiVersionService {
     Equipment resolve(InputStream stream, Equipment.Type type) throws IOException;
 
     Object dictionary(long id);
+    Object dictionaries(Long[] ids);
 
     Map<String,OrderResolver> orderResolvers();
 

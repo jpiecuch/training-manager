@@ -1,49 +1,49 @@
 <div class="form-group" data-ng-if="plan.editable">
     <label class="col-md-3 control-label"
-           data-ng-bind="'workout.exercises' | translate"></label>
+           data-ng-bind="'plan.phase.workout.exercises' | translate"></label>
 
     <div class="col-md-1">
         <input type="text" class="form-control"
                placeholder="{{'description.name' | translate}}"
-               data-ng-model="workout.descriptions.params.name">
+               data-ng-model="plan.phase.workout.descriptions.params.name">
     </div>
     <div class="col-md-1">
-        <select class="form-control" data-ng-model="workout.descriptions.params.muscle">
+        <select class="form-control" data-ng-model="plan.phase.workout.descriptions.params.muscle">
             <option data-ng-bind="'<'+('description.muscles' | translate)+'>'" value=""/>
             <option data-ng-repeat="muscle in dictionary.muscles" data-ng-bind="muscle | translate"
                     value="{{muscle}}"></option>
         </select>
     </div>
     <div class="col-md-1">
-        <select class="form-control" data-ng-model="workout.descriptions.params.type">
+        <select class="form-control" data-ng-model="plan.phase.workout.descriptions.params.type">
             <option data-ng-bind="'<'+('description.type' | translate)+'>'" value=""/>
             <option data-ng-repeat="type in dictionary.type" data-ng-bind="type | translate"
                     value="{{type}}"></option>
         </select>
     </div>
     <div class="col-md-1">
-        <select class="form-control" data-ng-model="workout.descriptions.params.level">
+        <select class="form-control" data-ng-model="plan.phase.workout.descriptions.params.level">
             <option data-ng-bind="'<'+('description.level' | translate)+'>'" value=""/>
             <option data-ng-repeat="level in dictionary.level" data-ng-bind="level | translate"
                     value="{{level}}"></option>
         </select>
     </div>
     <div class="col-md-1">
-        <select class="form-control" data-ng-model="workout.descriptions.params.mechanic">
+        <select class="form-control" data-ng-model="plan.phase.workout.descriptions.params.mechanic">
             <option data-ng-bind="'<'+('description.mechanics' | translate)+'>'" value=""/>
             <option data-ng-repeat="mechanic in dictionary.mechanics"
                     data-ng-bind="mechanic | translate" value="{{mechanic}}"></option>
         </select>
     </div>
     <div class="col-md-1">
-        <select class="form-control" data-ng-model="workout.descriptions.params.force">
+        <select class="form-control" data-ng-model="plan.phase.workout.descriptions.params.force">
             <option data-ng-bind="'<'+('description.force' | translate)+'>'" value=""/>
             <option data-ng-repeat="force in dictionary.force" data-ng-bind="force | translate"
                     value="{{force}}"></option>
         </select>
     </div>
     <div class="col-md-1">
-        <a href="" class="btn yellow" data-ng-click="workout.descriptions.retrieve(workout.index)">
+        <a href="" class="btn yellow" data-ng-click="plan.phase.workout.descriptions.retrieve(plan.phase.workout.index)">
             {{'search' | translate}} <i class="fa fa-search"></i>
         </a>
     </div>
@@ -54,19 +54,19 @@
     <div class="col-md-7">
         <div class="dictionary-tiles">
             <div class="dictionary-tile bg-blue-steel"
-                 data-ng-repeat="description in workout.descriptions.result.result"
-                 data-ng-click="workout.addExercise(description)">
+                 data-ng-repeat="description in plan.phase.workout.descriptions.result.result"
+                 data-ng-click="plan.phase.workout.group.addExercise({description: description}, plan.phase.workout.descriptions)">
                 <div class="dictionary-tile-body">
                     <span data-ng-bind="description.name"></span>
                 </div>
             </div>
         </div>
-        <ul class="pager" data-ng-if="workout.descriptions.result.result.length > 0">
-            <li class="previous" data-ng-if="workout.descriptions.params.firstResult > 0">
-                <a href="" data-ng-click="workout.descriptions.page(workout.index, -1)">← {{'prevPage' | translate}} </a>
+        <ul class="pager" data-ng-if="plan.phase.workout.descriptions.result.result.length > 0">
+            <li class="previous" data-ng-if="plan.phase.workout.descriptions.params.firstResult > 0">
+                <a href="" data-ng-click="plan.phase.workout.descriptions.page(plan.phase.workout.index, -1)">← {{'prevPage' | translate}} </a>
             </li>
-            <li class="next" data-ng-if="workout.descriptions.result.count > workout.descriptions.params.firstResult + workout.descriptions.params.maxResults">
-                <a href="" data-ng-click="workout.descriptions.page(workout.index, 1)">{{'nextPage' | translate}} → </a>
+            <li class="next" data-ng-if="plan.phase.workout.descriptions.result.count > plan.phase.workout.descriptions.params.firstResult + plan.phase.workout.descriptions.params.maxResults">
+                <a href="" data-ng-click="plan.phase.workout.descriptions.page(plan.phase.workout.index, 1)">{{'nextPage' | translate}} → </a>
             </li>
         </ul>
     </div>

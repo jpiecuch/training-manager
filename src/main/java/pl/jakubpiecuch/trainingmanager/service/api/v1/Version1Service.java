@@ -113,6 +113,11 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Override
+    public Object dictionaries(Long[] ids) {
+        return dictionary.retrieve(ids);
+    }
+
+    @Override
     public <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow) {
         return flowManagers.get(hierarchy).create(flow);
     }

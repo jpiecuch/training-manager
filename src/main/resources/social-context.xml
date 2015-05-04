@@ -46,7 +46,9 @@
         <constructor-arg index="0" ref="connectionFactoryLocator"/>
         <constructor-arg index="1" ref="usersConnectionRepository"/>
         <constructor-arg index="2">
-            <bean class="pl.jakubpiecuch.trainingmanager.service.user.social.SocialSignInAdapter"/>
+            <bean class="pl.jakubpiecuch.trainingmanager.service.user.social.SocialSignInAdapter">
+                <property name="accountDao" ref="usersDao"/>
+            </bean>
         </constructor-arg>
         <property name="signUpUrl" value="/?social=true#/login"/>
         <property name="postSignInUrl" value="/#"/>
@@ -78,6 +80,7 @@
                 <entry key="TWITTER" value-ref="twitterService"/>
             </map>
         </property>
+        <property name="accountDao" ref="usersDao"/>
     </bean>
 
 </beans>

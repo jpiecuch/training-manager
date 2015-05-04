@@ -1,4 +1,4 @@
-<section data-ng-controller="PlanController" data-ng-init="init(planForm)">
+<section data-ng-controller="PlanController" data-ng-init="init(planForm)" data-ng-cloak>
     <div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
@@ -47,5 +47,5 @@
             </div>
         </div>
     </form>
-    <form name="planForm" class="form-horizontal plan" data-ng-submit="plan.create(planForm)" novalidate data-ng-include="'resources/tpl/plan/plan.html'"></form>
+    <form name="planForm" class="form-horizontal plan" data-ng-submit="plan.submit()" novalidate data-ng-include="'resources/tpl/plan/plan.html'"></form>
 </section>

@@ -1,4 +1,4 @@
-app.service('authenticateService', function($http, urlService, $q, $rootScope) {
+app.service('authenticateService', function($http, urlService, $q, $rootScope, dictionaryService) {
     var user = null;
 
     this.getSocials = function() {
@@ -22,6 +22,7 @@ app.service('authenticateService', function($http, urlService, $q, $rootScope) {
                 if (data.status === 201) {
                     $rootScope.settings.isUserSignIn = true;
                     delete credentials.rememberMe;
+                    dictionaryService.feed([1,2,3,4,5,6,7,8,9,10,11,12]);
                 }
                 return data;
             });

@@ -1,52 +1,45 @@
-app.service('planService', function($q, $http, phaseService, formValidateService, alertService, urlService) {
-    var FORM_INPUT_NAME = "planName";
-    var FORM_INPUT_GOAL = "planGoal";
-
-    this.isValid = function(plan) {
-        var result = plan.phases.length > 0;
-        for (var i = 0; i < plan.phases.length; i++) {
-            var phase = plan.phases[i];
-            if (!phaseService.isValid(phase)) {
-                result = false;
-            }
-        }
-        plan.valid = result && this.isValidInputs(plan);
-        return plan.valid;
-    }
-
-    this.isValidInputs = function(plan) {
-        if (plan.form) {
-            return plan.form[FORM_INPUT_NAME] !== undefined
-                && plan.form[FORM_INPUT_NAME].$touched
-                && plan.form[FORM_INPUT_NAME].$valid
-                && plan.form[FORM_INPUT_GOAL] !== undefined
-                && plan.form[FORM_INPUT_GOAL].$touched
-                && plan.form[FORM_INPUT_GOAL].$valid;
-        }
-    }
-
-    this.post = function(plan) {
-        var payload = {name: plan.name, goal: plan.goal, id: plan.id, creatorId: plan.creatorId, phases: []};
+app.service('planService', function($q, $http, phaseService, formValidateService, alertService, urlService, inputService) {
+    this.submit = function(type, plan) {
+        var payload = {name: plan.name.value, goal: plan.goal.value, id: plan.id, creatorId: plan.creatorId, phases: []};
         _.each(plan.phases, function(phase) {
             payload.phases.push(phaseService.payload(phase));
         });
-        return $http.post(urlService.apiURL('/plans'), payload).then(function(data) {
-            plan.id = data.data;
+        return $http[type](urlService.apiURL('/plans/' + (type === 'put' ? plan.id : '')), payload).then(function(data) {
             return data;
         });
     };
 
-    this.put = function(plan) {
-        var payload = {name: plan.name, goal: plan.goal, id: plan.id, creatorId: plan.creatorId, phases: []};
-        _.each(plan.phases, function(phase) {
-            payload.phases.push(phaseService.payload(phase));
-        });
-        return $http.put(urlService.apiURL('/plans/' + plan.id), payload).then(function(data) {
-            return data;
-        });
+    this.activatePhase = function(plan, phase) {
+        plan.phase = phase;
+    };
+
+    this.addPhase = function(plan, phase) {
+        var next = phaseService.get(phase);
+        next.position = plan.phases.length + 1;
+        plan.phases.push(next);
+    };
+
+    this.removePhase = function(plan, idx) {
+        plan.phases.splice(idx, 1);
+        plan.phase = plan.phases[0];
+    };
+
+    function rec(o, s) {
+        s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+        s = s.replace(/^\./, '');           // strip a leading dot
+        var a = s.split('.');
+        for (var i = 0, n = a.length; i < n; ++i) {
+            var k = a[i];
+            if (k in o) {
+                o = o[k];
+            } else {
+                return;
+            }
+        }
+        return o;
     }
 
-    this.get = function(form, index, id) {
+    this.get = function(id) {
         var me = this;
         var deferred = $q.defer();
         deferred.resolve();
@@ -55,51 +48,37 @@ app.service('planService', function($q, $http, phaseService, formValidateService
         }).then(function(data) {
             var plan = {
                 id: data ? data.data.id : undefined,
-                form: form,
-                index: index,
-                childIndex: 0,
                 creatorId: data ? data.data.creatorId : null,
-                name: data ? data.data.name : null,
-                goal: data ? data.data.goal : null,
+                name: inputService.get(data ? data.data.name : null),
+                goal: inputService.get(data ? data.data.goal : null),
                 phases: [],
                 editable: data ? data.data.editable : true,
+                activatePhase: function(phase) {
+                    me.activatePhase(this, phase);
+                },
+                isActive: function(phase) {
+                    return this.phase == phase;
+                },
                 isValid: function() {
                     return me.isValid(this);
                 },
-                create: function(form) {
-                    formValidateService.validate(form);
-                    if (this.isValid()) {
-                        if (this.id) {
-                            me.put(this).then(function () {
-                                alertService.show({type: 'success', title: 'OK', description: 'Submit'});
-                            });
-                        } else {
-                            me.post(this).then(function () {
-                                alertService.show({type: 'success', title: 'OK', description: 'Submit'});
-                            });
-                        }
-                    } else {
-                        alertService.show({type: 'warning', title: 'ERROR', description: 'Something is wrong'});
-                    }
+                submit: function() {
+                    me.submit(this.id ? 'put' : 'post', this).then(function () {
+                        alertService.show({type: 'success', title: 'OK', description: 'Submit'});
+                    });
                 },
                 addPhase: function(phase) {
-                    var next = phaseService.get(this.form, '' + this.index + this.childIndex++, phase);
-                    next.position = this.phases.length + 1;
-                    this.phases.push(next);
+                    me.addPhase(this, phase);
                 },
                 removePhase:  function(idx) {
-                    for(var i = 0; this.phases.length; i++) {
-                        if (i === idx) {
-                            this.phases.splice(i, 1);
-                            break;
-                        }
-                    }
+                    me.removePhase(this, idx);
                 }
-            }
+            };
             if (data) {
                 for(var i = 0; i < data.data.phases.length; i++) {
                     plan.addPhase(data.data.phases[i]);
                 }
+                plan.phase = plan.phases[0];
             }
             return plan;
         });

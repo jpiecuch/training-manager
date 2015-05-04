@@ -10,7 +10,8 @@ var app = angular.module("app", [
     'ui.calendar',
     'checklist-model',
     'youtube-embed',
-    'tmh.dynamicLocale'
+    'tmh.dynamicLocale',
+    'QuickList'
 ]);
 
 app.config(['$animateProvider',
@@ -19,11 +20,12 @@ app.config(['$animateProvider',
     }
 ]);
 
-app.run(function ($rootScope, $location, $state, authenticateService, user, lang, tmhDynamicLocale) {
+app.run(function ($rootScope, $location, $state, authenticateService, user, lang, tmhDynamicLocale, dictionaryService) {
 
     if (user != null && user.authorities) {
         user.authorities = user.authorities.replace('[', '').replace(']', '');
         user.authorities = user.authorities.split(', ');
+        dictionaryService.feed([1,2,3,4,5,6,7,8,9,10,11,12]);
     }
 
     $rootScope.settings = {
@@ -264,7 +266,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             'resources/js/services/phase-service.js',
                             'resources/js/services/workout-service.js',
                             'resources/js/services/exercise-service.js',
-                            'resources/js/services/plan-starter-service.js'
+                            'resources/js/services/plan-starter-service.js',
+                            'resources/js/services/input-service.js'
                         ]
                     });
                 }]
@@ -331,7 +334,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             'resources/js/services/workout-service.js',
                             'resources/js/services/exercise-service.js',
                             'resources/js/services/dictionary-service.js',
-                            'resources/js/services/description-service.js'
+                            'resources/js/services/description-service.js',
+                            'resources/js/services/input-service.js'
                         ]
                     });
                 }]

@@ -1,36 +1,32 @@
-<div class="portlet-title">
-    <div class="caption">
-        <i class="icon-equalizer font-red-sunglo"></i>
-        <span class="caption-subject bold uppercase" data-ng-bind="'weekDay.' + workout.weekDay + '.full' | translate"></span>
-    </div>
-    <div class="actions">
-        <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="workout.visible = !workout.visible">
-            <i class="fa fa-angle-down"></i>
-        </a>
-    </div>
-</div>
-<div class="portlet-body" collapse="workout.visible === false">
+<div class="portlet-body" collapse="plan.phase.workout.visible === false">
     <div class="form-body">
-        <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['workoutMuscles' + workout.index]), 'has-error' : validate.isNotValid(planForm['workoutMuscles' + workout.index])}">
-            <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['workoutMuscles' + workout.index].$touched}" data-ng-bind="'workout.muscle' | translate"></label>
-            <div class="col-md-4">
+        <div class="form-group" data-ng-class="{'has-success' : plan.phase.workout.muscles.isValid(), 'has-error' : plan.phase.workout.muscles.isValid() === false}">
+            <label class="col-md-3 control-label" data-ng-class="{'bold' : plan.phase.workout.muscles.isTouched()}"><span data-ng-bind="'phase.description' | translate" tooltip="{{'field.required' | translate}}"  tooltip-placement="top"></span></label>
+            <div class="col-md-6">
                 <div data-ng-if="plan.editable">
-                    <div class="col-md-6" data-ng-repeat="muscle in workout.muscles">
-                        <input id="workoutMuscles{{workout.index}}{{$index}}" name="workoutMuscles{{workout.index}}" data-ng-model="muscle.selected" type="checkbox" data-ng-required="!workout.musclesSelected()">
-                        <label for="workoutMuscles{{workout.index}}{{$index}}"><span></span>{{muscle.name | translate}}</label>
+                    <div class="col-md-3" data-ng-repeat="muscle in plan.phase.workout.muscles.value">
+                        <input id="workoutMuscles{{$index}}" name="workoutMuscles{{$index}}" data-ng-model="muscle.selected" type="checkbox" data-ng-click="plan.phase.workout.muscles.touch()">
+                        <label for="workoutMuscles{{$index}}"><span></span>{{muscle.name | translate}}</label>
                     </div>
                 </div>
-                <span class="form-control-static" data-ng-if="!plan.editable && muscle.selected" data-ng-repeat="muscle in workout.muscles" data-ng-bind="muscle.name | translate"></span>
+                <span class="form-control-static" data-ng-if="!plan.editable && muscle.selected" data-ng-repeat="muscle in plan.phase.workout.muscles" data-ng-bind="muscle.name | translate"></span>
             </div>
         </div>
-        <section data-ng-if="plan.editable" data-ng-include="'resources/tpl/plan/search.html'"></section>
     </div>
     <div class="portlet-body">
-        <section data-ng-repeat="group in workout.groups | orderBy : 'id'">
-            <div data-ng-if="group.exercises.length > 1" class="super-set-title">
-                <span><i class="fa fa-star-o"></i> {{'superSet' | translate}} {{group.position}}</span>
+        <div class="tabbable tabbable-custom">
+            <ul class="nav nav-tabs">
+                <li ng-repeat="group in plan.phase.workout.groups" ng-class="{'active' : plan.phase.workout.isGroupActive(group)}"><a ng-click="plan.phase.workout.activateGroup(group)">{{group.id}}. {{(group.exercises.length > 1 ? 'superSet' : 'exercise') | translate}} <i data-ng-if="group.hasErrors()" class="fa fa-exclamation-circle text-danger"></i></a></li>
+                <li><a class="" href="" data-ng-click="plan.phase.workout.addGroup()" style="background-color: transparent;">
+                    <i class="fa fa-plus"></i></a>
+                </li>
+            </ul>
+            <div class="tab-content" data-ng-if="plan.phase.workout.groups.length > 0">
+                <div class="tab-pane active">
+                    <section data-ng-if="plan.editable" data-ng-include="'resources/tpl/plan/search.html'"></section>
+                    <section data-ng-repeat="exercise in plan.phase.workout.group.exercises | orderBy : 'position'" data-ng-include="'resources/tpl/plan/exercise.html'"></section>
+                </div>
             </div>
-            <section data-ng-repeat="exercise in group.exercises | orderBy : 'position'" data-ng-include="'resources/tpl/plan/exercise.html'"></section>
-        </section>
+        </div>
     </div>
 </div>

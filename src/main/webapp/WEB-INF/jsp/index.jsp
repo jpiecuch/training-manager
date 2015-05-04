@@ -89,11 +89,13 @@
 <script src="resources/js/modules/checklist-model.js" type="text/javascript"></script>
 <script src="resources/js/modules/angular-youtube-embed.js" type="text/javascript"></script>
 <script src="resources/js/modules/tmhDynamicLocale.js" type="text/javascript"></script>
+<script src="resources/js/modules/quick-ng-repeat.js" type="text/javascript"></script>
 
 <script src="resources/js/app.js" type="text/javascript"></script>
 <script src="resources/js/controllers/LocaleController.js" type="text/javascript"></script>
 <script src="resources/js/services/url-service.js" type="text/javascript"></script>
 <script src="resources/js/services/authenticate-service.js" type="text/javascript"></script>
+<script src="resources/js/services/dictionary-service.js" type="text/javascript"></script>
 <script src="resources/js/services/resource-service.js" type="text/javascript"></script>
 <script src="resources/js/services/input-validate-service.js" type="text/javascript"></script>
 <script src="resources/js/services/policy-service.js" type="text/javascript"></script>

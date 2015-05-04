@@ -64,5 +64,27 @@ app.service('descriptionService', function(urlService, $http, $q, formValidateSe
             return result;
         });
     }
+
+    this.search = function() {
+        var service = this;
+        return {
+            params: {firstResult: 0, maxResults: 30, excludeId: []},
+            result: {result: [], count: 0},
+            retrieve: function () {
+                this.params.firstResult = 0;
+                var me = this;
+                service.retrieve(this.params).then(function (data) {
+                    me.result = data.data;
+                });
+            },
+            page: function (idx, page) {
+                this.params.firstResult = this.params.firstResult + page * this.params.maxResults;
+                var me = this;
+                service.retrieve(this.params).then(function (data) {
+                    me.result = data.data;
+                });
+            }
+        }
+    }
 });
 

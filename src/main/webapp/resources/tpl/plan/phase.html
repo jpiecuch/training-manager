@@ -1,53 +1,42 @@
 <div class="portlet-title">
-    <div class="caption">
-        <i class="icon-equalizer font-red-sunglo"></i>
-        <span class="caption-subject bold uppercase" data-ng-bind="('phase' | translate) + ' ' + ($index +1)"></span>
-    </div>
     <div class="actions">
-        <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="phase.visible = !phase.visible">
-            <i class="fa fa-angle-down"></i>
-        </a>
-        <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="plan.removePhase($index)" data-ng-if="plan.phases.length > 1">
-            <i class="icon-trash"></i>
+        <a style="font-size: 14px" class="btn btn-icon-only red" href="" data-ng-click="plan.removePhase($index)" data-ng-if="plan.phases.length > 1">
+            <i class="fa fa-times"></i>
         </a>
     </div>
 </div>
-<div class="portlet-body" collapse="phase.visible === false">
+<div class="portlet-body">
     <div class="form-body">
-        <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['phaseDescription' + phase.index]), 'has-error' : validate.isNotValid(planForm['phaseDescription' + phase.index])}">
-            <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['phaseDescription' + phase.index].$touched}" data-ng-bind="'phase.description' | translate"></label>
-
+        <div class="form-group" data-ng-class="{'has-success' : plan.phase.description.isValid(), 'has-error' : plan.phase.description.isValid() === false}">
+            <label class="col-md-3 control-label" data-ng-class="{'bold' : plan.phase.description.isTouched()}"><span data-ng-bind="'phase.description' | translate" tooltip="{{'field.required' | translate}}"  tooltip-placement="top"></span></label>
             <div class="col-md-4">
                 <div class="input-icon right" data-ng-if="plan.editable">
-                    <i data-ng-if="planForm['phaseDescription' + phase.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['phaseDescription' + phase.index]), 'fa-exclamation' : validate.isNotValid(planForm['phaseDescription' + phase.index])}"></i>
-                    <input name="phaseDescription{{phase.index}}" type="text" class="form-control"
-                           placeholder="{{'phase.description.placeholder' | translate}}"
-                           data-ng-model="phase.description" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+                    <i data-ng-if="plan.phase.description.isTouched()" class="fa" data-ng-class="{'fa-check' : plan.phase.description.isValid(), 'fa-exclamation' : !plan.phase.description.isValid()}"></i>
+                    <input name="planName" type="text" class="form-control" placeholder="{{'phase.description.placeholder' | translate}}"
+                           data-ng-model="plan.phase.description.value" required data-ng-blur="plan.phase.description.touch()">
                 </div>
-                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="phase.description"></span>
+                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.phase.description"></span>
             </div>
         </div>
-        <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['phaseGoal' + phase.index]), 'has-error' : validate.isNotValid(planForm['phaseGoal' + phase.index])}">
-            <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['phaseGoal' + phase.index].$touched}" data-ng-bind="'phase.goal' | translate"></label>
-
+        <div class="form-group">
+            <label class="col-md-3 control-label"><span data-ng-bind="'plan.phase.goal' | translate" tooltip="{{'field.required' | translate}}"  tooltip-placement="top"></span></label>
             <div class="col-md-4">
                 <div class="input-icon right select-right" data-ng-if="plan.editable">
-                    <i data-ng-if="planForm['phaseGoal' + phase.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['phaseGoal' + phase.index]), 'fa-exclamation' : validate.isNotValid(planForm['phaseGoal' + phase.index])}"></i>
-                    <select name="phaseGoal{{phase.index}}" class="form-control" data-ng-model="phase.goal" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
-                        <option data-ng-repeat="goal in dictionary.goals" data-ng-bind="goal"
+                    <i data-ng-if="plan.phase.goal.isTouched()" class="fa" data-ng-class="{'fa-check' : plan.phase.goal.isValid(), 'fa-exclamation' : !plan.phase.goal.isValid()}"></i>
+                    <select class="form-control" data-ng-model="plan.phase.goal.value" required name="planGoal" data-ng-blur="plan.phase.goal.touch()">
+                        <option data-ng-repeat="goal in dictionary.goals track by $index" data-ng-bind="goal"
                                 value="{{goal}}"></option>
                     </select>
                 </div>
-                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="phase.goal"></span>
+                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.phase.goal"></span>
             </div>
         </div>
-        <div class="form-group" data-ng-class="{'has-success' : validate.isValid(planForm['phaseWeeks' + phase.index]), 'has-error' : validate.isNotValid(planForm['phaseWeeks' + phase.index])}">
-            <label class="col-md-3 control-label" data-ng-class="{'bold' : planForm['phaseWeeks' + phase.index].$touched}" data-ng-bind="'phase.weeks' | translate"></label>
-
+        <div class="form-group">
+            <label class="col-md-3 control-label"><span data-ng-bind="'plan.phase.weeks' | translate" tooltip="{{'field.required' | translate}}"  tooltip-placement="top"></span></label>
             <div class="col-md-4">
                 <div class="input-icon right select-right" data-ng-if="plan.editable">
-                    <i data-ng-if="planForm['phaseWeeks' + phase.index].$touched" class="fa" data-ng-class="{'fa-check' : validate.isValid(planForm['phaseWeeks' + phase.index]), 'fa-exclamation' : validate.isNotValid(planForm['phaseWeeks' + phase.index])}"></i>
-                    <select name="phaseWeeks{{phase.index}}" class="form-control" data-ng-model="phase.weeks" required tooltip="{{'field.required' | translate}}"  tooltip-placement="right">
+                    <i data-ng-if="plan.phase.weeks.isTouched()" class="fa" data-ng-class="{'fa-check' : plan.phase.weeks.isValid(), 'fa-exclamation' : !plan.phase.weeks.isValid()}"></i>
+                    <select class="form-control" data-ng-model="plan.phase.weeks.value" required name="planGoal" data-ng-blur="plan.phase.weeks.touch()">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -56,16 +45,16 @@
                         <option value="6">6</option>
                     </select>
                 </div>
-                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="phase.weeks"></span>
+                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.phase.weeks"></span>
             </div>
         </div>
         <div class="form-group" data-ng-if="plan.editable">
-            <label class="col-md-3 control-label" data-ng-bind="'phase.weekDays' | translate"></label>
+            <label class="col-md-3 control-label" data-ng-bind="'plan.phase.weekDays' | translate"></label>
             <div class="col-md-4">
                 <div class="small-tiles">
-                    <div class="small-tile" data-ng-repeat="weekDay in dictionary.weekDays"
-                         data-ng-class="{'bg-grey-cascade' : !phase.containsWeekDay(weekDay), 'bg-green-jungle' : phase.isValidWeekDay(weekDay) === true, 'bg-red-sunglo' : phase.isValidWeekDay(weekDay) === false || phase.containsWeekDay(weekDay) && phase.isValidWeekDay(weekDay) === undefined}"
-                         data-ng-click="phase.addWorkout(weekDay)">
+                    <div class="small-tile" data-quick-ng-repeat="weekDay in dictionary.weekDays" quick-repeat-list="dictionary.weekDays"
+                         data-ng-class="{'bg-grey-cascade' : !plan.phase.containsWeekDay(weekDay), 'bg-green-jungle' : plan.phase.isValidWeekDay(weekDay) === true, 'bg-red-sunglo' : plan.phase.isValidWeekDay(weekDay) === false || plan.phase.containsWeekDay(weekDay) && plan.phase.isValidWeekDay(weekDay) === undefined}"
+                         data-ng-click="plan.phase.updateWorkout(weekDay)">
                         <div class="small-tile-body">
                             <span data-ng-bind="'weekDay.' + weekDay + '.short' | translate"></span>
                         </div>
@@ -73,8 +62,13 @@
                 </div>
             </div>
         </div>
-        <div class="portlet-body">
-            <div class="bordered portlet light bg-inverse" data-ng-repeat="workout in phase.workouts | orderBy: 'weekDay'" data-ng-include="'resources/tpl/plan/workout.html'"></div>
+        <div class="tabbable tabbable-custom" data-ng-if="plan.phase.workouts.length > 0">
+                <ul class="nav nav-tabs">
+                    <li ng-repeat="workout in plan.phase.workouts" ng-class="{'active' : plan.phase.isWorkoutActive(workout)}"><a ng-click="plan.phase.activateWorkout(workout)">{{('weekDay.' + workout.weekDay + '.full' | translate)}} <i data-ng-if="workout.hasErrors()" class="fa fa-exclamation-circle text-danger"></i></a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" data-ng-include="'resources/tpl/plan/workout.html'"></div>
+                </div>
         </div>
     </div>
 </div>

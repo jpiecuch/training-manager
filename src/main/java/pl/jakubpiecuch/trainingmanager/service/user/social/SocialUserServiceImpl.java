@@ -30,7 +30,12 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
     @Override
     public UserDetails resolveDetails(Authentication authentication) {
         Assert.notNull(authentication.getSocial());
-        return new SecurityUser(null, authentication.getUsername(), authentication.getPassword(), authentication.getSocial(), AuthorityUtils.NO_AUTHORITIES);
+        Account account = accountDao.findByUniques(null, authentication.getUsername(), null);
+        if (account == null || Account.Status.ACTIVE != account.getStatus()) {
+            throw new UsernameNotFoundException("User not exists");
+        }
+        List<GrantedAuthority> authorities = CollectionUtils.isNotEmpty(account.getGrantedPermissions()) ? AuthorityUtils.createAuthorityList(account.getGrantedPermissions().toArray(new String[account.getGrantedPermissions().size()])) : AuthorityUtils.NO_AUTHORITIES;
+        return new SecurityUser(account.getId(), authentication.getUsername(), authentication.getPassword(), authentication.getSocial(), authorities);
     }
 
     @Override

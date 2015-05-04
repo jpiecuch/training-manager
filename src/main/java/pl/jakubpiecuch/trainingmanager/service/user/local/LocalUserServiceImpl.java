@@ -45,7 +45,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
             throw new UsernameNotFoundException("User not exists");
         }
         List<GrantedAuthority> authorities = CollectionUtils.isNotEmpty(account.getGrantedPermissions()) ? AuthorityUtils.createAuthorityList(account.getGrantedPermissions().toArray(new String[account.getGrantedPermissions().size()])) : AuthorityUtils.NO_AUTHORITIES;
-        return new SecurityUser(null, authentication.getUsername(), passwordEncoder.encode(authentication.getPassword(), account.getSalt()), null, authorities);
+        return new SecurityUser(account.getId(), authentication.getUsername(), passwordEncoder.encode(authentication.getPassword(), account.getSalt()), null, authorities);
     }
 
     @Override
