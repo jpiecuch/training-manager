@@ -1,14 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.web.controllers.api.plan;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Permissions;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
-import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanCriteria;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanDto;
 import pl.jakubpiecuch.trainingmanager.service.repository.Repositories;
@@ -26,15 +23,15 @@ public class PlanController extends AbstractController {
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.PLAN_CREATOR + Permissions.HAS_ROLE_SUFFIX)
     @RequestMapping(method = { RequestMethod.POST })
-    public ResponseEntity create(@PathVariable ApiVersionService.Version version, @RequestBody PlanDto flow) {
-        return new ResponseEntity(versionServices.get(version).createFlow(Flow.Hierarchy.PLAN, flow), HttpStatus.CREATED);
+    public Long create(@PathVariable ApiVersionService.Version version, @RequestBody PlanDto flow) {
+        return versionServices.get(version).storeInRepository(flow, Repositories.PLAN);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.PLAN_UPDATER + Permissions.HAS_ROLE_SUFFIX)
     @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.PUT })
     public void update(@PathVariable ApiVersionService.Version version, @RequestBody PlanDto flow, @PathVariable(ApiURI.ID_PARAM) Long id) {
         flow.setId(id);
-        versionServices.get(version).updateFlow(Flow.Hierarchy.PLAN, flow);
+        versionServices.get(version).updateInRepository(flow, Repositories.PLAN);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.PLAN_VIEWER + Permissions.HAS_ROLE_SUFFIX)
@@ -50,7 +47,7 @@ public class PlanController extends AbstractController {
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.PLAN_VIEWER + Permissions.HAS_ROLE_SUFFIX)
     @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.GET })
-    public ResponseEntity plan(@PathVariable ApiVersionService.Version version, @PathVariable Long id, @RequestParam(required = false, defaultValue = "false") boolean full) {
-        return new ResponseEntity(versionServices.get(version).flow(Flow.Hierarchy.PLAN, id, full), HttpStatus.OK);
+    public PlanDto plan(@PathVariable ApiVersionService.Version version, @PathVariable Long id) {
+        return versionServices.get(version).uniqueFromRepository(id, Repositories.PLAN);
     }
 }

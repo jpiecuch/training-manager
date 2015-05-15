@@ -2,7 +2,7 @@ package pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout;
 
 import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.domain.Workout;
-import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
+import pl.jakubpiecuch.trainingmanager.service.identify.IdentifyObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Rico on 2015-01-06.
  */
-public class WorkoutDto extends Flow {
+public class WorkoutDto implements IdentifyObject {
 
     private Long id;
     private Description.Muscles[] muscles;
@@ -65,10 +65,5 @@ public class WorkoutDto extends Flow {
 
     public void setGroups(List<GroupDto> groups) {
         this.groups = groups;
-    }
-
-    @Override
-    public Hierarchy getHierarchy() {
-        return Hierarchy.WORKOUT;
     }
 }

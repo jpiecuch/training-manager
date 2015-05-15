@@ -3,7 +3,6 @@ package pl.jakubpiecuch.trainingmanager.service.api;
 import org.springframework.http.ResponseEntity;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
-import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 import pl.jakubpiecuch.trainingmanager.service.repository.Repositories;
@@ -34,12 +33,8 @@ public interface ApiVersionService {
     Object language(String lang);
     void locale(HttpServletRequest request, HttpServletResponse response, String locale);
 
-    <T extends Flow> T flow(Flow.Hierarchy hierarchy, Long id, boolean full);
-    <T extends Flow> List<T> children(Flow.Hierarchy hierarchy, Long id, boolean full);
-    <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow);
-    <T extends Flow> void updateFlow(Flow.Hierarchy hierarchy, T flow);
-
     <T extends Criteria> PageResult retrieveFromRepository(T criteria, Repositories type);
+    <T extends RepoObject> T uniqueFromRepository(Long id, Repositories type);
     <T extends RepoObject> long storeInRepository(T object, Repositories type);
     <T extends RepoObject> void updateInRepository(T object, Repositories type);
     void removeFromRepository(long id, Repositories type);

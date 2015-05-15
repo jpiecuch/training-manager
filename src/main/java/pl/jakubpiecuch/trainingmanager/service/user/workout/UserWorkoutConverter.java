@@ -21,15 +21,23 @@ public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, User
     private UserWorkoutDao userWorkoutDao;
 
     @Override
+    protected UserWorkout convertFrom(UserWorkoutDto dto, UserWorkout entity) {
+        entity = userWorkoutDao.findById(dto.getId());
+        entity.setComment(dto.getComment());
+        entity.setState(dto.getState());
+        return entity;
+    }
+
+    @Override
     @Transactional
-    public UserWorkoutDto fromEntity(UserWorkout entity, boolean full) {
+    protected UserWorkoutDto convertTo(UserWorkout entity) {
         UserWorkoutDto result = new UserWorkoutDto();
         result.setId(entity.getId());
         result.setDate(entity.getDate());
         result.setMuscles(entity.getWorkout().getMuscles());
-        result.setPlan((PlanDto) planConverter.fromEntity(entity.getWorkout().getPhase().getPlan(), false));
-        result.setPhase((PhaseDto) phaseConverter.fromEntity(entity.getWorkout().getPhase(), false));
-        result.setExecutions(full ? executionConverter.fromEntityList(executionDao.findByParentId(entity.getId()), full) : null);
+        result.setPlan((PlanDto) planConverter.fromEntity(entity.getWorkout().getPhase().getPlan()));
+        result.setPhase((PhaseDto) phaseConverter.fromEntity(entity.getWorkout().getPhase()));
+        result.setExecutions(executionConverter.fromEntities(executionDao.findByParentId(entity.getId())));
         result.setWeekDay(entity.getWorkout().getWeekDay());
         result.setState(entity.getState());
         result.setComment(entity.getComment());
@@ -37,11 +45,8 @@ public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, User
     }
 
     @Override
-    public UserWorkout toEntity(UserWorkoutDto object) {
-        UserWorkout entity = userWorkoutDao.findById(object.getId());
-        entity.setComment(object.getComment());
-        entity.setState(object.getState());
-        return entity;
+    protected UserWorkout getEmpty() {
+        return new UserWorkout();
     }
 
     public void setPlanConverter(Converter planConverter) {

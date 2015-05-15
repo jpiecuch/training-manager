@@ -1,13 +1,12 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
-import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
+import pl.jakubpiecuch.trainingmanager.service.identify.IdentifyObject;
 
 /**
  * Created by Rico on 2015-01-06.
  */
-public class ExerciseDto extends Flow {
+public class ExerciseDto implements IdentifyObject {
 
     private Long id;
     private Long workoutId;
@@ -71,11 +70,5 @@ public class ExerciseDto extends Flow {
 
     public void setPosition(Integer position) {
         this.position = position;
-    }
-
-    @Override
-    @JsonIgnore
-    public Hierarchy getHierarchy() {
-        return Hierarchy.EXERCISE;
     }
 }

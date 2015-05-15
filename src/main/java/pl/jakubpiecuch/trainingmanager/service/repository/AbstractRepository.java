@@ -39,6 +39,11 @@ public abstract class AbstractRepository<E extends RepoObject, C extends Criteri
         dao.delete(new Description(id));
     }
 
+    @Override
+    public E retrieve(long id) {
+        return (E) dao.findById(id);
+    }
+
     public void setDao(RepoDao dao) {
         this.dao = dao;
     }

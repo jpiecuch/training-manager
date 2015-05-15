@@ -1,22 +1,27 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
+import pl.jakubpiecuch.trainingmanager.dao.PlanDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.domain.Phase;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
-import pl.jakubpiecuch.trainingmanager.service.flow.AbstractFlowConverter;
-import pl.jakubpiecuch.trainingmanager.service.flow.FlowManager;
+import pl.jakubpiecuch.trainingmanager.service.converter.AbstractConverter;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseConverter;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
+
+import java.util.ArrayList;
 
 /**
  * Created by Rico on 2014-12-31.
  */
-public class PlanConverter extends AbstractFlowConverter<PlanDto, Plan> {
+public class PlanConverter extends AbstractConverter<PlanDto, Plan> {
 
     private AuthenticationService authenticationService;
-    private FlowManager<PlanDto> planManager;
+    private PlanDao planDao;
+    private PhaseConverter phaseConverter;
 
     @Override
-    protected PlanDto convertTo(Plan entity, boolean full) {
+    protected PlanDto convertTo(Plan entity) {
 
         PlanDto flow = new PlanDto();
 
@@ -25,35 +30,42 @@ public class PlanConverter extends AbstractFlowConverter<PlanDto, Plan> {
         flow.setGoal(entity.getGoal());
         flow.setCreatorId(entity.getCreator().getId());
         flow.setEditable(!entity.getUsed() && authenticationService.signed().getId() == entity.getCreator().getId());
-        flow.setPhases(full ? manager.children(entity.getId(), true) : null);
+        flow.setPhases(phaseConverter.fromEntities(entity.getPhases()));
         flow.setUsed(entity.getUsed());
         return flow;
     }
 
     @Override
-    protected Plan convertFrom(PlanDto flowObject) {
-        Plan entity = new Plan();
-
-        entity.setName(flowObject.getName());
-        entity.setGoal(flowObject.getGoal());
-        if (flowObject.getId() == null) {
+    protected Plan convertFrom(PlanDto dto, Plan entity) {
+        entity.setName(dto.getName());
+        entity.setGoal(dto.getGoal());
+        if (dto.getId() == null) {
             Authentication signed = authenticationService.signed();
             entity.setCreator(new Account(signed.getId()));
-        } else {
-            PlanDto persisted = planManager.retrieve(flowObject.getId(), false);
-            entity.setId(flowObject.getId());
-            entity.setCreator(new Account(persisted.getCreatorId()));
-            entity.setUsed(persisted.getUsed());
+        }
+        entity.setPhases(new ArrayList<Phase>());
+        for (Phase phase : phaseConverter.toEntities(dto.getPhases(), entity.getPhases())) {
+            phase.setPlan(entity);
+            entity.getPhases().add(phase);
         }
 
         return entity;
+    }
+
+    @Override
+    protected Plan getEmpty() {
+        return new Plan();
     }
 
     public void setAuthenticationService(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
 
-    public void setPlanManager(FlowManager planManager) {
-        this.planManager = planManager;
+    public void setPhaseConverter(PhaseConverter phaseConverter) {
+        this.phaseConverter = phaseConverter;
+    }
+
+    public void setPlanDao(PlanDao planDao) {
+        this.planDao = planDao;
     }
 }

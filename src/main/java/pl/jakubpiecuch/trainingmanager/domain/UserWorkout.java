@@ -1,5 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
+import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "user_workout")
-public class UserWorkout extends CommonEntity {
+public class UserWorkout extends CommonEntity implements RepoObject {
 
     public enum State {
         PLANNED, IN_PROGRESS, REJECTED, COMPLETED

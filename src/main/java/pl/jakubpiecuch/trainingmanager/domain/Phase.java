@@ -1,7 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "phase")
@@ -13,6 +17,7 @@ public class Phase extends CommonEntity implements Serializable {
     private String description;
     private Plan plan;
     private Integer weeks;
+    private List<Workout> workouts;
 
     public Phase() {
     }
@@ -66,5 +71,14 @@ public class Phase extends CommonEntity implements Serializable {
 
     public void setWeeks(Integer weeks) {
         this.weeks = weeks;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phase")
+    public List<Workout> getWorkouts() {
+        return workouts;
+    }
+
+    public void setWorkouts(List<Workout> workouts) {
+        this.workouts = workouts;
     }
 }

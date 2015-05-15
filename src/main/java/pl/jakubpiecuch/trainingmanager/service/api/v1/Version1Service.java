@@ -19,8 +19,6 @@ import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.dictionary.Dictionary;
-import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
-import pl.jakubpiecuch.trainingmanager.service.flow.FlowManager;
 import pl.jakubpiecuch.trainingmanager.service.locale.LocaleService;
 import pl.jakubpiecuch.trainingmanager.service.repository.*;
 import pl.jakubpiecuch.trainingmanager.service.resolver.OrderResolver;
@@ -54,18 +52,17 @@ public class Version1Service implements ApiVersionService {
     private Map<ResourceService.Type, ResourceService> resourceServices;
     private Map<String, PropertiesConfiguration> propertiesConfigurations;
     private String[] langs;
-    private Map<Flow.Hierarchy, FlowManager> flowManagers;
     private Dictionary dictionary;
     private Map<Repositories, Repository> repositories;
     private Map<Repositories, ReadRepository> readRepositories;
     private ObjectMapper mapper = new ObjectMapper();
     private Map<String, OrderResolver> orderResolverMap;
     private UserPlanStarter userPlanStarter;
-    private UpdateManager<ExecutionDto> updateManager;
+    private UpdatableRepository<ExecutionDto> updatableRepository;
 
     @Override
     public void updateExecution(ExecutionDto execution) {
-        updateManager.update(execution);
+        updatableRepository.update(execution);
     }
 
     @Override
@@ -76,6 +73,11 @@ public class Version1Service implements ApiVersionService {
     @Override
     public Map<String, OrderResolver> orderResolvers() {
         return orderResolverMap;
+    }
+
+    @Override
+    public <T extends RepoObject> T uniqueFromRepository(Long id, Repositories type) {
+        return (T) readRepositories.get(type).retrieve(id);
     }
 
     @Override
@@ -115,26 +117,6 @@ public class Version1Service implements ApiVersionService {
     @Override
     public Object dictionaries(Long[] ids) {
         return dictionary.retrieve(ids);
-    }
-
-    @Override
-    public <T extends Flow> long createFlow(Flow.Hierarchy hierarchy, T flow) {
-        return flowManagers.get(hierarchy).create(flow);
-    }
-
-    @Override
-    public <T extends Flow> void updateFlow(Flow.Hierarchy hierarchy, T flow) {
-        flowManagers.get(hierarchy).update(flow);
-    }
-
-    @Override
-    public <T extends Flow> List<T> children(Flow.Hierarchy hierarchy, Long id, boolean full) {
-        return flowManagers.get(hierarchy.getChild()).children(id, full);
-    }
-
-    @Override
-    public <T extends Flow> T flow(Flow.Hierarchy hierarchy, Long id, boolean full) {
-        return (T) flowManagers.get(hierarchy).retrieve(id, full);
     }
 
     @Override
@@ -242,10 +224,6 @@ public class Version1Service implements ApiVersionService {
         this.readRepositories = readRepositories;
     }
 
-    public void setFlowManagers(Map<Flow.Hierarchy, FlowManager> flowManagers) {
-        this.flowManagers = flowManagers;
-    }
-
     public void setDictionary(Dictionary dictionary) {
         this.dictionary = dictionary;
     }
@@ -262,8 +240,8 @@ public class Version1Service implements ApiVersionService {
         this.userPlanStarter = userPlanStarter;
     }
 
-    public void setUpdateManager(UpdateManager<ExecutionDto> updateManager) {
-        this.updateManager = updateManager;
+    public void setUpdatableRepository(UpdatableRepository<ExecutionDto> updatableRepository) {
+        this.updatableRepository = updatableRepository;
     }
 
     @PostConstruct

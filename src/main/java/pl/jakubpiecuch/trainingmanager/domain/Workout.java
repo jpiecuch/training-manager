@@ -1,10 +1,16 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.annotations.*;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "workout")
@@ -20,6 +26,7 @@ public class Workout extends CommonEntity implements Serializable {
     private Phase phase;
     private Integer position;
     private String muscle;
+    private List<Exercise> exercises;
 
     public Workout() {
     }
@@ -64,6 +71,16 @@ public class Workout extends CommonEntity implements Serializable {
 
     protected void setMuscle(String muscles) {
         this.muscle = muscles;
+    }
+
+    @OneToMany(mappedBy = "workout")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    public List<Exercise> getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(List<Exercise> exercises) {
+        this.exercises = exercises;
     }
 
     @Transient

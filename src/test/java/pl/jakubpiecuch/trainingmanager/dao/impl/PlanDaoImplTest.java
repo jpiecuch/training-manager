@@ -3,9 +3,15 @@ package pl.jakubpiecuch.trainingmanager.dao.impl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import pl.jakubpiecuch.trainingmanager.dao.PhaseDao;
 import pl.jakubpiecuch.trainingmanager.dao.PlanDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.domain.Phase;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
@@ -21,15 +27,28 @@ public class PlanDaoImplTest extends BaseDAOTestCase {
     private static final Account CREATOR_SAVE = new Account(ACCOUNT_ID);
 
     private static Plan PLAN = new Plan();
+    private static Phase PHASE = new Phase();
 
     @Autowired
     private PlanDao planDao;
+
+    @Autowired
+    private PhaseDao phaseDao;
 
     @Before
     public void setUp() {
         PLAN.setName(NAME_SAVE);
         PLAN.setGoal(GOAL_SAVE);
         PLAN.setCreator(CREATOR_SAVE);
+
+        PHASE.setDescription("phase");
+        PHASE.setPosition(1);
+        PHASE.setGoal(GOAL);
+        PHASE.setWeeks(2);
+        PHASE.setPlan(PLAN);
+
+        PLAN.setPhases(new ArrayList<Phase>());
+        PLAN.getPhases().add(PHASE);
     }
 
     @Test
@@ -47,10 +66,12 @@ public class PlanDaoImplTest extends BaseDAOTestCase {
         planDao.create(PLAN);
         planDao.flush();
         assertNotNull(PLAN.getId());
+
+        PLAN.getPhases().get(0).setPlan(null);
+        planDao.update(PLAN);
+        planDao.flush();
+
+        phaseDao.findAll();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void testFindByParentId() {
-        planDao.findByParentId(1l);
-    }
 }

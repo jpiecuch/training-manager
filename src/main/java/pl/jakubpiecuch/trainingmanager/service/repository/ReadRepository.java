@@ -7,4 +7,5 @@ import pl.jakubpiecuch.trainingmanager.dao.PageResult;
  */
 public interface ReadRepository<T extends RepoObject, C extends Criteria>  {
     PageResult<T> read(C criteria);
+    T retrieve(long id);
 }

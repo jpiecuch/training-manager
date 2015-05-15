@@ -26,7 +26,7 @@ public class Exercise extends CommonEntity {
         super(id);
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "description")
     public Description getDescription() {
         return description;

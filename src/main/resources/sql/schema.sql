@@ -59,7 +59,7 @@ CREATE TABLE phase (
     position integer NOT NULL,
     goal integer NOT NULL,
     description character varying(50000),
-    plan bigint NOT NULL,
+    plan bigint,
     weeks integer NOT NULL
 );
 
@@ -68,12 +68,12 @@ CREATE TABLE workout (
     week_day integer NOT NULL,
     muscles character varying(1024) NOT NULL,
     position integer NOT NULL,
-    phase bigint NOT NULL
+    phase bigint
 );
 
 CREATE TABLE exercise (
     id bigint PRIMARY KEY NOT NULL,
-    workout bigint NOT NULL,
+    workout bigint,
     description bigint NOT NULL,
     position integer NOT NULL,
     super_set integer NOT NULL,

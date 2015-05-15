@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean  id="roleRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.role.RoleRepository">
+        <property name="dao" ref="roleDao"/>
+        <property name="validator" ref="roleValidator"/>
+        <property name="name" value="role"/>
+    </bean>
+
+    <bean  id="descriptionRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionRepository">
+        <property name="dao" ref="descriptionDao"/>
+        <property name="validator" ref="descriptionValidator"/>
+        <property name="name" value="description"/>
+    </bean>
+
+    <bean  id="equipmentRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.equipment.EquipmentRepository">
+        <property name="dao" ref="equipmentDao"/>
+        <property name="validator" ref="equipmentValidator"/>
+        <property name="name" value="equipment"/>
+    </bean>
+
+    <bean id="userWorkoutRepository" class="pl.jakubpiecuch.trainingmanager.service.user.workout.session.SessionUserWorkoutRepository">
+        <property name="converter" ref="userWorkoutConverter"/>
+        <property name="dao" ref="userWorkoutDao"/>
+        <property name="validator" ref="userWorkoutValidator"/>
+        <property name="name" value="userWorkout"/>
+    </bean>
+
+    <bean id="planRepository" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanRepository">
+        <property name="converter" ref="planConverter"/>
+        <property name="dao" ref="planDao"/>
+        <property name="validator" ref="planValidator"/>
+    </bean>
+
+    <bean id="executionRepository" class="pl.jakubpiecuch.trainingmanager.service.user.workout.session.execution.ExecutionUpdatableRepository">
+        <property name="converter" ref="executionConverter"/>
+        <property name="executionDao" ref="executionDao"/>
+        <property name="validator" ref="executionValidator"/>
+    </bean>
+
+</beans>

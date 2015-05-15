@@ -15,23 +15,28 @@ public class ExecutionConverter extends AbstractConverter<ExecutionDto, Executio
     private ExecutionDao executionDao;
 
     @Override
-    public ExecutionDto fromEntity(Execution entity, boolean full) {
+    protected ExecutionDto convertTo(Execution entity) {
         ExecutionDto result = new ExecutionDto();
         result.setId(entity.getId());
         result.setComment(entity.getComment());
-        result.setExercise((ExerciseDto) exerciseConverter.fromEntity(entity.getExercise(), full));
+        result.setExercise((ExerciseDto) exerciseConverter.fromEntity(entity.getExercise()));
         result.setState(entity.getState());
         result.setResults(entity.getResults());
         return result;
     }
 
     @Override
-    public Execution toEntity(ExecutionDto object) {
+    protected Execution convertFrom(ExecutionDto object, Execution entity) {
         Execution execution = executionDao.findById(object.getId());
         execution.setComment(object.getComment());
         execution.setState(object.getState());
         execution.setResults(object.getResults());
         return execution;
+    }
+
+    @Override
+    protected Execution getEmpty() {
+        return new Execution();
     }
 
     public void setExerciseConverter(Converter exerciseConverter) {

@@ -5,6 +5,13 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <bean id="supportService" class="pl.jakubpiecuch.trainingmanager.service.support.social.SocialSupportService"/>
+
+    <bean id="socialSignOnAdapter" class="pl.jakubpiecuch.trainingmanager.service.user.social.SocialSignOnAdapter">
+        <property name="accountDao" ref="usersDao"/>
+        <property name="userService" ref="socialUserService"/>
+    </bean>
+
     <bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
         <property name="connectionFactories">
             <list>

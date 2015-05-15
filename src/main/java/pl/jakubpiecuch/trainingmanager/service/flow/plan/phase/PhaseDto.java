@@ -3,15 +3,15 @@ package pl.jakubpiecuch.trainingmanager.service.flow.plan.phase;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
-import pl.jakubpiecuch.trainingmanager.service.flow.Flow;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutDto;
+import pl.jakubpiecuch.trainingmanager.service.identify.IdentifyObject;
 
 import java.util.List;
 
 /**
  * Created by Rico on 2014-12-31.
  */
-public class PhaseDto extends Flow {
+public class PhaseDto implements IdentifyObject {
 
     private Long id;
     private Integer position;
@@ -75,12 +75,6 @@ public class PhaseDto extends Flow {
 
     public void setWorkouts(List<WorkoutDto> workouts) {
         this.workouts = workouts;
-    }
-
-
-    @Override
-    public Hierarchy getHierarchy() {
-        return Hierarchy.PHASE;
     }
 
     @Override

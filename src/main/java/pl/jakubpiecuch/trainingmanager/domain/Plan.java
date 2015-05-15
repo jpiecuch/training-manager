@@ -1,11 +1,17 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
+import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
+
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "plan")
-public class Plan extends CommonEntity {
+public class Plan  extends CommonEntity implements RepoObject {
     private static final long serialVersionUID = 1L;
 
     public enum Goal {
@@ -16,7 +22,7 @@ public class Plan extends CommonEntity {
     private Goal goal;
     private Account creator;
     private Boolean used = false;
-    private List<Phase> phases;
+    private List<Phase> phases = new ArrayList<Phase>();
 
     public Plan() {
     }
@@ -61,5 +67,14 @@ public class Plan extends CommonEntity {
 
     public void setUsed(Boolean used) {
         this.used = used;
+    }
+
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    public List<Phase> getPhases() {
+        return phases;
+    }
+
+    public void setPhases(List<Phase> phases) {
+        this.phases = phases;
     }
 }

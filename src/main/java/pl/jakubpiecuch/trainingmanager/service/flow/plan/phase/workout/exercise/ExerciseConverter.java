@@ -3,29 +3,27 @@ package pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise
 import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.domain.Workout;
-import pl.jakubpiecuch.trainingmanager.service.flow.AbstractFlowConverter;
+import pl.jakubpiecuch.trainingmanager.service.converter.AbstractConverter;
 
 /**
  * Created by Rico on 2014-12-31.
  */
-public class ExerciseConverter extends AbstractFlowConverter<ExerciseDto, Exercise> {
+public class ExerciseConverter extends AbstractConverter<ExerciseDto, Exercise> {
 
     @Override
-    protected Exercise convertFrom(ExerciseDto flowObject) {
-        Exercise entity = new Exercise();
-
-        entity.setId(flowObject.getId());
-        entity.setDescription(new Description(flowObject.getDescriptionId()));
-        entity.setWorkout(new Workout(flowObject.getWorkoutId()));
-        entity.setSets(flowObject.getSets());
-        entity.setPosition(flowObject.getPosition());
-        entity.setGroup(flowObject.getGroup());
+    protected Exercise convertFrom(ExerciseDto dto, Exercise entity) {
+        entity.setId(dto.getId());
+        entity.setDescription(new Description(dto.getDescriptionId()));
+        entity.setWorkout(new Workout(dto.getWorkoutId()));
+        entity.setSets(dto.getSets());
+        entity.setPosition(dto.getPosition());
+        entity.setGroup(dto.getGroup());
 
         return entity;
     }
 
     @Override
-    protected ExerciseDto convertTo(Exercise entity, boolean full) {
+    protected ExerciseDto convertTo(Exercise entity) {
         ExerciseDto dto = new ExerciseDto();
 
         dto.setId(entity.getId());
@@ -34,8 +32,12 @@ public class ExerciseConverter extends AbstractFlowConverter<ExerciseDto, Exerci
         dto.setWorkoutId(entity.getWorkout().getId());
         dto.setGroup(entity.getGroup());
         dto.setPosition(entity.getPosition());
-        dto.setDescription(full ? entity.getDescription() : null);
+        dto.setDescription(entity.getDescription());
         return dto;
     }
 
+    @Override
+    protected Exercise getEmpty() {
+        return new Exercise();
+    }
 }

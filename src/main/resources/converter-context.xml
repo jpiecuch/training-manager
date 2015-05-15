@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="executionConverter" class="pl.jakubpiecuch.trainingmanager.service.user.workout.ExecutionConverter">
+        <property name="exerciseConverter" ref="exerciseConverter"/>
+        <property name="executionDao" ref="executionDao"/>
+    </bean>
+
+    <bean id="userWorkoutConverter" class="pl.jakubpiecuch.trainingmanager.service.user.workout.UserWorkoutConverter">
+        <property name="executionConverter" ref="executionConverter"/>
+        <property name="executionDao" ref="executionDao"/>
+        <property name="phaseConverter" ref="phaseConverter"/>
+        <property name="planConverter" ref="planConverter"/>
+        <property name="userWorkoutDao" ref="userWorkoutDao"/>
+    </bean>
+
+    <bean id="exerciseConverter" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseConverter"/>
+
+    <bean id="workoutConverter" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutConverter">
+        <property name="exerciseConverter" ref="exerciseConverter"/>
+    </bean>
+
+    <bean id="phaseConverter" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseConverter">
+        <property name="workoutConverter" ref="workoutConverter"/>
+    </bean>
+
+    <bean id="planConverter" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanConverter">
+        <property name="authenticationService" ref="authenticationService"/>
+        <property name="planDao" ref="planDao"/>
+        <property name="phaseConverter" ref="phaseConverter"/>
+    </bean>
+</beans>

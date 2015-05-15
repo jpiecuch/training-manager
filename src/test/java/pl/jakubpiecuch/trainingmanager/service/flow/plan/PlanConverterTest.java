@@ -7,10 +7,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import pl.jakubpiecuch.trainingmanager.dao.PlanDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.domain.Phase;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseConverter;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,10 +36,13 @@ public class PlanConverterTest {
     private static PlanConverter CONVERTER;
 
     @Mock
-    private PlanManager planManager;
+    AuthenticationService authenticationService;
 
     @Mock
-    AuthenticationService authenticationService;
+    PhaseConverter phaseConverter;
+
+    @Mock
+    PlanDao planDao;
 
 
     @Before
@@ -46,36 +55,38 @@ public class PlanConverterTest {
         PLAN_FLOW.setCreatorId(ACCOUNT_ID);
         PLAN_FLOW.setUsed(USED);
         PLAN_FLOW.setEditable(true);
+        PLAN_FLOW.setPhases(new ArrayList<PhaseDto>());
 
         PLAN.setId(ID);
         PLAN.setGoal(GOAL);
         PLAN.setName(NAME);
         PLAN.setCreator(account);
         PLAN.setUsed(USED);
+        PLAN.setPhases(new ArrayList<Phase>());
 
-        Mockito.when(planManager.retrieve(ID, false)).thenReturn(PLAN_FLOW);
         Mockito.when(authenticationService.signed()).thenReturn(new Authentication(account));
+        Mockito.when(planDao.findById(ID)).thenReturn(PLAN);
     }
 
     @Test
     public void testToFlowObject() throws Exception {
-        PlanDto flow = CONVERTER.fromEntity(PLAN, false);
+        PlanDto flow = CONVERTER.fromEntity(PLAN);
         assertEquals(flow, PLAN_FLOW);
     }
 
     @Test
     public void testFromFlowObject() throws Exception {
-        Plan plan = CONVERTER.toEntity(PLAN_FLOW);
+        Plan plan = CONVERTER.toEntity(PLAN_FLOW, new Plan(ID));
         assertEquals(plan, PLAN);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testToFlowObjectNull() throws Exception {
-        CONVERTER.fromEntity(null, false);
+        CONVERTER.fromEntity(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFromFlowObjectNull() throws Exception {
-        CONVERTER.toEntityList(null);
+        CONVERTER.toEntities(null, null);
     }
 }

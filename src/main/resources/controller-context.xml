@@ -52,29 +52,22 @@
                 <entry key="image" value-ref="imageResource"/>
             </map>
         </property>
-        <property name="flowManagers">
-            <map>
-                <entry key="PHASE" value-ref="phaseManager"/>
-                <entry key="PLAN" value-ref="planManager"/>
-                <entry key="WORKOUT" value-ref="workoutManager"/>
-                <entry key="EXERCISE" value-ref="exerciseManager"/>
-            </map>
-        </property>
         <property name="dictionary" ref="constantsDictionary"/>
         <property name="repositories">
             <map>
                 <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
                 <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
                 <entry key="ROLE" value-ref="roleRepository"/>
-                <entry key="WORKOUT" value-ref="userWorkoutManager"/>
+                <entry key="WORKOUT" value-ref="userWorkoutRepository"/>
+                <entry key="PLAN" value-ref="planRepository"/>
             </map>
         </property>
         <property name="readRepositories">
             <map>
                 <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
                 <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
-                <entry key="PLAN" value-ref="planManager"/>
-                <entry key="WORKOUT" value-ref="userWorkoutManager"/>
+                <entry key="PLAN" value-ref="planRepository"/>
+                <entry key="WORKOUT" value-ref="userWorkoutRepository"/>
                 <entry key="ROLE" value-ref="roleRepository"/>
             </map>
         </property>
@@ -88,6 +81,6 @@
             </map>
         </property>
         <property name="userPlanStarter" ref="sessionUserPlanStarter"/>
-        <property name="updateManager" ref="executionUpdateManager"/>
+        <property name="updatableRepository" ref="executionRepository"/>
     </bean>
 </beans>

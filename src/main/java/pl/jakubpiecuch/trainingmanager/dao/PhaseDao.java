@@ -2,5 +2,8 @@ package pl.jakubpiecuch.trainingmanager.dao;
 
 import pl.jakubpiecuch.trainingmanager.domain.Phase;
 
-public interface PhaseDao extends FlowDao<Phase> {
+import java.util.List;
+
+public interface PhaseDao {
+    List<Phase> findAll();
 }

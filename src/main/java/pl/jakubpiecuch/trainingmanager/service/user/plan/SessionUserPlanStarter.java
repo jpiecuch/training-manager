@@ -5,12 +5,14 @@ import pl.jakubpiecuch.trainingmanager.dao.ExecutionDao;
 import pl.jakubpiecuch.trainingmanager.dao.PlanDao;
 import pl.jakubpiecuch.trainingmanager.dao.UserWorkoutDao;
 import pl.jakubpiecuch.trainingmanager.domain.*;
-import pl.jakubpiecuch.trainingmanager.service.flow.FlowManager;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanCriteria;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanDto;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanRepository;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.GroupDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseDto;
+import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
 import javax.annotation.PostConstruct;
@@ -25,14 +27,14 @@ import java.util.Map;
 public class SessionUserPlanStarter implements UserPlanStarter {
 
     private Map<Integer, Integer> dayOfWeekMapper = new HashMap<Integer, Integer>();
-    private FlowManager<PlanDto> manager;
+    private Repository<PlanDto, PlanCriteria> manager;
     private ExecutionDao executionDao;
     private UserWorkoutDao userWorkoutDao;
     private PlanDao planDao;
 
     @Override
     public void start(UserPlan userPlan) {
-        PlanDto plan = manager.retrieve(userPlan.getPlanId(), true);
+        PlanDto plan = manager.retrieve(userPlan.getPlanId());
         int weekIncrease = 0;
         for (PhaseDto phase : plan.getPhases()) {
             for (int i = 0; i < phase.getWeeks(); i++) {
@@ -91,7 +93,7 @@ public class SessionUserPlanStarter implements UserPlanStarter {
         this.userWorkoutDao = userWorkoutDao;
     }
 
-    public void setManager(FlowManager<PlanDto> manager) {
+    public void setManager(Repository<PlanDto, PlanCriteria> manager) {
         this.manager = manager;
     }
 
