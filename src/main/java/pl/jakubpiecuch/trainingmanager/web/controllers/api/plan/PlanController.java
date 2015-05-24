@@ -34,6 +34,12 @@ public class PlanController extends AbstractController {
         versionServices.get(version).updateInRepository(flow, Repositories.PLAN);
     }
 
+    @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.PLAN_UPDATER + Permissions.HAS_ROLE_SUFFIX)
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.DELETE })
+    public void delete(@PathVariable ApiVersionService.Version version, @PathVariable(ApiURI.ID_PARAM) Long id) {
+        versionServices.get(version).removeFromRepository(id, Repositories.PLAN);
+    }
+
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.PLAN_VIEWER + Permissions.HAS_ROLE_SUFFIX)
     @RequestMapping(method = { RequestMethod.GET })
     public PageResult<PlanDto> plans(@PathVariable ApiVersionService.Version version,

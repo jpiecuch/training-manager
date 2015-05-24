@@ -2,6 +2,8 @@ package pl.jakubpiecuch.trainingmanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
@@ -81,5 +83,40 @@ public class Exercise extends CommonEntity {
 
     public void setSets(String[] sets) {
         this.reps = StringUtils.join(sets, SET_DELIMITER);
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Exercise rhs = (Exercise) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.description, rhs.description)
+                .append(this.workout, rhs.workout)
+                .append(this.reps, rhs.reps)
+                .append(this.position, rhs.position)
+                .append(this.group, rhs.group)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(description)
+                .append(workout)
+                .append(reps)
+                .append(position)
+                .append(group)
+                .toHashCode();
     }
 }

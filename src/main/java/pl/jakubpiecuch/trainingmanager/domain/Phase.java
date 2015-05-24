@@ -1,10 +1,14 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +21,7 @@ public class Phase extends CommonEntity implements Serializable {
     private String description;
     private Plan plan;
     private Integer weeks;
-    private List<Workout> workouts;
+    private List<Workout> workouts = new ArrayList<Workout>();
 
     public Phase() {
     }
@@ -73,12 +77,49 @@ public class Phase extends CommonEntity implements Serializable {
         this.weeks = weeks;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phase")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phase", orphanRemoval = true)
     public List<Workout> getWorkouts() {
         return workouts;
     }
 
     public void setWorkouts(List<Workout> workouts) {
         this.workouts = workouts;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Phase rhs = (Phase) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.position, rhs.position)
+                .append(this.goal, rhs.goal)
+                .append(this.description, rhs.description)
+                .append(this.plan, rhs.plan)
+                .append(this.weeks, rhs.weeks)
+                .append(this.workouts, rhs.workouts)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(position)
+                .append(goal)
+                .append(description)
+                .append(plan)
+                .append(weeks)
+                .append(workouts)
+                .toHashCode();
     }
 }

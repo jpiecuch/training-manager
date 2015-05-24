@@ -24,7 +24,7 @@ public class PlanRepository implements Repository<PlanDto, PlanCriteria> {
     @Override
     @Transactional
     public PageResult<PlanDto> read(PlanCriteria criteria) {
-        RepoDao repoDao = (RepoDao) dao;
+        RepoDao repoDao = dao;
         PageResult<Plan> result = repoDao.findByCriteria(criteria);
         final List<PlanDto> list = Lists.newArrayList(converter.fromEntities(result.getResult()));
         final long count = result.getCount();
@@ -64,6 +64,7 @@ public class PlanRepository implements Repository<PlanDto, PlanCriteria> {
     }
 
     @Override
+    @Transactional
     public void update(PlanDto element) {
         if (validator != null) {
             validator.validate(element, new BeanPropertyBindingResult(element, "plan"));

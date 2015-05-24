@@ -5,6 +5,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
+import pl.jakubpiecuch.trainingmanager.service.identify.IdentifyObject;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  * Created by Rico on 2014-12-31.
  */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public class PlanDto implements RepoObject {
+public class PlanDto implements RepoObject, IdentifyObject {
 
     private Long id;
     private String name;

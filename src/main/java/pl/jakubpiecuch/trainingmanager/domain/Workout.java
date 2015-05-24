@@ -1,6 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.annotations.*;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
@@ -9,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -26,7 +29,7 @@ public class Workout extends CommonEntity implements Serializable {
     private Phase phase;
     private Integer position;
     private String muscle;
-    private List<Exercise> exercises;
+    private List<Exercise> exercises = new ArrayList<Exercise>();
 
     public Workout() {
     }
@@ -73,8 +76,7 @@ public class Workout extends CommonEntity implements Serializable {
         this.muscle = muscles;
     }
 
-    @OneToMany(mappedBy = "workout")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Exercise> getExercises() {
         return exercises;
     }
@@ -99,5 +101,39 @@ public class Workout extends CommonEntity implements Serializable {
             ids[i] = muscles[i].ordinal();
         }
         this.muscle = StringUtils.join(ids, MUSCLE_DELIMITER);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Workout rhs = (Workout) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.weekDay, rhs.weekDay)
+                .append(this.phase, rhs.phase)
+                .append(this.position, rhs.position)
+                .append(this.muscle, rhs.muscle)
+                .append(this.exercises, rhs.exercises)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(weekDay)
+                .append(phase)
+                .append(position)
+                .append(muscle)
+                .append(exercises)
+                .toHashCode();
     }
 }

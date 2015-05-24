@@ -1,15 +1,25 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
-import pl.jakubpiecuch.trainingmanager.dao.PlanDao;
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+import org.springframework.transaction.annotation.Transactional;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.domain.Phase;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.converter.AbstractConverter;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseConverter;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
+import pl.jakubpiecuch.trainingmanager.service.identify.IdentifyObject;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Rico on 2014-12-31.
@@ -17,7 +27,6 @@ import java.util.ArrayList;
 public class PlanConverter extends AbstractConverter<PlanDto, Plan> {
 
     private AuthenticationService authenticationService;
-    private PlanDao planDao;
     private PhaseConverter phaseConverter;
 
     @Override
@@ -43,12 +52,27 @@ public class PlanConverter extends AbstractConverter<PlanDto, Plan> {
             Authentication signed = authenticationService.signed();
             entity.setCreator(new Account(signed.getId()));
         }
-        entity.setPhases(new ArrayList<Phase>());
-        for (Phase phase : phaseConverter.toEntities(dto.getPhases(), entity.getPhases())) {
-            phase.setPlan(entity);
-            entity.getPhases().add(phase);
+
+        Map<Long, ? extends IdentifyObject> map = uniqueMap(dto.getPhases());
+
+        List<Phase> phases = new ArrayList<Phase>();
+        for (Phase phase : entity.getPhases()) {
+            if (map.containsKey(phase.getId())) {
+                Phase e = phaseConverter.toEntity((PhaseDto) map.get(phase.getId()), phase);
+                e.setPlan(entity);
+                phases.add(e);
+            }
         }
 
+        Collection<? extends IdentifyObject> newPhases = filterNew(dto.getPhases());
+
+        for (IdentifyObject phase : newPhases) {
+            Phase e = phaseConverter.toEntity((PhaseDto)phase, null);
+            e.setPlan(entity);
+            phases.add(e);
+        }
+        entity.getPhases().clear();
+        entity.getPhases().addAll(phases);
         return entity;
     }
 
@@ -63,9 +87,5 @@ public class PlanConverter extends AbstractConverter<PlanDto, Plan> {
 
     public void setPhaseConverter(PhaseConverter phaseConverter) {
         this.phaseConverter = phaseConverter;
-    }
-
-    public void setPlanDao(PlanDao planDao) {
-        this.planDao = planDao;
     }
 }

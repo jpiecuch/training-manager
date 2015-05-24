@@ -28,7 +28,6 @@
 
     <bean id="planConverter" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanConverter">
         <property name="authenticationService" ref="authenticationService"/>
-        <property name="planDao" ref="planDao"/>
         <property name="phaseConverter" ref="phaseConverter"/>
     </bean>
 </beans>

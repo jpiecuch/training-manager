@@ -5,8 +5,13 @@ import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.domain.Workout;
 import pl.jakubpiecuch.trainingmanager.service.converter.AbstractConverter;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutConverter;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutDto;
+import pl.jakubpiecuch.trainingmanager.service.identify.IdentifyObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Rico on 2014-12-31.
@@ -38,11 +43,27 @@ public class PhaseConverter extends AbstractConverter<PhaseDto, Phase> {
         entity.setPosition(dto.getPosition());
         entity.setWeeks(dto.getWeeks());
 
-        entity.setWorkouts(new ArrayList<Workout>());
-        for (Workout workout : workoutConverter.toEntities(dto.getWorkouts(), entity.getWorkouts())) {
-            workout.setPhase(entity);
-            entity.getWorkouts().add(workout);
+        Map<Long, ? extends IdentifyObject> map = uniqueMap(dto.getWorkouts());
+
+        List<Workout> workouts = new ArrayList<Workout>();
+        for (Workout workout : entity.getWorkouts()) {
+            if (map.containsKey(workout.getId())) {
+                Workout e = workoutConverter.toEntity((WorkoutDto) map.get(workout.getId()), workout);
+                e.setPhase(entity);
+                workouts.add(e);
+            }
         }
+
+        Collection<? extends IdentifyObject> newWorkouts = filterNew(dto.getWorkouts());
+
+        for (IdentifyObject workout : newWorkouts) {
+            Workout e = workoutConverter.toEntity((WorkoutDto) workout, null);
+            e.setPhase(entity);
+            workouts.add(e);
+        }
+
+        entity.getWorkouts().clear();
+        entity.getWorkouts().addAll(workouts);
 
         return entity;
     }

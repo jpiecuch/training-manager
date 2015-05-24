@@ -1,5 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 
 import javax.persistence.*;
@@ -69,12 +71,55 @@ public class Plan  extends CommonEntity implements RepoObject {
         this.used = used;
     }
 
-    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Phase> getPhases() {
         return phases;
     }
 
     public void setPhases(List<Phase> phases) {
         this.phases = phases;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Plan rhs = (Plan) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.name, rhs.name)
+                .append(this.goal, rhs.goal)
+                .append(this.creator, rhs.creator)
+                .append(this.used, rhs.used)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(name)
+                .append(goal)
+                .append(creator)
+                .append(used)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Plan{");
+        sb.append("used=").append(used);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", goal=").append(goal);
+        sb.append(", creator=").append(creator);
+        sb.append('}');
+        return sb.toString();
     }
 }

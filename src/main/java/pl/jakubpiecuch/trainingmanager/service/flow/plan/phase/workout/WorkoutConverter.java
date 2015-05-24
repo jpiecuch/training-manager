@@ -7,6 +7,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Workout;
 import pl.jakubpiecuch.trainingmanager.service.converter.AbstractConverter;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseConverter;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseDto;
+import pl.jakubpiecuch.trainingmanager.service.identify.IdentifyObject;
 
 import java.util.*;
 
@@ -24,15 +25,30 @@ public class WorkoutConverter extends AbstractConverter<WorkoutDto, Workout> {
         entity.setPhase(new Phase(dto.getPhaseId()));
         entity.setPosition(dto.getPosition());
         entity.setWeekDay(dto.getWeekDay());
-        List<ExerciseDto> exercises = new ArrayList<ExerciseDto>();
+        List<ExerciseDto> exerciseDtos = new ArrayList<ExerciseDto>();
         for (GroupDto group : dto.getGroups()) {
-            exercises.addAll(group.getExercises());
+            exerciseDtos.addAll(group.getExercises());
         }
-        entity.setExercises(new ArrayList<Exercise>());
-        for (Exercise exercise : exerciseConverter.toEntities(exercises, entity.getExercises())) {
-            exercise.setWorkout(entity);
-            entity.getExercises().add(exercise);
+        Map<Long, ? extends IdentifyObject> map = uniqueMap(exerciseDtos);
+
+        List<Exercise> exercises = new ArrayList<Exercise>();
+        for (Exercise exercise : entity.getExercises()) {
+            if (map.containsKey(exercise.getId())) {
+                Exercise e = exerciseConverter.toEntity((ExerciseDto) map.get(exercise.getId()), exercise);
+                e.setWorkout(entity);
+                exercises.add(e);
+            }
         }
+
+        Collection<? extends IdentifyObject> newWorkouts = filterNew(exerciseDtos);
+
+        for (IdentifyObject exercise : newWorkouts) {
+            Exercise e = exerciseConverter.toEntity((ExerciseDto) exercise, null);
+            e.setWorkout(entity);
+            exercises.add(e);
+        }
+        entity.getExercises().clear();
+        entity.getExercises().addAll(exercises);
         return entity;
     }
 
