@@ -28,6 +28,31 @@ app.service('workoutService', function($q, $http, exerciseService, urlService, d
         workout.group = group;
     };
 
+    this.moveGroup = function (workout, o, count) {
+        var idx = workout.groups.indexOf(o);
+        var newPos = idx + count;
+        workout.groups.splice(idx, 1);
+        workout.groups.splice(newPos,0,o);
+        var id = 1;
+        _.each(workout.groups, function (item) {
+            item.id = id++;
+        });
+    };
+
+    this.isGroupLast = function(workout, o) {
+        return o.id === workout.groups.length;
+    };
+
+    this.removeGroup = function(workout, o) {
+        var idx = workout.groups.indexOf(o);
+        workout.groups.splice(idx, 1);
+        workout.groups = plan.phases[0];
+        var id = 1;
+        _.each(workout.groups, function (item) {
+            item.id = id++;
+        });
+    };
+
     this.muscles = function(workout) {
         var muscles = dictionaryService.get(2);
         var result = [];
@@ -118,6 +143,12 @@ app.service('workoutService', function($q, $http, exerciseService, urlService, d
             addGroup: function (id, exercises) {
                 me.addGroup(this, id, exercises)
             },
+            moveGroup: function(group, count) {
+                me.moveGroup(this, group, count);
+            },
+            removeGroup: function(group) {
+              me.removeGroup(this, group);
+            },
             activateGroup: function (group) {
                 me.activateGroup(this, group);
             },
@@ -126,6 +157,9 @@ app.service('workoutService', function($q, $http, exerciseService, urlService, d
             },
             hasErrors: function() {
                 return me.hasErrors(this);
+            },
+            isGroupLast: function(group) {
+                return me.isGroupLast(this, group);
             }
         };
         if (workout) {

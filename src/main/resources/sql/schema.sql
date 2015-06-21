@@ -119,7 +119,9 @@ CREATE TABLE execution (
 CREATE TABLE account_record (
     id BIGINT PRIMARY KEY NOT NULL,
     type integer NOT NULL,
-    value character varying(50)
+    value character varying(50),
+    date timestamp without time zone DEFAULT now() NOT NULL,
+    account bigint NOT NULL
 );
 
 ALTER TABLE userconnection ADD CONSTRAINT userconnection_pkey PRIMARY KEY (userid, providerid, provideruserid);
@@ -140,3 +142,4 @@ ALTER TABLE user_workout ADD CONSTRAINT account_fkey FOREIGN KEY (account) REFER
 ALTER TABLE user_workout ADD CONSTRAINT workout_user_fkey FOREIGN KEY (workout) REFERENCES workout(id);
 ALTER TABLE account_role ADD CONSTRAINT account_role_role_fkey FOREIGN KEY (role) REFERENCES role(id);
 ALTER TABLE account_role ADD CONSTRAINT account_role_account_fkey FOREIGN KEY (account) REFERENCES account(id);
+ALTER TABLE account_record ADD CONSTRAINT account_record_account_fkey FOREIGN KEY (account) REFERENCES account(id);

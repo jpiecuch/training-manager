@@ -13,7 +13,6 @@ import java.util.List;
 public class PostgreSQLDialect extends PostgreSQL82Dialect {
 
     public static final String OVER = "over";
-    protected static final String PARTITION = "partition";
     public static final String OVER_FORMAT = "%s " + OVER + "(%s)";
 
     public PostgreSQLDialect() {
@@ -23,7 +22,6 @@ public class PostgreSQLDialect extends PostgreSQL82Dialect {
 
     protected void registerTypesAndFunctions() {
         registerFunction(OVER, new Over());
-        registerFunction(PARTITION, new StandardSQLFunction(PARTITION));
     }
 
     public static class Over extends AbstractOver {

@@ -35,15 +35,17 @@
     </div>
     <div class="tabbable tabbable-custom" data-ng-if="plan.phase">
         <ul class="nav nav-tabs">
-            <li ng-repeat="phase in plan.phases" ng-class="{'active' : plan.isActive(phase)}"><a ng-click="plan.activatePhase(phase)">{{('phase' | translate) + ' ' + ($index +1)}} <i data-ng-if="phase.hasErrors()" class="fa fa-exclamation-circle text-danger"></i></a>
+            <li ng-repeat="phase in plan.phases | orderBy: 'position'" ng-class="{'active' : plan.isActive(phase)}"><a ng-click="plan.activatePhase(phase)">{{('phase' | translate) + ' ' + ($index +1)}} <i data-ng-if="phase.hasErrors()" class="fa fa-exclamation-circle text-danger"></i></a>
+            </li>
+            <li>
+            <a data-ng-if="plan.editable" href="" data-ng-click="plan.addPhase()">
+                <i class="fa fa-plus"></i>
+            </a>
             </li>
         </ul>
         <div class="tab-content">
-            <div class="portlet tab-pane active" data-ng-include="'resources/tpl/plan/phase.html'"></div>
+            <div class="portlet light tab-pane active" data-ng-include="'resources/tpl/plan/phase.html'"></div>
         </div>
     </div>
-    <a data-ng-if="plan.editable" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="plan.addPhase()">
-        <i class="fa fa-plus"></i>
-    </a>
     <div data-ng-if="plan.editable" data-ng-include="'resources/tpl/form-submit.html'"></div>
 </div>

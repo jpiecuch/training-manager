@@ -703,3 +703,23 @@ dictionary-tiles(new in v1.1.1)
     color: #4b77be !important;
     font-weight: 700 !important;
 }
+
+.tab-btn {
+    background-color: #35aa47 !important;
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    margin-top: 6px;
+}
+
+.tab-btn:hover {
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    margin-top: 6px;
+    background-color: #2d8f3c !important;
+}
+
+.tab-btn i {
+    font-size: 11px !important;
+}

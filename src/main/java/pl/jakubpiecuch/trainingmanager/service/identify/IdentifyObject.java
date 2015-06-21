@@ -5,4 +5,5 @@ package pl.jakubpiecuch.trainingmanager.service.identify;
  */
 public interface IdentifyObject {
     Long getId();
+    void setId(Long id);
 }

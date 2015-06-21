@@ -36,7 +36,7 @@ public abstract class AbstractRepository<E extends RepoObject, C extends Criteri
 
     @Override
     public void delete(long id) {
-        dao.delete(new Description(id));
+        dao.delete(new CommonEntity(id));
     }
 
     @Override

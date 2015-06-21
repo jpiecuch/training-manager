@@ -6,11 +6,14 @@
             <span class="caption-helper" data-ng-bind="::exercise.description.name"></span>
         </div>
         <div class="actions">
-            <a class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="exercise.visible = !exercise.visible">
-                <i class="fa fa-angle-down"></i>
+            <a class="btn btn-icon-only btn-default" href="" data-ng-click="plan.phase.workout.group.moveExercise($index, -1)">
+                <i class="fa fa-chevron-up"></i>
             </a>
-            <a data-ng-if="plan.editable" class="btn btn-circle btn-icon-only btn-default" href="" data-ng-click="plan.phase.workout.group.removeExercise(exercise)">
-                <i class="icon-trash"></i>
+            <a class="btn btn-icon-only btn-default" href="" data-ng-click="plan.phase.workout.group.moveExercise($index, 1)">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+            <a data-ng-if="plan.editable" class="btn btn-icon-only red btn-default" href="" data-ng-click="plan.phase.workout.group.removeExercise(exercise)">
+                <i class="icon-trash" style="color: white"></i>
             </a>
         </div>
     </div>

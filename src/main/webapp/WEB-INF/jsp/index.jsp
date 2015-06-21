@@ -33,6 +33,7 @@
     <!-- END THEME STYLES -->
     <link href="resources/css/custom.css" rel="stylesheet" type="text/css"/>
     <link href="resources/css/toaster.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/angular-chart.css" rel="stylesheet" type="text/css"/>
     <link rel="shortcut icon" href="resources/favicon.ico"/>
 </head>
 
@@ -69,6 +70,8 @@
 <script src="resources/assets/global/plugins/excanvas.min.js"></script>
 <![endif]-->
 <script src="resources/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="resources/assets/global/plugins/amcharts/amcharts.js" type="text/javascript"></script>
+<script src="resources/js/modules/chart.js" type="text/javascript"></script>
 
 <script src="resources/assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
 <script src="resources/assets/global/plugins/angularjs/angular-animate.min.js" type="text/javascript"></script>
@@ -89,7 +92,7 @@
 <script src="resources/js/modules/checklist-model.js" type="text/javascript"></script>
 <script src="resources/js/modules/angular-youtube-embed.js" type="text/javascript"></script>
 <script src="resources/js/modules/tmhDynamicLocale.js" type="text/javascript"></script>
-<script src="resources/js/modules/quick-ng-repeat.js" type="text/javascript"></script>
+<script src="resources/js/modules/angular-chart.min.js" type="text/javascript"></script>
 
 <script src="resources/js/app.js" type="text/javascript"></script>
 <script src="resources/js/controllers/LocaleController.js" type="text/javascript"></script>

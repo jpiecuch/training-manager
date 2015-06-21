@@ -39,6 +39,8 @@
 
     <bean id="roleController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.role.RoleController" parent="abstractController"/>
 
+    <bean id="accountRecordController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AccountRecordController" parent="abstractController"/>
+
     <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
         <property name="userServices">
             <map>
@@ -60,6 +62,7 @@
                 <entry key="ROLE" value-ref="roleRepository"/>
                 <entry key="WORKOUT" value-ref="userWorkoutRepository"/>
                 <entry key="PLAN" value-ref="planRepository"/>
+                <entry key="ACCOUNT_RECORD" value-ref="accountRecordRepository"/>
             </map>
         </property>
         <property name="readRepositories">
@@ -69,6 +72,7 @@
                 <entry key="PLAN" value-ref="planRepository"/>
                 <entry key="WORKOUT" value-ref="userWorkoutRepository"/>
                 <entry key="ROLE" value-ref="roleRepository"/>
+                <entry key="ACCOUNT_RECORD" value-ref="accountRecordRepository"/>
             </map>
         </property>
         <property name="orderResolverMap">

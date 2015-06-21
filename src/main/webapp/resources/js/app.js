@@ -11,7 +11,7 @@ var app = angular.module("app", [
     'checklist-model',
     'youtube-embed',
     'tmh.dynamicLocale',
-    'QuickList'
+    'chart.js'
 ]);
 
 app.config(['$animateProvider',
@@ -237,10 +237,14 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                     return $ocLazyLoad.load({
                         name: 'app',
                         files: [
+                            'resources/assets/global/plugins/amcharts/serial.js',
+                            'resources/assets/global/plugins/amcharts/lang/pl.js',
+                            'resources/assets/global/plugins/amcharts/themes/light.js',
                              'resources/js/controllers/DashboardController.js',
                              'resources/assets/admin/pages/css/todo.css',
                             'resources/js/services/user-workout-service.js',
-                            'resources/js/services/form-validate-service.js'
+                            'resources/js/services/form-validate-service.js',
+                            'resources/js/services/account-record-service.js'
                         ] 
                     });
                 }]

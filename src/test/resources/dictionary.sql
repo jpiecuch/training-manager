@@ -4,6 +4,8 @@ INSERT INTO role (id, name, permissions, modifiable) VALUES (1, 'ADMIN', '0,1,2'
 
 INSERT INTO account_role (account, role) VALUES (1,1);
 
+INSERT INTO account_record (id, type, value, date, account) VALUES (1, 0, '80.0', '2014-12-07 13:52:56.805', 1);
+
 INSERT INTO plan (id, name, goal, creator, used) VALUES (1, 'Main plan', 0, 1, true);
 
 INSERT INTO phase (id, position, goal, description, plan, weeks) VALUES (1, 1, 1, 'Main phase', 1, 3);

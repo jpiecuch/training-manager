@@ -1,7 +1,13 @@
 <div class="portlet-title">
     <div class="actions">
-        <a style="font-size: 14px" class="btn btn-icon-only red" href="" data-ng-click="plan.removePhase($index)" data-ng-if="plan.phases.length > 1">
-            <i class="fa fa-times"></i>
+        <a class="btn btn-icon-only btn-default" href="" data-ng-click="plan.movePhase(plan.phase,-1)" data-ng-if="plan.phase.position > 1">
+            <i class="fa fa-chevron-left"></i>
+        </a>
+        <a class="btn btn-icon-only btn-default" href="" data-ng-click="plan.movePhase(plan.phase,1)" data-ng-if="!plan.isPhaseLast(plan.phase)">
+            <i class="fa fa-chevron-right"></i>
+        </a>
+        <a class="btn btn-icon-only red" href="" data-ng-click="plan.removePhase(plan.phase)">
+            <i class="icon-trash"></i>
         </a>
     </div>
 </div>
@@ -67,7 +73,7 @@
                     <li ng-repeat="workout in plan.phase.workouts | orderBy : 'weekDay'" ng-class="{'active' : plan.phase.isWorkoutActive(workout)}"><a ng-click="plan.phase.activateWorkout(workout)">{{('weekDay.' + workout.weekDay + '.full' | translate)}} <i data-ng-if="workout.hasErrors()" class="fa fa-exclamation-circle text-danger"></i></a></li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" data-ng-include="'resources/tpl/plan/workout.html'"></div>
+                    <div class="tab-pane active portlet light" data-ng-include="'resources/tpl/plan/workout.html'"></div>
                 </div>
         </div>
     </div>

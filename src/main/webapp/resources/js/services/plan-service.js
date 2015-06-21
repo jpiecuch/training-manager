@@ -19,25 +19,30 @@ app.service('planService', function($q, $http, phaseService, formValidateService
         plan.phases.push(next);
     };
 
-    this.removePhase = function(plan, idx) {
+    this.removePhase = function(plan, o) {
+        var idx = plan.phases.indexOf(o);
         plan.phases.splice(idx, 1);
         plan.phase = plan.phases[0];
+        var position = 1;
+        _.each(plan.phases, function (item) {
+            item.position = position++;
+        });
     };
 
-    function rec(o, s) {
-        s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-        s = s.replace(/^\./, '');           // strip a leading dot
-        var a = s.split('.');
-        for (var i = 0, n = a.length; i < n; ++i) {
-            var k = a[i];
-            if (k in o) {
-                o = o[k];
-            } else {
-                return;
-            }
-        }
-        return o;
-    }
+    this.isPhaseLast = function(plan, o) {
+      return o.position === plan.phases.length;
+    };
+
+    this.movePhase = function (plan, o, count) {
+        var idx = plan.phases.indexOf(o);
+        var newPos = idx + count;
+        plan.phases.splice(idx, 1);
+        plan.phases.splice(newPos,0,o);
+        var position = 1;
+        _.each(plan.phases, function (item) {
+            item.position = position++;
+        });
+    };
 
     this.get = function(id) {
         var me = this;
@@ -53,6 +58,9 @@ app.service('planService', function($q, $http, phaseService, formValidateService
                 goal: inputService.get(data ? data.data.goal : null),
                 phases: [],
                 editable: data ? data.data.editable : true,
+                movePhase: function (idx, count) {
+                    me.movePhase(this, idx, count);
+                },
                 activatePhase: function(phase) {
                     me.activatePhase(this, phase);
                 },
@@ -72,6 +80,9 @@ app.service('planService', function($q, $http, phaseService, formValidateService
                 },
                 removePhase:  function(idx) {
                     me.removePhase(this, idx);
+                },
+                isPhaseLast: function(phase) {
+                    return me.isPhaseLast(this, phase);
                 }
             };
             if (data) {

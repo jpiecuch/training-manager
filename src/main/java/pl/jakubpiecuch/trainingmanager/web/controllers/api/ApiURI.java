@@ -19,6 +19,7 @@ public class ApiURI {
     private static final String EXECUTION_PATH = "/executions";
     private static final String USERS_PATH = "/users";
     public static final String ROLE_PATH = "/roles";
+    public static final String ACCOUNT_RECORD_PATH = "/accountrecords";
     public static final String KEY_PARAM = "key";
     public static final String KEY_PATH_PARAM = "/{"+ KEY_PARAM +"}";
     public static final String ID_PARAM = "id";
@@ -38,6 +39,7 @@ public class ApiURI {
     public static final String API_ROLE_PATH = API_VERSION_PATH + ROLE_PATH;
     public static final String WORKOUT_ID_PARAM = "workoutId";
     public static final String WORKOUT_ID_PATH_PARAM = "/{" + WORKOUT_ID_PARAM + "}";
+    public static final String API_ACCOUNT_RECORD_PATH = API_VERSION_PATH + ACCOUNT_RECORD_PATH;
 
     private ApiURI() {
     }

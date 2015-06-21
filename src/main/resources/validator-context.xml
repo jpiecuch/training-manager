@@ -58,4 +58,6 @@
     <bean id="executionValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.execution.ExecutionValidator"/>
 
     <bean id="userWorkoutValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.userworkout.UserWorkoutValidator"/>
+
+    <bean id="accountRecordValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.accountrecord.AccountRecordValidator"/>
 </beans>

@@ -30,4 +30,8 @@
         <property name="authenticationService" ref="authenticationService"/>
         <property name="phaseConverter" ref="phaseConverter"/>
     </bean>
+
+    <bean id="accountRecordConverter" class="pl.jakubpiecuch.trainingmanager.service.repository.accountrecord.AccountRecordConverter">
+        <property name="authenticationService" ref="authenticationService"/>
+    </bean>
 </beans>

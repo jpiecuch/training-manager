@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Rico on 2014-12-31.
  */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public class PlanDto implements RepoObject, IdentifyObject {
+public class PlanDto implements RepoObject {
 
     private Long id;
     private String name;

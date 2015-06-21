@@ -15,6 +15,13 @@
         <property name="name" value="description"/>
     </bean>
 
+    <bean id="accountRecordRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.accountrecord.AccountRecordRepository">
+        <property name="dao" ref="accountRecordDao"/>
+        <property name="name" value="accountRecord"/>
+        <property name="validator" ref="accountRecordValidator"/>
+        <property name="converter" ref="accountRecordConverter"/>
+    </bean>
+
     <bean  id="equipmentRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.equipment.EquipmentRepository">
         <property name="dao" ref="equipmentDao"/>
         <property name="validator" ref="equipmentValidator"/>
