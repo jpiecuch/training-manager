@@ -15,7 +15,6 @@ public class UserWorkoutCriteria extends Criteria<UserWorkoutCriteria> {
 
     public UserWorkoutCriteria(String lang) {
         super("u", "UserWorkout", lang);
-        addJoin("LEFT JOIN FETCH " + alias + ".executions e");
         addJoin("LEFT JOIN FETCH " + alias + ".workout w");
         addJoin("LEFT JOIN FETCH w.phase ph");
         addJoin("LEFT JOIN FETCH ph.plan p");
