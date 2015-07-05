@@ -17,7 +17,6 @@ public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, User
     private Converter planConverter;
     private Converter phaseConverter;
     private Converter executionConverter;
-    private ExecutionDao executionDao;
     private UserWorkoutDao userWorkoutDao;
 
     @Override
@@ -37,7 +36,7 @@ public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, User
         result.setMuscles(entity.getWorkout().getMuscles());
         result.setPlan((PlanDto) planConverter.fromEntity(entity.getWorkout().getPhase().getPlan()));
         result.setPhase((PhaseDto) phaseConverter.fromEntity(entity.getWorkout().getPhase()));
-        result.setExecutions(executionConverter.fromEntities(executionDao.findByParentId(entity.getId())));
+        result.setExecutions(executionConverter.fromEntities(entity.getExecutions()));
         result.setWeekDay(entity.getWorkout().getWeekDay());
         result.setState(entity.getState());
         result.setComment(entity.getComment());
@@ -59,10 +58,6 @@ public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, User
 
     public void setExecutionConverter(Converter executionConverter) {
         this.executionConverter = executionConverter;
-    }
-
-    public void setExecutionDao(ExecutionDao executionDao) {
-        this.executionDao = executionDao;
     }
 
     public void setUserWorkoutDao(UserWorkoutDao userWorkoutDao) {

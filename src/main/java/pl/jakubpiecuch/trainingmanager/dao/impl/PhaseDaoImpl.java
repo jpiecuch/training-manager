@@ -7,9 +7,4 @@ import pl.jakubpiecuch.trainingmanager.domain.Phase;
 import java.util.List;
 
 public class PhaseDaoImpl extends CoreDaoImpl<Phase> implements PhaseDao {
-
-    @Override
-    public List<Phase> findAll() {
-        return session().createQuery("SELECT p FROM Phase p").list();
-    }
 }

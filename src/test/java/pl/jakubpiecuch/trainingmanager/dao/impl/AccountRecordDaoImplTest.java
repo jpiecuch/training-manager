@@ -2,6 +2,7 @@ package pl.jakubpiecuch.trainingmanager.dao.impl;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import pl.jakubpiecuch.trainingmanager.dao.AccountRecordDao;
 import pl.jakubpiecuch.trainingmanager.domain.AccountRecord;
 
@@ -17,9 +18,9 @@ public class AccountRecordDaoImplTest extends BaseDAOTestCase {
     @Autowired
     private AccountRecordDao accountRecordDao;
 
-    @Test
-    public void testFindByAccountIdAndType() {
-
+    @Test(expected = NullPointerException.class)
+    public void testFindByCriteriaNull() {
+        accountRecordDao.findByCriteria(null);
     }
 
 }

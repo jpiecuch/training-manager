@@ -70,8 +70,6 @@ public class PlanDaoImplTest extends BaseDAOTestCase {
         PLAN.getPhases().get(0).setPlan(null);
         planDao.update(PLAN);
         planDao.flush();
-
-        phaseDao.findAll();
     }
 
 }

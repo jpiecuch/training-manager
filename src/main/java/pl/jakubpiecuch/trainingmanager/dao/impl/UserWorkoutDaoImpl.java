@@ -11,8 +11,4 @@ import java.util.List;
  */
 public class UserWorkoutDaoImpl extends AbstractRepoDao<UserWorkout, UserWorkoutCriteria> implements UserWorkoutDao {
 
-    @Override
-    public List<UserWorkout> findByParentId(long parentId) {
-        return session().createQuery("SELECT u FROM UserWorkout u WHERE u.workout.id = :workoutId").setParameter("workoutId", parentId).list();
-    }
 }

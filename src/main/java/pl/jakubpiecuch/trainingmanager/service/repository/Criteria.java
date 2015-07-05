@@ -23,6 +23,7 @@ public abstract class Criteria<T extends Criteria> {
     protected List<String> restrictions = new ArrayList<String>();
     protected Map<String, Object> params = new HashMap<String, Object>();
     private List<Long> excludedIds = new ArrayList<Long>();
+    private List<String> joins = new ArrayList<String>();
 
     public enum OrderMode {
         ASC,DESC
@@ -54,12 +55,20 @@ public abstract class Criteria<T extends Criteria> {
         }
     }
 
+    protected T addJoin(String join) {
+        this.joins.add(join);
+        return (T)this;
+    }
+
     protected abstract String[] getValidFields();
     protected abstract void appendRestrictions();
 
     public Query query(Session session) {
         StringBuilder sb = new StringBuilder("SELECT "+ alias +", over(count(*)) FROM "+entity+" "+alias+" ");
 
+        for (String join : joins) {
+            sb.append(join).append(" ");
+        }
         if (this.id != null) {
             restrictions.add(" "+alias+".id = :id ");
             params.put("id", this.id);

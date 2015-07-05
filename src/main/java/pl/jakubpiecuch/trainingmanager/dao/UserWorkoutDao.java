@@ -10,5 +10,4 @@ import java.util.List;
  * Created by Rico on 2015-01-25.
  */
 public interface UserWorkoutDao extends CoreDao<UserWorkout> {
-    List<UserWorkout> findByParentId(long parentId);
 }

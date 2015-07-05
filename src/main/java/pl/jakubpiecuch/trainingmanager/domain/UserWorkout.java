@@ -4,6 +4,7 @@ import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Rico on 2015-01-25.
@@ -22,6 +23,7 @@ public class UserWorkout extends CommonEntity implements RepoObject {
     private Date date;
     private Workout workout;
     private State state;
+    private List<Execution> executions;
 
     public UserWorkout() {
         super();
@@ -86,5 +88,14 @@ public class UserWorkout extends CommonEntity implements RepoObject {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    @OneToMany(mappedBy = "workout")
+    public List<Execution> getExecutions() {
+        return executions;
+    }
+
+    public void setExecutions(List<Execution> executions) {
+        this.executions = executions;
     }
 }
