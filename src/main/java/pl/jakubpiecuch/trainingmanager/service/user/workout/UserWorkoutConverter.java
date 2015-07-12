@@ -1,8 +1,9 @@
 package pl.jakubpiecuch.trainingmanager.service.user.workout;
 
 import org.springframework.transaction.annotation.Transactional;
-import pl.jakubpiecuch.trainingmanager.dao.ExecutionDao;
 import pl.jakubpiecuch.trainingmanager.dao.UserWorkoutDao;
+import pl.jakubpiecuch.trainingmanager.domain.Phase;
+import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.domain.UserWorkout;
 import pl.jakubpiecuch.trainingmanager.service.converter.AbstractConverter;
 import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
@@ -14,8 +15,6 @@ import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
  */
 public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, UserWorkout> {
 
-    private Converter planConverter;
-    private Converter phaseConverter;
     private Converter executionConverter;
     private UserWorkoutDao userWorkoutDao;
 
@@ -34,8 +33,8 @@ public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, User
         result.setId(entity.getId());
         result.setDate(entity.getDate());
         result.setMuscles(entity.getWorkout().getMuscles());
-        result.setPlan((PlanDto) planConverter.fromEntity(entity.getWorkout().getPhase().getPlan()));
-        result.setPhase((PhaseDto) phaseConverter.fromEntity(entity.getWorkout().getPhase()));
+        result.setPlan(getPlan(entity.getWorkout().getPhase().getPlan()));
+        result.setPhase(getPhase(entity.getWorkout().getPhase()));
         result.setExecutions(executionConverter.fromEntities(entity.getExecutions()));
         result.setWeekDay(entity.getWorkout().getWeekDay());
         result.setState(entity.getState());
@@ -48,12 +47,19 @@ public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, User
         return new UserWorkout();
     }
 
-    public void setPlanConverter(Converter planConverter) {
-        this.planConverter = planConverter;
+    private PlanDto getPlan(Plan plan) {
+        PlanDto dto = new PlanDto();
+        dto.setName(plan.getName());
+        dto.setGoal(plan.getGoal());
+        return dto;
     }
 
-    public void setPhaseConverter(Converter phaseConverter) {
-        this.phaseConverter = phaseConverter;
+    private PhaseDto getPhase(Phase phase) {
+        PhaseDto dto = new PhaseDto();
+        dto.setDescription(phase.getDescription());
+        dto.setGoal(phase.getGoal());
+        dto.setPosition(phase.getPosition());
+        return dto;
     }
 
     public void setExecutionConverter(Converter executionConverter) {
