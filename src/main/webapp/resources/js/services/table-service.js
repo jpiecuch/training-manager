@@ -19,6 +19,14 @@ app.service('tableService', function() {
             totalPage: function() {
                 return Math.ceil(this.data.count / this.count);
             },
+            search: function() {
+                var me = this;
+                me.filter.params.firstResult = 0;
+                this.service.retrieve(this.filter.params).then(function(data) {
+                    me.page = 1;
+                    me.data = data.data;
+                });
+            },
             sort: function(property) {
                 this.page = 1;
                 this.filter.params.firstResult = ((this.page - 1) * this.count);

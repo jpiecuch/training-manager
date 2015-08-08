@@ -1,10 +1,13 @@
 app.service('planService', function($q, $http, phaseService, formValidateService, alertService, urlService, inputService) {
+    var PUT_METHOD = 'put';
+    var POST_METHOD = 'post';
+
     this.submit = function(type, plan) {
         var payload = {name: plan.name.value, goal: plan.goal.value, id: plan.id, creatorId: plan.creatorId, phases: []};
         _.each(plan.phases, function(phase) {
             payload.phases.push(phaseService.payload(phase));
         });
-        return $http[type](urlService.apiURL('/plans/' + (type === 'put' ? plan.id : '')), payload).then(function(data) {
+        return $http[type](urlService.apiURL('/plans/' + (type === PUT_METHOD ? plan.id : '')), payload).then(function(data) {
             return data;
         });
     };
@@ -71,7 +74,12 @@ app.service('planService', function($q, $http, phaseService, formValidateService
                     return me.isValid(this);
                 },
                 submit: function() {
-                    me.submit(this.id ? 'put' : 'post', this).then(function () {
+                    var plan = this;
+                    var method = plan.id ? PUT_METHOD : POST_METHOD;
+                    me.submit(method, this).then(function (data) {
+                        if (method === POST_METHOD) {
+                            plan.id = data.data;
+                        }
                         alertService.show({type: 'success', title: 'OK', description: 'Submit'});
                     });
                 },
