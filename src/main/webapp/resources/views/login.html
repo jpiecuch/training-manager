@@ -63,14 +63,14 @@
 <!-- END FORGOT PASSWORD FORM -->
 <!-- BEGIN REGISTRATION FORM -->
 <form data-ng-show="login.tab.idx === 2" class="register-form" action="index.html" method="post">
-<h3>Sign Up</h3>
+<h3 data-ng-bind="'signUp' | translate"></h3>
 <p class="hint" data-ng-bind="'user.enter.personal.data.below' | translate"></p>
     <div class="form-group">
-        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.firstName' | translate">Full Name</label>
+        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.firstName' | translate"></label>
         <input class="form-control placeholder-no-fix" type="text" placeholder="{{'user.firstName' | translate}}" name="fullname"/>
     </div>
     <div class="form-group">
-        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.firstName' | translate">Full Name</label>
+        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.firstName' | translate"></label>
         <input class="form-control placeholder-no-fix" type="text" placeholder="{{'user.lastName' | translate}}" name="fullname"/>
     </div>
     <div class="form-group">
@@ -80,16 +80,16 @@
     </div>
 <p class="hint" data-ng-bind="'user.account.info' | translate"></p>
     <div class="form-group">
-        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.name' | translate">Full Name</label>
+        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.name' | translate"></label>
         <input class="form-control placeholder-no-fix" type="text" placeholder="{{'user.name' | translate}}" name="fullname"/>
     </div>
     <div class="form-group">
-        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.password' | translate">Password</label>
-        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="{{'user.password' | translate}}" name="password"/>
+        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.password' | translate"></label>
+        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="password" placeholder="{{'user.password' | translate}}" name="password"/>
     </div>
     <div class="form-group">
-        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.rPassword' | translate">Password</label>
-        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="{{'user.rPassword' | translate}}" name="password"/>
+        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.rPassword' | translate"></label>
+        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="r_password" placeholder="{{'user.rPassword' | translate}}" name="rPassword"/>
     </div>
 <div class="form-group margin-top-20 margin-bottom-20">
     <label class="check">
@@ -99,13 +99,13 @@
     </div>
 </div>
 <div class="form-actions">
-    <button type="button" id="register-back-btn" class="btn btn-default">Back</button>
-    <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right">Submit</button>
+    <button type="button" id="register-back-btn" class="btn btn-default" data-ng-bind="'back' | translate"></button>
+    <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right" data-ng-bind="'send' | translate"></button>
 </div>
 </form>
 <!-- END REGISTRATION FORM -->
 </div>
 <div class="copyright">
-    2014 © Metronic. Admin Dashboard Template.
+    2015 © {{'app.name' | translate}}.
 </div>
 <!-- END PAGE LEVEL SCRIPTS -->
