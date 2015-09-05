@@ -6,7 +6,7 @@
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->
 <div class="content" data-ng-init="init()">
-    <div id="lang-icons" class="pull-right" data-ng-controller="LocaleController" data-ng-init="locale.init()">
+    <div id="lang-icons" class="pull-right" data-ng-controller="LocaleController" data-ng-init="locale.init()" style="position: absolute; margin-left: 70%;">
         <ul class="nav navbar-nav">
             <li data-ng-repeat="lang in locale.langs" id="lang-{{lang}}" >
                 <a data-ng-click="locale.update(lang)" ng-class="{selected: locale.current === lang}" href=""></a>
@@ -31,19 +31,19 @@
         <a href="" data-ng-click="login.tab.setIdx(1)" id="forget-password" class="forget-password" data-ng-bind="'user.forgot.password' | translate"></a>
     </div>
 </form>
-    <div class="login-options">
-        <h4 data-ng-bind="'user.login.with' | translate"></h4>
-        <ul class="social-icons">
-            <li><a class="social-icon-color facebook" data-original-title="facebook" href="#"></a></li>
-            <li ng-repeat="s in login.social.providers">
-                <form id="{{s.id}}-form" action="{{login.social.getUrl(s.id)}}" method="post">
-                    <input ng-if="s.scope" type="hidden" name="scope" value="{{s.scope}}">
-                    <input type="submit" class="social-icon-color {{s.id}}"  value=""></a>
-                </form>
-            </li>
-        </ul>
-    </div>
-    <div class="create-account">
+<div class="login-options" data-ng-show="login.tab.idx === 0">
+    <h4 data-ng-bind="'user.login.with' | translate"></h4>
+    <ul class="social-icons">
+        <li><a class="social-icon-color facebook" data-original-title="facebook" href="#"></a></li>
+        <li ng-repeat="s in login.social.providers">
+            <form id="{{s.id}}-form" action="{{login.social.getUrl(s.id)}}" method="post">
+                <input ng-if="s.scope" type="hidden" name="scope" value="{{s.scope}}">
+                <input type="submit" class="social-icon-color {{s.id}}"  value=""></a>
+            </form>
+        </li>
+    </ul>
+</div>
+    <div class="create-account" data-ng-show="login.tab.idx === 0">
         <p><a href="" data-ng-click="login.tab.setIdx(2)" id="register-btn" class="uppercase" data-ng-bind="'user.create.account' | translate"></a></p>
     </div>
 
