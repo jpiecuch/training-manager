@@ -16,6 +16,4 @@
         <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
     </bean>
 
-    <import resource="dao-context.xml"/>
-    
 </beans>

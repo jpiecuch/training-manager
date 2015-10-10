@@ -28,7 +28,7 @@ app.service('userWorkoutService', function($q, $http, urlService, authenticateSe
 
     this.allStates = function () {
         return states;
-    }
+    };
 
     this.retrieve = function(params) {
         return $http.get(urlService.apiURL('/users/' + authenticateService.signed().id + '/workouts/'), { params: params });
@@ -144,7 +144,7 @@ app.service('userWorkoutService', function($q, $http, urlService, authenticateSe
                     index.reject = function (form) {
                         this.state = states.REJECTED.key;
                         this.save(form);
-                    }
+                    };
                     index.start = function (form) {
                         this.state = states.IN_PROGRESS.key;
                         this.save(form);

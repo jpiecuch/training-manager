@@ -4,6 +4,9 @@ import org.hibernate.HibernateException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import org.springframework.transaction.annotation.Transactional;
+import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 
@@ -13,7 +16,7 @@ import java.util.Date;
 
 import static org.junit.Assert.*;
 
-public class AccountDaoImplTest extends BaseDAOTestCase {
+public class AccountDaoImplTest extends BaseIntegrationTestCase {
 
     private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
     private static final Long ID = 1l;
@@ -46,6 +49,7 @@ public class AccountDaoImplTest extends BaseDAOTestCase {
     private AccountDao accountDao;
 
     @Test
+    @Transactional
     public void testDelete() {
         Account account = new Account();
         account.setName(NAME + "delete");
@@ -60,6 +64,7 @@ public class AccountDaoImplTest extends BaseDAOTestCase {
     }
 
     @Test
+    @Transactional
     public void testUpdate() {
         Account account = new Account();
         account.setName(NAME + "update");
@@ -75,6 +80,7 @@ public class AccountDaoImplTest extends BaseDAOTestCase {
     }
 
     @Test
+    @Transactional
     public void testSave() {
         Account account = new Account();
         account.setName(NAME + "new");
@@ -104,11 +110,13 @@ public class AccountDaoImplTest extends BaseDAOTestCase {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    @Transactional
     public void testSaveNull() {
         accountDao.create(null);
     }
 
     @Test
+    @Transactional
     public void testSaveValidity() {
         int counter = 0;
 
@@ -177,6 +185,7 @@ public class AccountDaoImplTest extends BaseDAOTestCase {
 
 
     @Test
+    @Transactional
     public void testFindByUniques() throws Exception {
         assertAccount(accountDao.findByUniques(ID, null, null));
         assertAccount(accountDao.findByUniques(null, NAME, null));

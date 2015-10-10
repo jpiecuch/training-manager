@@ -1,3 +1,5 @@
+DROP SCHEMA public;
+
 CREATE TABLE account (
     id bigint PRIMARY KEY NOT NULL,
     name character varying(50) NOT NULL,

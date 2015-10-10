@@ -3,19 +3,19 @@ package pl.jakubpiecuch.trainingmanager.dao.impl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.PhaseDao;
 import pl.jakubpiecuch.trainingmanager.dao.PlanDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.domain.Phase;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
-import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
-public class PlanDaoImplTest extends BaseDAOTestCase {
+public class PlanDaoImplTest extends BaseIntegrationTestCase {
 
     private static final Long ID = 1l;
     private static final Plan.Goal GOAL = Plan.Goal.MUSCLES;

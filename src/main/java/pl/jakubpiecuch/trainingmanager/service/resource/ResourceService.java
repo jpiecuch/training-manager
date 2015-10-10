@@ -7,12 +7,12 @@ import java.util.List;
 
 public interface ResourceService {
     
-    public enum Type { 
+    enum Type {
         image("jpg", "png");
 
         private String[] extensions;
 
-        private Type(String... extensions) {
+        Type(String... extensions) {
             this.extensions = extensions;
         }
         

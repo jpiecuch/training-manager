@@ -7,5 +7,5 @@ import java.util.List;
  */
 public interface SupportService<T> {
 
-    public List<T> supported();
+    List<T> supported();
 }

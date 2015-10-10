@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface AuthenticationService {
 
-    public void signIn(HttpServletRequest request, HttpServletResponse response, Authentication authentication);
-    public void signOut(HttpServletRequest request, HttpServletResponse response);
-    public Authentication signed();
+    void signIn(HttpServletRequest request, HttpServletResponse response, Authentication authentication);
+    void signOut(HttpServletRequest request, HttpServletResponse response);
+    Authentication signed();
 }

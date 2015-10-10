@@ -6,6 +6,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Account;
  * Created by Rico on 2014-12-06.
  */
 public class Registration extends Authentication {
+    public static final String NAME = "registration";
 
     private String repeat;
 

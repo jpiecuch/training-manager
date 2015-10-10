@@ -25,6 +25,7 @@ import pl.jakubpiecuch.trainingmanager.service.resolver.OrderResolver;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
 import pl.jakubpiecuch.trainingmanager.service.user.UserService;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
+import pl.jakubpiecuch.trainingmanager.service.user.local.LocalUserService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
@@ -59,6 +60,16 @@ public class Version1Service implements ApiVersionService {
     private Map<String, OrderResolver> orderResolverMap;
     private UserPlanStarter userPlanStarter;
     private UpdatableRepository<ExecutionDto> updatableRepository;
+
+    @Override
+    public void activate(String code) {
+        ((LocalUserService)userServices.get(Provider.Type.LOCAL)).activate(code);
+    }
+
+    @Override
+    public void resetPassword(String email, Locale locale) {
+        ((LocalUserService)userServices.get(Provider.Type.LOCAL)).password(email, locale);
+    }
 
     @Override
     public void updateExecution(ExecutionDto execution) {

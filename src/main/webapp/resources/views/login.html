@@ -49,11 +49,11 @@
 
 <!-- END LOGIN FORM -->
 <!-- BEGIN FORGOT PASSWORD FORM -->
-<form data-ng-show="login.tab.idx === 1" class="forget-form">
+<form data-ng-show="login.tab.idx === 1" class="forget-form" data-ng-submit="login.reset.post()">
     <h3 data-ng-bind="'user.forgot.password' | translate"></h3>
     <p data-ng-bind="'user.enter.email.to.reset.password' | translate"></p>
     <div class="form-group">
-        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="{{'user.email' | translate}}" name="email"/>
+        <input data-ng-model="login.reset.email" class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="{{'user.email' | translate}}" name="email"/>
     </div>
     <div class="form-actions">
         <button type="button" id="back-btn" class="btn btn-default" data-ng-bind="'back' | translate"></button>

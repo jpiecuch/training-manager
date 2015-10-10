@@ -101,7 +101,7 @@ app.service('planService', function($q, $http, phaseService, formValidateService
             }
             return plan;
         });
-    }
+    };
 
     this.retrieve = function(params) {
         return $http.get(urlService.apiURL('/plans'), { params: params });

@@ -10,8 +10,10 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
        <context:annotation-config />
-       <util:properties id="propertyConfigurer" location="classpath:dev.properties"/>
-       <context:property-placeholder properties-ref="propertyConfigurer" />
+       <util:properties id="propertyConfigurerEnv" location="classpath:configuration/dev.properties"/>
+       <util:properties id="propertyConfigurerCommon" location="classpath:configuration/common.properties"/>
+       <context:property-placeholder location="classpath:configuration/dev.properties,classpath:configuration/common.properties" />
+
 
        <mvc:annotation-driven />
 

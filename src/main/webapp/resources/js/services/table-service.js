@@ -41,7 +41,7 @@ app.service('tableService', function() {
 
             },
             changePage: function(increase) {
-                this.page = new Number(this.page ? this.page : 1) + increase;
+                this.page = Number(this.page ? this.page : 1) + increase;
                 var me = this;
 
                 this.filter.params.firstResult = ((this.page - 1) * this.count);
@@ -53,7 +53,7 @@ app.service('tableService', function() {
             },
             changeCount: function(count) {
                 this.page = 1;
-                this.count = new Number(count) + 0;
+                this.count = Number(count) + 0;
                 var me = this;
 
                 this.filter.params.firstResult = ((this.page - 1) * this.count);

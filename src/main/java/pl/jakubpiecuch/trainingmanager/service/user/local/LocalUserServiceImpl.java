@@ -11,17 +11,22 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.web.util.UriUtils;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.encoder.password.PasswordEncoder;
 import pl.jakubpiecuch.trainingmanager.service.mail.EmailService;
+import pl.jakubpiecuch.trainingmanager.service.password.PasswordService;
 import pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService;
+import pl.jakubpiecuch.trainingmanager.service.user.local.assertion.AccountAssert;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
+import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.validation.ValidationException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,25 +39,21 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
     private static final int EMAIL_CRYPT_POSITION = 1;
 
     private PasswordEncoder passwordEncoder;
+    private PasswordService passwordService;
     private CryptService cryptService;
     private Validator validator;
-
 
     @Override
     public SecurityUser resolveDetails(Authentication authentication)  {
         Account account = accountDao.findByUniques(null, authentication.getUsername(), null);
-        if (account == null || Account.Status.ACTIVE != account.getStatus()) {
-            throw new UsernameNotFoundException("User not exists");
-        }
+        AccountAssert.isTrue(account != null && Account.Status.ACTIVE == account.getStatus());
         List<GrantedAuthority> authorities = CollectionUtils.isNotEmpty(account.getGrantedPermissions()) ? AuthorityUtils.createAuthorityList(account.getGrantedPermissions().toArray(new String[account.getGrantedPermissions().size()])) : AuthorityUtils.NO_AUTHORITIES;
         return new SecurityUser(account.getId(), authentication.getUsername(), passwordEncoder.encode(authentication.getPassword(), account.getSalt()), null, authorities);
     }
 
     @Override
     public boolean isValidCredentials(Account entity, UserDetails user) {
-        if (entity == null || Account.Status.ACTIVE != entity.getStatus()) {
-            throw new NotFoundException();
-        }
+        AccountAssert.isTrue(entity != null && Account.Status.ACTIVE == entity.getStatus());
         if (!entity.getPassword().equals(user.getPassword())) {
             throw new ValidationException();
         }
@@ -62,57 +63,50 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
     @Override
     public UserDetails loadUserByUsername(String username) {
         Account account = accountDao.findByUniques(null, username, null);
-        if (account == null || Account.Status.ACTIVE != account.getStatus()) {
-            throw new UsernameNotFoundException("User not exists");
-        }
+        AccountAssert.isTrue(account != null && Account.Status.ACTIVE == account.getStatus());
         List<GrantedAuthority> authorities = CollectionUtils.isNotEmpty(account.getGrantedPermissions()) ? AuthorityUtils.createAuthorityList(account.getGrantedPermissions().toArray(new String[account.getGrantedPermissions().size()])) : AuthorityUtils.NO_AUTHORITIES;
         return new SecurityUser(account.getId(), account.getName(), account.getPassword(), null, authorities);
     }
 
     @Override
-    public ResetStatus password(String id) {
-        Account account = accountDao.findByUniques(null, null, id);
-        if (account != null) {
-            account.setStatus(Account.Status.RESET_PASSWORD);
-            accountDao.create(account);
-            return ResetStatus.OK;
-        }
-        return ResetStatus.USER_NOT_EXIST;
+    public void password(String email, Locale locale) {
+        Account account = accountDao.findByUniques(null, null, email);
+        AccountAssert.isTrue(account != null && Account.Status.ACTIVE == account.getStatus());
+        String password = passwordService.generate();
+        account.setPassword(passwordEncoder.encode(password, account.getSalt()));
+        emailService.sendEmail(new Object[]{password, account, WebUtil.fromJson(account.getConfig(), Account.Config.class)}, locale, EmailService.Template.NEW_PASSWORD, account.getEmail());
+        accountDao.update(account);
     }
 
     @Override
-    public boolean activate(String id) {
+    public void activate(String code) {
         try {
-            String decrypt = cryptService.decrypt(id, EMAIL_CRYPT_POSITION);
+            String decrypt = cryptService.decrypt(code, EMAIL_CRYPT_POSITION);
             Account account = accountDao.findByUniques(null, null, decrypt);
-            if (account != null && Account.Status.ACTIVE != account.getStatus()) {
-                account.setStatus(Account.Status.ACTIVE);
-                accountDao.create(account);
-                return true;
-            }
+            AccountAssert.isTrue(account != null && Account.Status.CREATED == account.getStatus());
+            account.setStatus(Account.Status.ACTIVE);
+            accountDao.update(account);
         } catch (SymmetricEncryptionException e) {
-            LOGGER.warn("Wrong activate value " + id, e);
+            throw new IllegalArgumentException(e);
         }
-        return false;
-    }
-
-    @Override
-    public boolean availability(String field, String value) {
-        return accountDao.findByUniques(null, "name".equals(field) ? value : null, "email".equals(field) ? value : null) == null;
     }
 
     @Override
     public void signOn(Registration registration, Locale locale) {
-        validator.validate(registration, new BeanPropertyBindingResult(registration, "registration"));
-        Account account = new Account();
-        account.setName(registration.getUsername());
-        account.setEmail(registration.getEmail());
-        account.setConfig(new Account.Config.Builder().firstName(registration.getFirstName()).lastName(registration.getLastName()).build().toString());
-        account.setStatus(Account.Status.CREATED);
-        account.setSalt(KeyGenerators.string().generateKey());
-        account.setPassword(passwordEncoder.encode(registration.getPassword(), account.getSalt()));
-        accountDao.create(account);
-        emailService.sendEmail(new Object[] { cryptService.encrypt(account.getName(), account.getEmail()), account}, locale, EmailService.Template.REGISTER, account.getEmail());
+        try {
+            validator.validate(registration, new BeanPropertyBindingResult(registration, Registration.NAME));
+            Account account = new Account();
+            account.setName(registration.getUsername());
+            account.setEmail(registration.getEmail());
+            account.setConfig(new Account.Config.Builder().firstName(registration.getFirstName()).lastName(registration.getLastName()).build().toString());
+            account.setStatus(Account.Status.CREATED);
+            account.setSalt(KeyGenerators.string().generateKey());
+            account.setPassword(passwordEncoder.encode(registration.getPassword(), account.getSalt()));
+            emailService.sendEmail(new Object[] {UriUtils.encodeQueryParam(cryptService.encrypt(account.getName(), account.getEmail()), "UTF-8"), account, WebUtil.fromJson(account.getConfig(), Account.Config.class)}, locale, EmailService.Template.REGISTER, account.getEmail());
+            accountDao.create(account);
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -125,5 +119,9 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
 
     public void setValidator(Validator validator) {
         this.validator = validator;
+    }
+
+    public void setPasswordService(PasswordService passwordService) {
+        this.passwordService = passwordService;
     }
 }

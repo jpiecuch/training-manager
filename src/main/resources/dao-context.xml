@@ -64,4 +64,5 @@
     <bean id="accountRecordDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.AccountRecordDaoImpl" parent="coreDao">
         <property name="clazz" value="pl.jakubpiecuch.trainingmanager.domain.AccountRecord"/>
     </bean>
+
 </beans>

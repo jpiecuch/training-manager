@@ -41,7 +41,7 @@ app.directive('ngSpinnerBar', ['$rootScope',
             }
         };
     }
-])
+]);
 
 // Handle global LINK click
 app.directive('a', function() {
@@ -63,7 +63,7 @@ app.directive('onlyDigits', function () {
         restrict: 'A',
         link: function (scope, element, attrs, modelCtrl) {
             modelCtrl.$parsers.push(function (inputValue) {
-                if (inputValue == undefined) return ''
+                if (inputValue == undefined) return '';
                 var transformedInput = inputValue.replace(/^0|[^0-9+.]/g, '');
                 if (transformedInput != inputValue) {
                     modelCtrl.$setViewValue(transformedInput);
@@ -85,7 +85,7 @@ app.directive('onlyDecimals', function () {
             var decimalCount = 2;
 
             modelCtrl.$parsers.push(function (inputValue) {
-                if (inputValue == undefined) return ''
+                if (inputValue == undefined) return '';
                 var reg = new RegExp('[^0-9\\' + decimalPoint + ']');
                 var transformedInput = inputValue.replace(reg, '');
                 if (transformedInput != inputValue) {
