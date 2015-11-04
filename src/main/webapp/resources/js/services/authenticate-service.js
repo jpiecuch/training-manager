@@ -6,7 +6,7 @@ app.service('authenticateService', function($http, urlService, $q, $rootScope, d
     };
 
     this.resetPassword = function(email) {
-        return $http.post(urlService.apiURL('/authentication/reset?email=') + email);
+        return $http.post(urlService.apiURL('/reset'), email);
     };
 
     this.create = function(user) {

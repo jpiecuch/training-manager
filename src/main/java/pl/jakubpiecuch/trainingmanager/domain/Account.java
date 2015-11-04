@@ -3,6 +3,7 @@ package pl.jakubpiecuch.trainingmanager.domain;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
@@ -16,12 +17,14 @@ public class Account extends VersionedEntity {
         ACTIVE, RESET_PASSWORD, EXPIRED, CREATED
     }
 
+
     private String name;
     private String password;
     private String email;
     private String salt;
     private Status status;
     private String config;
+    private Provider.Type provider;
     private List<Role> roles;
 
     public Account() {
@@ -85,6 +88,16 @@ public class Account extends VersionedEntity {
 
     public void setConfig(String config) {
         this.config = config;
+    }
+
+    @Column(name = "provider")
+    @Enumerated(EnumType.ORDINAL)
+    public Provider.Type getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider.Type provider) {
+        this.provider = provider;
     }
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

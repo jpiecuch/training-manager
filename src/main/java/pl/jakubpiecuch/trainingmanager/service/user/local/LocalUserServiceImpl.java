@@ -20,6 +20,7 @@ import pl.jakubpiecuch.trainingmanager.service.password.PasswordService;
 import pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService;
 import pl.jakubpiecuch.trainingmanager.service.user.local.assertion.AccountAssert;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
@@ -102,6 +103,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
             account.setStatus(Account.Status.CREATED);
             account.setSalt(KeyGenerators.string().generateKey());
             account.setPassword(passwordEncoder.encode(registration.getPassword(), account.getSalt()));
+            account.setProvider(Provider.Type.LOCAL);
             emailService.sendEmail(new Object[] {UriUtils.encodeQueryParam(cryptService.encrypt(account.getName(), account.getEmail()), "UTF-8"), account, WebUtil.fromJson(account.getConfig(), Account.Config.class)}, locale, EmailService.Template.REGISTER, account.getEmail());
             accountDao.create(account);
         } catch (UnsupportedEncodingException e) {

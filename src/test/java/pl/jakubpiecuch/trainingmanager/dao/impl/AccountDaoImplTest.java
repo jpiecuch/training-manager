@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,6 +57,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         account.setSalt(SALT);
         account.setPassword(PASSWORD);
         account.setStatus(Account.Status.CREATED);
+        account.setProvider(Provider.Type.LOCAL);
         accountDao.create(account);
         accountDao.flush();
         assertNotNull(account.getId());
@@ -71,6 +73,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         account.setSalt(SALT);
         account.setPassword(PASSWORD);
         account.setStatus(Account.Status.CREATED);
+        account.setProvider(Provider.Type.LOCAL);
         accountDao.create(account);
         accountDao.flush();
         assertNull(accountDao.findByUniques(null, null, "email"));
@@ -87,6 +90,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         account.setSalt(SALT);
         account.setPassword(PASSWORD);
         account.setStatus(Account.Status.CREATED);
+        account.setProvider(Provider.Type.LOCAL);
         accountDao.create(account);
         accountDao.flush();
         assertNotNull(account.getId());
@@ -158,7 +162,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
             counter++; //4
         }
 
-        //not unique name
+        //null provider
         try {
             Account account = new Account();
             account.setName(NAME);
@@ -170,17 +174,30 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
             counter++; //5
         }
 
+        //not unique name
+        try {
+            Account account = new Account();
+            account.setName(NAME);
+            account.setPassword(PASSWORD);
+            account.setSalt(SALT);
+            account.setStatus(STATUS);
+            accountDao.create(account);
+        } catch (ConstraintViolationException ex) {
+            counter++; //6
+        }
+
         //unique name
         Account account = new Account();
         account.setName(NAME + "unique_name");
         account.setPassword(PASSWORD);
         account.setSalt(SALT);
         account.setStatus(STATUS);
+        account.setProvider(Provider.Type.LOCAL);
         accountDao.create(account);
 
         assertNotNull(account.getId());
         assertNotNull(account.getCreated());
-        assertEquals(5, counter);
+        assertEquals(6, counter);
     }
 
 

@@ -15,6 +15,7 @@ import java.util.Locale;
 
 @RequestMapping(ApiURI.API_RESET_PASSWORD)
 @RestController
+@PreAuthorize(value = Permissions.IS_ANONYMOUS)
 public class ResetPasswordController extends AbstractController {
 
     @PreAuthorize(value = Permissions.IS_ANONYMOUS)
