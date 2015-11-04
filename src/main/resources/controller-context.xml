@@ -41,6 +41,11 @@
 
     <bean id="accountRecordController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AccountRecordController" parent="abstractController"/>
 
+    <bean id="resetPasswordController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.password.ResetPasswordController" parent="abstractController"/>
+
+    <bean id="activateUserController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.activate.ActivateUserController" parent="abstractController"/>
+
+
     <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
         <property name="userServices">
             <map>

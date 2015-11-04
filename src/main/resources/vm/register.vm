@@ -673,7 +673,7 @@
                                 <table class="row note">
                                     <tr>
                                         <td class="wrapper last">
-                                            <h4>${messageSource.getMessage('mail.welcome', null, $locale)}, $data[1].firstName</h4>
+                                            <h4>${messageSource.getMessage('mail.welcome', null, $locale)}, $data[2].firstName</h4>
                                             <p>${messageSource.getMessage('mail.joinThanks', null, $locale)}. ${messageSource.getMessage('mail.clickLink', null, $locale)}:</p>
                                             <table class="twelve columns" style="margin-bottom: 10px">
                                                 <tr>

@@ -43,11 +43,11 @@ app.service('descriptionService', function(urlService, $http, $q, formValidateSe
                 alertService.show({type: 'warning', title: 'ERROR', description: 'Something is wrong'});
             }
         }
-    }
+    };
 
     this.retrieve = function(params) {
         return $http.get(urlService.apiURL('/descriptions'), { params: params });
-    }
+    };
 
     this.get = function(form, id) {
         var deferred = $q.defer();
@@ -63,7 +63,7 @@ app.service('descriptionService', function(urlService, $http, $q, formValidateSe
             }
             return result;
         });
-    }
+    };
 
     this.search = function() {
         var service = this;

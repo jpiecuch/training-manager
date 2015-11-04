@@ -3,13 +3,13 @@ app.service('inputValidateService', function() {
         if (input) {
             return input.$valid && input.$touched;
         }
-    }
+    };
 
     this.isNotValid = function(input) {
         if (input) {
             return input.$invalid && input.$touched;
         }
-    }
+    };
 
     this.status = function(input) {
         if (input) {

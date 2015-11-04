@@ -88,23 +88,19 @@ public abstract class AbstractSocialService<T> implements SocialService {
         }
     }
 
-    @Autowired
+
     public void setConnectionRepository(ConnectionRepository connectionRepository) {
         this.connectionRepository = connectionRepository;
     }
 
-    @Autowired
     public void setUsersConnectionRepository(UsersConnectionRepository usersConnectionRepository) {
         this.usersConnectionRepository = usersConnectionRepository;
     }
 
-    @Autowired
     public void setConnectionFactoryRegistry(ConnectionFactoryRegistry connectionFactoryRegistry) {
         this.connectionFactoryRegistry = connectionFactoryRegistry;
     }
 
-    @Autowired
-    @Qualifier("socialUserService")
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
@@ -119,11 +115,4 @@ public abstract class AbstractSocialService<T> implements SocialService {
         this.url = url;
     }
 
-    public void setRest(RestTemplate rest) {
-        this.rest = rest;
-    }
-
-    public void setProviderSignInUtils(ProviderSignInUtils providerSignInUtils) {
-        this.providerSignInUtils = providerSignInUtils;
-    }
 }

@@ -5,7 +5,7 @@ import java.util.Locale;
 public interface EmailService {
     
     enum Template {
-        REGISTER
+        NEW_PASSWORD, REGISTER
     }
     
     void sendEmail(Object[] data, Locale locale, Template template, String... recipients);

@@ -2,16 +2,17 @@ package pl.jakubpiecuch.trainingmanager.dao.impl;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.DescriptionDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
-import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
 import pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionCriteria;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class DescriptionDaoImplTest extends BaseDAOTestCase {
+public class DescriptionDaoImplTest extends BaseIntegrationTestCase {
 
     @Autowired
     private DescriptionDao descriptionDao;

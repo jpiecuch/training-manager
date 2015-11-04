@@ -19,7 +19,7 @@ app.service('inputService', function() {
             },
             errors: []
         }
-    }
+    };
 
     this.getArray = function(value) {
         var me = this;

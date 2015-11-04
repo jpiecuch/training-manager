@@ -77,7 +77,7 @@ app.service('equipmentService', function(urlService, $http, $q, formValidateServ
                 alertService.show({type: 'warning', title: 'ERROR', description: 'Something is wrong'});
             }
         }
-    }
+    };
 
 
     this.get = function(form, id) {
@@ -94,7 +94,7 @@ app.service('equipmentService', function(urlService, $http, $q, formValidateServ
             }
             return result;
         });
-    }
+    };
 
     this.retrieve = function(params) {
         return $http.get(urlService.apiURL('/equipments'), { params: params });

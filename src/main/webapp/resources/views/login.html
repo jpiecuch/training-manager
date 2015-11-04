@@ -6,7 +6,7 @@
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->
 <div class="content" data-ng-init="init()">
-    <div id="lang-icons" class="pull-right" data-ng-controller="LocaleController" data-ng-init="locale.init()">
+    <div id="lang-icons" class="pull-right" data-ng-controller="LocaleController" data-ng-init="locale.init()" style="position: absolute; margin-left: 70%;">
         <ul class="nav navbar-nav">
             <li data-ng-repeat="lang in locale.langs" id="lang-{{lang}}" >
                 <a data-ng-click="locale.update(lang)" ng-class="{selected: locale.current === lang}" href=""></a>
@@ -31,29 +31,29 @@
         <a href="" data-ng-click="login.tab.setIdx(1)" id="forget-password" class="forget-password" data-ng-bind="'user.forgot.password' | translate"></a>
     </div>
 </form>
-    <div class="login-options">
-        <h4 data-ng-bind="'user.login.with' | translate"></h4>
-        <ul class="social-icons">
-            <li><a class="social-icon-color facebook" data-original-title="facebook" href="#"></a></li>
-            <li ng-repeat="s in login.social.providers">
-                <form id="{{s.id}}-form" action="{{login.social.getUrl(s.id)}}" method="post">
-                    <input ng-if="s.scope" type="hidden" name="scope" value="{{s.scope}}">
-                    <input type="submit" class="social-icon-color {{s.id}}"  value=""></a>
-                </form>
-            </li>
-        </ul>
-    </div>
-    <div class="create-account">
+<div class="login-options" data-ng-show="login.tab.idx === 0">
+    <h4 data-ng-bind="'user.login.with' | translate"></h4>
+    <ul class="social-icons">
+        <li><a class="social-icon-color facebook" data-original-title="facebook" href="#"></a></li>
+        <li ng-repeat="s in login.social.providers">
+            <form id="{{s.id}}-form" action="{{login.social.getUrl(s.id)}}" method="post">
+                <input ng-if="s.scope" type="hidden" name="scope" value="{{s.scope}}">
+                <input type="submit" class="social-icon-color {{s.id}}"  value=""></a>
+            </form>
+        </li>
+    </ul>
+</div>
+    <div class="create-account" data-ng-show="login.tab.idx === 0">
         <p><a href="" data-ng-click="login.tab.setIdx(2)" id="register-btn" class="uppercase" data-ng-bind="'user.create.account' | translate"></a></p>
     </div>
 
 <!-- END LOGIN FORM -->
 <!-- BEGIN FORGOT PASSWORD FORM -->
-<form data-ng-show="login.tab.idx === 1" class="forget-form" action="index.html" method="post">
+<form data-ng-show="login.tab.idx === 1" class="forget-form" data-ng-submit="login.reset.post()">
     <h3 data-ng-bind="'user.forgot.password' | translate"></h3>
     <p data-ng-bind="'user.enter.email.to.reset.password' | translate"></p>
     <div class="form-group">
-        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="{{'user.email' | translate}}" name="email"/>
+        <input data-ng-model="login.reset.email" class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="{{'user.email' | translate}}" name="email"/>
     </div>
     <div class="form-actions">
         <button type="button" id="back-btn" class="btn btn-default" data-ng-bind="'back' | translate"></button>
@@ -63,14 +63,14 @@
 <!-- END FORGOT PASSWORD FORM -->
 <!-- BEGIN REGISTRATION FORM -->
 <form data-ng-show="login.tab.idx === 2" class="register-form" action="index.html" method="post">
-<h3>Sign Up</h3>
+<h3 data-ng-bind="'signUp' | translate"></h3>
 <p class="hint" data-ng-bind="'user.enter.personal.data.below' | translate"></p>
     <div class="form-group">
-        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.firstName' | translate">Full Name</label>
+        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.firstName' | translate"></label>
         <input class="form-control placeholder-no-fix" type="text" placeholder="{{'user.firstName' | translate}}" name="fullname"/>
     </div>
     <div class="form-group">
-        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.firstName' | translate">Full Name</label>
+        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.firstName' | translate"></label>
         <input class="form-control placeholder-no-fix" type="text" placeholder="{{'user.lastName' | translate}}" name="fullname"/>
     </div>
     <div class="form-group">
@@ -80,32 +80,32 @@
     </div>
 <p class="hint" data-ng-bind="'user.account.info' | translate"></p>
     <div class="form-group">
-        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.name' | translate">Full Name</label>
+        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.name' | translate"></label>
         <input class="form-control placeholder-no-fix" type="text" placeholder="{{'user.name' | translate}}" name="fullname"/>
     </div>
     <div class="form-group">
-        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.password' | translate">Password</label>
-        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="{{'user.password' | translate}}" name="password"/>
+        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.password' | translate"></label>
+        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="password" placeholder="{{'user.password' | translate}}" name="password"/>
     </div>
     <div class="form-group">
-        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.rPassword' | translate">Password</label>
-        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="{{'user.rPassword' | translate}}" name="password"/>
+        <label class="control-label visible-ie8 visible-ie9" data-ng-bind="'user.rPassword' | translate"></label>
+        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="r_password" placeholder="{{'user.rPassword' | translate}}" name="rPassword"/>
     </div>
 <div class="form-group margin-top-20 margin-bottom-20">
     <label class="check">
         <input type="checkbox" name="tnc" id="tnc"/><label for="tnc"><span></span></label>
-        {{'app.i.agree.to' | translate}} <a href="#" data-ng-bind="'app.terms.of.service' | translate"></a> {{'app.and' | translate}} <a href="" ng-click="showPolicy()"> <spring:message code="app.privacy.policy"/> </a></label>
+        {{'app.i.agree.to' | translate}} <a href="#" data-ng-bind="'app.terms.of.service' | translate"></a> {{'app.and' | translate}} <a href="" ng-click="showPolicy()">{{'app.privacy.policy' | translate}} </a></label>
     <div id="register_tnc_error">
     </div>
 </div>
 <div class="form-actions">
-    <button type="button" id="register-back-btn" class="btn btn-default">Back</button>
-    <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right">Submit</button>
+    <button type="button" id="register-back-btn" class="btn btn-default" data-ng-bind="'back' | translate"></button>
+    <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right" data-ng-bind="'send' | translate"></button>
 </div>
 </form>
 <!-- END REGISTRATION FORM -->
 </div>
 <div class="copyright">
-    2014 © Metronic. Admin Dashboard Template.
+    2015 © {{'app.name' | translate}}.
 </div>
 <!-- END PAGE LEVEL SCRIPTS -->

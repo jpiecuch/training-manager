@@ -16,7 +16,7 @@ public class SocialProvider extends LocalProvider {
 
         private String providerId;
 
-        private SocialType(String providerId) {
+        SocialType(String providerId) {
             this.providerId = providerId;
         }
 

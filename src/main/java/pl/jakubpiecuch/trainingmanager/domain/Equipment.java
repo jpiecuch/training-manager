@@ -18,7 +18,7 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
 
         private Class clazz;
 
-        private Type(Class clazz){
+        Type(Class clazz){
             this.clazz = clazz;
         }
 

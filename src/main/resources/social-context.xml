@@ -64,20 +64,18 @@
 
     <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" factory-method="noOpText"/>
 
-    <bean id="facebookService" class="pl.jakubpiecuch.trainingmanager.service.social.facebook.FacebookService">
+    <bean id="abstractSocialService" class="pl.jakubpiecuch.trainingmanager.service.social.AbstractSocialService" abstract="true">
+        <property name="connectionFactoryRegistry" ref="connectionFactoryLocator"/>
         <property name="connectionRepository" ref="connectionRepository"/>
+        <property name="usersConnectionRepository" ref="usersConnectionRepository"/>
+        <property name="userService" ref="socialUserService"/>
         <property name="url" value="http://www.gym-home.com/result/%s"/>
     </bean>
+    <bean id="facebookService" class="pl.jakubpiecuch.trainingmanager.service.social.facebook.FacebookService" parent="abstractSocialService"/>
 
-    <bean id="googleService" class="pl.jakubpiecuch.trainingmanager.service.social.google.GoogleService">
-        <property name="connectionRepository" ref="connectionRepository"/>
-        <property name="url" value="http://www.gym-home.com/result/%s"/>
-    </bean>
+    <bean id="googleService" class="pl.jakubpiecuch.trainingmanager.service.social.google.GoogleService" parent="abstractSocialService"/>
 
-    <bean id="twitterService" class="pl.jakubpiecuch.trainingmanager.service.social.twitter.TwitterService">
-        <property name="connectionRepository" ref="connectionRepository"/>
-        <property name="url" value="http://www.gym-home.com/result/%s"/>
-    </bean>
+    <bean id="twitterService" class="pl.jakubpiecuch.trainingmanager.service.social.twitter.TwitterService" parent="abstractSocialService"/>
 
     <bean id="socialUserService" class="pl.jakubpiecuch.trainingmanager.service.user.social.SocialUserServiceImpl">
         <property name="socialServices">

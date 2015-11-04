@@ -13,6 +13,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.social.SocialService;
 import pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
@@ -64,6 +65,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
         account.setStatus(Account.Status.ACTIVE);
         account.setSalt(KeyGenerators.string().generateKey());
         account.setPassword(SecurityUser.OAUTH);
+        account.setProvider(Provider.Type.SOCIAL);
 
         accountDao.create(account);
     }

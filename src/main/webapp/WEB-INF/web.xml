@@ -34,8 +34,6 @@
         <param-value>
             /WEB-INF/spring-servlet.xml
             classpath:applicationContext.xml
-            classpath:security-context..xml
-            classpath:datasource-context.xml
         </param-value>
     </context-param>
     <context-param>

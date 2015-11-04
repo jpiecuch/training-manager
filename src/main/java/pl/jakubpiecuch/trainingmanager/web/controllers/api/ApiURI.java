@@ -12,7 +12,6 @@ public class ApiURI {
     public static final String LANGUAGE_PATH = "/languages";
     public static final String WORKOUTS_PATH = "/workouts";
     public static final String PLANS_PATH = "/plans";
-    public static final String CHILDREN_PATH = "/children";
     private static final String DICTIONARY_PATH = "/dictionary";
     private static final String DESCRIPTION_PATH = "/descriptions";
     private static final String EQUIPMENT_PATH = "/equipments";
@@ -40,6 +39,8 @@ public class ApiURI {
     public static final String WORKOUT_ID_PARAM = "workoutId";
     public static final String WORKOUT_ID_PATH_PARAM = "/{" + WORKOUT_ID_PARAM + "}";
     public static final String API_ACCOUNT_RECORD_PATH = API_VERSION_PATH + ACCOUNT_RECORD_PATH;
+    public static final String API_RESET_PASSWORD = API_VERSION_PATH + "/reset";
+    public static final String API_ACTIVATE_USER = API_VERSION_PATH + "/activate";
 
     private ApiURI() {
     }

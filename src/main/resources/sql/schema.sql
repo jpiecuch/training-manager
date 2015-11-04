@@ -1,3 +1,5 @@
+DROP SCHEMA public;
+
 CREATE TABLE account (
     id bigint PRIMARY KEY NOT NULL,
     name character varying(50) NOT NULL,
@@ -7,7 +9,8 @@ CREATE TABLE account (
     updated timestamp without time zone DEFAULT now() NOT NULL,
     status integer DEFAULT 0 NOT NULL,
     email character varying(50),
-    config character varying(50000)
+    config character varying(50000),
+    provider integer NOT NULL
 );
 
 CREATE TABLE role (

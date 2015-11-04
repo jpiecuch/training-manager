@@ -65,7 +65,7 @@ app.service('phaseService', function($q, $http, workoutService, urlService, inpu
             }
         }
         return hasErrors !== undefined || phase.touched ? hasErrors || phase.workouts.length === 0 : hasErrors;
-    }
+    };
 
     this.get = function(phase) {
         var me = this;

@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.ExecutionDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
@@ -16,7 +18,7 @@ import java.util.Date;
 
 import static org.junit.Assert.*;
 
-public class ExecutionDaoImplTest extends BaseDAOTestCase {
+public class ExecutionDaoImplTest extends BaseIntegrationTestCase {
 
     public static final Integer[] SETS = new Integer[]{12, 12, 12, 12};
     @Autowired

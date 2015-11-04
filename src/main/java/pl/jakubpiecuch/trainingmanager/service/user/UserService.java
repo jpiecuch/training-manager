@@ -13,7 +13,7 @@ import java.util.Locale;
  */
 public interface UserService {
 
-    public void signOn(Registration request, Locale locale);
-    public void signIn(HttpServletRequest request, HttpServletResponse response, UserDetails user);
-    public UserDetails resolveDetails(Authentication authentication);
+    void signOn(Registration request, Locale locale);
+    void signIn(HttpServletRequest request, HttpServletResponse response, UserDetails user);
+    UserDetails resolveDetails(Authentication authentication);
 }
