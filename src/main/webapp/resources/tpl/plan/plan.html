@@ -15,7 +15,7 @@
                         <input name="planName" type="text" class="form-control" placeholder="{{'plan.name.placeholder' | translate}}"
                                data-ng-model="plan.name.value" required data-ng-blur="plan.name.touch()">
                     </div>
-                    <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.name"></span>
+                    <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.name.value"></span>
                 </div>
             </div>
             <div class="form-group">
@@ -28,7 +28,7 @@
                                     value="{{goal}}"></option>
                         </select>
                     </div>
-                    <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.goal"></span>
+                    <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.goal.value"></span>
                 </div>
             </div>
         </div>

@@ -56,7 +56,7 @@
                         </ul>
                         <input data-ng-disabled="set.value === 'FAIL'" data-only-digits name="exerciseSet{{$index}}" type="text" class="form-control" data-ng-model="exercise.sets[$index].value" required data-ng-blur="exercise.sets[$index].touch()">
                     </div>
-                    <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="set"></span>
+                    <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="set.value"></span>
                 </div>
                 <a href="" class="btn btn-icon-only" data-ng-click="exercise.addSet()" data-ng-if="plan.editable">
                     <i class="fa fa-plus"></i>

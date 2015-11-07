@@ -21,7 +21,7 @@
                     <input name="planName" type="text" class="form-control" placeholder="{{'phase.description.placeholder' | translate}}"
                            data-ng-model="plan.phase.description.value" required data-ng-blur="plan.phase.description.touch()">
                 </div>
-                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.phase.description"></span>
+                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.phase.description.value"></span>
             </div>
         </div>
         <div class="form-group">
@@ -34,7 +34,7 @@
                                 value="{{goal}}"></option>
                     </select>
                 </div>
-                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.phase.goal"></span>
+                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.phase.goal.value"></span>
             </div>
         </div>
         <div class="form-group">
@@ -51,7 +51,7 @@
                         <option value="6">6</option>
                     </select>
                 </div>
-                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.phase.weeks"></span>
+                <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.phase.weeks.value"></span>
             </div>
         </div>
         <div class="form-group" data-ng-if="plan.editable">

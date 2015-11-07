@@ -9,7 +9,7 @@
                         <label for="workoutMuscles{{$index}}"><span></span>{{muscle.name | translate}}</label>
                     </div>
                 </div>
-                <span class="form-control-static" data-ng-if="!plan.editable && muscle.selected" data-ng-repeat="muscle in plan.phase.workout.muscles" data-ng-bind="muscle.name | translate"></span>
+                <span style="margin-right: 5px; color: #ffffff" class="form-control-static todo-tasklist-badge badge badge-roundless badge-primary" data-ng-if="!plan.editable && muscle.selected" data-ng-repeat="muscle in plan.phase.workout.muscles.value" data-ng-bind="muscle.name | translate"></span>
             </div>
         </div>
     </div>
