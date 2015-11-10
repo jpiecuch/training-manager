@@ -62,7 +62,7 @@
 </form>
 <!-- END FORGOT PASSWORD FORM -->
 <!-- BEGIN REGISTRATION FORM -->
-<form data-ng-show="login.tab.idx === 2" class="register-form" action="index.html" method="post">
+<form data-ng-show="login.tab.idx === 2" class="register-form" data-ng-submit="login.create.post()">
 <h3 data-ng-bind="'signUp' | translate"></h3>
 <p class="hint" data-ng-bind="'user.enter.personal.data.below' | translate"></p>
     <div class="form-group">
