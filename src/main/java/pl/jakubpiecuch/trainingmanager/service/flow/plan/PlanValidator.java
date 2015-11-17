@@ -12,6 +12,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.GroupDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutDto;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseDto;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 
@@ -41,68 +42,78 @@ public class PlanValidator implements Validator {
         PlanDto plan = (PlanDto) target;
         if (CollectionUtils.isNotEmpty(plan.getPhases())) {
             for (int i = 0; i < plan.getPhases().size(); i++) {
-                PhaseDto phase = plan.getPhases().get(i);
-                String phaseName = String.format(ARRAY_PROPERTY_FORMAT, PHASES_FIELD, i);
-
-                ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, "position"), RestrictionCode.REQUIRED);
-                ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName,"description"), RestrictionCode.REQUIRED);
-                ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName,"goal"), RestrictionCode.REQUIRED);
-                ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName,"weeks"), RestrictionCode.REQUIRED);
-
-                if (CollectionUtils.isNotEmpty(phase.getWorkouts())) {
-                    for (int j = 0; j < phase.getWorkouts().size(); j++) {
-                        WorkoutDto workout = phase.getWorkouts().get(j);
-                        String workoutName = String.format(ARRAY_PROPERTY_FORMAT, WORKOUTS_FIELD, j);
-
-                        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, "muscles"), RestrictionCode.REQUIRED);
-                        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, "weekDay"), RestrictionCode.REQUIRED);
-                        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, "position"), RestrictionCode.REQUIRED);
-
-                        if (CollectionUtils.isNotEmpty(workout.getGroups())) {
-                            for (int k = 0; k < workout.getGroups().size(); k++) {
-
-                                GroupDto group = workout.getGroups().get(k);
-                                String groupName = String.format(ARRAY_PROPERTY_FORMAT, GROUPS_FIELD, k);
-                                ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, groupName, "id"), RestrictionCode.REQUIRED);
-
-                                if (CollectionUtils.isEmpty(group.getExercises())) {
-                                    errors.rejectValue(path(phaseName, workoutName, groupName, EXERCISES_FIELD), RestrictionCode.REQUIRED);
-                                }
-                                if (CollectionUtils.isNotEmpty(group.getExercises())) {
-                                    for (int l = 0; l < group.getExercises().size(); l++) {
-                                        String exerciseName = String.format(ARRAY_PROPERTY_FORMAT, EXERCISES_FIELD, l);
-                                        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, groupName, exerciseName, "descriptionId"), RestrictionCode.REQUIRED);
-                                        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, groupName, exerciseName, "position"), RestrictionCode.REQUIRED);
-
-                                        String[] sets = group.getExercises().get(l).getSets();
-                                        if (ArrayUtils.isNotEmpty(sets)) {
-                                            for (int m = 0; m < sets.length; m++) {
-                                                String set = sets[m];
-                                                if (!Exercise.FAIL_KEY.equals(set) && !NumberUtils.isNumber(set)) {
-                                                    errors.rejectValue(path(phaseName, workoutName, groupName, exerciseName, String.format(ARRAY_PROPERTY_FORMAT, SETS_FIELD, m)), RestrictionCode.INVALID);
-                                                }
-                                            }
-                                        } else {
-                                            errors.rejectValue(path(phaseName, workoutName, groupName, exerciseName, SETS_FIELD), RestrictionCode.REQUIRED);
-                                        }
-                                    }
-                                }
-                            }
-                        } else {
-                            errors.rejectValue(path(phaseName, workoutName, GROUPS_FIELD), RestrictionCode.REQUIRED);
-                        }
-
-                    }
-                } else {
-                    errors.rejectValue(path(phaseName + WORKOUTS_FIELD), RestrictionCode.REQUIRED);
-                }
-
+                validatePhase(plan.getPhases().get(i), errors, i);
             }
         } else {
             errors.rejectValue(PHASES_FIELD, RestrictionCode.REQUIRED);
         }
         if (errors.hasErrors()) {
             throw new ValidationException(errors);
+        }
+    }
+
+    private void validatePhase(PhaseDto phase, Errors errors, int index) {
+        String phaseName = String.format(ARRAY_PROPERTY_FORMAT, PHASES_FIELD, index);
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, "position"), RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName,"description"), RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName,"goal"), RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName,"weeks"), RestrictionCode.REQUIRED);
+
+        if (CollectionUtils.isNotEmpty(phase.getWorkouts())) {
+            for (int i = 0; i < phase.getWorkouts().size(); i++) {
+                validateWorkout(phase.getWorkouts().get(i), errors, i, phaseName);
+            }
+        } else {
+            errors.rejectValue(path(phaseName + WORKOUTS_FIELD), RestrictionCode.REQUIRED);
+        }
+    }
+
+    private void validateWorkout(WorkoutDto workout, Errors errors, int index, String phaseName) {
+        String workoutName = String.format(ARRAY_PROPERTY_FORMAT, WORKOUTS_FIELD, index);
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, "muscles"), RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, "weekDay"), RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, "position"), RestrictionCode.REQUIRED);
+
+        if (CollectionUtils.isNotEmpty(workout.getGroups())) {
+            for (int i = 0; i < workout.getGroups().size(); i++) {
+                validateGroup(workout.getGroups().get(i), errors, i, phaseName, workoutName);
+            }
+        } else {
+            errors.rejectValue(path(phaseName, workoutName, GROUPS_FIELD), RestrictionCode.REQUIRED);
+        }
+    }
+
+    private void validateGroup(GroupDto group, Errors errors, int index, String phaseName, String workoutName) {
+        String groupName = String.format(ARRAY_PROPERTY_FORMAT, GROUPS_FIELD, index);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, groupName, "id"), RestrictionCode.REQUIRED);
+
+        if (CollectionUtils.isEmpty(group.getExercises())) {
+            errors.rejectValue(path(phaseName, workoutName, groupName, EXERCISES_FIELD), RestrictionCode.REQUIRED);
+        }
+        if (CollectionUtils.isNotEmpty(group.getExercises())) {
+            for (int l = 0; l < group.getExercises().size(); l++) {
+                validateExercise(group.getExercises().get(l), errors, l, phaseName, workoutName, groupName);
+            }
+        }
+    }
+
+    private void validateExercise(ExerciseDto exercise, Errors errors, int index, String phaseName, String workoutName, String groupName) {
+        String exerciseName = String.format(ARRAY_PROPERTY_FORMAT, EXERCISES_FIELD, index);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, groupName, exerciseName, "descriptionId"), RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, groupName, exerciseName, "position"), RestrictionCode.REQUIRED);
+
+        String[] sets = exercise.getSets();
+        if (ArrayUtils.isNotEmpty(sets)) {
+            for (int i = 0; i < sets.length; i++) {
+                String set = sets[i];
+                if (!Exercise.FAIL_KEY.equals(set) && !NumberUtils.isNumber(set)) {
+                    errors.rejectValue(path(phaseName, workoutName, groupName, exerciseName, String.format(ARRAY_PROPERTY_FORMAT, SETS_FIELD, i)), RestrictionCode.INVALID);
+                }
+            }
+        } else {
+            errors.rejectValue(path(phaseName, workoutName, groupName, exerciseName, SETS_FIELD), RestrictionCode.REQUIRED);
         }
     }
 

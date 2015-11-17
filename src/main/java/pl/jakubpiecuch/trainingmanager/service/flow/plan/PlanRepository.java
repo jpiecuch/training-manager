@@ -20,6 +20,7 @@ public class PlanRepository implements Repository<PlanDto, PlanCriteria> {
 
     private PlanConverter converter;
     private PlanDao dao;
+    private Validator validator;
 
     @Override
     @Transactional
@@ -40,8 +41,6 @@ public class PlanRepository implements Repository<PlanDto, PlanCriteria> {
             }
         };
     }
-
-    private Validator validator;
 
     @Override
     @Transactional
