@@ -7,11 +7,12 @@ public class RestrictionCode {
     public static final String REQUIRED = "required";
     public static final String PATTERN = "pattern";
     public static final String EQUAL = "equal";
-    public static final String MIN_LENGTH = "minLength: %s";
-    public static final String MAX_LENGTH = "maxLength: %s";
+    public static final String MIN_LENGTH = "minLength";
+    public static final String MAX_LENGTH = "maxLength";
     public static final String INVALID = "invalid";
-    public static final String LOWER = "lower than: %s";
+    public static final String LOWER = "lower than";
     public static final String UNIQUE = "unique";
+    public static final String CHECKED = "checked";
 
     private RestrictionCode() {
     }

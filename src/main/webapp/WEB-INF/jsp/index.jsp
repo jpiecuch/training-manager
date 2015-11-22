@@ -97,6 +97,7 @@
 <script src="resources/js/app.js" type="text/javascript"></script>
 <script src="resources/js/controllers/LocaleController.js" type="text/javascript"></script>
 <script src="resources/js/services/url-service.js" type="text/javascript"></script>
+<script src="resources/js/services/input-service.js" type="text/javascript"></script>
 <script src="resources/js/services/authenticate-service.js" type="text/javascript"></script>
 <script src="resources/js/services/dictionary-service.js" type="text/javascript"></script>
 <script src="resources/js/services/resource-service.js" type="text/javascript"></script>

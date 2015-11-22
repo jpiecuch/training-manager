@@ -1,4 +1,4 @@
-app.service('authenticateService', function($http, urlService, $q, $rootScope, dictionaryService) {
+app.service('authenticateService', function($http, urlService, $q, $rootScope, dictionaryService, inputService) {
     var user = null;
 
     this.getSocials = function() {
@@ -7,10 +7,6 @@ app.service('authenticateService', function($http, urlService, $q, $rootScope, d
 
     this.resetPassword = function(email) {
         return $http.post(urlService.apiURL('/reset'), email);
-    };
-
-    this.create = function(user) {
-        return $http.post(urlService.url('/signon'), user);
     };
 
     this.signIn = function(credentials) {

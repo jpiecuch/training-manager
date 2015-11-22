@@ -220,7 +220,10 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                         name: 'app',
                         files: [
                             'resources/assets/admin/pages/css/login.css',
-                            'resources/js/controllers/LoginController.js'
+                            'resources/js/controllers/LoginController.js',
+                            'resources/js/services/form-validate-service.js',
+                            'resources/js/services/register-service.js',
+                            'resources/js/controllers/RegisterController.js'
                         ]
                     });
                 }]
@@ -240,8 +243,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             'resources/assets/global/plugins/amcharts/serial.js',
                             'resources/assets/global/plugins/amcharts/lang/pl.js',
                             'resources/assets/global/plugins/amcharts/themes/light.js',
-                             'resources/js/controllers/DashboardController.js',
-                             'resources/assets/admin/pages/css/todo.css',
+                            'resources/js/controllers/DashboardController.js',
+                            'resources/assets/admin/pages/css/todo.css',
                             'resources/js/services/user-workout-service.js',
                             'resources/js/services/form-validate-service.js',
                             'resources/js/services/account-record-service.js'

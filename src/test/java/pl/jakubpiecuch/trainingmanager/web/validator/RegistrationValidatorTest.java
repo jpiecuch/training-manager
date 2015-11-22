@@ -12,8 +12,8 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 
-import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,8 +42,8 @@ public class RegistrationValidatorTest {
         registration.setLastName("test");
         registration.setUsername("test123");
         registration.setPassword("passWord123!");
-        registration.setRepeat("passWord123!");
         registration.setProvider(Provider.Type.LOCAL);
+        registration.setAccepted(true);
         BeanPropertyBindingResult errors = new BeanPropertyBindingResult(registration, "registration");
         validator.validate(registration, errors);
         

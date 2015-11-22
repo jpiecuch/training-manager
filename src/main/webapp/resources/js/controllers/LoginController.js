@@ -20,16 +20,6 @@ app.controller('LoginController', function($sce, $state, $scope, $http, $rootSco
             },
             email: null
         },
-        create: {
-            post: function() {
-                var me = this;
-                authenticateService.create(this.login.create.user).then(function(data) {
-                    me.login.create.status = 'CREATED';
-                });
-            },
-            user: null,
-            status: null
-        },
         credentials: {
             username: null,
             password: null,

@@ -1,6 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.web.handlers.exception;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +18,7 @@ import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationExcepti
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Rico on 2014-12-20.
@@ -68,10 +70,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         public static class FieldError {
             private final String field;
             private final String code;
+            private final Map<String, Object> params;
 
-            public FieldError(String field, String code) {
+            public FieldError(String field, String code, Map<String, Object> params) {
                 this.field = field;
                 this.code = code;
+                this.params = params;
             }
 
             public String getCode() {
@@ -80,6 +84,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
             public String getField() {
                 return field;
+            }
+
+            public Map<String, Object> getParams() {
+                return params;
             }
         }
 
@@ -93,7 +101,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResource error = new ErrorResource(ErrorResource.DEFAULT_CODE, ire.getMessage());
 
         for(FieldError fe : ire.getErrors().getFieldErrors()) {
-            error.addFieldError(new ErrorResource.FieldError(fe.getField(), fe.getCode()));
+            error.addFieldError(new ErrorResource.FieldError(fe.getField(), fe.getCode(), ArrayUtils.isNotEmpty(fe.getArguments()) ? (Map<String, Object>) fe.getArguments()[0] : null));
         }
 
         HttpHeaders headers = new HttpHeaders();

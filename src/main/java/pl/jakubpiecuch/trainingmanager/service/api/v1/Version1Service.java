@@ -45,6 +45,7 @@ import java.util.*;
 
 public class Version1Service implements ApiVersionService {
 
+    private static final char LIST_DELIMITER = ';';
     private String messageSourceFile;
     private CryptService cryptService;
     private Map<Provider.Type, UserService> userServices;
@@ -259,7 +260,11 @@ public class Version1Service implements ApiVersionService {
     protected void afterPropertiesSet() throws URISyntaxException, ConfigurationException {
         this.propertiesConfigurations = new HashMap<String, PropertiesConfiguration>();
         for (String lang : langs) {
-            this.propertiesConfigurations.put(lang, new PropertiesConfiguration(new File(getClass().getResource(String.format(messageSourceFile, lang)).toURI())));
+            PropertiesConfiguration configuration = new PropertiesConfiguration();
+            configuration.setListDelimiter(LIST_DELIMITER);
+            configuration.setFile(new File(getClass().getResource(String.format(messageSourceFile, lang)).toURI()));
+            configuration.load();
+            this.propertiesConfigurations.put(lang, configuration);
         }
     }
 }
