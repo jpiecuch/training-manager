@@ -42,12 +42,13 @@
         <div class="form-group margin-top-20 margin-bottom-20" data-ng-class="{'has-error' : register.errors.hasErrors(registerForm.accepted)}">
             <label class="check">
                 <input type="checkbox" name="accepted" id="tnc" data-ng-model="register.user.accepted"/><label for="tnc"><span></span></label>
-                {{'app.i.agree.to' | translate}} <a href="#" data-ng-bind="'app.terms.of.service' | translate"></a> {{'app.and' | translate}} <a href="" ng-click="showPolicy()">{{'app.privacy.policy' | translate}} </a></label>
-            </div>
+                {{'app.i.agree.to' | translate}} <a href="#" data-ng-bind="'app.terms.of.service' | translate"></a> {{'app.and' | translate}} <a href="" ng-click="showPolicy()">{{'app.privacy.policy' | translate}} </a>
+            </label>
             <span class="help-block" data-ng-repeat="error in register.errors.accepted" data-ng-bind="register.errors.resolveMessage(error)"></span>
         </div>
+        </div>
         <div class="form-actions">
-            <button type="button" id="register-back-btn" class="btn btn-default" data-ng-bind="'back' | translate"></button>
+            <button type="button" id="register-back-btn" class="btn btn-default" data-ng-bind="'back' | translate" data-ng-click="login.tab.setIdx(0)"></button>
             <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right" data-ng-bind="'send' | translate"></button>
         </div>
     </section>

@@ -223,7 +223,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             'resources/js/controllers/LoginController.js',
                             'resources/js/services/form-validate-service.js',
                             'resources/js/services/register-service.js',
-                            'resources/js/controllers/RegisterController.js'
+                            'resources/js/controllers/RegisterController.js',
+                            'resources/js/services/signIn-service.js',
+                            'resources/js/controllers/SignInController.js',
+                            'resources/js/services/password-service.js',
+                            'resources/js/controllers/PasswordController.js'
                         ]
                     });
                 }]
