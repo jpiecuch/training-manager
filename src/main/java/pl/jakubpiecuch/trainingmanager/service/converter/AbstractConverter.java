@@ -3,16 +3,13 @@ package pl.jakubpiecuch.trainingmanager.service.converter;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.service.identify.IdentifyObject;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 

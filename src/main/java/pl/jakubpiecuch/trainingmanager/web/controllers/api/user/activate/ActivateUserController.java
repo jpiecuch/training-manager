@@ -9,8 +9,6 @@ import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 
-import java.util.Locale;
-
 @RequestMapping(ApiURI.API_ACTIVATE_USER)
 @RestController
 public class ActivateUserController extends AbstractController {

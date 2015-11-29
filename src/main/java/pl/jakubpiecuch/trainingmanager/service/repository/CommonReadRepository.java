@@ -2,9 +2,6 @@ package pl.jakubpiecuch.trainingmanager.service.repository;
 
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
-import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
-import pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository;
-import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 /**
  * Created by Rico on 2015-02-22.
  */

@@ -7,7 +7,6 @@ import pl.jakubpiecuch.trainingmanager.domain.Permissions;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
 import pl.jakubpiecuch.trainingmanager.service.repository.Repositories;
-import pl.jakubpiecuch.trainingmanager.service.user.workout.ExecutionDto;
 import pl.jakubpiecuch.trainingmanager.service.user.workout.UserWorkoutDto;
 import pl.jakubpiecuch.trainingmanager.service.user.workout.session.UserWorkoutCriteria;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;

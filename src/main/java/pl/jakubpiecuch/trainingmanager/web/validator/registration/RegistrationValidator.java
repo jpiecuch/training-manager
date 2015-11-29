@@ -8,7 +8,6 @@ import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository;
 import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
-import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;

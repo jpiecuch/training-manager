@@ -1,20 +1,18 @@
 package pl.jakubpiecuch.trainingmanager.service.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.RememberMeServices;
-import org.springframework.stereotype.Service;
-import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
+import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.domain.Role;
 import pl.jakubpiecuch.trainingmanager.service.mail.EmailService;
+import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
+import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
-import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +26,7 @@ import java.util.List;
 public abstract class AbstractUserService implements UserService {
 
     protected EmailService emailService;
-    protected AccountDao accountDao;
+    protected Repository<Account, AccountCriteria> repository;
     private RememberMeServices rememberMeServices;
 
     public abstract boolean isValidCredentials(Account entity, UserDetails user);
@@ -38,7 +36,7 @@ public abstract class AbstractUserService implements UserService {
         SecurityUser securityUser = (SecurityUser) user;
         //TODO: this is not good enough
         String username = securityUser.getSocial() != null ? String.format(SecurityUser.SOCIAL_USERNAME_FORMAT, securityUser.getSocial().getProviderId(), securityUser.getUsername()) : securityUser.getUsername();
-        Account entity = accountDao.findByUniques(null, username, null);
+        Account entity = findUser(username);
         if (isValidCredentials(entity, user)) {
             List<String> roles = new ArrayList<String>();
             for (Role role : entity.getRoles()) {
@@ -52,14 +50,22 @@ public abstract class AbstractUserService implements UserService {
         }
     }
 
+    protected Account findUser(String username) {
+        PageResult<Account> result = repository.read(new AccountCriteria().addNameRestrictions(username));
+        if (result.getCount() > 0) {
+            return result.getResult().get(0);
+        }
+        return null;
+    }
+
 
     public void setEmailService(EmailService emailService) {
         this.emailService = emailService;
     }
 
 
-    public void setAccountDao(AccountDao accountDao) {
-        this.accountDao = accountDao;
+    public void setRepository(Repository<Account, AccountCriteria> repository) {
+        this.repository = repository;
     }
 
     public void setRememberMeServices(RememberMeServices rememberMeServices) {

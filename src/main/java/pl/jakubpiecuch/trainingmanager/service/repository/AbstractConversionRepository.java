@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.repository;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
@@ -15,17 +16,19 @@ public abstract class AbstractConversionRepository<T extends RepoObject, E exten
     protected Converter<T,E> converter;
 
     @Override
+    @Transactional
     public PageResult<T> read(C criteria) {
-        final PageResult entities = dao.findByCriteria(criteria);
+        final PageResult result = dao.findByCriteria(criteria);
+        final List<T> entities = converter.fromEntities(result.getResult());
         return new PageResult<T>() {
             @Override
             public List<T> getResult() {
-                return converter.fromEntities(entities.getResult());
+                return entities;
             }
 
             @Override
             public long getCount() {
-                return entities.getCount();
+                return result.getCount();
             }
         };
     }

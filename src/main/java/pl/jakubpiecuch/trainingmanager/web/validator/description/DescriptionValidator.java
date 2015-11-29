@@ -8,8 +8,6 @@ import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 
-import java.io.IOException;
-
 /**
  * Created by Rico on 2014-12-07.
  */

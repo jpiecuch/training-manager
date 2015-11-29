@@ -29,7 +29,7 @@
         <property name="clazz" value="pl.jakubpiecuch.trainingmanager.domain.Description"/>
     </bean>
     
-    <bean id="accountDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.AccountDaoImpl" parent="coreDao">
+    <bean id="accountDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.AccountDaoImpl" parent="repoDao">
         <property name="clazz" value="pl.jakubpiecuch.trainingmanager.domain.Account"/>
     </bean>
 

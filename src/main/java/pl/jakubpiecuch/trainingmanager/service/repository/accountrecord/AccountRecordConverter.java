@@ -2,17 +2,10 @@ package pl.jakubpiecuch.trainingmanager.service.repository.accountrecord;
 
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.domain.AccountRecord;
-import pl.jakubpiecuch.trainingmanager.domain.Phase;
-import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.converter.AbstractConverter;
-import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanDto;
-import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseConverter;
-import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
-import pl.jakubpiecuch.trainingmanager.service.identify.IdentifyObject;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
-import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 
-import java.util.*;
+import java.util.Date;
 
 /**
  * Created by Rico on 2014-12-31.

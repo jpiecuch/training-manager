@@ -10,8 +10,6 @@ import pl.jakubpiecuch.trainingmanager.service.user.workout.UserWorkoutDto;
  */
 public class SessionUserWorkoutRepository extends AbstractConversionRepository<UserWorkoutDto, UserWorkout, UserWorkoutCriteria> {
 
-    private Converter<UserWorkoutDto, UserWorkout> converter;
-
     @Override
     public long create(UserWorkoutDto element) {
         throw new UnsupportedOperationException();
@@ -25,10 +23,6 @@ public class SessionUserWorkoutRepository extends AbstractConversionRepository<U
     @Override
     public UserWorkout getEmpty() {
         return new UserWorkout();
-    }
-
-    public void setConverter(Converter converter) {
-        this.converter = converter;
     }
 
 }

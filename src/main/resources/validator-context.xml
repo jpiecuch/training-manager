@@ -37,6 +37,10 @@
         </property>
     </bean>
 
+    <bean id="accountValidator"  class="pl.jakubpiecuch.trainingmanager.web.validator.account.AccountValidator">
+
+    </bean>
+
     <bean id="roleValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.role.RoleValidator">
         <property name="readRepository" ref="roleRepository"/>
     </bean>

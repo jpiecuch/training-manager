@@ -31,7 +31,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
     @Override
     public UserDetails resolveDetails(Authentication authentication) {
         Assert.notNull(authentication.getSocial());
-        Account account = accountDao.findByUniques(null, authentication.getUsername(), null);
+        Account account = findUser(authentication.getUsername());
         if (account == null || Account.Status.ACTIVE != account.getStatus()) {
             throw new UsernameNotFoundException("User not exists");
         }
@@ -47,7 +47,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
 
     @Override
     public SocialUserDetails loadUserByUserId(String userId) {
-        Account account = accountDao.findByUniques(null, userId, null);
+        Account account = findUser(userId);
         if (account == null || Account.Status.ACTIVE != account.getStatus()) {
             throw new UsernameNotFoundException("User not exists");
         }
@@ -67,7 +67,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
         account.setPassword(SecurityUser.OAUTH);
         account.setProvider(Provider.Type.SOCIAL);
 
-        accountDao.create(account);
+        repository.create(account);
     }
 
     @Required
