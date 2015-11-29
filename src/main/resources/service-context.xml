@@ -69,7 +69,7 @@
     <crypt:b64SymmetricCipherer id="decryptService" mode="DECRYPT"/>
 
     <bean id="authenticationService" class="pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationServiceImpl">
-        <property name="accountDao" ref="usersDao"/>
+        <property name="accountDao" ref="accountDao"/>
         <property name="userServices">
             <map>
                 <entry key="LOCAL" value-ref="localUserService"/>

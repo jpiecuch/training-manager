@@ -2,24 +2,15 @@ package pl.jakubpiecuch.trainingmanager.service.repository;
 
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
-import pl.jakubpiecuch.trainingmanager.dao.PageResult;
-import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
-import pl.jakubpiecuch.trainingmanager.domain.Description;
 
 /**
  * Created by Rico on 2015-02-22.
  */
-public abstract class AbstractRepository<E extends RepoObject, C extends Criteria> implements Repository<E, C> {
+public class CommonRepository<E extends RepoObject, C extends Criteria> extends CommonReadRepository<E, C> implements Repository<E, C> {
 
-    protected RepoDao dao;
     protected Validator validator;
     protected String name;
-
-    @Override
-    public PageResult<E> read(C criteria) {
-        return dao.findByCriteria(criteria);
-    }
 
     @Override
     public long create(E element) {
@@ -37,15 +28,6 @@ public abstract class AbstractRepository<E extends RepoObject, C extends Criteri
     @Override
     public void delete(long id) {
         dao.delete(new CommonEntity(id));
-    }
-
-    @Override
-    public E retrieve(long id) {
-        return (E) dao.findById(id);
-    }
-
-    public void setDao(RepoDao dao) {
-        this.dao = dao;
     }
 
     public void setValidator(Validator validator) {

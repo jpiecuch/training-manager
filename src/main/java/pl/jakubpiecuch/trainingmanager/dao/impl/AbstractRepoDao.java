@@ -9,6 +9,7 @@ import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,8 @@ public abstract class AbstractRepoDao<E extends CommonEntity, C extends Criteria
 
     @Override
     public PageResult<E> findByCriteria(C criteria) {
-        final List<Object[]> result = criteria.query(session()).list();
+
+        final List<Object[]> result = criteria != null ? criteria.query(session()).list() : new ArrayList<Object[]>();
 
         return new PageResult<E>() {
             @Override

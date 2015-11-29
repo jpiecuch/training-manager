@@ -13,6 +13,7 @@ public class RestrictionCode {
     public static final String LOWER = "lower than";
     public static final String UNIQUE = "unique";
     public static final String CHECKED = "checked";
+    public static final String EXISTS = "exists";
 
     private RestrictionCode() {
     }

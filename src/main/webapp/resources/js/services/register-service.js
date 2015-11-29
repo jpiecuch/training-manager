@@ -5,15 +5,14 @@ app.service('registerService', function($http, urlService, formValidateService, 
     };
 
     this.success = function(form, response) {
-        alertService.show({type: 'success', title: 'OK', description: 'Submit'});
+        alertService.show({type: 'success', title: 'success', description: 'register.success'});
     };
 
     this.error = function(form, response) {
         _.each(response.data.fieldErrors, function(error) {
-            console.log(error.field);
             form.errors[error.field].push(error);
         });
-        alertService.show({type: 'warning', title: 'OK', description: 'Submit'});
+        alertService.show({type: 'warning', title: 'warning', description: 'register.validation.error'});
     };
 
     this.clearErrors = function(errors) {

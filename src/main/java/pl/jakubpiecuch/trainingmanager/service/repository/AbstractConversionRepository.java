@@ -1,11 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.service.repository;
 
 import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
-import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
-import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
 
 import java.util.List;
@@ -13,7 +10,7 @@ import java.util.List;
 /**
  * Created by Rico on 2015-02-22.
  */
-public abstract class AbstractConversionRepository<T extends RepoObject, E extends RepoObject, C extends Criteria> extends AbstractRepository<T,C> implements Repository<T, C> {
+public abstract class AbstractConversionRepository<T extends RepoObject, E extends RepoObject, C extends Criteria> extends CommonRepository<T,C> implements Repository<T, C> {
 
     protected Converter<T,E> converter;
 

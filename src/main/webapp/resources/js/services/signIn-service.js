@@ -9,7 +9,7 @@ app.service('signInService', function($http, authenticateService, $state, alertS
     };
 
     this.error = function() {
-        alertService.show({type: 'warning', title: 'warning', description: 'wrong.credentials'});
+        alertService.show({type: 'warning', title: 'warning', description: 'signIn.credentials.error'});
     };
 
 

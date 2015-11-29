@@ -1,16 +1,26 @@
 package pl.jakubpiecuch.trainingmanager.web.validator;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
+import pl.jakubpiecuch.trainingmanager.dao.PageResult;
+import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository;
+import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
+import pl.jakubpiecuch.trainingmanager.web.validator.registration.RegistrationValidator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -22,7 +32,10 @@ public class RegistrationValidatorTest {
     
     @Autowired
     @Qualifier("registrationValidator")
-    private Validator validator;
+    private RegistrationValidator validator;
+
+    @Autowired
+    private ReadRepository accountRepository;
 
     @Test(expected = ValidationException.class)
     public void validateExceptionTest() {
@@ -35,6 +48,30 @@ public class RegistrationValidatorTest {
 
     @Test
     public void validateTest() {
+        Mockito.when(accountRepository.read(new AccountCriteria().addEmailRestrictions("test@test.com"))).thenReturn(new PageResult() {
+            @Override
+            public List getResult() {
+                return new ArrayList();
+            }
+
+            @Override
+            public long getCount() {
+                return 0;
+            }
+        });
+
+        Mockito.when(accountRepository.read(new AccountCriteria().addNameRestrictions("test123"))).thenReturn(new PageResult() {
+            @Override
+            public List getResult() {
+                return new ArrayList();
+            }
+
+            @Override
+            public long getCount() {
+                return 0;
+            }
+        });
+
         Registration registration = new Registration();
 
         registration.setEmail("test@test.com");

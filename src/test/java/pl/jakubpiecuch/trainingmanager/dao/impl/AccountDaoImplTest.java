@@ -8,7 +8,9 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
+import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 
 import java.text.ParseException;
@@ -213,6 +215,36 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         assertNull(accountDao.findByUniques(null, null, NOT_EXISTS_EMAIL));
         assertNull(accountDao.findByUniques(NOT_EXISTS_ID, NAME, EMAIL));
         assertAccount(accountDao.findByUniques(ID, NOT_EXISTS_NAME, NOT_EXISTS_EMAIL));
+    }
+
+    @Test
+    public void testFindByCriteria() {
+        PageResult<Account> result = accountDao.findByCriteria(null);
+
+        assertEquals(0l, result.getCount());
+
+        result = accountDao.findByCriteria(new AccountCriteria());
+
+        assertEquals(1l, result.getCount());
+        assertAccount(result.getResult().get(0));
+
+        result = accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions("wrong@email.com"));
+
+        assertEquals(0l, result.getCount());
+
+        result = accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions(EMAIL));
+
+        assertEquals(1l, result.getCount());
+        assertAccount(result.getResult().get(0));
+
+        result = accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions(EMAIL).addNameRestrictions("wrong.name"));
+
+        assertEquals(0l, result.getCount());
+
+        result = accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions(EMAIL).addNameRestrictions(NAME));
+
+        assertEquals(1l, result.getCount());
+        assertAccount(result.getResult().get(0));
     }
 
     private static void assertAccount(Account account) {

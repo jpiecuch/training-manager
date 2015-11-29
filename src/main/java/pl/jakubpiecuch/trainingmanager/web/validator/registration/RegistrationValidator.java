@@ -5,6 +5,9 @@ import org.springframework.util.Assert;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository;
+import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
@@ -26,7 +29,7 @@ public class RegistrationValidator implements Validator {
     private String namePattern;
     private int minNameLength;
     private int maxNameLength;
-    private Validator authenticationValidator;
+    private ReadRepository<Account, AccountCriteria> repository;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -61,6 +64,8 @@ public class RegistrationValidator implements Validator {
             errors.rejectValue("email", RestrictionCode.REQUIRED);
         } else if (!object.getEmail().matches(emailPattern)) {
             errors.rejectValue("email", RestrictionCode.PATTERN, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.PATTERN, emailPattern).build()}, null);
+        } else if (repository.read(new AccountCriteria().addEmailRestrictions(object.getEmail())).getCount() > 0) {
+            errors.rejectValue("email", RestrictionCode.EXISTS);
         }
 
         if (StringUtils.isEmpty(object.getUsername())) {
@@ -71,6 +76,8 @@ public class RegistrationValidator implements Validator {
             errors.rejectValue("username", RestrictionCode.MIN_LENGTH, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.MIN_LENGTH, minNameLength).build()}, null);
         } else if (maxNameLength < object.getUsername().length()) {
             errors.rejectValue("username", RestrictionCode.MAX_LENGTH, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.MAX_LENGTH, maxNameLength).build()}, null);
+        } else if (repository.read(new AccountCriteria().addNameRestrictions(object.getUsername())).getCount() > 0) {
+            errors.rejectValue("username", RestrictionCode.EXISTS);
         }
 
         if (!object.isAccepted()) {
@@ -93,12 +100,6 @@ public class RegistrationValidator implements Validator {
         Map build() {
             return map;
         }
-    }
-
-
-
-    public void setAuthenticationValidator(Validator authenticationValidator) {
-        this.authenticationValidator = authenticationValidator;
     }
 
     public void setMinPasswordLength(int minPasswordLength) {
@@ -127,5 +128,9 @@ public class RegistrationValidator implements Validator {
 
     public void setMaxNameLength(int maxNameLength) {
         this.maxNameLength = maxNameLength;
+    }
+
+    public void setRepository(ReadRepository<Account, AccountCriteria> repository) {
+        this.repository = repository;
     }
 }

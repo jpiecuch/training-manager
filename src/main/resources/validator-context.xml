@@ -13,7 +13,7 @@
         <property name="maxPasswordLength" value="${user.password.maxLength}"/>
         <property name="minPasswordLength" value="${user.password.minLength}"/>
         <property name="passwordPattern" value="${user.password.pattern}"/>
-        <property name="authenticationValidator" ref="authenticationValidator"/>
+        <property name="repository" ref="accountRepository"/>
     </bean>
 
     <bean id="descriptionValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.description.DescriptionValidator">
