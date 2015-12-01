@@ -20,6 +20,10 @@ import java.util.Set;
 public class Workout extends CommonEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final String MUSCLE_DELIMITER = ";";
+    public static final String PHASE_FIELD = "phase";
+    public static final String POSITION_FIELD = "position";
+    public static final String WEEK_DAY_FIELD = "week_day";
+    public static final String MUSCLES_FIELD = "muscles";
 
     public enum WeekDay {
         SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
@@ -38,7 +42,7 @@ public class Workout extends CommonEntity implements Serializable {
         super(id);
     }
 
-    @Column(name = "position")
+    @Column(name = POSITION_FIELD)
     public Integer getPosition() {
         return position;
     }
@@ -47,7 +51,7 @@ public class Workout extends CommonEntity implements Serializable {
         this.position = position;
     }
 
-    @Column(name = "week_day")
+    @Column(name = WEEK_DAY_FIELD)
     @Enumerated(EnumType.ORDINAL)
     public WeekDay getWeekDay() {
         return weekDay;
@@ -58,7 +62,7 @@ public class Workout extends CommonEntity implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "phase")
+    @JoinColumn(name = PHASE_FIELD)
     public Phase getPhase() {
         return phase;
     }
@@ -67,7 +71,7 @@ public class Workout extends CommonEntity implements Serializable {
         this.phase = phase;
     }
 
-    @Column(name = "muscles")
+    @Column(name = MUSCLES_FIELD)
     protected String getMuscle() {
         return muscle;
     }
@@ -76,7 +80,7 @@ public class Workout extends CommonEntity implements Serializable {
         this.muscle = muscles;
     }
 
-    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = Exercise.WORKOUT_FIELD, cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Exercise> getExercises() {
         return exercises;
     }

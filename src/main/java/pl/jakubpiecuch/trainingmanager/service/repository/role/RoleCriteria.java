@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class RoleCriteria extends Criteria<RoleCriteria> {
 
-    private static final String[] PROPERTIES = new String[] {CommonEntity.ID_FIELD_NAME, Role.NAME_FIELD_NAME};
+    private static final String[] PROPERTIES = new String[] {CommonEntity.ID_FIELD, Role.NAME_FIELD_NAME};
 
     private List<String> names = new ArrayList<String>();
 

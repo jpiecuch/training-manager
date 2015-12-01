@@ -1,6 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise;
 
 import pl.jakubpiecuch.trainingmanager.domain.Description;
+import pl.jakubpiecuch.trainingmanager.domain.Exercise;
 import pl.jakubpiecuch.trainingmanager.service.identify.IdentifyObject;
 
 /**
@@ -8,6 +9,7 @@ import pl.jakubpiecuch.trainingmanager.service.identify.IdentifyObject;
  */
 public class ExerciseDto implements IdentifyObject {
 
+    public static final String DESCRIPTION_ID = Exercise.DESCRIPTION_FIELD + "Id";
     private Long id;
     private Long workoutId;
     private Long descriptionId;
