@@ -677,7 +677,7 @@
                                             <p>${messageSource.getMessage('mail.joinThanks', null, $locale)}. ${messageSource.getMessage('mail.clickLink', null, $locale)}:</p>
                                             <table class="twelve columns" style="margin-bottom: 10px">
                                                 <tr>
-                                                    <td class="panel"><a href="https://www.gym-home.com/authentication/activate/$data[0]">https://www.gym-home.com/authentication/activate/$data[0]</a></td>
+                                                    <td class="panel"><a href="https://www.gym-home.com?activate=$data[0]">https://www.gym-home.com?activate=$data[0]</a></td>
                                                     <td class="expander"></td>
                                                 </tr>
                                             </table>

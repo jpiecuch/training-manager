@@ -41,7 +41,7 @@ app.run(function ($rootScope, $location, $state, authenticateService, user, lang
 
     $rootScope.$on('$stateChangeStart', function (ev, to, toParams, from) {
 
-        if (to.name !== 'login' && !$rootScope.settings.isUserSignIn) {
+        if (to.name !== 'login' && to.name !== 'activate' && !$rootScope.settings.isUserSignIn) {
             $state.transitionTo('login');
             ev.preventDefault();
             $rootScope.settings.isAccessDenied = true;
@@ -110,10 +110,6 @@ app.controller('ThemePanelController', ['$scope', function($scope) {
 
 /* Setup Layout Part - Footer */
 app.controller('FooterController', ['$scope', function($scope) {
-
-}]);
-
-app.controller('SignOutController', ['$scope', function($scope) {
 
 }]);
 
@@ -228,6 +224,23 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             'resources/js/controllers/SignInController.js',
                             'resources/js/services/password-service.js',
                             'resources/js/controllers/PasswordController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        .state('activate', {
+            url: "/activate/:code",
+            templateUrl: "resources/views/activate.html",
+            data: {pageTitle: 'Activate'},
+            controller: "ActivateController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'app',
+                        files: [
+                            'resources/js/controllers/ActivateController.js',
+                            'resources/js/services/activate-service.js',
                         ]
                     });
                 }]

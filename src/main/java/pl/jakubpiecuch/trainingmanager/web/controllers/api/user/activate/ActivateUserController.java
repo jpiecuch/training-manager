@@ -14,8 +14,8 @@ import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 public class ActivateUserController extends AbstractController {
 
     @PreAuthorize(value = Permissions.IS_ANONYMOUS)
-    @RequestMapping(method = { RequestMethod.GET })
-    public ResponseEntity activate(@PathVariable ApiVersionService.Version version, @RequestParam(value = "code") String code) {
+    @RequestMapping(method = { RequestMethod.POST })
+    public ResponseEntity activate(@PathVariable ApiVersionService.Version version, @RequestBody String code) {
         versionServices.get(version).activate(code);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

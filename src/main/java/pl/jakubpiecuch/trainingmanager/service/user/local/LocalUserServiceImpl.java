@@ -88,7 +88,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
             account.setStatus(Account.Status.ACTIVE);
             repository.update(account);
         } catch (SymmetricEncryptionException e) {
-            throw new IllegalArgumentException(e);
+            throw new IllegalArgumentException("activate.code.error", e);
         }
     }
 
