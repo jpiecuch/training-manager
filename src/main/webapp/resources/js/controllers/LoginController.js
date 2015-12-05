@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('LoginController', function($sce, $scope, urlService, authenticateService, policyService, $stateParams) {
+app.controller('LoginController', function($sce, $scope, urlService, authenticateService, policyService) {
     $scope.login = {
         tab: {
             idx: 0,
@@ -22,7 +22,6 @@ app.controller('LoginController', function($sce, $scope, urlService, authenticat
     };
 
     $scope.init = function() {
-        console.log($stateParams.code);
         authenticateService.getSocials().then(function(data) {
             $scope.login.social.providers = data.data;
         });

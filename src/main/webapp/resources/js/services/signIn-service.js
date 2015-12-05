@@ -24,7 +24,6 @@ app.service('signInService', function($http, authenticateService, $state, alertS
             },
             form: null,
             submit: function() {
-                console.log('test');
                 me.post(this.credentials).then(function success() {
                     me.success();
                 }, function error() {
