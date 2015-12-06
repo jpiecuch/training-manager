@@ -27,6 +27,7 @@ public class PlanValidatorTest {
             validator.validate(plan, errors);
         } catch (ValidationException ex) {
             assertTrue(ex.getErrors().hasErrors());
+            assertEquals(2, ex.getErrors().getFieldErrorCount());
 
             assertRequiredField(ex.getErrors(), Plan.NAME_FIELD);
             assertRequiredField(ex.getErrors(), PlanValidator.PHASES_FIELD);
