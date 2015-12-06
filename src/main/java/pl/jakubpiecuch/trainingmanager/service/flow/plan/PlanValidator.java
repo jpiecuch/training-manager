@@ -44,6 +44,8 @@ public class PlanValidator implements Validator {
             for (int i = 0; i < plan.getPhases().size(); i++) {
                 validatePhase(plan.getPhases().get(i), errors, i);
             }
+        } else {
+            errors.rejectValue(PHASES_FIELD, RestrictionCode.REQUIRED);
         }
         if (errors.hasErrors()) {
             throw new ValidationException(errors);

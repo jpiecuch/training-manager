@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 
@@ -36,6 +37,24 @@ public class PlanValidatorTest {
         }
 
         assertTrue(assertionPerformed);
+
+        errors = new BeanPropertyBindingResult(plan, NAME);
+
+        plan.setName("name");
+        plan.getPhases().add(new PhaseDto());
+
+        assertionPerformed = false;
+        try {
+            validator.validate(plan, errors);
+        } catch (ValidationException ex) {
+            assertTrue(ex.getErrors().hasErrors());
+            assertEquals(5, ex.getErrors().getFieldErrorCount());
+
+            assertionPerformed = true;
+        }
+
+        assertTrue(assertionPerformed);
+
 
     }
 

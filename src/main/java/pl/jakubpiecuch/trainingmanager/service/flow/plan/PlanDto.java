@@ -7,6 +7,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class PlanDto implements RepoObject {
     private String name;
     private Plan.Goal goal;
     private Long creatorId;
-    private List<PhaseDto> phases;
+    private List<PhaseDto> phases = new ArrayList<PhaseDto>();
     private Boolean editable;
     private Boolean used;
 
