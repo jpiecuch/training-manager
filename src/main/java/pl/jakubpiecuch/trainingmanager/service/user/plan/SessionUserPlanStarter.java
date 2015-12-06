@@ -7,7 +7,6 @@ import pl.jakubpiecuch.trainingmanager.dao.UserWorkoutDao;
 import pl.jakubpiecuch.trainingmanager.domain.*;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanCriteria;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanDto;
-import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanRepository;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.GroupDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutDto;

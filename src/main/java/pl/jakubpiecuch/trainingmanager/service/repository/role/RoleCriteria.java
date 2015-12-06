@@ -37,7 +37,7 @@ public class RoleCriteria extends Criteria<RoleCriteria> {
     @Override
     protected void appendRestrictions() {
         if (this.id == null) {
-            collection(this.names, "name", "IN");
+            collection(this.names, Role.NAME_FIELD_NAME, "IN");
         }
     }
 }

@@ -3,6 +3,7 @@ package pl.jakubpiecuch.trainingmanager.domain;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
@@ -12,7 +13,17 @@ import java.util.List;
 
 @Entity
 @Table(name = "account")
-public class Account extends VersionedEntity {
+public class Account extends VersionedEntity implements RepoObject {
+
+    public static final String NAME_FIELD_NAME = "name";
+    public static final String PASSWORD_FIELD_NAME = "password";
+    public static final String SALT_FIELD_NAME = "salt";
+    public static final String STATUS_FIELD_NAME = "status";
+    public static final String EMAIL_FIELD_NAME = "email";
+    public static final String CONFIG_FIELD_NAME = "config";
+    public static final String PROVIDER_FIELD_NAME = "provider";
+    public static final String ROLE_FIELD_NAME = "role";
+
     public enum Status {
         ACTIVE, RESET_PASSWORD, EXPIRED, CREATED
     }
@@ -35,7 +46,7 @@ public class Account extends VersionedEntity {
         super(id);
     }
 
-    @Column(name = "name")
+    @Column(name = NAME_FIELD_NAME)
     public String getName() {
         return name;
     }
@@ -44,7 +55,7 @@ public class Account extends VersionedEntity {
         this.name = name;
     }
 
-    @Column(name = "password")
+    @Column(name = PASSWORD_FIELD_NAME)
     public String getPassword() {
         return password;
     }
@@ -53,7 +64,7 @@ public class Account extends VersionedEntity {
         this.password = password;
     }
 
-    @Column(name = "salt")
+    @Column(name = SALT_FIELD_NAME)
     public String getSalt() {
         return salt;
     }
@@ -62,7 +73,7 @@ public class Account extends VersionedEntity {
         this.salt = salt;
     }
 
-    @Column(name = "status")
+    @Column(name = STATUS_FIELD_NAME)
     @Enumerated(EnumType.ORDINAL)
     public Status getStatus() {
         return status;
@@ -72,7 +83,7 @@ public class Account extends VersionedEntity {
         this.status = status;
     }
 
-    @Column(name = "email")
+    @Column(name = EMAIL_FIELD_NAME)
     public String getEmail() {
         return email;
     }
@@ -81,7 +92,7 @@ public class Account extends VersionedEntity {
         this.email = email;
     }
 
-    @Column(name = "config")
+    @Column(name = CONFIG_FIELD_NAME)
     public String getConfig() {
         return config;
     }
@@ -90,7 +101,7 @@ public class Account extends VersionedEntity {
         this.config = config;
     }
 
-    @Column(name = "provider")
+    @Column(name = PROVIDER_FIELD_NAME)
     @Enumerated(EnumType.ORDINAL)
     public Provider.Type getProvider() {
         return provider;
@@ -101,7 +112,7 @@ public class Account extends VersionedEntity {
     }
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "account_role", joinColumns = {@JoinColumn(name = "account") }, inverseJoinColumns = { @JoinColumn(name = "role") })
+    @JoinTable(name = "account_role", joinColumns = {@JoinColumn(name = Role.ACCOUNT_FIELD_NAME) }, inverseJoinColumns = { @JoinColumn(name = ROLE_FIELD_NAME) })
     public List<Role> getRoles() {
         return roles;
     }

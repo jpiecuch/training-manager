@@ -2,7 +2,6 @@ package pl.jakubpiecuch.trainingmanager.service.resolver.order.description;
 
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
 import pl.jakubpiecuch.trainingmanager.service.resolver.AbstractOrderResolver;
-import pl.jakubpiecuch.trainingmanager.service.resolver.OrderResolver;
 
 import java.util.Map;
 

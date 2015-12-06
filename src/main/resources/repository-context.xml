@@ -3,13 +3,19 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
+    <bean id="accountRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.CommonRepository">
+        <property name="dao" ref="accountDao"/>
+        <property name="name" value="account"/>
+        <property name="validator" ref="accountValidator"/>
+    </bean>
+
     <bean  id="roleRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.role.RoleRepository">
         <property name="dao" ref="roleDao"/>
         <property name="validator" ref="roleValidator"/>
         <property name="name" value="role"/>
     </bean>
 
-    <bean  id="descriptionRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionRepository">
+    <bean  id="descriptionRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.CommonRepository">
         <property name="dao" ref="descriptionDao"/>
         <property name="validator" ref="descriptionValidator"/>
         <property name="name" value="description"/>
@@ -22,7 +28,7 @@
         <property name="converter" ref="accountRecordConverter"/>
     </bean>
 
-    <bean  id="equipmentRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.equipment.EquipmentRepository">
+    <bean  id="equipmentRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.CommonRepository">
         <property name="dao" ref="equipmentDao"/>
         <property name="validator" ref="equipmentValidator"/>
         <property name="name" value="equipment"/>

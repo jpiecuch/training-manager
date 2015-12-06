@@ -1,0 +1,55 @@
+<form name="registerForm" data-ng-show="login.tab.idx === 2" class="register-form" data-ng-submit="register.submit()" data-ng-controller="RegisterController" novalidate>
+    <section data-ng-init="init(registerForm)">
+        <h3 data-ng-bind="'signUp' | translate"></h3>
+        <p class="hint" data-ng-bind="'user.enter.personal.data.below' | translate"></p>
+        <div class="form-group" data-ng-class="{'has-error' : register.errors.hasErrors(registerForm.firstName)}">
+            <label class="control-label visible-ie8 visible-ie9" data-ng-class="{'bold' : login.create.user.firstName.isTouched()}" data-ng-bind="'user.firstName' | translate"></label>
+            <div class="input-icon right">
+                <input class="form-control placeholder-no-fix" type="text" placeholder="{{'user.firstName' | translate}}" name="firstName" data-ng-model="register.user.firstName" />
+                <span class="help-block" data-ng-repeat="error in register.errors.firstName" data-ng-bind="register.errors.resolveMessage(error)"></span>
+            </div>
+        </div>
+        <div class="form-group" data-ng-class="{'has-error' : register.errors.hasErrors(registerForm.lastName)}">
+            <label class="control-label visible-ie8 visible-ie9" data-ng-class="{'bold' : login.create.user.lastName.isTouched()}" data-ng-bind="'user.lastName' | translate"></label>
+            <div class="input-icon right">
+                <input class="form-control placeholder-no-fix" type="text" placeholder="{{'user.lastName' | translate}}" name="lastName" data-ng-model="register.user.lastName" />
+                <span class="help-block" data-ng-repeat="error in register.errors.lastName" data-ng-bind="register.errors.resolveMessage(error)"></span>
+            </div>
+        </div>
+        <div class="form-group" data-ng-class="{'has-error' : register.errors.hasErrors(registerForm.email)}">
+            <label class="control-label visible-ie8 visible-ie9" data-ng-class="{'bold' : login.create.user.email.isTouched()}" data-ng-bind="'user.email' | translate"></label>
+            <div class="input-icon right">
+                <input class="form-control placeholder-no-fix" type="text" placeholder="{{'user.email' | translate}}" name="email" data-ng-model="register.user.email" required/>
+                <span class="help-block" data-ng-repeat="error in register.errors.email" data-ng-bind="register.errors.resolveMessage(error)"></span>
+            </div>
+        </div>
+        <p class="hint" data-ng-bind="'user.account.info' | translate"></p>
+        <div class="form-group" data-ng-class="{'has-error' : register.errors.hasErrors(registerForm.username)}">
+            <label class="control-label visible-ie8 visible-ie9" data-ng-class="{'bold' : login.create.user.username.isTouched()}" data-ng-bind="'user.username' | translate"></label>
+            <div class="input-icon right">
+                <input class="form-control placeholder-no-fix" type="text" placeholder="{{'user.username' | translate}}" name="username" data-ng-model="register.user.username" required/>
+                <span class="help-block" data-ng-repeat="error in register.errors.username" data-ng-bind="register.errors.resolveMessage(error)"></span>
+            </div>
+        </div>
+        <div class="form-group" data-ng-class="{'has-error' : register.errors.hasErrors(registerForm.password)}">
+            <label class="control-label visible-ie8 visible-ie9" data-ng-class="{'bold' : login.create.user.password.isTouched()}" data-ng-bind="'user.password' | translate"></label>
+            <div class="input-icon right">
+                <i data-ng-if="registerForm.password.$touched" class="fa register-icon" data-ng-class="{'fa-check' : register.input.validate.isValid(registerForm.password), 'fa-exclamation' : register.input.validate.isNotValid(registerForm.password)}"></i>
+                <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="{{'user.password' | translate}}" name="password" data-ng-model="register.user.password" required />
+                <span class="help-block" data-ng-repeat="error in register.errors.password" data-ng-bind="register.errors.resolveMessage(error)"></span>
+            </div>
+        </div>
+        <div class="form-group margin-top-20 margin-bottom-20" data-ng-class="{'has-error' : register.errors.hasErrors(registerForm.accepted)}">
+            <label class="check">
+                <input type="checkbox" name="accepted" id="tnc" data-ng-model="register.user.accepted"/><label for="tnc"><span></span></label>
+                {{'app.i.agree.to' | translate}} <a href="#" data-ng-bind="'app.terms.of.service' | translate" data-ng-click="register.terms.show()"></a> {{'app.and' | translate}} <a href="" ng-click="register.policy.show()">{{'app.privacy.policy' | translate}} </a>
+            </label>
+            <span class="help-block" data-ng-repeat="error in register.errors.accepted" data-ng-bind="register.errors.resolveMessage(error)"></span>
+        </div>
+        </div>
+        <div class="form-actions">
+            <button type="button" id="register-back-btn" class="btn btn-default" data-ng-bind="'back' | translate" data-ng-click="login.tab.setIdx(0)"></button>
+            <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right" data-ng-bind="'send' | translate"></button>
+        </div>
+    </section>
+</form>

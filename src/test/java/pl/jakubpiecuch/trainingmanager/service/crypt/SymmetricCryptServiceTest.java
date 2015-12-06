@@ -16,7 +16,7 @@ public class SymmetricCryptServiceTest {
     private final static String RAW_TEXT = "raw text";
     private final static String[] RAW_TEXT_ARRAY = new String[] {"raw", "text", "array"};
     private final static String ENC_TEXT = "qYevnGLdSpSNzAqPX8ARmQ==";
-    private final static String ENC_TEXT_FROM_ARRAY = "s4bhPPr/LYA8oe/GVpbHPA==";
+    private final static String ENC_TEXT_FROM_ARRAY = "rEunkz0zsA+4SH0XmIRmaA==";
 
     @Before
     public void setUp() {

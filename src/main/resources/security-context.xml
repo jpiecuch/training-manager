@@ -25,12 +25,12 @@
     <beans:bean id="accessDeniedHandler" class="pl.jakubpiecuch.trainingmanager.web.handlers.access.AccessDeniedHandler"></beans:bean>
 
     <beans:bean id="authenticationProvider" class="pl.jakubpiecuch.trainingmanager.web.authentication.LocalAuthenticationProvider">
-        <beans:property name="accountDao" ref="usersDao"/>
+        <beans:property name="repository" ref="accountRepository"/>
     </beans:bean>
 
     <beans:bean abstract="true" id="abstractUserService" class="pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService">
         <beans:property name="emailService" ref="emailService"/>
-        <beans:property name="accountDao" ref="usersDao"/>
+        <beans:property name="repository" ref="accountRepository"/>
         <beans:property name="rememberMeServices" ref="rememberMeServices"/>
     </beans:bean>
     
@@ -39,6 +39,7 @@
         <beans:property name="cryptService" ref="cryptService"/>
         <beans:property name="validator" ref="registrationValidator"/>
         <beans:property name="passwordService" ref="passwordService"/>
+        <beans:property name="serviceUri" value="${service.uri}"/>
     </beans:bean>
     
     <beans:bean id="shaPasswordEncoder" class="pl.jakubpiecuch.trainingmanager.service.encoder.password.sha.SHAPasswordEncoder"><beans:property name="strength" value="256"/></beans:bean>

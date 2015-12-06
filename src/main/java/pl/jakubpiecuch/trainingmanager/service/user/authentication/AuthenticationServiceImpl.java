@@ -7,7 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
-import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
+import pl.jakubpiecuch.trainingmanager.dao.PageResult;
+import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
+import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.UserService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
@@ -29,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private Validator validator;
     private Map<Provider.Type, UserService> userServices;
-    private AccountDao accountDao;
+    private Repository<Account, AccountCriteria> repository;
     private LogoutHandler logoutHandler;
 
     @Override
@@ -52,7 +55,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (object instanceof String) {
             throw new NotFoundException();
         }
-        return new Authentication(accountDao.findByUniques(((SecurityUser) object).getId(), ((SecurityUser) object).getUsername(), null));
+        PageResult<Account> result = repository.read(new AccountCriteria().setIdRestriction(((SecurityUser) object).getId()).addNameRestrictions(((SecurityUser) object).getUsername()));
+        if (result.getCount() == 0) {
+            throw new NotFoundException();
+        }
+        return new Authentication(result.getResult().get(0));
     }
 
     public void setUserServices(Map<Provider.Type, UserService> userServices) {
@@ -63,8 +70,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.validator = validator;
     }
 
-    public void setAccountDao(AccountDao accountDao) {
-        this.accountDao = accountDao;
+    public void setRepository(Repository<Account, AccountCriteria> repository) {
+        this.repository = repository;
     }
 
     public void setLogoutHandler(LogoutHandler logoutHandler) {

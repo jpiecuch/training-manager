@@ -723,3 +723,7 @@ dictionary-tiles(new in v1.1.1)
 .tab-btn i {
     font-size: 11px !important;
 }
+
+.register-icon {
+    padding-top: 3px;
+}

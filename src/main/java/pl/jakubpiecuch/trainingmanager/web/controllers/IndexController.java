@@ -10,7 +10,6 @@ import org.springframework.web.context.request.WebRequest;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialSignOnAdapter;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
-import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
 import java.util.Locale;
 

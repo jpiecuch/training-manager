@@ -1,6 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.service.user.local.assertion;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
 /**

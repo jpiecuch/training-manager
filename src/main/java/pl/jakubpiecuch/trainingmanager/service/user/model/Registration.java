@@ -8,7 +8,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Account;
 public class Registration extends Authentication {
     public static final String NAME = "registration";
 
-    private String repeat;
+    boolean accepted;
 
     public Registration() {
         super();
@@ -18,11 +18,11 @@ public class Registration extends Authentication {
         super(account);
     }
 
-    public String getRepeat() {
-        return repeat;
+    public boolean isAccepted() {
+        return accepted;
     }
 
-    public void setRepeat(String repeat) {
-        this.repeat = repeat;
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 }
