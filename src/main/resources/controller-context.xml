@@ -47,7 +47,7 @@
 
 
     <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
-        <property name="messageSourceFiles" value="/bundles/web/web_%s.properties,/bundles/policy/policy_%s.properties"/>
+        <property name="messageSourceFiles" value="/bundles/web/web_%s.properties,/bundles/policy/policy_%s.properties,/bundles/terms/terms_%s.properties"/>
         <property name="langs" value="${app.langs}"/>
         <property name="userServices">
             <map>

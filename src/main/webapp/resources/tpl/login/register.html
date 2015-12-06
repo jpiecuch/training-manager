@@ -42,7 +42,7 @@
         <div class="form-group margin-top-20 margin-bottom-20" data-ng-class="{'has-error' : register.errors.hasErrors(registerForm.accepted)}">
             <label class="check">
                 <input type="checkbox" name="accepted" id="tnc" data-ng-model="register.user.accepted"/><label for="tnc"><span></span></label>
-                {{'app.i.agree.to' | translate}} <a href="#" data-ng-bind="'app.terms.of.service' | translate"></a> {{'app.and' | translate}} <a href="" ng-click="register.policy.show()">{{'app.privacy.policy' | translate}} </a>
+                {{'app.i.agree.to' | translate}} <a href="#" data-ng-bind="'app.terms.of.service' | translate" data-ng-click="register.terms.show()"></a> {{'app.and' | translate}} <a href="" ng-click="register.policy.show()">{{'app.privacy.policy' | translate}} </a>
             </label>
             <span class="help-block" data-ng-repeat="error in register.errors.accepted" data-ng-bind="register.errors.resolveMessage(error)"></span>
         </div>

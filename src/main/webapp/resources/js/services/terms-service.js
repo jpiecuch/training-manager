@@ -1,4 +1,4 @@
-app.service('policyService', function($rootScope, $modal) {
+app.service('termsService', function($rootScope, $modal) {
     this.show = function() {
         $rootScope.$broadcast('showTermsEvent');
     };
