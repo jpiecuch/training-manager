@@ -85,7 +85,7 @@ public class PlanValidator implements Validator {
 
     private void validateGroup(GroupDto group, Errors errors, int index, String phaseName, String workoutName) {
         String groupName = String.format(ARRAY_PROPERTY_FORMAT, GROUPS_FIELD, index);
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, groupName, CommonEntity.ID_FIELD), RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, groupName, CommonEntity.ID_FIELD_NAME), RestrictionCode.REQUIRED);
 
         if (CollectionUtils.isEmpty(group.getExercises())) {
             errors.rejectValue(path(phaseName, workoutName, groupName, EXERCISES_FIELD), RestrictionCode.REQUIRED);
