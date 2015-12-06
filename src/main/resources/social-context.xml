@@ -8,7 +8,7 @@
     <bean id="supportService" class="pl.jakubpiecuch.trainingmanager.service.support.social.SocialSupportService"/>
 
     <bean id="socialSignOnAdapter" class="pl.jakubpiecuch.trainingmanager.service.user.social.SocialSignOnAdapter">
-        <property name="accountDao" ref="usersDao"/>
+        <property name="repository" ref="accountRepository"/>
         <property name="userService" ref="socialUserService"/>
     </bean>
 
@@ -54,7 +54,7 @@
         <constructor-arg index="1" ref="usersConnectionRepository"/>
         <constructor-arg index="2">
             <bean class="pl.jakubpiecuch.trainingmanager.service.user.social.SocialSignInAdapter">
-                <property name="accountDao" ref="usersDao"/>
+                <property name="repository" ref="accountRepository"/>
             </bean>
         </constructor-arg>
         <property name="signUpUrl" value="/?social=true#/login"/>
@@ -85,7 +85,7 @@
                 <entry key="TWITTER" value-ref="twitterService"/>
             </map>
         </property>
-        <property name="accountDao" ref="usersDao"/>
+        <property name="repository" ref="accountRepository"/>
     </bean>
 
 </beans>

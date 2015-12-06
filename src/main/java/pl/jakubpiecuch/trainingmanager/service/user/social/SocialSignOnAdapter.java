@@ -6,8 +6,10 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.web.context.request.WebRequest;
-import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
+import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
+import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.UserService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
@@ -17,7 +19,7 @@ import java.util.Locale;
 
 public class SocialSignOnAdapter {
     private ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
-    private AccountDao accountDao;
+    private Repository<Account, AccountCriteria> repository;
     private UserService userService;
     
    public void signOn(WebRequest request, Locale locale) {
@@ -35,17 +37,25 @@ public class SocialSignOnAdapter {
 
            userService.signOn(registration, locale);
            providerSignInUtils.doPostSignUp(profile.getName(), request);
-           Account entity = accountDao.findByUniques(null, String.format(SecurityUser.SOCIAL_USERNAME_FORMAT, connection.getKey().getProviderId(), connection.getKey().getProviderUserId()), null);
+           Account entity = findUser(String.format(SecurityUser.SOCIAL_USERNAME_FORMAT, connection.getKey().getProviderId(), connection.getKey().getProviderUserId()));
            WebUtil.authenticate(new SecurityUser(entity.getId(), entity.getName(), entity.getPassword(), SocialProvider.SocialType.valueOf(connection.getKey().getProviderId().toUpperCase()),
                    CollectionUtils.isNotEmpty(entity.getGrantedPermissions()) ? AuthorityUtils.createAuthorityList(entity.getGrantedPermissions().toArray(new String[entity.getGrantedPermissions().size()])) : AuthorityUtils.NO_AUTHORITIES));
        }
    }
 
+    private Account findUser(String username) {
+        PageResult<Account> result = repository.read(new AccountCriteria().addNameRestrictions(username));
+        if (result.getCount() > 0) {
+            return result.getResult().get(0);
+        }
+        return null;
+    }
+
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
-    public void setAccountDao(AccountDao accountDao) {
-        this.accountDao = accountDao;
+    public void setRepository(Repository<Account, AccountCriteria> repository) {
+        this.repository = repository;
     }
 }

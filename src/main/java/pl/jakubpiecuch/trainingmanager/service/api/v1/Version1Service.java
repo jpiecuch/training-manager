@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +46,14 @@ import java.util.*;
 
 public class Version1Service implements ApiVersionService {
 
-    private String messageSourceFile;
+    private static final char LIST_DELIMITER = ';';
+    private String[] messageSourceFiles;
     private CryptService cryptService;
     private Map<Provider.Type, UserService> userServices;
     private AuthenticationService authenticationService;
     private LocaleService localeService;
     private Map<ResourceService.Type, ResourceService> resourceServices;
-    private Map<String, PropertiesConfiguration> propertiesConfigurations;
+    private Map<String, List<PropertiesConfiguration>> propertiesConfigurations;
     private String[] langs;
     private Dictionary dictionary;
     private Map<Repositories, Repository> repositories;
@@ -181,16 +183,20 @@ public class Version1Service implements ApiVersionService {
 
     @Override
     public Object language(final String lang) {
-        final PropertiesConfiguration propertiesConfiguration = propertiesConfigurations.get(lang);
-        if(propertiesConfiguration == null) {
+        final List<PropertiesConfiguration> configurations = propertiesConfigurations.get(lang);
+        if(CollectionUtils.isEmpty(configurations)) {
             throw new NotFoundException();
         }
-        return Maps.toMap(propertiesConfiguration.getKeys(), new Function<String, String>() {
-            @Override
-            public String apply(String input) {
-                return propertiesConfiguration.getString(input);
-            }
-        });
+        Map<String, String> result = new HashMap<String, String>();
+        for (final PropertiesConfiguration propertiesConfiguration : configurations) {
+            result.putAll(Maps.toMap(propertiesConfiguration.getKeys(), new Function<String, String>() {
+                @Override
+                public String apply(String input) {
+                    return propertiesConfiguration.getString(input);
+                }
+            }));
+        }
+        return result;
     }
 
 
@@ -213,12 +219,10 @@ public class Version1Service implements ApiVersionService {
         this.userServices = userServices;
     }
 
-    @Value("/bundles/web/web_%s.properties")
-    public void setMessageSourceFile(String messageSourceFile) {
-        this.messageSourceFile = messageSourceFile;
+    public void setMessageSourceFiles(String[] messageSourceFiles) {
+        this.messageSourceFiles = messageSourceFiles;
     }
 
-    @Value("${app.langs}")
     public void setLangs(String[] langs) {
         this.langs = langs;
     }
@@ -227,7 +231,7 @@ public class Version1Service implements ApiVersionService {
         this.authenticationService = authenticationService;
     }
 
-    public void setPropertiesConfigurations(Map<String, PropertiesConfiguration> propertiesConfigurations) {
+    public void setPropertiesConfigurations(Map<String, List<PropertiesConfiguration>> propertiesConfigurations) {
         this.propertiesConfigurations = propertiesConfigurations;
     }
 
@@ -257,9 +261,17 @@ public class Version1Service implements ApiVersionService {
 
     @PostConstruct
     protected void afterPropertiesSet() throws URISyntaxException, ConfigurationException {
-        this.propertiesConfigurations = new HashMap<String, PropertiesConfiguration>();
+        this.propertiesConfigurations = new HashMap<String, List<PropertiesConfiguration>>();
         for (String lang : langs) {
-            this.propertiesConfigurations.put(lang, new PropertiesConfiguration(new File(getClass().getResource(String.format(messageSourceFile, lang)).toURI())));
+            List<PropertiesConfiguration> configurations = new ArrayList<PropertiesConfiguration>();
+            for (String messageSourceFile : messageSourceFiles) {
+                PropertiesConfiguration configuration = new PropertiesConfiguration();
+                configuration.setListDelimiter(LIST_DELIMITER);
+                configuration.setFile(new File(getClass().getResource(String.format(messageSourceFile, lang)).toURI()));
+                configuration.load();
+                configurations.add(configuration);
+            }
+            this.propertiesConfigurations.put(lang, configurations);
         }
     }
 }

@@ -17,6 +17,10 @@
 
        <mvc:annotation-driven />
 
+       <bean id="accountRepository" class="org.mockito.Mockito" factory-method="mock">
+              <constructor-arg value="pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository"/>
+       </bean>
+
        <import resource="validator-context.xml"/>
 
        <!-- only for mocking purpose -->

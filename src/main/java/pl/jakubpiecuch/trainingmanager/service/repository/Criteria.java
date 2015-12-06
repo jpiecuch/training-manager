@@ -4,6 +4,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import pl.jakubpiecuch.trainingmanager.service.resolver.OrderResolver;
@@ -141,4 +143,52 @@ public abstract class Criteria<T extends Criteria> {
         }
         return (T) this;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Criteria rhs = (Criteria) obj;
+        return new EqualsBuilder()
+                .append(this.alias, rhs.alias)
+                .append(this.entity, rhs.entity)
+                .append(this.restrictionFormat, rhs.restrictionFormat)
+                .append(this.lang, rhs.lang)
+                .append(this.restrictions, rhs.restrictions)
+                .append(this.params, rhs.params)
+                .append(this.excludedIds, rhs.excludedIds)
+                .append(this.joins, rhs.joins)
+                .append(this.id, rhs.id)
+                .append(this.firstResult, rhs.firstResult)
+                .append(this.maxResults, rhs.maxResults)
+                .append(this.order, rhs.order)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(alias)
+                .append(entity)
+                .append(restrictionFormat)
+                .append(lang)
+                .append(restrictions)
+                .append(params)
+                .append(excludedIds)
+                .append(joins)
+                .append(id)
+                .append(firstResult)
+                .append(maxResults)
+                .append(order)
+                .toHashCode();
+    }
+
+
 }

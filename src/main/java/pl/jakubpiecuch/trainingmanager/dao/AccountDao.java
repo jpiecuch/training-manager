@@ -1,8 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.dao;
 
-import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
 
-public interface AccountDao extends CoreDao<Account> {
-    Account findByUniques(Long id, String name, String email);
+public interface AccountDao extends RepoDao<Account, AccountCriteria>  {
 }

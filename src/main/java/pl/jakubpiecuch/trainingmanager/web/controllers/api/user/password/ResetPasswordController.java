@@ -9,8 +9,6 @@ import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
 @RequestMapping(ApiURI.API_RESET_PASSWORD)

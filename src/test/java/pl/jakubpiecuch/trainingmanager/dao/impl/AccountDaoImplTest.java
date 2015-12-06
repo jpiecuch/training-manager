@@ -4,11 +4,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
+import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 
 import java.text.ParseException;
@@ -26,8 +27,6 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
     private static final String SALT = "3994c7aea794c1cf";
     private static final String CREATED_STRING = "2014-12-07 13:52:56.805";
     private static final Long NOT_EXISTS_ID = 99l;
-    private static final String NOT_EXISTS_NAME = "not.exists";
-    private static final String NOT_EXISTS_EMAIL = "not@exists.com";
     private static final String ROLE_NAME = "ADMIN";
     private static Date CREATED;
     private static final String UPDATED_STRING = "2014-12-07 13:53:16.062";
@@ -62,7 +61,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         accountDao.flush();
         assertNotNull(account.getId());
         accountDao.delete(account);
-        assertNull(accountDao.findByUniques(account.getId(), null, null));
+        assertNull(accountDao.findById(account.getId()));
     }
 
     @Test
@@ -76,10 +75,10 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         account.setProvider(Provider.Type.LOCAL);
         accountDao.create(account);
         accountDao.flush();
-        assertNull(accountDao.findByUniques(null, null, "email"));
+        assertEquals(0l, accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions("email")).getCount());
         account.setEmail("email");
         accountDao.update(account);
-        assertNotNull(accountDao.findByUniques(null, null, "email"));
+        assertEquals(1l, accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions("email")).getCount());
     }
 
     @Test
@@ -200,19 +199,34 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         assertEquals(6, counter);
     }
 
-
     @Test
-    @Transactional
-    public void testFindByUniques() throws Exception {
-        assertAccount(accountDao.findByUniques(ID, null, null));
-        assertAccount(accountDao.findByUniques(null, NAME, null));
-        assertAccount(accountDao.findByUniques(null, null, EMAIL));
-        assertNull(accountDao.findByUniques(null, null, null));
-        assertNull(accountDao.findByUniques(NOT_EXISTS_ID, null, null));
-        assertNull(accountDao.findByUniques(null, NOT_EXISTS_NAME, null));
-        assertNull(accountDao.findByUniques(null, null, NOT_EXISTS_EMAIL));
-        assertNull(accountDao.findByUniques(NOT_EXISTS_ID, NAME, EMAIL));
-        assertAccount(accountDao.findByUniques(ID, NOT_EXISTS_NAME, NOT_EXISTS_EMAIL));
+    public void testFindByCriteria() {
+        PageResult<Account> result = accountDao.findByCriteria(null);
+
+        assertEquals(0l, result.getCount());
+
+        result = accountDao.findByCriteria(new AccountCriteria());
+
+        assertEquals(1l, result.getCount());
+        assertAccount(result.getResult().get(0));
+
+        result = accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions("wrong@email.com"));
+
+        assertEquals(0l, result.getCount());
+
+        result = accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions(EMAIL));
+
+        assertEquals(1l, result.getCount());
+        assertAccount(result.getResult().get(0));
+
+        result = accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions(EMAIL).addNameRestrictions("wrong.name"));
+
+        assertEquals(0l, result.getCount());
+
+        result = accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions(EMAIL).addNameRestrictions(NAME));
+
+        assertEquals(1l, result.getCount());
+        assertAccount(result.getResult().get(0));
     }
 
     private static void assertAccount(Account account) {

@@ -2,12 +2,12 @@ package pl.jakubpiecuch.trainingmanager.service.repository.role;
 
 import org.springframework.util.Assert;
 import pl.jakubpiecuch.trainingmanager.domain.Role;
-import pl.jakubpiecuch.trainingmanager.service.repository.AbstractRepository;
+import pl.jakubpiecuch.trainingmanager.service.repository.CommonRepository;
 
 /**
  * Created by Rico on 2015-01-02.
  */
-public class RoleRepository extends AbstractRepository<Role, RoleCriteria> {
+public class RoleRepository extends CommonRepository<Role, RoleCriteria> {
 
     @Override
     public long create(Role element) {

@@ -1,7 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.web.validator.role;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.springframework.util.Assert;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;

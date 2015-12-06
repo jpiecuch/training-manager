@@ -7,23 +7,25 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
+import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
-import pl.jakubpiecuch.trainingmanager.service.encoder.password.PasswordEncoder;
+import pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository;
+import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
 import java.util.List;
 
 public class LocalAuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {
 
-    private AccountDao accountDao;
+    private ReadRepository<Account, AccountCriteria> repository;
 
     @Override
     public Authentication authenticate(Authentication a) {
-        Account account = accountDao.findByUniques(null, a.getName(), null);
-        if (account == null) {
+        PageResult<Account> result = repository.read(new AccountCriteria().addNameRestrictions(a.getName()));
+        if (result.getCount() == 0) {
             throw new BadCredentialsException("Username not found.");
         }
+        Account account = result.getResult().get(0);
         if (!((UserDetails)a.getPrincipal()).getPassword().equals(account.getPassword())) {
             throw new BadCredentialsException("Wrong password.");
         }
@@ -36,7 +38,7 @@ public class LocalAuthenticationProvider implements org.springframework.security
         return true;
     }
 
-    public void setAccountDao(AccountDao accountDao) {
-        this.accountDao = accountDao;
+    public void setRepository(ReadRepository<Account, AccountCriteria> repository) {
+        this.repository = repository;
     }
 }

@@ -41,7 +41,7 @@ app.run(function ($rootScope, $location, $state, authenticateService, user, lang
 
     $rootScope.$on('$stateChangeStart', function (ev, to, toParams, from) {
 
-        if (to.name !== 'login' && !$rootScope.settings.isUserSignIn) {
+        if (to.name !== 'login' && to.name !== 'activate' && !$rootScope.settings.isUserSignIn) {
             $state.transitionTo('login');
             ev.preventDefault();
             $rootScope.settings.isAccessDenied = true;
@@ -99,25 +99,6 @@ app.controller('SidebarController', ['$scope', '$location', function($scope, $lo
     }
 }]);
 
-/* Setup Layout Part - Quick Sidebar */
-app.controller('QuickSidebarController', ['$scope', function($scope) {
-
-}]);
-
-/* Setup Layout Part - Theme Panel */
-app.controller('ThemePanelController', ['$scope', function($scope) {
-}]);
-
-/* Setup Layout Part - Footer */
-app.controller('FooterController', ['$scope', function($scope) {
-
-}]);
-
-app.controller('SignOutController', ['$scope', function($scope) {
-
-}]);
-
-
 app.config(function($translateProvider, contextPath, lang) {
     $translateProvider.preferredLanguage(lang);
     $translateProvider.useStaticFilesLoader({
@@ -126,31 +107,21 @@ app.config(function($translateProvider, contextPath, lang) {
     });
 });
 
-app.config(function ($httpProvider) {
-
-    var logsOutUserOn401 = ['$q', '$location', function ($q, $location) {
-        var success = function (response) {
-            return response;
-        };
-
-        var error = function (response) {
+app.service('anonymousInterceptor', function ($q, $location, alertService) {
+    return {
+        responseError: function(response) {
             if (response.status === 401) {
-                //redirect them back to login page
-                $location.path('/');
-
-                return $q.reject(response);
+                $location.path('/login');
+            } else if (response.status === 403) {
+                alertService.show({type: 'warning', title: 'warning', description: response.data.message});
             }
-            else {
-                return $q.reject(response);
-            }
-        };
+            return $q.reject(response);
+        }
+    };
+});
 
-        return function (promise) {
-            return promise.then(success, error);
-        };
-    }];
-
-    $httpProvider.interceptors.push(logsOutUserOn401);
+app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('anonymousInterceptor');
 });
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
@@ -220,7 +191,31 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                         name: 'app',
                         files: [
                             'resources/assets/admin/pages/css/login.css',
-                            'resources/js/controllers/LoginController.js'
+                            'resources/js/controllers/LoginController.js',
+                            'resources/js/services/form-validate-service.js',
+                            'resources/js/services/register-service.js',
+                            'resources/js/controllers/RegisterController.js',
+                            'resources/js/services/signIn-service.js',
+                            'resources/js/controllers/SignInController.js',
+                            'resources/js/services/password-service.js',
+                            'resources/js/controllers/PasswordController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        .state('activate', {
+            url: "/activate/:code",
+            templateUrl: "resources/views/activate.html",
+            data: {pageTitle: 'Activate'},
+            controller: "ActivateController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'app',
+                        files: [
+                            'resources/js/controllers/ActivateController.js',
+                            'resources/js/services/activate-service.js',
                         ]
                     });
                 }]
@@ -240,8 +235,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             'resources/assets/global/plugins/amcharts/serial.js',
                             'resources/assets/global/plugins/amcharts/lang/pl.js',
                             'resources/assets/global/plugins/amcharts/themes/light.js',
-                             'resources/js/controllers/DashboardController.js',
-                             'resources/assets/admin/pages/css/todo.css',
+                            'resources/js/controllers/DashboardController.js',
+                            'resources/assets/admin/pages/css/todo.css',
                             'resources/js/services/user-workout-service.js',
                             'resources/js/services/form-validate-service.js',
                             'resources/js/services/account-record-service.js'
