@@ -43,6 +43,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
     private PasswordService passwordService;
     private CryptService cryptService;
     private Validator validator;
+    private String serviceUri;
 
     @Override
     public SecurityUser resolveDetails(Authentication authentication)  {
@@ -104,8 +105,8 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
             account.setSalt(KeyGenerators.string().generateKey());
             account.setPassword(passwordEncoder.encode(registration.getPassword(), account.getSalt()));
             account.setProvider(Provider.Type.LOCAL);
-            emailService.sendEmail(new Object[] {UriUtils.encodeQueryParam(cryptService.encrypt(account.getName(), account.getEmail()), "UTF-8"), account, WebUtil.fromJson(account.getConfig(), Account.Config.class)}, locale, EmailService.Template.REGISTER, account.getEmail());
             repository.create(account);
+            emailService.sendEmail(new Object[] {UriUtils.encodeQueryParam(cryptService.encrypt(account.getName(), account.getEmail()), "UTF-8"), account, WebUtil.fromJson(account.getConfig(), Account.Config.class), serviceUri}, locale, EmailService.Template.REGISTER, account.getEmail());
         } catch (UnsupportedEncodingException e) {
             throw new IllegalArgumentException(e);
         }
@@ -133,5 +134,9 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
 
     public void setPasswordService(PasswordService passwordService) {
         this.passwordService = passwordService;
+    }
+
+    public void setServiceUri(String serviceUri) {
+        this.serviceUri = serviceUri;
     }
 }
