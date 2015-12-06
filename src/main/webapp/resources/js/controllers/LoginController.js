@@ -13,11 +13,6 @@ app.controller('LoginController', function($sce, $scope, urlService, authenticat
             getUrl: function(id) {
                 return $sce.trustAsResourceUrl(urlService.url('signin') + '/' + id);
             }
-        },
-        policy: {
-            show: function() {
-                policyService.show();
-            }
         }
     };
 

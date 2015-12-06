@@ -1,15 +1,15 @@
 app.service('policyService', function($rootScope, $modal) {
     this.show = function() {
-        $rootScope.$broadcast('showPolicyEvent');
+        $rootScope.$broadcast('showTermsEvent');
     };
 
     this.get = function() {
         return {
             init: function(scope) {
-                scope.$on('showPolicyEvent', function() {
+                scope.$on('showTermsEvent', function() {
                     var modalInstance = $modal.open({
                         animation: true,
-                        templateUrl: 'policyModal.html',
+                        templateUrl: 'termsModal.html',
                         size: 'lg'
                     });
 

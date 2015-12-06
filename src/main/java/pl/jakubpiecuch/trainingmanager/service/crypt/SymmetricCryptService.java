@@ -5,11 +5,13 @@ import org.apache.commons.lang.StringUtils;
 
 public class SymmetricCryptService implements CryptService {
 
+    public static final String SLASH = "/";
+    public static final String BACKSLASH = "\\";
     private Base64EncodedCipherer encryptService;
     private Base64EncodedCipherer decryptService;
     private static final String IV = "AQIDBAUGAQI=";
     private static final String KEY = "Rs3xEA16I52XJpsWwkw4GrB8l6FiVGK/";
-    private static final String VAL_SPLITTER = "|";
+    protected static final String VAL_SPLITTER = "|";
 
     @Override
     public String encrypt(String... args) {
@@ -17,12 +19,12 @@ public class SymmetricCryptService implements CryptService {
         for (int i = 0; i < args.length; i++) {
             builder.append(args[i]).append(i < args.length - 1 ? VAL_SPLITTER : StringUtils.EMPTY);
         }
-        return encryptService.encrypt(KEY, IV, builder.toString()).replace("/", "\\");
+        return encryptService.encrypt(KEY, IV, builder.toString()).replace(SLASH, BACKSLASH);
     }
 
     @Override
     public String decrypt(String arg, Integer position) {
-        String result = decryptService.encrypt(KEY, IV, arg.replace("\\", "/"));
+        String result = decryptService.encrypt(KEY, IV, StringUtils.replace(arg, BACKSLASH, SLASH));
         return position != null ? StringUtils.split(result, VAL_SPLITTER)[position]  : result;
     }
 

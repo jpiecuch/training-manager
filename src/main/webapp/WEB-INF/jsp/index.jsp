@@ -64,6 +64,9 @@
 
 <div data-ng-if="settings.isUserSignIn" data-ng-include="'resources/tpl/footer.html'" data-ng-controller="FooterController" class="page-footer">
 </div>
+<div data-ng-include="'resources/tpl/policy.html'" data-ng-controller="PolicyController"></div>
+<div data-ng-include="'resources/tpl/terms.html'" data-ng-controller="TermsController"></div>
+<div data-ng-include="'resources/tpl/terms.html'" data-ng-controller="TermsController"></div>
 <script src="https://www.youtube.com/iframe_api"></script>
 <!--[if lt IE 9]>
 <script src="resources/assets/global/plugins/respond.min.js"></script>
@@ -96,6 +99,7 @@
 
 <script src="resources/js/app.js" type="text/javascript"></script>
 <script src="resources/js/controllers/LocaleController.js" type="text/javascript"></script>
+<script src="resources/js/controllers/PolicyController.js" type="text/javascript"></script>
 <script src="resources/js/services/url-service.js" type="text/javascript"></script>
 <script src="resources/js/services/input-service.js" type="text/javascript"></script>
 <script src="resources/js/services/authenticate-service.js" type="text/javascript"></script>
@@ -103,6 +107,7 @@
 <script src="resources/js/services/resource-service.js" type="text/javascript"></script>
 <script src="resources/js/services/input-validate-service.js" type="text/javascript"></script>
 <script src="resources/js/services/policy-service.js" type="text/javascript"></script>
+<script src="resources/js/services/terms-service.js" type="text/javascript"></script>
 <script src="resources/js/services/alert-service.js" type="text/javascript"></script>
 <script src="resources/js/directives.js" type="text/javascript"></script>
 

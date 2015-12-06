@@ -99,21 +99,6 @@ app.controller('SidebarController', ['$scope', '$location', function($scope, $lo
     }
 }]);
 
-/* Setup Layout Part - Quick Sidebar */
-app.controller('QuickSidebarController', ['$scope', function($scope) {
-
-}]);
-
-/* Setup Layout Part - Theme Panel */
-app.controller('ThemePanelController', ['$scope', function($scope) {
-}]);
-
-/* Setup Layout Part - Footer */
-app.controller('FooterController', ['$scope', function($scope) {
-
-}]);
-
-
 app.config(function($translateProvider, contextPath, lang) {
     $translateProvider.preferredLanguage(lang);
     $translateProvider.useStaticFilesLoader({
@@ -121,6 +106,7 @@ app.config(function($translateProvider, contextPath, lang) {
         suffix: ''
     });
 });
+
 app.service('anonymousInterceptor', function ($q, $location, alertService) {
     return {
         responseError: function(response) {
@@ -133,6 +119,7 @@ app.service('anonymousInterceptor', function ($q, $location, alertService) {
         }
     };
 });
+
 app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('anonymousInterceptor');
 });

@@ -1,4 +1,4 @@
-app.service('registerService', function($http, urlService, formValidateService, inputValidateService, alertService, $filter) {
+app.service('registerService', function($http, urlService, formValidateService, inputValidateService, alertService, $filter, policyService) {
 
     this.post = function(user) {
         return $http.post(urlService.apiURL('/signon'), user);
@@ -66,6 +66,11 @@ app.service('registerService', function($http, urlService, formValidateService, 
             },
             init: function(form) {
                 this.form = form;
+            },
+            policy: {
+                show: function() {
+                    policyService.show();
+                }
             }
         }
     };
