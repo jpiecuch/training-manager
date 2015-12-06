@@ -13,6 +13,11 @@ public class Exercise extends CommonEntity {
 
     private static final String SET_DELIMITER = ";";
     public static final String FAIL_KEY = "FAIL";
+    public static final String WORKOUT_FIELD = "workout";
+    public static final String DESCRIPTION_FIELD = "description";
+    public static final String REPS_FIELD = "reps";
+    public static final String SUPER_SET_FIELD = "super_set";
+    public static final String POSITION_FIELD = "position";
 
     private Description description;
     private Workout workout;
@@ -28,7 +33,7 @@ public class Exercise extends CommonEntity {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "description")
+    @JoinColumn(name = DESCRIPTION_FIELD)
     public Description getDescription() {
         return description;
     }
@@ -38,7 +43,7 @@ public class Exercise extends CommonEntity {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "workout")
+    @JoinColumn(name = WORKOUT_FIELD)
     @JsonIgnore
     public Workout getWorkout() {
         return workout;
@@ -48,7 +53,7 @@ public class Exercise extends CommonEntity {
         this.workout = workout;
     }
 
-    @Column(name = "reps")
+    @Column(name = REPS_FIELD)
     protected String getReps() {
         return this.reps;
     }
@@ -57,7 +62,7 @@ public class Exercise extends CommonEntity {
         this.reps = reps;
     }
 
-    @Column(name = "super_set")
+    @Column(name = SUPER_SET_FIELD)
     public Integer getGroup() {
         return group;
     }
@@ -66,7 +71,7 @@ public class Exercise extends CommonEntity {
         this.group = group;
     }
 
-    @Column(name = "position")
+    @Column(name = POSITION_FIELD)
     public Integer getPosition() {
         return position;
     }

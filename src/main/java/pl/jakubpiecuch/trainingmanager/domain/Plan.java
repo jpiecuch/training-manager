@@ -12,6 +12,10 @@ import java.util.List;
 @Table(name = "plan")
 public class Plan  extends CommonEntity implements RepoObject {
     private static final long serialVersionUID = 1L;
+    public static final String NAME_FIELD = "name";
+    public static final String GOAL_FIELD = "goal";
+    public static final String CREATOR_FIELD = "creator";
+    public static final String USED_FIELD = "used";
 
     public enum Goal {
         MUSCLES, STRENGTH
@@ -30,7 +34,7 @@ public class Plan  extends CommonEntity implements RepoObject {
         super(id);
     }
 
-    @Column(name = "name")
+    @Column(name = NAME_FIELD)
     public String getName() {
         return name;
     }
@@ -39,7 +43,7 @@ public class Plan  extends CommonEntity implements RepoObject {
         this.name = name;
     }
 
-    @Column(name = "goal")
+    @Column(name = GOAL_FIELD)
     @Enumerated(EnumType.ORDINAL)
     public Goal getGoal() {
         return goal;
@@ -50,7 +54,7 @@ public class Plan  extends CommonEntity implements RepoObject {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "creator")
+    @JoinColumn(name = CREATOR_FIELD)
     public Account getCreator() {
         return creator;
     }
@@ -59,7 +63,7 @@ public class Plan  extends CommonEntity implements RepoObject {
         this.creator = creator;
     }
 
-    @Column(name = "used")
+    @Column(name = USED_FIELD)
     public Boolean getUsed() {
         return used;
     }
@@ -68,7 +72,7 @@ public class Plan  extends CommonEntity implements RepoObject {
         this.used = used;
     }
 
-    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = Phase.PLAN_FIELD, cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Phase> getPhases() {
         return phases;
     }
