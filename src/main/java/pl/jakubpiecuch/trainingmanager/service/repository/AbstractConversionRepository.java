@@ -43,7 +43,7 @@ public abstract class AbstractConversionRepository<T extends RepoObject, E exten
     @Override
     public void update(T element) {
         validator.validate(element, new BeanPropertyBindingResult(element, name));
-        dao.update((CommonEntity) element);
+        dao.update((CommonEntity) converter.toEntity(element, (E) dao.findById(element.getId())));
     }
 
     @Override
