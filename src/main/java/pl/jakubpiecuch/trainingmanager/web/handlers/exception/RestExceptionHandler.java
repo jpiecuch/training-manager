@@ -33,13 +33,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class ErrorResource {
-        public static final String DEFAULT_CODE = "InvalidRequest";
-        private String code;
         private String message;
         private List<FieldError> fieldErrors;
 
-        public ErrorResource(String code, String message) {
-            this.code = code;
+        public ErrorResource(String message) {
             this.message = message;
         }
 
@@ -48,14 +45,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 fieldErrors = new ArrayList<FieldError>();
             }
             fieldErrors.add(error);
-        }
-
-        public String getCode() {
-            return code;
-        }
-
-        public void setCode(String code) {
-            this.code = code;
         }
 
         public String getMessage() {
@@ -101,7 +90,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         LOGGER.error("",e);
         ValidationException ire = (ValidationException) e;
 
-        ErrorResource error = new ErrorResource(ErrorResource.DEFAULT_CODE, ire.getMessage());
+        ErrorResource error = new ErrorResource(ire.getMessage());
 
         for(FieldError fe : ire.getErrors().getFieldErrors()) {
             error.addFieldError(new ErrorResource.FieldError(fe.getField(), fe.getCode(), ArrayUtils.isNotEmpty(fe.getArguments()) ? (Map<String, Object>) fe.getArguments()[0] : null));
@@ -118,7 +107,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         LOGGER.error("",e);
         IllegalArgumentException ire = (IllegalArgumentException) e;
 
-        ErrorResource error = new ErrorResource(ErrorResource.DEFAULT_CODE, ire.getMessage());
+        ErrorResource error = new ErrorResource(ire.getMessage());
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -130,7 +119,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleNotFound(RuntimeException e, WebRequest request) {
         LOGGER.error("",e);
 
-        ErrorResource error = new ErrorResource(ErrorResource.DEFAULT_CODE, e.getMessage());
+        ErrorResource error = new ErrorResource(e.getMessage());
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -142,7 +131,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleAccessDenied(RuntimeException e, WebRequest request) {
         LOGGER.error("",e);
 
-        ErrorResource error = new ErrorResource(ErrorResource.DEFAULT_CODE, e.getMessage());
+        ErrorResource error = new ErrorResource(e.getMessage());
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -154,6 +143,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
         LOGGER.error("",ex);
         headers.setContentType(MediaType.APPLICATION_JSON);
-        return super.handleExceptionInternal(ex, body == null ? new ErrorResource(ErrorResource.DEFAULT_CODE, ex.getMessage()) : body, headers, status, request);
+        return super.handleExceptionInternal(ex, body == null ? new ErrorResource(ex.getMessage()) : body, headers, status, request);
     }
 }

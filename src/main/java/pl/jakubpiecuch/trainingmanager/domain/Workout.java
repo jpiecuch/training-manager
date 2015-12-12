@@ -17,7 +17,7 @@ public class Workout extends CommonEntity implements Serializable {
     private static final String MUSCLE_DELIMITER = ";";
     public static final String PHASE_FIELD = "phase";
     public static final String POSITION_FIELD = "position";
-    public static final String WEEK_DAY_FIELD = "week_day";
+    public static final String WEEK_DAY_FIELD = "weekDay";
     public static final String MUSCLES_FIELD = "muscles";
 
     public enum WeekDay {
@@ -46,7 +46,7 @@ public class Workout extends CommonEntity implements Serializable {
         this.position = position;
     }
 
-    @Column(name = WEEK_DAY_FIELD)
+    @Column(name = "week_day")
     @Enumerated(EnumType.ORDINAL)
     public WeekDay getWeekDay() {
         return weekDay;

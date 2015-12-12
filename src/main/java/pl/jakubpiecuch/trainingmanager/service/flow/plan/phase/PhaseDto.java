@@ -6,6 +6,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutDto;
 import pl.jakubpiecuch.trainingmanager.service.identify.IdentifyObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class PhaseDto implements IdentifyObject {
     private Plan.Goal goal;
     private Long planId;
     private Integer weeks;
-    private List<WorkoutDto> workouts;
+    private List<WorkoutDto> workouts = new ArrayList<WorkoutDto>();
 
     public Long getId() {
         return id;

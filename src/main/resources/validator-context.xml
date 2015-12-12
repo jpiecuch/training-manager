@@ -21,7 +21,9 @@
         <property name="maxNameLength" value="${description.name.maxLength}"/>
     </bean>
 
-    <bean id="planValidator" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanValidator"/>
+    <bean id="insertPlanValidator" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.InsertPlanValidator"/>
+
+    <bean id="updatePlanValidator" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.UpdatePlanValidator"/>
 
     <bean id="equipmentValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.EquipmentValidator">
         <property name="validators">

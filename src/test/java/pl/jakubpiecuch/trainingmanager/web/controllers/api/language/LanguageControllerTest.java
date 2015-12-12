@@ -26,24 +26,15 @@ public class LanguageControllerTest extends BaseControllerTestCase {
         }
     };
 
-    @Autowired
-    private LanguageController languageController;
-
-    @Override
-    protected LanguageController getController() {
-        return languageController;
-    }
-
     @Before
     public void setUpChild() throws Exception {
         super.setUp();
-        Mockito.when(versionService.languages()).thenReturn(LANGS);
-        Mockito.when(versionService.language(VALID_LANG)).thenReturn(new HashMap<String, String>());
-        Mockito.when(versionService.language(NOT_VALID_LANG)).thenThrow(NotFoundException.class);
     }
 
     @Test
     public void testLang() throws Exception {
+        Mockito.when(versionService.languages()).thenReturn(LANGS);
+
         mockMvc.perform(MockMvcRequestBuilders.get(ApiURI.API_LANGUAGE_PATH, ApiVersionService.Version.v1)
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
@@ -51,9 +42,13 @@ public class LanguageControllerTest extends BaseControllerTestCase {
 
     @Test
     public void testLangs() throws Exception {
+        Mockito.when(versionService.language(VALID_LANG)).thenReturn(new HashMap<String, String>());
+
         mockMvc.perform(MockMvcRequestBuilders.get(ApiURI.API_LANGUAGE_PATH + ApiURI.KEY_PATH_PARAM, ApiVersionService.Version.v1, VALID_LANG)
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Mockito.when(versionService.language(NOT_VALID_LANG)).thenThrow(NotFoundException.class);
 
         mockMvc.perform(MockMvcRequestBuilders.get(ApiURI.API_LANGUAGE_PATH + ApiURI.KEY_PATH_PARAM, ApiVersionService.Version.v1, NOT_VALID_LANG)
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))

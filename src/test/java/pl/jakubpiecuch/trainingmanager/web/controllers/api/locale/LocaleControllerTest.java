@@ -20,14 +20,6 @@ public class LocaleControllerTest extends BaseControllerTestCase {
     private static final String NOT_SUPPORTED_LOCALE = "de";
     private static final String SUPPORTED_LOCALE = "pl";
 
-    @Autowired
-    private LocaleController controller;
-
-    @Override
-    public LocaleController getController() {
-        return controller;
-    }
-
     @Before
     public void setUp() {
         super.setUp();

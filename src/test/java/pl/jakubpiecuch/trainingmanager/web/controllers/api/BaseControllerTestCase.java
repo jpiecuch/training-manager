@@ -26,22 +26,14 @@ public abstract class BaseControllerTestCase {
     @Autowired
     private WebApplicationContext wac;
 
-    @Mock
+    @Autowired
     protected ApiVersionService versionService;
 
     protected final static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     protected MockMvc mockMvc;
-    protected abstract AbstractController getController();
 
     protected void setUp() {
-        MockitoAnnotations.initMocks(this);
-        getController().setVersionServices(new HashMap<ApiVersionService.Version, ApiVersionService>() {
-            {
-                put(ApiVersionService.Version.v1, versionService);
-            }
-        });
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
-
     }
 }

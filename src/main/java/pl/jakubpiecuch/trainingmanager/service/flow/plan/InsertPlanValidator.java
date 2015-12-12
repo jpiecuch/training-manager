@@ -19,7 +19,7 @@ import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 /**
  * Created by Rico on 2014-11-29.
  */
-public class PlanValidator implements Validator {
+public class InsertPlanValidator implements Validator {
 
     private static final String ARRAY_PROPERTY_FORMAT = "%s[%s]";
     public static final String GROUPS_FIELD = "groups";
@@ -27,11 +27,11 @@ public class PlanValidator implements Validator {
     public static final String PHASES_FIELD = "phases";
     public static final String EXERCISES_FIELD = "exercises";
     private static final char SEPARATOR = '.';
-    private static final String SETS_FIELD = "sets";
+    public static final String SETS_FIELD = "sets";
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return true;
+        return PlanDto.class.isAssignableFrom(clazz);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class PlanValidator implements Validator {
                 validateWorkout(phase.getWorkouts().get(i), errors, i, phaseName);
             }
         } else {
-            errors.rejectValue(path(phaseName + WORKOUTS_FIELD), RestrictionCode.REQUIRED);
+            errors.rejectValue(path(phaseName, WORKOUTS_FIELD), RestrictionCode.REQUIRED);
         }
     }
 

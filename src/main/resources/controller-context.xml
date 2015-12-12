@@ -3,14 +3,6 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <bean id="abstractController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController" abstract="true">
-        <property name="versionServices">
-            <map>
-                <entry key="v1" value-ref="version1Service"/>
-            </map>
-        </property>
-    </bean>
-
     <bean id="signInController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signin.SignInController" parent="abstractController"/>
 
     <bean id="signOutController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signout.SignOutController" parent="abstractController"/>
@@ -44,54 +36,4 @@
     <bean id="resetPasswordController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.password.ResetPasswordController" parent="abstractController"/>
 
     <bean id="activateUserController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.activate.ActivateUserController" parent="abstractController"/>
-
-
-    <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
-        <property name="messageSourceFiles" value="/bundles/web/web_%s.properties,/bundles/policy/policy_%s.properties,/bundles/terms/terms_%s.properties"/>
-        <property name="langs" value="${app.langs}"/>
-        <property name="userServices">
-            <map>
-                <entry key="SOCIAL" value-ref="socialUserService"/>
-                <entry key="LOCAL" value-ref="localUserService"/>
-            </map>
-        </property>
-        <property name="authenticationService" ref="authenticationService"/>
-        <property name="resourceServices">
-            <map>
-                <entry key="image" value-ref="imageResource"/>
-            </map>
-        </property>
-        <property name="dictionary" ref="constantsDictionary"/>
-        <property name="repositories">
-            <map>
-                <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
-                <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
-                <entry key="ROLE" value-ref="roleRepository"/>
-                <entry key="WORKOUT" value-ref="userWorkoutRepository"/>
-                <entry key="PLAN" value-ref="planRepository"/>
-                <entry key="ACCOUNT_RECORD" value-ref="accountRecordRepository"/>
-            </map>
-        </property>
-        <property name="readRepositories">
-            <map>
-                <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
-                <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
-                <entry key="PLAN" value-ref="planRepository"/>
-                <entry key="WORKOUT" value-ref="userWorkoutRepository"/>
-                <entry key="ROLE" value-ref="roleRepository"/>
-                <entry key="ACCOUNT_RECORD" value-ref="accountRecordRepository"/>
-            </map>
-        </property>
-        <property name="orderResolverMap">
-            <map>
-                <entry key="Description-muscles" value-ref="descriptionMusclesOrderResolver"/>
-                <entry key="Description-type" value-ref="descriptionTypeOrderResolver"/>
-                <entry key="Description-level" value-ref="descriptionLevelOrderResolver"/>
-                <entry key="Description-mechanics" value-ref="descriptionMechanicsOrderResolver"/>
-                <entry key="Description-force" value-ref="descriptionForceOrderResolver"/>
-            </map>
-        </property>
-        <property name="userPlanStarter" ref="sessionUserPlanStarter"/>
-        <property name="updatableRepository" ref="executionRepository"/>
-    </bean>
 </beans>

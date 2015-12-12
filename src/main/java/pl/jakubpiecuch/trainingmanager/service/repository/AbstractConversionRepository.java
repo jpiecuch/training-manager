@@ -3,15 +3,17 @@ package pl.jakubpiecuch.trainingmanager.service.repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
+import pl.jakubpiecuch.trainingmanager.dao.util.DaoAssert;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
+import pl.jakubpiecuch.trainingmanager.web.validator.ValidationType;
 
 import java.util.List;
 
 /**
  * Created by Rico on 2015-02-22.
  */
-public abstract class AbstractConversionRepository<T extends RepoObject, E extends RepoObject, C extends Criteria> extends CommonRepository<T,C> implements Repository<T, C> {
+public abstract class AbstractConversionRepository<T extends RepoObject, E extends RepoObject, C extends Criteria> extends CommonRepository<T,C> {
 
     protected Converter<T,E> converter;
 
@@ -35,20 +37,22 @@ public abstract class AbstractConversionRepository<T extends RepoObject, E exten
 
     @Override
     public long create(T element) {
-        validator.validate(element, new BeanPropertyBindingResult(element, name));
+        validators.get(ValidationType.INSERT).validate(element, new BeanPropertyBindingResult(element, name));
         element.setId(dao.create((CommonEntity) converter.toEntity(element, getEmpty())));
         return element.getId();
     }
 
     @Override
     public void update(T element) {
-        validator.validate(element, new BeanPropertyBindingResult(element, name));
-        dao.update((CommonEntity) converter.toEntity(element, (E) dao.findById(element.getId())));
+        CommonEntity entity =  dao.findById(element.getId());
+        DaoAssert.notNull(entity);
+        validators.get(ValidationType.UPDATE).validate(element, new BeanPropertyBindingResult(element, name));
+        dao.update((CommonEntity) converter.toEntity(element, (E) entity));
     }
 
     @Override
     public T retrieve(long id) {
-        return converter.fromEntity((E) dao.findById(id));
+        return converter.fromEntity((E) super.retrieve(id));
     }
 
     public abstract E getEmpty();
