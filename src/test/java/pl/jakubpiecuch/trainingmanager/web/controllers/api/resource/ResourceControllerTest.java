@@ -37,9 +37,6 @@ public class ResourceControllerTest extends BaseControllerTestCase {
     };
     private static final String FILE_KEY = "file";
 
-    @Autowired
-    private ResourceController resourceController;
-
     @Before
     public void setUpChild() throws Exception {
         final HttpHeaders headers = new HttpHeaders();
@@ -48,11 +45,6 @@ public class ResourceControllerTest extends BaseControllerTestCase {
         Mockito.when(versionService.resource(TYPE, DIRECTORY_KEY)).thenReturn(new ResponseEntity(LIST, HttpStatus.OK));
         Mockito.when(versionService.resource(TYPE, FILE_KEY)).thenReturn(new ResponseEntity(FIRST.getBytes(), headers, HttpStatus.OK));
         Mockito.when(versionService.resource(TYPE, NOT_EXISTS_DIRECTORY_KEY)).thenThrow(NotFoundException.class);
-    }
-
-    @Override
-    protected ResourceController getController() {
-        return resourceController;
     }
 
     @Test

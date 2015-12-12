@@ -9,15 +9,22 @@
 
        <context:annotation-config />
 
-       <bean id="localeController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.locale.LocaleController"/>
-
-       <bean id="signInController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signin.SignInController"/>
-
-       <bean id="resourceController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.resource.ResourceController"/>
-
-       <bean id="languageController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.language.LanguageController"/>
-
-       <bean id="myExceptionHandler" class="pl.jakubpiecuch.trainingmanager.web.handlers.exception.RestExceptionHandler"/>
-
        <mvc:annotation-driven />
+
+       <import resource="controller-context.xml"/>
+
+       <bean id="abstractController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController" abstract="true">
+              <property name="versionServices">
+                     <map>
+                            <entry key="v1" value-ref="version1Service"/>
+                     </map>
+              </property>
+       </bean>
+
+       <bean id="version1Service" class="org.mockito.Mockito" factory-method="mock">
+              <constructor-arg value="pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService"/>
+       </bean>
+
+       <bean id="exceptionHandler" class="pl.jakubpiecuch.trainingmanager.web.handlers.exception.RestExceptionHandler"/>
+
 </beans>

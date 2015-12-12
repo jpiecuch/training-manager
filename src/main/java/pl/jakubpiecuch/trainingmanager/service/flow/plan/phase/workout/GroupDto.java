@@ -2,6 +2,7 @@ package pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout;
 
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public class GroupDto {
     private Integer id;
-    private List<ExerciseDto> exercises;
+    private List<ExerciseDto> exercises = new ArrayList<ExerciseDto>();
 
     public Integer getId() {
         return id;

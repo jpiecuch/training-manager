@@ -28,6 +28,6 @@ public class AccessDeniedHandler implements org.springframework.security.web.acc
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
         httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
         httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
-        httpServletResponse.getOutputStream().println(mapper.writeValueAsString(new RestExceptionHandler.ErrorResource(RestExceptionHandler.ErrorResource.DEFAULT_CODE, e.getMessage())));
+        httpServletResponse.getOutputStream().println(mapper.writeValueAsString(new RestExceptionHandler.ErrorResource(e.getMessage())));
     }
 }

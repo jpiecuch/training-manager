@@ -12,6 +12,11 @@ import java.util.List;
 @Table(name = "phase")
 public class Phase extends CommonEntity implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final String GOAL_FIELD = "goal";
+    public static final String POSITION_FIELD = "position";
+    public static final String DESCRIPTION_FIELD = "description";
+    public static final String PLAN_FIELD = "plan";
+    public static final String WEEKS_FIELD = "weeks";
 
     private Integer position;
     private Plan.Goal goal;
@@ -27,7 +32,7 @@ public class Phase extends CommonEntity implements Serializable {
         super(id);
     }
 
-    @Column(name = "goal")
+    @Column(name = GOAL_FIELD)
     @Enumerated(EnumType.ORDINAL)
     public Plan.Goal getGoal() {
         return goal;
@@ -37,7 +42,7 @@ public class Phase extends CommonEntity implements Serializable {
         this.goal = goal;
     }
 
-    @Column(name = "position")
+    @Column(name = POSITION_FIELD)
     public Integer getPosition() {
         return position;
     }
@@ -46,7 +51,7 @@ public class Phase extends CommonEntity implements Serializable {
         this.position = position;
     }
 
-    @Column(name = "description")
+    @Column(name = DESCRIPTION_FIELD)
     public String getDescription() {
         return description;
     }
@@ -56,7 +61,7 @@ public class Phase extends CommonEntity implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "plan")
+    @JoinColumn(name = PLAN_FIELD)
     public Plan getPlan() {
         return plan;
     }
@@ -65,7 +70,7 @@ public class Phase extends CommonEntity implements Serializable {
         this.plan = plan;
     }
 
-    @Column(name = "weeks")
+    @Column(name = WEEKS_FIELD)
     public Integer getWeeks() {
         return weeks;
     }
@@ -74,7 +79,7 @@ public class Phase extends CommonEntity implements Serializable {
         this.weeks = weeks;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phase", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = Workout.PHASE_FIELD, orphanRemoval = true)
     public List<Workout> getWorkouts() {
         return workouts;
     }

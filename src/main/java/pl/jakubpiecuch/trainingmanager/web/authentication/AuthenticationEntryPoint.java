@@ -29,7 +29,7 @@ public class AuthenticationEntryPoint implements org.springframework.security.we
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.getOutputStream().println(mapper.writeValueAsString(new RestExceptionHandler.ErrorResource(RestExceptionHandler.ErrorResource.DEFAULT_CODE, authException.getMessage())));
+        response.getOutputStream().println(mapper.writeValueAsString(new RestExceptionHandler.ErrorResource(authException.getMessage())));
 
     }
 }

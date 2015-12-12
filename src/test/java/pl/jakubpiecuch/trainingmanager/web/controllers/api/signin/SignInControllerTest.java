@@ -16,11 +16,6 @@ public class SignInControllerTest extends BaseControllerTestCase {
     @Autowired
     SignInController controller;
 
-    @Override
-    protected SignInController getController() {
-        return controller;
-    }
-
     private static Authentication VALID_AUTHENTICATION = new Authentication();
 
     @Before

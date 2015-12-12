@@ -1,93 +1,41 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
-import com.google.common.collect.Lists;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.Validator;
-import pl.jakubpiecuch.trainingmanager.dao.PageResult;
-import pl.jakubpiecuch.trainingmanager.dao.PlanDao;
-import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
+import org.springframework.util.Assert;
+import pl.jakubpiecuch.trainingmanager.dao.util.DaoAssert;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
-import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
-import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
+import pl.jakubpiecuch.trainingmanager.service.repository.AbstractConversionRepository;
 
-import java.util.List;
 
 /**
  * Created by Rico on 2014-12-31.
  */
-public class PlanRepository implements Repository<PlanDto, PlanCriteria> {
+public class PlanRepository extends AbstractConversionRepository<PlanDto, Plan, PlanCriteria> {
 
-    private PlanConverter converter;
-    private PlanDao dao;
-
-    @Override
-    @Transactional
-    public PageResult<PlanDto> read(PlanCriteria criteria) {
-        RepoDao repoDao = dao;
-        PageResult<Plan> result = repoDao.findByCriteria(criteria);
-        final List<PlanDto> list = Lists.newArrayList(converter.fromEntities(result.getResult()));
-        final long count = result.getCount();
-        return new PageResult<PlanDto>() {
-            @Override
-            public List<PlanDto> getResult() {
-                return list;
-            }
-
-            @Override
-            public long getCount() {
-                return count;
-            }
-        };
-    }
-
-    private Validator validator;
+    private static final String PLAN_USED_CODE = "plan.used.error";
 
     @Override
     @Transactional
     public PlanDto retrieve(long id) {
-        Plan flow = dao.findById(id);
-        if (flow == null) {
-            throw new NotFoundException();
-        }
-        return converter.fromEntity(flow);
-    }
-
-    @Override
-    public long create(PlanDto element) {
-        if (validator != null) {
-            validator.validate(element, new BeanPropertyBindingResult(element, "plan"));
-        }
-        Plan entity = converter.toEntity(element, new Plan());
-        dao.create(entity);
-        return entity.getId();
+        return super.retrieve(id);
     }
 
     @Override
     @Transactional
     public void update(PlanDto element) {
-        if (validator != null) {
-            validator.validate(element, new BeanPropertyBindingResult(element, "plan"));
-        }
-        Plan entity = converter.toEntity(element, dao.findById(element.getId()));
-        dao.update(entity);
+        super.update(element);
     }
 
     @Override
     public void delete(long id) {
-        Plan entity = dao.findById(id);
-        dao.delete(entity);
+        Plan plan = (Plan) dao.findById(id);
+        DaoAssert.notNull(plan);
+        Assert.isTrue(!plan.getUsed(), PLAN_USED_CODE);
+        super.delete(plan);
     }
 
-    public void setValidator(Validator validator) {
-        this.validator = validator;
-    }
-
-    public void setConverter(PlanConverter converter) {
-        this.converter = converter;
-    }
-
-    public void setDao(PlanDao dao) {
-        this.dao = dao;
+    @Override
+    public Plan getEmpty() {
+        return new Plan();
     }
 }
