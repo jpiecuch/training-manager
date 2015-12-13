@@ -13,11 +13,13 @@ import org.springframework.validation.Validator;
 import org.springframework.web.util.UriUtils;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.domain.Role;
 import pl.jakubpiecuch.trainingmanager.service.crypt.CryptService;
 import pl.jakubpiecuch.trainingmanager.service.encoder.password.PasswordEncoder;
 import pl.jakubpiecuch.trainingmanager.service.mail.EmailService;
 import pl.jakubpiecuch.trainingmanager.service.password.PasswordService;
 import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
+import pl.jakubpiecuch.trainingmanager.service.repository.role.RoleCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService;
 import pl.jakubpiecuch.trainingmanager.service.user.local.assertion.AccountAssert;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
@@ -105,6 +107,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
             account.setSalt(KeyGenerators.string().generateKey());
             account.setPassword(passwordEncoder.encode(registration.getPassword(), account.getSalt()));
             account.setProvider(Provider.Type.LOCAL);
+            account.getRoles().addAll(roleRepository.read(new RoleCriteria().addNameRestrictions(Role.ADMIN_ROLE)).getResult());
             repository.create(account);
             emailService.sendEmail(new Object[] {UriUtils.encodeQueryParam(cryptService.encrypt(account.getName(), account.getEmail()), "UTF-8"), account, WebUtil.fromJson(account.getConfig(), Account.Config.class), serviceUri}, locale, EmailService.Template.REGISTER, account.getEmail());
         } catch (UnsupportedEncodingException e) {

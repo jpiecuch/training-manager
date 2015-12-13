@@ -36,7 +36,7 @@ public class Account extends VersionedEntity implements RepoObject {
     private Status status;
     private String config;
     private Provider.Type provider;
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<Role>();
 
     public Account() {
         super();

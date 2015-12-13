@@ -10,6 +10,8 @@ import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.util.Assert;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.domain.Role;
+import pl.jakubpiecuch.trainingmanager.service.repository.role.RoleCriteria;
 import pl.jakubpiecuch.trainingmanager.service.social.SocialService;
 import pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
@@ -66,6 +68,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
         account.setSalt(KeyGenerators.string().generateKey());
         account.setPassword(SecurityUser.OAUTH);
         account.setProvider(Provider.Type.SOCIAL);
+        account.getRoles().addAll(roleRepository.read(new RoleCriteria().addNameRestrictions(Role.ADMIN_ROLE)).getResult());
 
         repository.create(account);
     }

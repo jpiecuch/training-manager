@@ -23,17 +23,21 @@ app.service('registerService', function($http, urlService, formValidateService, 
       }
     };
 
+    this.getEmptyUser = function() {
+        return {
+            username: null,
+            firstName: null,
+            lastName: null,
+            email: null,
+            password: null,
+            accepted: false
+        }
+    };
+
     this.get = function() {
         var me = this;
         return {
-            user: {
-                username: null,
-                firstName: null,
-                lastName: null,
-                email: null,
-                password: null,
-                accepted: false
-            },
+            user: this.getEmptyUser(),
             errors: {
                 username: [],
                 firstName: [],
@@ -59,7 +63,8 @@ app.service('registerService', function($http, urlService, formValidateService, 
                 var form = this;
                 me.clearErrors(this.errors);
                 me.post(angular.extend({provider: 'LOCAL'},this.user)).then(function success(response) {
-                    me.success(this.form, response);
+                    me.success(form, response);
+                    form.user = me.getEmptyUser();
                 }, function error(response) {
                     me.error(form, response);
                 });

@@ -31,6 +31,7 @@
     <beans:bean abstract="true" id="abstractUserService" class="pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService">
         <beans:property name="emailService" ref="emailService"/>
         <beans:property name="repository" ref="accountRepository"/>
+        <beans:property name="roleRepository" ref="roleRepository"/>
         <beans:property name="rememberMeServices" ref="rememberMeServices"/>
     </beans:bean>
     

@@ -12,6 +12,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Role;
 import pl.jakubpiecuch.trainingmanager.service.mail.EmailService;
 import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
 import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
+import pl.jakubpiecuch.trainingmanager.service.repository.role.RoleCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ public abstract class AbstractUserService implements UserService {
 
     protected EmailService emailService;
     protected Repository<Account, AccountCriteria> repository;
+    protected Repository<Role, RoleCriteria> roleRepository;
     private RememberMeServices rememberMeServices;
 
     public abstract boolean isValidCredentials(Account entity, UserDetails user);
@@ -70,5 +72,9 @@ public abstract class AbstractUserService implements UserService {
 
     public void setRememberMeServices(RememberMeServices rememberMeServices) {
         this.rememberMeServices = rememberMeServices;
+    }
+
+    public void setRoleRepository(Repository<Role, RoleCriteria> roleRepository) {
+        this.roleRepository = roleRepository;
     }
 }
