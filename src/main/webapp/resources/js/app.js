@@ -173,6 +173,10 @@ app.controller('HeaderController', ['$scope', 'authenticateService', '$state', '
     }
 }]);
 
+app.controller('FooterController', [function() {
+
+}]);
+
 /* Setup Rounting For All Pages */
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     // Redirect any unmatched url
@@ -317,7 +321,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         //Plan
         .state('plans', {
             url: "/plans",
-            templateUrl: "resources/views/plans.html",
+            templateUrl: "resources/views/table.html",
             data: {pageTitle: 'Plans'},
             controller: "PlansController",
             resolve: {
