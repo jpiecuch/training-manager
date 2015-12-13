@@ -86,6 +86,7 @@
             </map>
         </property>
         <property name="repository" ref="accountRepository"/>
+        <property name="roleRepository" ref="roleRepository"/>
     </bean>
 
 </beans>
