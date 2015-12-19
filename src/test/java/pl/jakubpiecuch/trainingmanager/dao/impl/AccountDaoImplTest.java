@@ -29,25 +29,39 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
     private static final String CREATED_STRING = "2014-12-07 13:52:56.805";
     private static final Long NOT_EXISTS_ID = 99l;
     private static final String ROLE_NAME = "ADMIN";
-    private static Date CREATED;
     private static final String UPDATED_STRING = "2014-12-07 13:53:16.062";
-    private static Date UPDATED;
     private static final Account.Status STATUS = Account.Status.ACTIVE;
     private static final String EMAIL = "test.user@test.com";
     private static final String FIRST_NAME = "Test";
     private static final String LAST_NAME = "User";
-    private static final String CONFIG = "{\"firstName\":\""+FIRST_NAME+"\",\"lastName\":\""+LAST_NAME+"\"}";
-
+    private static final String CONFIG = "{\"firstName\":\"" + FIRST_NAME + "\",\"lastName\":\"" + LAST_NAME + "\"}";
+    private static Date CREATED;
+    private static Date UPDATED;
 
     static {
         try {
             CREATED = FORMAT.parse(CREATED_STRING);
             UPDATED = FORMAT.parse(UPDATED_STRING);
-        } catch (ParseException e) {}
+        } catch (ParseException e) {
+        }
     }
 
     @Autowired
     private RepoDao<Account, AccountCriteria> accountDao;
+
+    private static void assertAccount(Account account) {
+        assertEquals(ID, account.getId());
+        assertEquals(PASSWORD, account.getPassword());
+        assertEquals(NAME, account.getName());
+        assertEquals(SALT, account.getSalt());
+        assertEquals(UPDATED, account.getUpdated());
+        assertEquals(CREATED, account.getCreated());
+        assertEquals(STATUS, account.getStatus());
+        assertEquals(EMAIL, account.getEmail());
+        assertEquals(CONFIG, account.getConfig());
+        assertNotNull(account.getRoles());
+        assertEquals(ROLE_NAME, account.getRoles().get(0).getName());
+    }
 
     @Test
     @Transactional
@@ -110,7 +124,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
             account.setId(NOT_EXISTS_ID);
             accountDao.create(account);
             accountDao.flush();
-        } catch(HibernateException ex) {
+        } catch (HibernateException ex) {
             exFlag = true;
         }
         assertTrue(exFlag);
@@ -213,15 +227,15 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
 
         //not unique email + social type
         try {
-        Account account = new Account();
-        account.setEmail(EMAIL);
-        account.setName(NAME + "unique_name");
-        account.setPassword(PASSWORD);
-        account.setSalt(SALT);
-        account.setStatus(STATUS);
-        account.setProvider(Provider.Type.LOCAL);
-        account.setSocialType(SocialProvider.SocialType.NONE);
-        accountDao.create(account);
+            Account account = new Account();
+            account.setEmail(EMAIL);
+            account.setName(NAME + "unique_name");
+            account.setPassword(PASSWORD);
+            account.setSalt(SALT);
+            account.setStatus(STATUS);
+            account.setProvider(Provider.Type.LOCAL);
+            account.setSocialType(SocialProvider.SocialType.NONE);
+            accountDao.create(account);
         } catch (ConstraintViolationException ex) {
             counter++; //8
         }
@@ -270,19 +284,5 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
 
         assertEquals(1l, result.getCount());
         assertAccount(result.getResult().get(0));
-    }
-
-    private static void assertAccount(Account account) {
-        assertEquals(ID, account.getId());
-        assertEquals(PASSWORD, account.getPassword());
-        assertEquals(NAME, account.getName());
-        assertEquals(SALT, account.getSalt());
-        assertEquals(UPDATED, account.getUpdated());
-        assertEquals(CREATED, account.getCreated());
-        assertEquals(STATUS, account.getStatus());
-        assertEquals(EMAIL, account.getEmail());
-        assertEquals(CONFIG, account.getConfig());
-        assertNotNull(account.getRoles());
-        assertEquals(ROLE_NAME, account.getRoles().get(0).getName());
     }
 }

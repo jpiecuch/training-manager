@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 public class LevelOrderResolverTest extends AbstractOrderResolverTest {
 
+    private LevelOrderResolver resolver = new LevelOrderResolver();
+
     public LevelOrderResolverTest() {
         super(new HashMap<String, Integer[]>() {
             {
@@ -15,8 +17,6 @@ public class LevelOrderResolverTest extends AbstractOrderResolverTest {
             }
         });
     }
-
-    private LevelOrderResolver resolver = new LevelOrderResolver();
 
     @Override
     public LevelOrderResolver getResolver() {

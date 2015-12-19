@@ -28,7 +28,7 @@ public class Version1ServiceTest {
 
     private static final String LANG_EN = "en";
     private static final String LANG_PL = "pl";
-    private static final String[] LANGS = new String[] {LANG_EN, LANG_PL};
+    private static final String[] LANGS = new String[]{LANG_EN, LANG_PL};
     private static final String NOT_VALID_LOCALE = "en";
     private static final String NOT_VALID_USERNAME = "not valid username";
     private static final String NOT_VALID_PASSWORD = "not valid password";

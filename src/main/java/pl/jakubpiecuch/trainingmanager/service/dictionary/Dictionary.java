@@ -6,5 +6,6 @@ package pl.jakubpiecuch.trainingmanager.service.dictionary;
 public interface Dictionary {
 
     Object retrieve(long id);
+
     Object retrieve(Long[] ids);
 }

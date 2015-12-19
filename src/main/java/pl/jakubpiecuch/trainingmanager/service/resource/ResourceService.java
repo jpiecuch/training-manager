@@ -6,7 +6,15 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ResourceService {
-    
+
+    List<String> resources(String handler);
+
+    byte[] read(String handler) throws IOException;
+
+    MediaType getMediaType(String handler) throws IOException;
+
+    boolean isCatalog(String handler);
+
     enum Type {
         image("jpg", "png");
 
@@ -15,14 +23,9 @@ public interface ResourceService {
         Type(String... extensions) {
             this.extensions = extensions;
         }
-        
+
         public String[] getExtensions() {
             return extensions;
         }
     }
-    
-    List<String> resources(String handler);
-    byte[] read(String handler) throws IOException;
-    MediaType getMediaType(String handler) throws IOException;
-    boolean isCatalog(String handler);
 }

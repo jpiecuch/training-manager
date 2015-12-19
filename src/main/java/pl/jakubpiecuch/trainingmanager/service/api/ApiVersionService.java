@@ -22,35 +22,50 @@ import java.util.Locale;
 import java.util.Map;
 
 public interface ApiVersionService {
-    enum Version {
-        v1
-    }
-
     List<String> languages();
+
     ResponseEntity resource(ResourceService.Type type, String key) throws IOException;
+
     Object language(String lang);
+
     void locale(HttpServletRequest request, HttpServletResponse response, String locale);
 
     <T extends Criteria> PageResult retrieveFromRepository(T criteria, Repositories type);
+
     <T extends RepoObject> T uniqueFromRepository(Long id, Repositories type);
+
     <T extends RepoObject> long storeInRepository(T object, Repositories type);
+
     <T extends RepoObject> void updateInRepository(T object, Repositories type);
+
     void removeFromRepository(long id, Repositories type);
 
     Equipment resolve(InputStream stream, Equipment.Type type) throws IOException;
 
     Object dictionary(long id);
+
     Object dictionaries(Long[] ids);
 
-    Map<String,OrderResolver> orderResolvers();
+    Map<String, OrderResolver> orderResolvers();
 
     void signIn(HttpServletRequest request, HttpServletResponse response, Authentication authentication);
+
     void signOut(HttpServletRequest request, HttpServletResponse response);
+
     void signOn(Registration registration, Locale locale);
+
     Authentication signed();
+
     void startPlan(UserPlan userPlan);
+
     void updateExecution(ExecutionDto execution);
+
     void resetPassword(String email, Locale locale);
+
     void activate(String code);
+
+    enum Version {
+        v1
+    }
 
 }

@@ -44,7 +44,7 @@ public class InsertPlanValidatorTest {
 
             ValidationTestUtils.AssertBuilder assertBuilder = ValidationTestUtils.createAssertBuilder();
 
-            for (String fullField : new String[] {Plan.NAME_FIELD, InsertPlanValidator.PHASES_FIELD}) {
+            for (String fullField : new String[]{Plan.NAME_FIELD, InsertPlanValidator.PHASES_FIELD}) {
                 assertBuilder.addAssert(fullField, RestrictionCode.REQUIRED);
             }
 
@@ -88,7 +88,7 @@ public class InsertPlanValidatorTest {
 
 
         getPlan().getPhases().get(0).getWorkouts().get(0).setPosition(1);
-        getPlan().getPhases().get(0).getWorkouts().get(0).setMuscles(new Description.Muscles[] {Description.Muscles.ABDUCTORS});
+        getPlan().getPhases().get(0).getWorkouts().get(0).setMuscles(new Description.Muscles[]{Description.Muscles.ABDUCTORS});
         getPlan().getPhases().get(0).getWorkouts().get(0).setWeekDay(Workout.WeekDay.FRIDAY);
         getPlan().getPhases().get(0).getWorkouts().get(0).getGroups().add(new GroupDto());
 
@@ -121,7 +121,7 @@ public class InsertPlanValidatorTest {
 
         getPlan().getPhases().get(0).getWorkouts().get(0).getGroups().get(0).getExercises().get(0).setPosition(1);
         getPlan().getPhases().get(0).getWorkouts().get(0).getGroups().get(0).getExercises().get(0).setDescriptionId(1l);
-        getPlan().getPhases().get(0).getWorkouts().get(0).getGroups().get(0).getExercises().get(0).setSets(new String[] {"wrong"});
+        getPlan().getPhases().get(0).getWorkouts().get(0).getGroups().get(0).getExercises().get(0).setSets(new String[]{"wrong"});
 
 
         errors = new BeanPropertyBindingResult(getPlan(), NAME);
@@ -136,14 +136,14 @@ public class InsertPlanValidatorTest {
             ValidationTestUtils.FieldPathBuilder builder = ValidationTestUtils.createFieldPathBuilder()
                     .addCollectionField(InsertPlanValidator.PHASES_FIELD, 0)
                     .addCollectionField(InsertPlanValidator.WORKOUTS_FIELD, 0)
-                    .addCollectionField(InsertPlanValidator.GROUPS_FIELD , 0)
+                    .addCollectionField(InsertPlanValidator.GROUPS_FIELD, 0)
                     .addCollectionField(InsertPlanValidator.EXERCISES_FIELD, 0)
                     .addCollectionField(ExerciseDto.SETS_FIELD, 0);
 
             ValidationTestUtils.createAssertBuilder().addAssert(builder.build(), RestrictionCode.INVALID);
         }
 
-        getPlan().getPhases().get(0).getWorkouts().get(0).getGroups().get(0).getExercises().get(0).setSets(new String[] {"12", Exercise.FAIL_KEY});
+        getPlan().getPhases().get(0).getWorkouts().get(0).getGroups().get(0).getExercises().get(0).setSets(new String[]{"12", Exercise.FAIL_KEY});
 
 
         errors = new BeanPropertyBindingResult(getPlan(), NAME);
@@ -165,7 +165,7 @@ public class InsertPlanValidatorTest {
         ValidationTestUtils.FieldPathBuilder builder = ValidationTestUtils.createFieldPathBuilder()
                 .addCollectionField(InsertPlanValidator.PHASES_FIELD, phaseIndex)
                 .addCollectionField(InsertPlanValidator.WORKOUTS_FIELD, workoutIndex)
-                .addCollectionField(InsertPlanValidator.GROUPS_FIELD , groupIndex)
+                .addCollectionField(InsertPlanValidator.GROUPS_FIELD, groupIndex)
                 .addCollectionField(InsertPlanValidator.EXERCISES_FIELD, exerciseIndex);
 
         ValidationTestUtils.AssertBuilder assertBuilder = ValidationTestUtils.createAssertBuilder();
@@ -182,7 +182,7 @@ public class InsertPlanValidatorTest {
         ValidationTestUtils.FieldPathBuilder builder = ValidationTestUtils.createFieldPathBuilder()
                 .addCollectionField(InsertPlanValidator.PHASES_FIELD, phaseIndex)
                 .addCollectionField(InsertPlanValidator.WORKOUTS_FIELD, workoutIndex)
-                .addCollectionField(InsertPlanValidator.GROUPS_FIELD , groupIndex);
+                .addCollectionField(InsertPlanValidator.GROUPS_FIELD, groupIndex);
 
         ValidationTestUtils.AssertBuilder assertBuilder = ValidationTestUtils.createAssertBuilder();
 
@@ -201,7 +201,7 @@ public class InsertPlanValidatorTest {
 
         ValidationTestUtils.AssertBuilder assertBuilder = ValidationTestUtils.createAssertBuilder();
 
-        for (String fullField : ValidationTestUtils.extendFields(builder, Workout.MUSCLES_FIELD,Workout.POSITION_FIELD,
+        for (String fullField : ValidationTestUtils.extendFields(builder, Workout.MUSCLES_FIELD, Workout.POSITION_FIELD,
                 Workout.WEEK_DAY_FIELD, InsertPlanValidator.GROUPS_FIELD)) {
             assertBuilder.addAssert(fullField, RestrictionCode.REQUIRED);
         }

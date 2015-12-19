@@ -17,25 +17,21 @@ import java.util.Locale;
 @RunWith(MockitoJUnitRunner.class)
 public class VelocityEmailServiceTest {
 
-    @InjectMocks
-    private VelocityEmailService emailService;
-
-    @Mock
-    private MessageSource messageSource;
-    //ResourceNotFoundException
-
-    @Mock
-    private VelocityEngine velocityEngine;
-
-    private JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-
     private static final Locale VALID_LOCALE = new Locale("en");
     private static final EmailService.Template VALID_TEMPLATE = EmailService.Template.REGISTER;
+    //ResourceNotFoundException
     private static final String VALID_RECIPIENT = "test@test.com";
     private static final String VALID_SENDER = "send@test.com";
     private static final String VALID_SUBJECT = "subject";
     private static final String VALID_ENCODING = "UTF-8";
     private static final String TEMPLATE_LOCATION = "location";
+    @InjectMocks
+    private VelocityEmailService emailService;
+    @Mock
+    private MessageSource messageSource;
+    @Mock
+    private VelocityEngine velocityEngine;
+    private JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
     @Before
     public void setUp() {

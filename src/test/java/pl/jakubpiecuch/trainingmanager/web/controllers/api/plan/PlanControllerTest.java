@@ -3,18 +3,14 @@ package pl.jakubpiecuch.trainingmanager.web.controllers.api.plan;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.repository.Repositories;
-import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.BaseControllerTestCase;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by jakub on 12.12.2015.

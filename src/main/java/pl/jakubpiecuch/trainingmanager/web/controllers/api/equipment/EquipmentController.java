@@ -25,25 +25,25 @@ import java.util.Locale;
 public class EquipmentController extends AbstractController {
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.EQUIPMENT_VIEWER + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(method = { RequestMethod.GET })
+    @RequestMapping(method = {RequestMethod.GET})
     public PageResult<Equipment> equipments(@PathVariable ApiVersionService.Version version,
-                               @RequestParam(value = "type", required = false) Equipment.Type[] types,
-                               @RequestParam(value = "excludeId", required = false) Long[] excludedIds,
-                               @RequestParam(value = "firstResult", required = false, defaultValue = "0") Integer firstResult,
-                               @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults,
-                               Locale locale) {
+                                            @RequestParam(value = "type", required = false) Equipment.Type[] types,
+                                            @RequestParam(value = "excludeId", required = false) Long[] excludedIds,
+                                            @RequestParam(value = "firstResult", required = false, defaultValue = "0") Integer firstResult,
+                                            @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults,
+                                            Locale locale) {
         return versionServices.get(version).retrieveFromRepository(new EquipmentCriteria(locale.getLanguage()).addTypeRestriction(types).setFirstResultRestriction(firstResult)
                 .setMaxResultsRestriction(maxResults).addExcludedIdRestriction(excludedIds), Repositories.EQUIPMENT);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.EQUIPMENT_VIEWER + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.GET })
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = {RequestMethod.GET})
     public Equipment equiment(@PathVariable ApiVersionService.Version version, @PathVariable long id, Locale locale) {
         return (Equipment) versionServices.get(version).retrieveFromRepository(new EquipmentCriteria(locale.getLanguage()).setIdRestriction(id), Repositories.EQUIPMENT).getResult().get(0);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.EQUIPMENT_CREATOR + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(method = { RequestMethod.POST })
+    @RequestMapping(method = {RequestMethod.POST})
     public long create(@PathVariable ApiVersionService.Version version, HttpServletRequest request, @RequestParam(value = "type") Equipment.Type type) throws IOException {
         HttpInputMessage message = new ServletServerHttpRequest(request);
         Equipment equipment = versionServices.get(version).resolve(message.getBody(), type);
@@ -51,7 +51,7 @@ public class EquipmentController extends AbstractController {
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.EQUIPMENT_UPDATER + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.PUT })
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = {RequestMethod.PUT})
     public void update(@PathVariable ApiVersionService.Version version, @PathVariable long id, HttpServletRequest request, @RequestParam(value = "type") Equipment.Type type) throws IOException {
         HttpInputMessage message = new ServletServerHttpRequest(request);
         Equipment equipment = versionServices.get(version).resolve(message.getBody(), type);
@@ -60,7 +60,7 @@ public class EquipmentController extends AbstractController {
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.EQUIPMENT_DELETER + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.DELETE })
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = {RequestMethod.DELETE})
     public void delete(@PathVariable ApiVersionService.Version version, @PathVariable long id) {
         versionServices.get(version).removeFromRepository(id, Repositories.EQUIPMENT);
     }

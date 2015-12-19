@@ -2,7 +2,7 @@ package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
-import pl.jakubpiecuch.trainingmanager.domain.*;
+import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 
 /**

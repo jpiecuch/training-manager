@@ -13,9 +13,9 @@ import java.util.List;
 /**
  * Created by Rico on 2015-02-22.
  */
-public abstract class AbstractConversionRepository<T extends RepoObject, E extends RepoObject, C extends Criteria> extends CommonRepository<T,C> {
+public abstract class AbstractConversionRepository<T extends RepoObject, E extends RepoObject, C extends Criteria> extends CommonRepository<T, C> {
 
-    protected Converter<T,E> converter;
+    protected Converter<T, E> converter;
 
     @Override
     @Transactional
@@ -44,7 +44,7 @@ public abstract class AbstractConversionRepository<T extends RepoObject, E exten
 
     @Override
     public void update(T element) {
-        CommonEntity entity =  dao.findById(element.getId());
+        CommonEntity entity = dao.findById(element.getId());
         DaoAssert.notNull(entity);
         validators.get(ValidationType.UPDATE).validate(element, new BeanPropertyBindingResult(element, name));
         dao.update((CommonEntity) converter.toEntity(element, (E) entity));

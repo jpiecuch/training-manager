@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <bean id="abstractController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController" abstract="true">
+    <bean id="abstractController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController"
+          abstract="true">
         <property name="versionServices">
             <map>
                 <entry key="v1" value-ref="version1Service"/>
@@ -12,7 +13,8 @@
     </bean>
 
     <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
-        <property name="messageSourceFiles" value="/bundles/web/web_%s.properties,/bundles/policy/policy_%s.properties,/bundles/terms/terms_%s.properties"/>
+        <property name="messageSourceFiles"
+                  value="/bundles/web/web_%s.properties,/bundles/policy/policy_%s.properties,/bundles/terms/terms_%s.properties"/>
         <property name="langs" value="${app.langs}"/>
         <property name="userServices">
             <map>

@@ -24,17 +24,17 @@ import java.util.Map;
 
 public abstract class AbstractSocialService<T> implements SocialService {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSocialService.class);
-
+    protected String url;
+    protected WebRequest request;
     private ConnectionRepository connectionRepository;
     private UsersConnectionRepository usersConnectionRepository;
     private ConnectionFactoryRegistry connectionFactoryRegistry;
     private UserService userService;
-    protected String url;
-    protected WebRequest request;
     private RestTemplate rest = new RestTemplate();
     private ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
 
     protected abstract Class<T> getConnectionClass();
+
     protected abstract String getRestUrl();
 
     protected Connection<T> connection() {
@@ -51,16 +51,16 @@ public abstract class AbstractSocialService<T> implements SocialService {
             if (connectionData != null) {
                 ConnectionFactory cf = connectionFactoryRegistry.getConnectionFactory(user.getSocial().getProviderId());
 
-                OAuth2Connection<?> con = (OAuth2Connection<?>)cf.createConnection(connectionData);
+                OAuth2Connection<?> con = (OAuth2Connection<?>) cf.createConnection(connectionData);
                 List<String> userIDs = usersConnectionRepository.findUserIdsWithConnection(con);
 
                 if (userIDs.size() == 1) {
                     String userId = userIDs.get(0);
                     ConnectionRepository conRep = usersConnectionRepository.createConnectionRepository(userId);
-                    con = (OAuth2Connection<?>)conRep.getConnection(new ConnectionKey(user.getSocial().getProviderId(), user.getUsername()));
+                    con = (OAuth2Connection<?>) conRep.getConnection(new ConnectionKey(user.getSocial().getProviderId(), user.getUsername()));
                     conRep.updateConnection(con);
                     return true;
-                } else  if (userIDs.isEmpty()) {
+                } else if (userIDs.isEmpty()) {
                     ProviderSignInAttempt signInAttempt = new ProviderSignInAttempt(con, connectionFactoryRegistry, usersConnectionRepository);
                     request.setAttribute("org.springframework.social.connect.web.ProviderSignInAttempt", signInAttempt, RequestAttributes.SCOPE_SESSION);
                     Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
@@ -81,7 +81,7 @@ public abstract class AbstractSocialService<T> implements SocialService {
             } else {
                 throw new NotFoundException();
             }
-        } catch(HttpClientErrorException e) {
+        } catch (HttpClientErrorException e) {
             LOGGER.warn("", e);
             throw new NotFoundException();
         }

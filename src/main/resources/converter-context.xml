@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
     <bean id="executionConverter" class="pl.jakubpiecuch.trainingmanager.service.user.workout.ExecutionConverter">
@@ -13,9 +13,11 @@
         <property name="userWorkoutDao" ref="userWorkoutDao"/>
     </bean>
 
-    <bean id="exerciseConverter" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseConverter"/>
+    <bean id="exerciseConverter"
+          class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseConverter"/>
 
-    <bean id="workoutConverter" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutConverter">
+    <bean id="workoutConverter"
+          class="pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutConverter">
         <property name="exerciseConverter" ref="exerciseConverter"/>
     </bean>
 
@@ -28,7 +30,8 @@
         <property name="phaseConverter" ref="phaseConverter"/>
     </bean>
 
-    <bean id="accountRecordConverter" class="pl.jakubpiecuch.trainingmanager.service.repository.accountrecord.AccountRecordConverter">
+    <bean id="accountRecordConverter"
+          class="pl.jakubpiecuch.trainingmanager.service.repository.accountrecord.AccountRecordConverter">
         <property name="authenticationService" ref="authenticationService"/>
     </bean>
 </beans>

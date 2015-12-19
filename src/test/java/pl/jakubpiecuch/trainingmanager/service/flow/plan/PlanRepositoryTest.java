@@ -23,15 +23,12 @@ public class PlanRepositoryTest {
     private static PlanDto PLAN_FLOW = new PlanDto();
     private static Plan PLAN = new Plan();
     private static Plan USED_PLAN = new Plan();
-
-    @InjectMocks
-    private PlanRepository planRepository;
-
     @Mock
     RepoDao<Plan, PlanCriteria> dao;
-
     @Mock
     PlanConverter converter;
+    @InjectMocks
+    private PlanRepository planRepository;
 
     @Before
     public void setUp() {

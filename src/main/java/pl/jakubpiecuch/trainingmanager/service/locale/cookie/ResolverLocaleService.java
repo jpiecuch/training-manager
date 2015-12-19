@@ -42,7 +42,7 @@ public class ResolverLocaleService implements LocaleService {
 
     public void setSupportedLocales(String[] locales) {
         this.supportedLocales = new Locale[locales.length];
-        for (int i =0; i < locales.length; i++) {
+        for (int i = 0; i < locales.length; i++) {
             supportedLocales[i] = new Locale(locales[i]);
         }
     }

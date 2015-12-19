@@ -25,11 +25,6 @@ public class Account extends VersionedEntity implements RepoObject {
     public static final String PROVIDER_FIELD_NAME = "provider";
     public static final String ROLE_FIELD_NAME = "role";
     public static final String SOCIAL_TYPE_FIELD_NAME = "social_type";
-
-    public enum Status {
-        ACTIVE, RESET_PASSWORD, EXPIRED, CREATED
-    }
-
     private String name;
     private String password;
     private String email;
@@ -39,7 +34,6 @@ public class Account extends VersionedEntity implements RepoObject {
     private Provider.Type provider;
     private SocialProvider.SocialType socialType;
     private List<Role> roles = new ArrayList<Role>();
-
     public Account() {
         super();
     }
@@ -124,7 +118,7 @@ public class Account extends VersionedEntity implements RepoObject {
     }
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "account_role", joinColumns = {@JoinColumn(name = Role.ACCOUNT_FIELD_NAME) }, inverseJoinColumns = { @JoinColumn(name = ROLE_FIELD_NAME) })
+    @JoinTable(name = "account_role", joinColumns = {@JoinColumn(name = Role.ACCOUNT_FIELD_NAME)}, inverseJoinColumns = {@JoinColumn(name = ROLE_FIELD_NAME)})
     public List<Role> getRoles() {
         return roles;
     }
@@ -147,51 +141,6 @@ public class Account extends VersionedEntity implements RepoObject {
             }
         }
         return authorities;
-    }
-
-    public static class Config {
-        private String firstName;
-        private String lastName;
-
-        protected Config() {
-        }
-
-        private Config(Builder builder) {
-            this.firstName = builder.firstName;
-            this.lastName = builder.lastName;
-        }
-
-        public String getFirstName() {
-            return firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public static class Builder {
-            private String firstName;
-            private String lastName;
-
-            public Builder lastName(String lastName) {
-                this.lastName = lastName;
-                return this;
-            }
-
-            public Builder firstName(String firstName) {
-                this.firstName = firstName;
-                return this;
-            }
-
-            public Config build() {
-                return new Config(this);
-            }
-        }
-
-        @Override
-        public String toString() {
-            return WebUtil.toJson(this);
-        }
     }
 
     @Override
@@ -240,5 +189,54 @@ public class Account extends VersionedEntity implements RepoObject {
         sb.append(", config='").append(config).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    public enum Status {
+        ACTIVE, RESET_PASSWORD, EXPIRED, CREATED
+    }
+
+    public static class Config {
+        private String firstName;
+        private String lastName;
+
+        protected Config() {
+        }
+
+        private Config(Builder builder) {
+            this.firstName = builder.firstName;
+            this.lastName = builder.lastName;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        @Override
+        public String toString() {
+            return WebUtil.toJson(this);
+        }
+
+        public static class Builder {
+            private String firstName;
+            private String lastName;
+
+            public Builder lastName(String lastName) {
+                this.lastName = lastName;
+                return this;
+            }
+
+            public Builder firstName(String firstName) {
+                this.firstName = firstName;
+                return this;
+            }
+
+            public Config build() {
+                return new Config(this);
+            }
+        }
     }
 }

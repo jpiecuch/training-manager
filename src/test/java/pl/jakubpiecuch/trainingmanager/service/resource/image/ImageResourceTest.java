@@ -22,10 +22,9 @@ public class ImageResourceTest {
     private static final String IMAGE = "image.jpg";
     private static final String NOT_EXIST_FOLDER = "000";
     private static final String NOT_EXIST_FILE = "notExists.jpg";
-    private ImageResource imageResource = new ImageResource();
-
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
+    private ImageResource imageResource = new ImageResource();
 
     @Before
     public void setUp() throws Exception {
@@ -88,17 +87,17 @@ public class ImageResourceTest {
     }
 
     @Test(expected = NotFoundException.class)
-    public void testGetMediaTypeOfDirectory() throws  Exception{
+    public void testGetMediaTypeOfDirectory() throws Exception {
         imageResource.getMediaType("/" + FOLDER);
     }
 
     @Test(expected = NotFoundException.class)
-    public void testGetMediaTypeFileNotExists() throws  Exception{
+    public void testGetMediaTypeFileNotExists() throws Exception {
         imageResource.getMediaType("/" + NOT_EXIST_FOLDER);
     }
 
     @Test
-    public void testGetMediaType() throws  Exception{
+    public void testGetMediaType() throws Exception {
         assertEquals(MediaType.IMAGE_JPEG, imageResource.getMediaType("/" + FOLDER + "/" + IMAGE));
     }
 

@@ -28,10 +28,9 @@ public class PlanConverterTest {
     private static final String NAME = "name";
     private static final Long ACCOUNT_ID = 2l;
     private static final Boolean USED = false;
+    private static final String CONFIG = "{\"firstName\":\"first\",\"lastName\":\"last\"}";
     private static PlanDto PLAN_FLOW = new PlanDto();
     private static Plan PLAN = new Plan();
-    private static final String CONFIG = "{\"firstName\":\"first\",\"lastName\":\"last\"}";
-
     @InjectMocks
     private static PlanConverter CONVERTER;
 

@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class AccountCriteria extends Criteria<AccountCriteria> {
 
-    private static final String[] PROPERTIES = new String[] {CommonEntity.ID_FIELD_NAME, Account.NAME_FIELD_NAME, Account.EMAIL_FIELD_NAME, Account.STATUS_FIELD_NAME};
+    private static final String[] PROPERTIES = new String[]{CommonEntity.ID_FIELD_NAME, Account.NAME_FIELD_NAME, Account.EMAIL_FIELD_NAME, Account.STATUS_FIELD_NAME};
 
     private List<String> names = new ArrayList<String>();
     private List<String> emails = new ArrayList<String>();

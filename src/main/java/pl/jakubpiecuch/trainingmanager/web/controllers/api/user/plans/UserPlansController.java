@@ -16,7 +16,7 @@ import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 public class UserPlansController extends AbstractController {
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.PLAN_STARTER + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(method = { RequestMethod.POST })
+    @RequestMapping(method = {RequestMethod.POST})
     public void create(@PathVariable ApiVersionService.Version version, @RequestBody UserPlan userPlan) {
         versionServices.get(version).startPlan(userPlan);
     }

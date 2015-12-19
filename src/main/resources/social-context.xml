@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
@@ -64,18 +64,22 @@
 
     <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" factory-method="noOpText"/>
 
-    <bean id="abstractSocialService" class="pl.jakubpiecuch.trainingmanager.service.social.AbstractSocialService" abstract="true">
+    <bean id="abstractSocialService" class="pl.jakubpiecuch.trainingmanager.service.social.AbstractSocialService"
+          abstract="true">
         <property name="connectionFactoryRegistry" ref="connectionFactoryLocator"/>
         <property name="connectionRepository" ref="connectionRepository"/>
         <property name="usersConnectionRepository" ref="usersConnectionRepository"/>
         <property name="userService" ref="socialUserService"/>
         <property name="url" value="http://www.gym-home.com/result/%s"/>
     </bean>
-    <bean id="facebookService" class="pl.jakubpiecuch.trainingmanager.service.social.facebook.FacebookService" parent="abstractSocialService"/>
+    <bean id="facebookService" class="pl.jakubpiecuch.trainingmanager.service.social.facebook.FacebookService"
+          parent="abstractSocialService"/>
 
-    <bean id="googleService" class="pl.jakubpiecuch.trainingmanager.service.social.google.GoogleService" parent="abstractSocialService"/>
+    <bean id="googleService" class="pl.jakubpiecuch.trainingmanager.service.social.google.GoogleService"
+          parent="abstractSocialService"/>
 
-    <bean id="twitterService" class="pl.jakubpiecuch.trainingmanager.service.social.twitter.TwitterService" parent="abstractSocialService"/>
+    <bean id="twitterService" class="pl.jakubpiecuch.trainingmanager.service.social.twitter.TwitterService"
+          parent="abstractSocialService"/>
 
     <bean id="socialUserService" class="pl.jakubpiecuch.trainingmanager.service.user.social.SocialUserServiceImpl">
         <property name="socialServices">

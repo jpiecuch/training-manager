@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 public class MechanicsOrderResolverTest extends AbstractOrderResolverTest {
 
+    private MechanicsOrderResolver resolver = new MechanicsOrderResolver();
+
     public MechanicsOrderResolverTest() {
         super(new HashMap<String, Integer[]>() {
             {
@@ -15,8 +17,6 @@ public class MechanicsOrderResolverTest extends AbstractOrderResolverTest {
             }
         });
     }
-
-    private MechanicsOrderResolver resolver = new MechanicsOrderResolver();
 
     @Override
     public MechanicsOrderResolver getResolver() {

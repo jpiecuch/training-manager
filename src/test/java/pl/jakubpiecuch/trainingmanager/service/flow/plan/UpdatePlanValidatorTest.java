@@ -42,7 +42,7 @@ public class UpdatePlanValidatorTest extends InsertPlanValidatorTest {
 
             ValidationTestUtils.AssertBuilder assertBuilder = ValidationTestUtils.createAssertBuilder();
 
-            for (String fullField : new String[] {CommonEntity.ID_FIELD_NAME, InsertPlanValidator.PHASES_FIELD, Plan.NAME_FIELD, InsertPlanValidator.PHASES_FIELD}) {
+            for (String fullField : new String[]{CommonEntity.ID_FIELD_NAME, InsertPlanValidator.PHASES_FIELD, Plan.NAME_FIELD, InsertPlanValidator.PHASES_FIELD}) {
                 assertBuilder.addAssert(fullField, RestrictionCode.REQUIRED);
             }
         }

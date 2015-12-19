@@ -11,9 +11,9 @@ import static org.junit.Assert.assertNull;
 
 public class AccountTest extends AbstractEntityTest<Account> {
 
+    public static final String CONFIG = "{\"firstName\":\"john\"}";
     private static final String EMAIL = "email";
     private static final Long ID = 1l;
-    public static final String CONFIG = "{\"firstName\":\"john\"}";
     private static final Account.Status STATUS = Account.Status.ACTIVE;
     private static final Date CREATED = new Date();
     private static final String NAME = "name";

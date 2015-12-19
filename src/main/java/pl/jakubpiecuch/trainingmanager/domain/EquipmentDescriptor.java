@@ -3,6 +3,12 @@ package pl.jakubpiecuch.trainingmanager.domain;
 public interface EquipmentDescriptor {
     Class getConfigClass();
 
+    interface LoadConfig {
+    }
+
+    interface RackConfig {
+    }
+
     class BenchConfig {
         private Integer height;
 
@@ -11,10 +17,7 @@ public interface EquipmentDescriptor {
         }
     }
 
-    class  NeckConfig {
-        public enum Type {
-            STRAIGHT, EZ
-        }
+    class NeckConfig {
         private boolean connectedLoad;
         private Type type;
 
@@ -25,6 +28,10 @@ public interface EquipmentDescriptor {
         public Type getType() {
             return type;
         }
+
+        public enum Type {
+            STRAIGHT, EZ
+        }
     }
 
     class BarConfig {
@@ -33,9 +40,6 @@ public interface EquipmentDescriptor {
         public Integer getHandles() {
             return handles;
         }
-    }
-
-    interface LoadConfig {
     }
 
     class StandConfig {
@@ -50,8 +54,6 @@ public interface EquipmentDescriptor {
             return height;
         }
     }
-    interface RackConfig {
-    }
 
     class DumbbellConfig {
         private boolean connectedLoad;
@@ -60,6 +62,7 @@ public interface EquipmentDescriptor {
             return connectedLoad;
         }
     }
+
     class PressConfig {
         private Integer handles;
 

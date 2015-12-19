@@ -9,14 +9,13 @@ import org.junit.Test;
 
 public class SymmetricCryptServiceTest {
 
+    private final static String RAW_TEXT = "raw text";
+    private final static String[] RAW_TEXT_ARRAY = new String[]{"raw", "text", "array"};
+    private final static String ENC_TEXT = "qYevnGLdSpSNzAqPX8ARmQ==";
+    private final static String ENC_TEXT_FROM_ARRAY = "rEunkz0zsA+4SH0XmIRmaA==";
     private SymmetricCryptService symmetricCryptService = new SymmetricCryptService();
     private Base64EncodedCiphererImpl decryptService = new Base64EncodedCiphererImpl();
     private Base64EncodedCiphererImpl encryptService = new Base64EncodedCiphererImpl();
-
-    private final static String RAW_TEXT = "raw text";
-    private final static String[] RAW_TEXT_ARRAY = new String[] {"raw", "text", "array"};
-    private final static String ENC_TEXT = "qYevnGLdSpSNzAqPX8ARmQ==";
-    private final static String ENC_TEXT_FROM_ARRAY = "rEunkz0zsA+4SH0XmIRmaA==";
 
     @Before
     public void setUp() {

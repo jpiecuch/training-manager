@@ -11,7 +11,7 @@ public class SHAPasswordEncoder implements PasswordEncoder, InitializingBean {
 
     private int strength;
     private ShaPasswordEncoder passwordEncoder;
-    
+
     @Override
     public String encode(String password, String salt) {
         if (StringUtils.isBlank(password) || StringUtils.isBlank(salt)) {
@@ -24,7 +24,7 @@ public class SHAPasswordEncoder implements PasswordEncoder, InitializingBean {
     public boolean isValid(String encPass, String rawPass, Object salt) {
         return passwordEncoder.isPasswordValid(encPass, rawPass, salt);
     }
-  
+
     @Override
     public void afterPropertiesSet() {
         passwordEncoder = new ShaPasswordEncoder(strength);
@@ -35,5 +35,5 @@ public class SHAPasswordEncoder implements PasswordEncoder, InitializingBean {
         this.strength = strength;
     }
 
-    
+
 }

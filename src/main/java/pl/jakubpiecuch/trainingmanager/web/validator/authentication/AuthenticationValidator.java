@@ -12,7 +12,7 @@ import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 /**
  * Created by Rico on 2014-11-29.
  */
-public class AuthenticationValidator implements Validator  {
+public class AuthenticationValidator implements Validator {
 
 
     @Override

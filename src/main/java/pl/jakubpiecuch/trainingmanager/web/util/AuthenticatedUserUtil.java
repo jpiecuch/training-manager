@@ -13,7 +13,7 @@ public class AuthenticatedUserUtil {
         Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return object instanceof String ? null : (SecurityUser) object;
     }
-    
+
     public static Account getUser() {
         return new Account(getAuthenticatedUserDetails().getId());
     }

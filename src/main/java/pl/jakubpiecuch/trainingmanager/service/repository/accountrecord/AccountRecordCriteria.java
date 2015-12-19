@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Rico on 2015-06-13.
  */
 public class AccountRecordCriteria extends Criteria<AccountRecordCriteria> {
-    private static final String[] PROPERTIES = new String[] {"id","type","date","account"};
+    private static final String[] PROPERTIES = new String[]{"id", "type", "date", "account"};
 
     private Date from;
     private Date to;
@@ -44,7 +44,7 @@ public class AccountRecordCriteria extends Criteria<AccountRecordCriteria> {
 
     @Override
     protected void appendRestrictions() {
-        restrictions.add(" "+alias+".account.id = :accountId ");
+        restrictions.add(" " + alias + ".account.id = :accountId ");
         params.put("accountId", AuthenticatedUserUtil.getUser().getId());
         if (this.id == null) {
             if (this.from != null) {

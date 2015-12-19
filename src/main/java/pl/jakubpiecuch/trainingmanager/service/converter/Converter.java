@@ -7,6 +7,8 @@ import java.util.List;
  */
 public interface Converter<T, E> {
     T fromEntity(E entity);
+
     List<T> fromEntities(List<E> list);
+
     E toEntity(T object, E entity);
 }

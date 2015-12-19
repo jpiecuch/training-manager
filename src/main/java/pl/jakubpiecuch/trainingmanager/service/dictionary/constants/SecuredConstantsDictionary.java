@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by Rico on 2015-01-01.
  */
-public class SecuredConstantsDictionary extends ConstantsDictionary{
+public class SecuredConstantsDictionary extends ConstantsDictionary {
 
     @Override
     @PreAuthorize("isAuthenticated()")

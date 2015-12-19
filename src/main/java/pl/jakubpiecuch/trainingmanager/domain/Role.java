@@ -12,14 +12,13 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "role")
 public class Role extends CommonEntity implements RepoObject {
-    private static final long serialVersionUID = 1L;
     public static final String NAME_FIELD_NAME = "name";
     public static final String GRANTED_PERMISSIONS_FIELD_NAME = "grantedPermissions";
-    private static final String PERMISSIONS_SEPARATOR = ";";
     public static final String ADMIN_ROLE = "ADMIN";
     public static final String USER_ROLE = "USER";
     public static final String ACCOUNT_FIELD_NAME = "account";
-
+    private static final long serialVersionUID = 1L;
+    private static final String PERMISSIONS_SEPARATOR = ";";
     private String name;
     private String permissions;
     private Boolean modifiable;

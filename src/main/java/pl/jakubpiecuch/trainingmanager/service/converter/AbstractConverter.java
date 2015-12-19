@@ -43,11 +43,13 @@ public abstract class AbstractConverter<T extends IdentifyObject, E extends Comm
     }
 
     protected abstract E convertFrom(T dto, E entity);
+
     protected abstract T convertTo(E entity);
+
     protected abstract E getEmpty();
 
     protected Map<Long, ? extends IdentifyObject> uniqueMap(List<? extends IdentifyObject> list) {
-        return  Maps.uniqueIndex(Collections2.filter(list, new Predicate<IdentifyObject>() {
+        return Maps.uniqueIndex(Collections2.filter(list, new Predicate<IdentifyObject>() {
             @Override
             public boolean apply(IdentifyObject input) {
                 return input.getId() != null;

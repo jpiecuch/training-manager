@@ -49,19 +49,15 @@ public class FacebookServiceTest {
     };
 
     private static final List<String> EMPTY_CON_REP_RESPONSE = new ArrayList<String>();
-
-    private static SecurityUser VALID_USER;
-
     private static final String FACEBOOK_FIRST_NAME = "firstName";
     private static final String FACEBOOK_LAST_NAME = "lastName";
     private static final String FACEBOOK_EMAIL = "email";
     private static final String FACEBOOK_USERNAME = "username";
     private static final UserProfile USER_PROFILE = new UserProfileBuilder().setName(FACEBOOK_ID).setFirstName(FACEBOOK_FIRST_NAME)
-    .setLastName(FACEBOOK_LAST_NAME).setEmail(FACEBOOK_EMAIL).setUsername(FACEBOOK_USERNAME).build();
-
+            .setLastName(FACEBOOK_LAST_NAME).setEmail(FACEBOOK_EMAIL).setUsername(FACEBOOK_USERNAME).build();
     private static final String PROVIDER_ID = "facebook";
     private static final String PROVIDER_USER_ID = FACEBOOK_ID;
-
+    private static SecurityUser VALID_USER;
     @InjectMocks
     private FacebookService facebookService;
 
@@ -100,7 +96,7 @@ public class FacebookServiceTest {
 
     @Before
     public void setUp() {
-        VALID_USER = new SecurityUser(null,FACEBOOK_ID, FACEBOOK_KEY, SocialProvider.SocialType.FACEBOOK, AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
+        VALID_USER = new SecurityUser(null, FACEBOOK_ID, FACEBOOK_KEY, SocialProvider.SocialType.FACEBOOK, AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
         Mockito.when(restTemplate.getForObject(String.format(facebookService.getRestUrl(), FACEBOOK_KEY), HashMap.class)).thenReturn(FACEBOOK_RESPONSE);
         Mockito.when(connectionFactoryRegistry.getConnectionFactory(SocialProvider.SocialType.FACEBOOK.getProviderId())).thenReturn(connectionFactory);
         Mockito.when(connectionFactory.createConnection(Matchers.any(ConnectionData.class))).thenReturn(oAuth2Connection);
@@ -125,7 +121,7 @@ public class FacebookServiceTest {
     }
 
     @Test
-    public void testCreateConnectionWithPersistedUser() throws Exception{
+    public void testCreateConnectionWithPersistedUser() throws Exception {
         Mockito.when(usersConnectionRepository.findUserIdsWithConnection(oAuth2Connection)).thenReturn(NOT_EMPTY_CON_REP_RESPONSE);
         Mockito.when(usersConnectionRepository.createConnectionRepository(FACEBOOK_USER_ID)).thenReturn(connectionRepository);
 
@@ -133,14 +129,13 @@ public class FacebookServiceTest {
     }
 
     @Test
-    public void testCreateConnectionWithNotPersistedUser() throws Exception{
+    public void testCreateConnectionWithNotPersistedUser() throws Exception {
         Mockito.when(usersConnectionRepository.findUserIdsWithConnection(oAuth2Connection)).thenReturn(EMPTY_CON_REP_RESPONSE);
         Mockito.when(providerSignInUtils.getConnectionFromSession(request)).thenReturn(connection);
         Mockito.when(connection.fetchUserProfile()).thenReturn(USER_PROFILE);
         Mockito.when(connection.getKey()).thenReturn(connectionKey);
         Assert.assertTrue(facebookService.createConnection(VALID_USER));
     }
-
 
 
 }

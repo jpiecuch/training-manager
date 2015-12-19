@@ -65,12 +65,12 @@ public class UserWorkoutDto implements RepoObject {
         this.executions = executions;
     }
 
-    public void setWeekDay(Workout.WeekDay weekDay) {
-        this.weekDay = weekDay;
-    }
-
     public Workout.WeekDay getWeekDay() {
         return weekDay;
+    }
+
+    public void setWeekDay(Workout.WeekDay weekDay) {
+        this.weekDay = weekDay;
     }
 
     @Override

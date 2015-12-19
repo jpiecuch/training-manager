@@ -14,6 +14,8 @@ import java.util.Locale;
 public interface UserService {
 
     void signOn(Registration request, Locale locale);
+
     void signIn(HttpServletRequest request, HttpServletResponse response, UserDetails user);
+
     UserDetails resolveDetails(Authentication authentication);
 }

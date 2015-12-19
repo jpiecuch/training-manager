@@ -22,37 +22,37 @@ import java.util.Locale;
 public class PlanController extends AbstractController {
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.PLAN_CREATOR + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(method = { RequestMethod.POST })
+    @RequestMapping(method = {RequestMethod.POST})
     public Long create(@PathVariable ApiVersionService.Version version, @RequestBody PlanDto flow) {
         return versionServices.get(version).storeInRepository(flow, Repositories.PLAN);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.PLAN_UPDATER + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.PUT })
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = {RequestMethod.PUT})
     public void update(@PathVariable ApiVersionService.Version version, @RequestBody PlanDto flow, @PathVariable(ApiURI.ID_PARAM) Long id) {
         flow.setId(id);
         versionServices.get(version).updateInRepository(flow, Repositories.PLAN);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.PLAN_UPDATER + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.DELETE })
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = {RequestMethod.DELETE})
     public void delete(@PathVariable ApiVersionService.Version version, @PathVariable(ApiURI.ID_PARAM) Long id) {
         versionServices.get(version).removeFromRepository(id, Repositories.PLAN);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.PLAN_VIEWER + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(method = { RequestMethod.GET })
+    @RequestMapping(method = {RequestMethod.GET})
     public PageResult<PlanDto> plans(@PathVariable ApiVersionService.Version version,
-                                                @RequestParam(value = "goal", required = false) Plan.Goal[] goals,
-                                                @RequestParam(value = "firstResult", required = false, defaultValue = "0") Integer firstResult,
-                                                @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults,
-                                                Locale locale) {
+                                     @RequestParam(value = "goal", required = false) Plan.Goal[] goals,
+                                     @RequestParam(value = "firstResult", required = false, defaultValue = "0") Integer firstResult,
+                                     @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults,
+                                     Locale locale) {
         return versionServices.get(version).retrieveFromRepository(new PlanCriteria(locale.getLanguage()).setFirstResultRestriction(firstResult)
                 .setMaxResultsRestriction(maxResults).addGoalRestrictions(goals), Repositories.PLAN);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.PLAN_VIEWER + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.GET })
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = {RequestMethod.GET})
     public PlanDto plan(@PathVariable ApiVersionService.Version version, @PathVariable Long id) {
         return versionServices.get(version).uniqueFromRepository(id, Repositories.PLAN);
     }

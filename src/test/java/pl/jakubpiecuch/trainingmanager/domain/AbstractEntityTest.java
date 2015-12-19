@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 public abstract class AbstractEntityTest<T extends CommonEntity> {
 
     protected abstract T getEntity();
+
     protected abstract void assertEntity();
 
     protected void testEntity() {

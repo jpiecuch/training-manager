@@ -26,7 +26,7 @@ public class ImageResource implements ResourceService {
         if (!file.exists() || file.isDirectory()) {
             throw new NotFoundException();
         }
-        return MediaType.valueOf(Files.probeContentType(Paths.get(root + handler))) ;
+        return MediaType.valueOf(Files.probeContentType(Paths.get(root + handler)));
     }
 
     @Override

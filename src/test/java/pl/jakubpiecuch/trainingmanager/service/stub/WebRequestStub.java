@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by jakub on 19.09.2015.
  */
-public class WebRequestStub implements WebRequest  {
+public class WebRequestStub implements WebRequest {
     @Override
     public String getHeader(String s) {
         return null;

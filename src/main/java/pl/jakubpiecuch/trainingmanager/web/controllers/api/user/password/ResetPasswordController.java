@@ -17,7 +17,7 @@ import java.util.Locale;
 public class ResetPasswordController extends AbstractController {
 
     @PreAuthorize(value = Permissions.IS_ANONYMOUS)
-    @RequestMapping(method = { RequestMethod.POST })
+    @RequestMapping(method = {RequestMethod.POST})
     public ResponseEntity reset(@PathVariable ApiVersionService.Version version, @RequestBody String email, Locale locale) {
         versionServices.get(version).resetPassword(email, locale);
         return new ResponseEntity(HttpStatus.NO_CONTENT);

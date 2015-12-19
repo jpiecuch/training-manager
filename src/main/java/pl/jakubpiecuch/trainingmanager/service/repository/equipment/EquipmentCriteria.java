@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Rico on 2015-01-02.
  */
 public class EquipmentCriteria extends Criteria<EquipmentCriteria> {
-    private static final String[] PROPERTIES = new String[] {"id","type"};
+    private static final String[] PROPERTIES = new String[]{"id", "type"};
     private List<Equipment.Type> types = new ArrayList<Equipment.Type>();
 
     public EquipmentCriteria(String lang) {
@@ -27,7 +27,7 @@ public class EquipmentCriteria extends Criteria<EquipmentCriteria> {
     }
 
     public EquipmentCriteria addTypeRestriction(Equipment.Type... types) {
-        if(ArrayUtils.isNotEmpty(types)) {
+        if (ArrayUtils.isNotEmpty(types)) {
             this.types.addAll(Arrays.asList(types));
         }
         return this;

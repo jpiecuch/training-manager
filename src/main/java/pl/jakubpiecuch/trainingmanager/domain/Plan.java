@@ -10,23 +10,17 @@ import java.util.List;
 
 @Entity
 @Table(name = "plan")
-public class Plan  extends CommonEntity implements RepoObject {
-    private static final long serialVersionUID = 1L;
+public class Plan extends CommonEntity implements RepoObject {
     public static final String NAME_FIELD = "name";
     public static final String GOAL_FIELD = "goal";
     public static final String CREATOR_FIELD = "creator";
     public static final String USED_FIELD = "used";
-
-    public enum Goal {
-        MUSCLES, STRENGTH
-    }
-
+    private static final long serialVersionUID = 1L;
     private String name;
     private Goal goal;
     private Account creator;
     private Boolean used = false;
     private List<Phase> phases = new ArrayList<Phase>();
-
     public Plan() {
     }
 
@@ -122,5 +116,9 @@ public class Plan  extends CommonEntity implements RepoObject {
         sb.append(", creator=").append(creator);
         sb.append('}');
         return sb.toString();
+    }
+
+    public enum Goal {
+        MUSCLES, STRENGTH
     }
 }

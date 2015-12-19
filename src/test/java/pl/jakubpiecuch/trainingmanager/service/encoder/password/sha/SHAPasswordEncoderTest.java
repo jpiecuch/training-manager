@@ -13,14 +13,14 @@ public class SHAPasswordEncoderTest {
     private SHAPasswordEncoder encoder = new SHAPasswordEncoder();
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp() throws Exception {
         encoder.setStrength(STRENGTH);
         encoder.afterPropertiesSet();
     }
 
     @Test
     public void testEncode() throws Exception {
-        Assert.assertEquals(ENCODED_PASS,encoder.encode(RAW_PASS, SALT));
+        Assert.assertEquals(ENCODED_PASS, encoder.encode(RAW_PASS, SALT));
     }
 
     @Test

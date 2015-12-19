@@ -9,10 +9,6 @@ import java.util.Date;
 @Table(name = "account_record")
 public class AccountRecord extends CommonEntity implements RepoObject {
 
-    public enum Type {
-        WEIGHT
-    }
-
     private Type type;
     private String value;
     private Date date;
@@ -54,5 +50,9 @@ public class AccountRecord extends CommonEntity implements RepoObject {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public enum Type {
+        WEIGHT
     }
 }

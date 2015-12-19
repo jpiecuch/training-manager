@@ -48,7 +48,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
     private String serviceUri;
 
     @Override
-    public SecurityUser resolveDetails(Authentication authentication)  {
+    public SecurityUser resolveDetails(Authentication authentication) {
         Account account = findUser(authentication.getUsername());
         AccountAssert.isTrue(account != null && Account.Status.ACTIVE == account.getStatus());
         List<GrantedAuthority> authorities = CollectionUtils.isNotEmpty(account.getGrantedPermissions()) ? AuthorityUtils.createAuthorityList(account.getGrantedPermissions().toArray(new String[account.getGrantedPermissions().size()])) : AuthorityUtils.NO_AUTHORITIES;
@@ -109,7 +109,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
             account.setProvider(Provider.Type.LOCAL);
             account.getRoles().addAll(roleRepository.read(new RoleCriteria().addNameRestrictions(Role.ADMIN_ROLE)).getResult());
             repository.create(account);
-            emailService.sendEmail(new Object[] {UriUtils.encodeQueryParam(cryptService.encrypt(account.getName(), account.getEmail()), "UTF-8"), account, WebUtil.fromJson(account.getConfig(), Account.Config.class), serviceUri}, locale, EmailService.Template.REGISTER, account.getEmail());
+            emailService.sendEmail(new Object[]{UriUtils.encodeQueryParam(cryptService.encrypt(account.getName(), account.getEmail()), "UTF-8"), account, WebUtil.fromJson(account.getConfig(), Account.Config.class), serviceUri}, locale, EmailService.Template.REGISTER, account.getEmail());
         } catch (UnsupportedEncodingException e) {
             throw new IllegalArgumentException(e);
         }

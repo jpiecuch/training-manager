@@ -12,8 +12,9 @@ public interface LocaleService {
 
     /**
      * Set the current locale to the given one.
-     * @param locale new locale
-     * @param request the request to be used for locale modification
+     *
+     * @param locale   new locale
+     * @param request  the request to be used for locale modification
      * @param response the response to be used for locale modification
      */
     void update(HttpServletRequest request, HttpServletResponse response, Locale locale);

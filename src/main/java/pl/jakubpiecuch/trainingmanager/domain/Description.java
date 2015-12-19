@@ -8,30 +8,7 @@ import javax.persistence.*;
 @Table(name = "description")
 public class Description extends CommonEntity implements RepoObject {
 
-    public static final String PROPERTY_NAME  = "name";
-
-    public enum Muscles {
-        ABDUCTORS, ABS, BICEPS, CALVES, CHEST, FOREARM, GLUTES, HAMSTRINGS, LATS, LOWER_BACK, MIDDLE_BACK, NECK, QUADS, SHOULDERS, TRAPS, TRICEPS
-    }
-    public enum Type {
-        CARDIO, OLYMPIC_WEIGHTLIFTING, PLYOMETRICS, POWERLIFTING, STRENGTH, STRETCHING, STRONGMAN
-    }
-    public enum Level {
-        BEGINNER, INTERMEDIATE, EXPERT
-    }
-    public enum Mechanics {
-        COMPOUND, ISOLATION
-    }
-    public enum Force {
-        PULL, PUSH, STATIC
-    }
-    public enum Sets {
-        REPS, TIME
-    }
-    public enum Lateral {
-        UNILATERAL, BILATERAL
-    }
-
+    public static final String PROPERTY_NAME = "name";
     private String name;
     private String movieUrl;
     private String description;
@@ -43,11 +20,9 @@ public class Description extends CommonEntity implements RepoObject {
     private Force force;
     private Lateral lateral;
     private Sets sets;
-
     public Description(Long id) {
         super(id);
     }
-
     public Description() {
     }
 
@@ -149,6 +124,34 @@ public class Description extends CommonEntity implements RepoObject {
 
     public void setSets(Sets sets) {
         this.sets = sets;
+    }
+
+    public enum Muscles {
+        ABDUCTORS, ABS, BICEPS, CALVES, CHEST, FOREARM, GLUTES, HAMSTRINGS, LATS, LOWER_BACK, MIDDLE_BACK, NECK, QUADS, SHOULDERS, TRAPS, TRICEPS
+    }
+
+    public enum Type {
+        CARDIO, OLYMPIC_WEIGHTLIFTING, PLYOMETRICS, POWERLIFTING, STRENGTH, STRETCHING, STRONGMAN
+    }
+
+    public enum Level {
+        BEGINNER, INTERMEDIATE, EXPERT
+    }
+
+    public enum Mechanics {
+        COMPOUND, ISOLATION
+    }
+
+    public enum Force {
+        PULL, PUSH, STATIC
+    }
+
+    public enum Sets {
+        REPS, TIME
+    }
+
+    public enum Lateral {
+        UNILATERAL, BILATERAL
     }
 }
 

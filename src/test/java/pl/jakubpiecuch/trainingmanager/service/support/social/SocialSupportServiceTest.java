@@ -8,7 +8,6 @@ import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 import java.util.List;
 
 
-
 public class SocialSupportServiceTest {
 
     private SocialSupportService socialSupportService = new SocialSupportService();
@@ -20,7 +19,7 @@ public class SocialSupportServiceTest {
         Assert.assertEquals(3, supported.size());
 
         List<SocialProvider.SocialType> types = Lists.newArrayList(SocialProvider.SocialType.values());
-        for(SocialProvider provider : supported) {
+        for (SocialProvider provider : supported) {
             types.remove(provider.getSocialType());
         }
 

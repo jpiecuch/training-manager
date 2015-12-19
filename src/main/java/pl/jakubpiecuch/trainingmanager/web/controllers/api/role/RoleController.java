@@ -22,40 +22,40 @@ import java.util.Locale;
 public class RoleController extends AbstractController {
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.ROLE_VIEWER + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(method = { RequestMethod.GET })
+    @RequestMapping(method = {RequestMethod.GET})
     public PageResult<Role> roles(@PathVariable ApiVersionService.Version version,
-                               @RequestParam(value = "name", required = false) String[] names,
-                               @RequestParam(value = "excludeId", required = false) Long[] excludedIds,
-                               @RequestParam(value = "firstResult", required = false, defaultValue = "0") Integer firstResult,
-                               @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults,
-                               @RequestParam(value = "orderby", required = false, defaultValue = "id") String orderBy,
-                               @RequestParam(value = "ordermode", required = false, defaultValue = "ASC") Criteria.OrderMode orderMode,
-                               Locale locale) {
+                                  @RequestParam(value = "name", required = false) String[] names,
+                                  @RequestParam(value = "excludeId", required = false) Long[] excludedIds,
+                                  @RequestParam(value = "firstResult", required = false, defaultValue = "0") Integer firstResult,
+                                  @RequestParam(value = "maxResults", required = false, defaultValue = "10") Integer maxResults,
+                                  @RequestParam(value = "orderby", required = false, defaultValue = "id") String orderBy,
+                                  @RequestParam(value = "ordermode", required = false, defaultValue = "ASC") Criteria.OrderMode orderMode,
+                                  Locale locale) {
         return versionServices.get(version).retrieveFromRepository(new RoleCriteria().addNameRestrictions(names).setFirstResultRestriction(firstResult)
                 .setMaxResultsRestriction(maxResults).addExcludedIdRestriction(excludedIds).setOrderBy(orderBy, orderMode, versionServices.get(version).orderResolvers()), Repositories.ROLE);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.ROLE_VIEWER + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.GET })
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = {RequestMethod.GET})
     public Role role(@PathVariable ApiVersionService.Version version, @PathVariable long id, Locale locale) {
         return (Role) versionServices.get(version).retrieveFromRepository(new RoleCriteria().setIdRestriction(id), Repositories.ROLE).getResult().get(0);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.ROLE_CREATOR + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(method = { RequestMethod.POST })
+    @RequestMapping(method = {RequestMethod.POST})
     public long create(@PathVariable ApiVersionService.Version version, @RequestBody Role description) {
         return versionServices.get(version).storeInRepository(description, Repositories.ROLE);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.ROLE_UPDATER + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.PUT })
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = {RequestMethod.PUT})
     public void update(@PathVariable ApiVersionService.Version version, @PathVariable long id, @RequestBody Role description) {
         description.setId(id);
         versionServices.get(version).updateInRepository(description, Repositories.ROLE);
     }
 
     @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.ROLE_DELETER + Permissions.HAS_ROLE_SUFFIX)
-    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.DELETE })
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = {RequestMethod.DELETE})
     public void delete(@PathVariable ApiVersionService.Version version, @PathVariable long id) {
         versionServices.get(version).removeFromRepository(id, Repositories.ROLE);
     }

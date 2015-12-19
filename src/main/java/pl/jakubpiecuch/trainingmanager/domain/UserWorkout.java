@@ -13,10 +13,6 @@ import java.util.List;
 @Table(name = "user_workout")
 public class UserWorkout extends CommonEntity implements RepoObject {
 
-    public enum State {
-        PLANNED, IN_PROGRESS, REJECTED, COMPLETED
-    }
-
     private String comment;
     private Account account;
     private Boolean remind;
@@ -24,7 +20,6 @@ public class UserWorkout extends CommonEntity implements RepoObject {
     private Workout workout;
     private State state;
     private List<Execution> executions;
-
     public UserWorkout() {
         super();
     }
@@ -97,5 +92,9 @@ public class UserWorkout extends CommonEntity implements RepoObject {
 
     public void setExecutions(List<Execution> executions) {
         this.executions = executions;
+    }
+
+    public enum State {
+        PLANNED, IN_PROGRESS, REJECTED, COMPLETED
     }
 }

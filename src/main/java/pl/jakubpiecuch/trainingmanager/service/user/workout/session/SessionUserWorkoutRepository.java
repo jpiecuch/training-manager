@@ -1,7 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.user.workout.session;
 
 import pl.jakubpiecuch.trainingmanager.domain.UserWorkout;
-import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
 import pl.jakubpiecuch.trainingmanager.service.repository.AbstractConversionRepository;
 import pl.jakubpiecuch.trainingmanager.service.user.workout.UserWorkoutDto;
 

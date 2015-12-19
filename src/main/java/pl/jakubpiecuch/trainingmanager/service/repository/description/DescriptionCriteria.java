@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Rico on 2015-01-02.
  */
 public class DescriptionCriteria extends Criteria<DescriptionCriteria> {
-    private static final String[] PROPERTIES = new String[] {"id","type","muscles","mechanics","force","level", Description.PROPERTY_NAME};
+    private static final String[] PROPERTIES = new String[]{"id", "type", "muscles", "mechanics", "force", "level", Description.PROPERTY_NAME};
     private List<Description.Muscles> muscles = new ArrayList<Description.Muscles>();
     private List<Description.Force> force = new ArrayList<Description.Force>();
     private List<Description.Level> level = new ArrayList<Description.Level>();
@@ -37,35 +37,35 @@ public class DescriptionCriteria extends Criteria<DescriptionCriteria> {
     }
 
     public DescriptionCriteria addMuscleRestriction(Description.Muscles... muscle) {
-        if(ArrayUtils.isNotEmpty(muscle)) {
+        if (ArrayUtils.isNotEmpty(muscle)) {
             this.muscles.addAll(Arrays.asList(muscle));
         }
         return this;
     }
 
     public DescriptionCriteria addForceRestriction(Description.Force... force) {
-        if(ArrayUtils.isNotEmpty(force)) {
+        if (ArrayUtils.isNotEmpty(force)) {
             this.force.addAll(Arrays.asList(force));
         }
         return this;
     }
 
     public DescriptionCriteria addLevelRestriction(Description.Level... level) {
-        if(ArrayUtils.isNotEmpty(level)) {
+        if (ArrayUtils.isNotEmpty(level)) {
             this.level.addAll(Arrays.asList(level));
         }
         return this;
     }
 
     public DescriptionCriteria addMechanicsRestriction(Description.Mechanics... mechanics) {
-        if(ArrayUtils.isNotEmpty(mechanics)) {
+        if (ArrayUtils.isNotEmpty(mechanics)) {
             this.mechanics.addAll(Arrays.asList(mechanics));
         }
         return this;
     }
 
     public DescriptionCriteria addTypeRestriction(Description.Type... type) {
-        if(ArrayUtils.isNotEmpty(type)) {
+        if (ArrayUtils.isNotEmpty(type)) {
             this.type.addAll(Arrays.asList(type));
         }
         return this;
@@ -81,7 +81,7 @@ public class DescriptionCriteria extends Criteria<DescriptionCriteria> {
             collection(this.type, "type", "IN");
             collection(this.excludedIds, "id", "NOT IN");
             if (StringUtils.isNotEmpty(name)) {
-                restrictions.add("lower("  + alias + ".name) LIKE :name ");
+                restrictions.add("lower(" + alias + ".name) LIKE :name ");
                 params.put("name", "%" + name.toLowerCase() + "%");
             }
         }

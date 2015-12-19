@@ -22,15 +22,15 @@ public class StaticPasswordServiceTest extends BaseIntegrationTestCase {
     @Autowired
     private StaticPasswordService passwordService;
 
-    @Resource(name="passwords")
+    @Resource(name = "passwords")
     private List<String> passwords = new ArrayList<String>();
-    
+
     @Value(value = "${user.password.pattern}")
     private String passwordPattern;
-    
+
     @Value(value = "${user.password.maxLength}")
     private Integer maxPasswordLength;
-    
+
     @Value(value = "${user.password.minLength}")
     private Integer minPasswordLength;
 

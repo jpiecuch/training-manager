@@ -10,21 +10,6 @@ import pl.jakubpiecuch.trainingmanager.service.user.local.LocalProvider;
  */
 public class SocialProvider extends LocalProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(SocialProvider.class);
-
-    public enum SocialType {
-        FACEBOOK("facebook"), GOOGLE("google"), TWITTER("twitter"), NONE("none");
-
-        private String providerId;
-
-        SocialType(String providerId) {
-            this.providerId = providerId;
-        }
-
-        public String getProviderId() {
-            return providerId;
-        }
-    }
-
     private final String scope;
 
     private SocialProvider(Builder builder) {
@@ -40,7 +25,7 @@ public class SocialProvider extends LocalProvider {
         try {
             return SocialType.valueOf(StringUtils.upperCase(id));
         } catch (IllegalArgumentException e) {
-            LOGGER.error("Not matching social: " +  id, e);
+            LOGGER.error("Not matching social: " + id, e);
             return null;
         }
     }
@@ -48,6 +33,20 @@ public class SocialProvider extends LocalProvider {
     @Override
     public Type getType() {
         return Type.SOCIAL;
+    }
+
+    public enum SocialType {
+        FACEBOOK("facebook"), GOOGLE("google"), TWITTER("twitter"), NONE("none");
+
+        private String providerId;
+
+        SocialType(String providerId) {
+            this.providerId = providerId;
+        }
+
+        public String getProviderId() {
+            return providerId;
+        }
     }
 
     public static class Builder {
@@ -58,6 +57,7 @@ public class SocialProvider extends LocalProvider {
             this.id = id;
             return this;
         }
+
         public Builder scope(String scope) {
             this.scope = scope;
             return this;

@@ -13,23 +13,17 @@ import java.util.List;
 @Entity
 @Table(name = "workout")
 public class Workout extends CommonEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private static final String MUSCLE_DELIMITER = ";";
     public static final String PHASE_FIELD = "phase";
     public static final String POSITION_FIELD = "position";
     public static final String WEEK_DAY_FIELD = "weekDay";
     public static final String MUSCLES_FIELD = "muscles";
-
-    public enum WeekDay {
-        SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
-    }
-
+    private static final long serialVersionUID = 1L;
+    private static final String MUSCLE_DELIMITER = ";";
     private WeekDay weekDay;
     private Phase phase;
     private Integer position;
     private String muscle;
     private List<Exercise> exercises = new ArrayList<Exercise>();
-
     public Workout() {
     }
 
@@ -88,7 +82,7 @@ public class Workout extends CommonEntity implements Serializable {
     public Description.Muscles[] getMuscles() {
         Integer[] ids = WebUtil.toIntArray(StringUtils.splitByWholeSeparatorPreserveAllTokens(muscle, MUSCLE_DELIMITER));
         Description.Muscles[] result = new Description.Muscles[ids.length];
-        for(int i = 0; i < ids.length; i++) {
+        for (int i = 0; i < ids.length; i++) {
             result[i] = Description.Muscles.values()[ids[i]];
         }
         return result;
@@ -96,7 +90,7 @@ public class Workout extends CommonEntity implements Serializable {
 
     public void setMuscles(Description.Muscles[] muscles) {
         Integer[] ids = new Integer[muscles.length];
-        for(int i = 0; i < muscles.length; i++) {
+        for (int i = 0; i < muscles.length; i++) {
             ids[i] = muscles[i].ordinal();
         }
         this.muscle = StringUtils.join(ids, MUSCLE_DELIMITER);
@@ -134,5 +128,9 @@ public class Workout extends CommonEntity implements Serializable {
                 .append(muscle)
                 .append(exercises)
                 .toHashCode();
+    }
+
+    public enum WeekDay {
+        SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
     }
 }

@@ -24,18 +24,12 @@ public abstract class Criteria<T extends Criteria> {
 
     protected List<String> restrictions = new ArrayList<String>();
     protected Map<String, Object> params = new HashMap<String, Object>();
-    private List<Long> excludedIds = new ArrayList<Long>();
-    private List<String> joins = new ArrayList<String>();
-
-    public enum OrderMode {
-        ASC,DESC
-    }
-
     protected Long id;
     protected Integer firstResult;
     protected Integer maxResults;
     protected String order;
-
+    private List<Long> excludedIds = new ArrayList<Long>();
+    private List<String> joins = new ArrayList<String>();
     public Criteria(String alias, String entity, String lang) {
         this.alias = alias;
         this.entity = entity;
@@ -50,7 +44,6 @@ public abstract class Criteria<T extends Criteria> {
         }
     }
 
-
     protected void validateProperty(String property) {
         if (!ArrayUtils.contains(getValidFields(), property)) {
             throw new IllegalArgumentException();
@@ -59,20 +52,21 @@ public abstract class Criteria<T extends Criteria> {
 
     protected T addJoin(String join) {
         this.joins.add(join);
-        return (T)this;
+        return (T) this;
     }
 
     protected abstract String[] getValidFields();
+
     protected abstract void appendRestrictions();
 
     public Query query(Session session) {
-        StringBuilder sb = new StringBuilder("SELECT "+ alias +", over(count(*)) FROM "+entity+" "+alias+" ");
+        StringBuilder sb = new StringBuilder("SELECT " + alias + ", over(count(*)) FROM " + entity + " " + alias + " ");
 
         for (String join : joins) {
             sb.append(join).append(" ");
         }
         if (this.id != null) {
-            restrictions.add(" "+alias+".id = :id ");
+            restrictions.add(" " + alias + ".id = :id ");
             params.put("id", this.id);
         }
 
@@ -82,28 +76,28 @@ public abstract class Criteria<T extends Criteria> {
             collection(this.excludedIds, "id", "NOT IN");
         }
 
-        if(!restrictions.isEmpty()) {
+        if (!restrictions.isEmpty()) {
             sb.append(" WHERE ");
         }
 
-        for (int i =0; i < restrictions.size(); i++) {
+        for (int i = 0; i < restrictions.size(); i++) {
             String restriction = restrictions.get(i);
             sb.append((i > 0 ? " AND " : "") + restriction);
         }
 
         if (StringUtils.isNotEmpty(order)) {
-            sb.append(" ORDER BY " + order + " " );
+            sb.append(" ORDER BY " + order + " ");
         }
 
         Query query = session.createQuery(sb.toString());
-        if ( this.id == null && this.firstResult != null) {
+        if (this.id == null && this.firstResult != null) {
             query.setFirstResult(this.firstResult);
         }
         if (this.id == null && this.maxResults != null) {
             query.setMaxResults(this.maxResults);
         }
 
-        for(Map.Entry<String, Object> entry : params.entrySet()) {
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
             if (entry.getValue() instanceof List) {
                 query.setParameterList(entry.getKey(), (Collection) entry.getValue());
             } else {
@@ -188,6 +182,10 @@ public abstract class Criteria<T extends Criteria> {
                 .append(maxResults)
                 .append(order)
                 .toHashCode();
+    }
+
+    public enum OrderMode {
+        ASC, DESC
     }
 
 

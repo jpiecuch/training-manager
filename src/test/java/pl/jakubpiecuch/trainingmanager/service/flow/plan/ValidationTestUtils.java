@@ -38,20 +38,19 @@ public class ValidationTestUtils {
         private static final String DELIMITER = ".";
         private static final char OPEN_ARRAY = '[';
         private static final char CLOSE_ARRAY = ']';
+        private StringBuilder builder = new StringBuilder();
 
         private FieldPathBuilder() {
 
         }
 
-        private StringBuilder builder = new StringBuilder();
-
         public FieldPathBuilder addField(String field) {
-            builder.append(builder.length() > 0  ? DELIMITER : StringUtils.EMPTY).append(field);
+            builder.append(builder.length() > 0 ? DELIMITER : StringUtils.EMPTY).append(field);
             return this;
         }
 
         public FieldPathBuilder addCollectionField(String field, int index) {
-            builder.append(builder.length() > 0  ? DELIMITER : StringUtils.EMPTY).append(field).append(OPEN_ARRAY).append(index).append(CLOSE_ARRAY);
+            builder.append(builder.length() > 0 ? DELIMITER : StringUtils.EMPTY).append(field).append(OPEN_ARRAY).append(index).append(CLOSE_ARRAY);
             return this;
         }
 
@@ -67,11 +66,11 @@ public class ValidationTestUtils {
 
     public static class AssertBuilder {
 
+        private Map<String, List<String>> assertions = new HashMap<String, List<String>>();
+
         private AssertBuilder() {
 
         }
-
-        private Map<String, List<String>> assertions = new HashMap<String, List<String>>();
 
         public AssertBuilder addAssert(String field, String... restrictions) {
             assertions.put(field, Arrays.asList(restrictions));
@@ -92,7 +91,6 @@ public class ValidationTestUtils {
 
                 assertEquals(String.format("Expected errors for field %s are different than actual", entry.getKey()), expected, actual);
             }
-
 
 
             assertEquals("Not all fields were assert", new HashSet<String>(Lists.transform(errors.getFieldErrors(), new Function<FieldError, String>() {

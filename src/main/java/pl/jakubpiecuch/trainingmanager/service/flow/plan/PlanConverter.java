@@ -61,7 +61,7 @@ public class PlanConverter extends AbstractConverter<PlanDto, Plan> {
         Collection<? extends IdentifyObject> newPhases = filterNew(dto.getPhases());
 
         for (IdentifyObject phase : newPhases) {
-            Phase e = phaseConverter.toEntity((PhaseDto)phase, null);
+            Phase e = phaseConverter.toEntity((PhaseDto) phase, null);
             e.setPlan(entity);
             phases.add(e);
         }

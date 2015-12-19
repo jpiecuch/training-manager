@@ -19,15 +19,15 @@ public class IndexController {
 
     private SocialSignOnAdapter socialSignOnAdapter;
     private AuthenticationService authenticationService;
-    
-    @RequestMapping(method = { RequestMethod.GET, RequestMethod.HEAD})
-    public String index(Model model, @RequestParam(required = false, value = "social", defaultValue = "false") Boolean social, WebRequest request, Locale locale){
+
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD})
+    public String index(Model model, @RequestParam(required = false, value = "social", defaultValue = "false") Boolean social, WebRequest request, Locale locale) {
         if (social) {
             socialSignOnAdapter.signOn(request, locale);
         }
         try {
             model.addAttribute("user", authenticationService.signed());
-        } catch(NotFoundException ex) {
+        } catch (NotFoundException ex) {
 
         }
         return "index";

@@ -33,7 +33,7 @@ public class UserWorkoutCriteria extends Criteria<UserWorkoutCriteria> {
 
     @Override
     protected void appendRestrictions() {
-        restrictions.add(" "+alias+".account.id = :accountId ");
+        restrictions.add(" " + alias + ".account.id = :accountId ");
         params.put("accountId", AuthenticatedUserUtil.getUser().getId());
 
         if (this.id == null) {

@@ -12,49 +12,18 @@ import java.io.IOException;
 @Table(name = "equipment")
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Equipment<T> extends CommonEntity implements EquipmentDescriptor, RepoObject {
-    public enum Type {
-        BAR(Bar.class), BENCH(Bench.class), DUMBBELL(Dumbbell.class), LOAD(Load.class),
-        NECK(Neck.class), PRESS(Press.class), STAND(Stand.class), RACK(Rack.class);
-
-        private Class clazz;
-
-        Type(Class clazz){
-            this.clazz = clazz;
-        }
-
-        public Class getTypeClass() {
-            return this.clazz;
-        }
-    }
-
-    private static final class DiscriminatorType {
-        protected static final String BAR = "0";
-        protected static final String BENCH = "1";
-        protected static final String DUMBBELL = "2";
-        protected static final String LOAD = "3";
-        protected static final String NECK = "4";
-        protected static final String PRESS = "5";
-        protected static final String STAND = "6";
-        protected static final String RACK = "7";
-
-        private DiscriminatorType() {
-        }
-    }
-
     private int type;
     private String data;
     private Double weight;
     private Integer length;
     private Double strength;
-
     public Equipment() {
     }
-    
     public Equipment(Long id) {
         setId(id);
     }
 
-    @Column(name = "type", nullable=false, updatable=false, insertable=false)
+    @Column(name = "type", nullable = false, updatable = false, insertable = false)
     protected int getDiscriminatorType() {
         return type;
     }
@@ -115,6 +84,35 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
 
     public void setConfig(T config) {
         this.data = WebUtil.toJson(config);
+    }
+
+    public enum Type {
+        BAR(Bar.class), BENCH(Bench.class), DUMBBELL(Dumbbell.class), LOAD(Load.class),
+        NECK(Neck.class), PRESS(Press.class), STAND(Stand.class), RACK(Rack.class);
+
+        private Class clazz;
+
+        Type(Class clazz) {
+            this.clazz = clazz;
+        }
+
+        public Class getTypeClass() {
+            return this.clazz;
+        }
+    }
+
+    private static final class DiscriminatorType {
+        protected static final String BAR = "0";
+        protected static final String BENCH = "1";
+        protected static final String DUMBBELL = "2";
+        protected static final String LOAD = "3";
+        protected static final String NECK = "4";
+        protected static final String PRESS = "5";
+        protected static final String STAND = "6";
+        protected static final String RACK = "7";
+
+        private DiscriminatorType() {
+        }
     }
 
     @Entity

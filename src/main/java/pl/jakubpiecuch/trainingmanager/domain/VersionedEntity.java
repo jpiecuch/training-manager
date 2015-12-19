@@ -12,19 +12,19 @@ import java.util.Date;
 
 @MappedSuperclass
 public class VersionedEntity extends CommonEntity {
-    
+
     private Date created;
     private Date updated;
 
     public VersionedEntity() {
         super();
     }
-    
+
     public VersionedEntity(Long id) {
         super(id);
     }
-    
-    
+
+
     @Column(name = "created", insertable = false, nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     public Date getCreated() {

@@ -21,13 +21,13 @@ import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
  */
 public class InsertPlanValidator implements Validator {
 
-    private static final String ARRAY_PROPERTY_FORMAT = "%s[%s]";
     public static final String GROUPS_FIELD = "groups";
     public static final String WORKOUTS_FIELD = "workouts";
     public static final String PHASES_FIELD = "phases";
     public static final String EXERCISES_FIELD = "exercises";
-    private static final char SEPARATOR = '.';
     public static final String SETS_FIELD = "sets";
+    private static final String ARRAY_PROPERTY_FORMAT = "%s[%s]";
+    private static final char SEPARATOR = '.';
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -56,9 +56,9 @@ public class InsertPlanValidator implements Validator {
         String phaseName = String.format(ARRAY_PROPERTY_FORMAT, PHASES_FIELD, index);
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, Phase.POSITION_FIELD), RestrictionCode.REQUIRED);
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName,Phase.DESCRIPTION_FIELD), RestrictionCode.REQUIRED);
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName,Phase.GOAL_FIELD), RestrictionCode.REQUIRED);
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName,Phase.WEEKS_FIELD), RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, Phase.DESCRIPTION_FIELD), RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, Phase.GOAL_FIELD), RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, Phase.WEEKS_FIELD), RestrictionCode.REQUIRED);
 
         if (CollectionUtils.isNotEmpty(phase.getWorkouts())) {
             for (int i = 0; i < phase.getWorkouts().size(); i++) {

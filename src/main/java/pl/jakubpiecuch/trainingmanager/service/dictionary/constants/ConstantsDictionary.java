@@ -31,16 +31,15 @@ public class ConstantsDictionary implements Dictionary {
     private static final long EXERCISE_SETS_ID = 11;
     private static final long EXERCISE_LATERAL_ID = 12;
 
-    private static final long[] SECURED_IDS = new long[] {
+    private static final long[] SECURED_IDS = new long[]{
             GOAL_MAP_ID, EXERCISE_MUSCLES_MAP_ID, EXERCISE_TYPE_ID, EXERCISE_LEVEL_ID,
             EQUIPMENT_TYPE_ID, EXERCISE_MECHANICS_ID, EXERCISE_FORCE_ID, EQUIPMENT_TYPE_ID,
             NECK_TYPE_ID, EXERCISE_SETS_ID
     };
-
+    protected Map<Long, List> map = new HashMap<Long, List>();
     private SupportService socialSupportService;
     private Dictionary securedDictionary;
     private String[] langs;
-    protected Map<Long, List> map = new HashMap<Long, List>();
 
     @Override
     public Object retrieve(long id) {

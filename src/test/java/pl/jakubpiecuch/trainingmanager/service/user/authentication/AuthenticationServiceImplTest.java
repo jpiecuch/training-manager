@@ -12,7 +12,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
-import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanCriteria;
 import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.UserService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
@@ -30,10 +29,10 @@ public class AuthenticationServiceImplTest {
 
     private static final String PASSWORD = "password";
     private static final String USERNAME = "username";
+    private static final String NAME = "authentication";
     private static Authentication NULL_SOCIAL_AUTHENTICATION = new Authentication();
     private static Authentication NULL_PROVIDER_AUTHENTICATION = new Authentication();
     private static Authentication NOT_VALID_AUTHENTICATION = new Authentication();
-    private static final String NAME = "authentication";
     private static Errors BINDING_RESULTS = new BeanPropertyBindingResult(NOT_VALID_AUTHENTICATION, NAME);
     @InjectMocks
     private AuthenticationServiceImpl authenticationService;

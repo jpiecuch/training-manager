@@ -25,7 +25,7 @@ public class CommonRepository<E extends RepoObject, C extends Criteria> extends 
 
     @Override
     public void update(E element) {
-        CommonEntity entity =  dao.findById(element.getId());
+        CommonEntity entity = dao.findById(element.getId());
         DaoAssert.notNull(entity);
         validators.get(ValidationType.UPDATE).validate(element, new BeanPropertyBindingResult(element, name));
         dao.update((CommonEntity) element);

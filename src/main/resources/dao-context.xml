@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
@@ -10,25 +10,26 @@
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-    
-    <bean id="coreDao" class="pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl" abstract="true" >
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean id="repoDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.AbstractRepoDao" abstract="true" parent="coreDao"/>
-    
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="coreDao" class="pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl" abstract="true">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="repoDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.AbstractRepoDao" abstract="true"
+          parent="coreDao"/>
+
     <bean id="equipmentDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.CommonRepoDaoImpl" parent="repoDao">
         <property name="clazz" value="pl.jakubpiecuch.trainingmanager.domain.Equipment"/>
     </bean>
-    
+
     <bean id="descriptionDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.CommonRepoDaoImpl" parent="repoDao">
         <property name="clazz" value="pl.jakubpiecuch.trainingmanager.domain.Description"/>
     </bean>
-    
+
     <bean id="accountDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.CommonRepoDaoImpl" parent="repoDao">
         <property name="clazz" value="pl.jakubpiecuch.trainingmanager.domain.Account"/>
     </bean>

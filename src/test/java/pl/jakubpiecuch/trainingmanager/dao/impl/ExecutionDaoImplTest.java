@@ -17,12 +17,10 @@ public class ExecutionDaoImplTest extends BaseIntegrationTestCase {
     public static final Long UNILATERAL_EXECUTION = 2l;
 
     public static final List<Integer> SETS = Lists.newArrayList(15, 15, 15);
-    private static final List<Double> WEIGHTS = Lists.newArrayList(80.0, 80.0, 80.0);
-
     public static final List<Integer> LEFT_SETS = Lists.newArrayList(12, 10, 8, 8, 6);
-    private static final List<Double> LEFT_WEIGHTS = Lists.newArrayList(17.0, 18.0, 19.25, 20.25, 21.25);
-
     public static final List<Integer> RIGHT_SETS = Lists.newArrayList(12, 10, 8, 8, 6);
+    private static final List<Double> WEIGHTS = Lists.newArrayList(80.0, 80.0, 80.0);
+    private static final List<Double> LEFT_WEIGHTS = Lists.newArrayList(17.0, 18.0, 19.25, 20.25, 21.25);
     private static final List<Double> RIGHT_WEIGHTS = Lists.newArrayList(17.0, 18.0, 19.25, 20.25, 21.25);
 
     @Autowired

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SignOnController extends AbstractController {
 
     @PreAuthorize(value = Permissions.IS_ANONYMOUS)
-    @RequestMapping(method = { RequestMethod.POST })
+    @RequestMapping(method = {RequestMethod.POST})
     public ResponseEntity signOn(@PathVariable ApiVersionService.Version version, HttpServletRequest request, @RequestBody Registration registration) {
         versionServices.get(version).signOn(registration, request.getLocale());
         return new ResponseEntity(HttpStatus.CREATED);

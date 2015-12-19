@@ -26,7 +26,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:test-validator-context.xml")
 public class RegistrationValidatorTest {
-    
+
     @Autowired
     @Qualifier("registrationValidator")
     private RegistrationValidator validator;
@@ -77,7 +77,7 @@ public class RegistrationValidatorTest {
         registration.setAccepted(true);
         BeanPropertyBindingResult errors = new BeanPropertyBindingResult(registration, "registration");
         validator.validate(registration, errors);
-        
+
         assertFalse(errors.hasErrors());
     }
 

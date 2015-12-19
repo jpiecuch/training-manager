@@ -40,7 +40,7 @@ public class SessionUserPlanStarter implements UserPlanStarter {
                 for (WorkoutDto workout : phase.getWorkouts()) {
                     DateTime dateTime = new DateTime().withYear(userPlan.getYear());
                     int currentWeek = userPlan.getWeek() + weekIncrease;
-                    if (dateTime.weekOfWeekyear().getMaximumValue() <  currentWeek) {
+                    if (dateTime.weekOfWeekyear().getMaximumValue() < currentWeek) {
                         dateTime = dateTime.plusYears(1);
                         currentWeek = currentWeek - dateTime.weekOfWeekyear().getMaximumValue();
                     }
@@ -52,7 +52,7 @@ public class SessionUserPlanStarter implements UserPlanStarter {
                     userWorkout.setState(UserWorkout.State.PLANNED);
                     userWorkoutDao.create(userWorkout);
                     for (GroupDto group : workout.getGroups()) {
-                        for(ExerciseDto exercise : group.getExercises()) {
+                        for (ExerciseDto exercise : group.getExercises()) {
                             Execution execution = new Execution();
                             execution.setExercise(new Exercise(exercise.getId()));
                             execution.setWorkout(userWorkout);

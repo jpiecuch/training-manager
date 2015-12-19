@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 public class ForceOrderResolverTest extends AbstractOrderResolverTest {
 
+    private ForceOrderResolver resolver = new ForceOrderResolver();
+
     public ForceOrderResolverTest() {
         super(new HashMap<String, Integer[]>() {
             {
@@ -15,8 +17,6 @@ public class ForceOrderResolverTest extends AbstractOrderResolverTest {
             }
         });
     }
-
-    private ForceOrderResolver resolver = new ForceOrderResolver();
 
     @Override
     public ForceOrderResolver getResolver() {

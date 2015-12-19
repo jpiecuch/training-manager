@@ -11,14 +11,13 @@ import javax.persistence.*;
 @Table(name = "exercise")
 public class Exercise extends CommonEntity {
 
-    private static final String SET_DELIMITER = ";";
     public static final String FAIL_KEY = "FAIL";
     public static final String WORKOUT_FIELD = "workout";
     public static final String DESCRIPTION_FIELD = "description";
     public static final String REPS_FIELD = "reps";
     public static final String SUPER_SET_FIELD = "super_set";
     public static final String POSITION_FIELD = "position";
-
+    private static final String SET_DELIMITER = ";";
     private Description description;
     private Workout workout;
     private String reps;

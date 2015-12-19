@@ -11,13 +11,12 @@ import java.util.List;
 @Entity
 @Table(name = "phase")
 public class Phase extends CommonEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
     public static final String GOAL_FIELD = "goal";
     public static final String POSITION_FIELD = "position";
     public static final String DESCRIPTION_FIELD = "description";
     public static final String PLAN_FIELD = "plan";
     public static final String WEEKS_FIELD = "weeks";
-
+    private static final long serialVersionUID = 1L;
     private Integer position;
     private Plan.Goal goal;
     private String description;

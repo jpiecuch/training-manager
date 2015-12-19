@@ -14,12 +14,12 @@ import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 @RestController
 public class DictionaryController extends AbstractController {
 
-    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = { RequestMethod.GET })
+    @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = {RequestMethod.GET})
     public ResponseEntity dictionary(@PathVariable ApiVersionService.Version version, @PathVariable Long id) {
         return new ResponseEntity(versionServices.get(version).dictionary(id), HttpStatus.OK);
     }
 
-    @RequestMapping(method = { RequestMethod.GET })
+    @RequestMapping(method = {RequestMethod.GET})
     public ResponseEntity dictionaries(@PathVariable ApiVersionService.Version version, @RequestParam("id") Long[] ids) {
         return new ResponseEntity(versionServices.get(version).dictionaries(ids), HttpStatus.OK);
     }

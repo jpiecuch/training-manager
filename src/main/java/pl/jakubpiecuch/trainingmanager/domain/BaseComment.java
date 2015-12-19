@@ -9,18 +9,18 @@ import javax.persistence.*;
 
 @MappedSuperclass
 public class BaseComment<T extends CommonEntity> extends VersionedEntity {
-    
+
     private String comment;
     private Account account;
     private T commented;
 
     public BaseComment() {
     }
-    
+
     public BaseComment(Long id) {
         super(id);
     }
-    
+
     @JoinColumn(name = "commented")
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore

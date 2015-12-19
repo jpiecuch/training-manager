@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
-       <context:annotation-config />
-       <util:properties id="propertyConfigurerEnv" location="classpath:configuration/dev.properties"/>
-       <util:properties id="propertyConfigurerCommon" location="classpath:configuration/common.properties"/>
-       <context:property-placeholder location="classpath:configuration/dev.properties,classpath:configuration/common.properties" />
+    <context:annotation-config/>
+    <util:properties id="propertyConfigurerEnv" location="classpath:configuration/dev.properties"/>
+    <util:properties id="propertyConfigurerCommon" location="classpath:configuration/common.properties"/>
+    <context:property-placeholder
+            location="classpath:configuration/dev.properties,classpath:configuration/common.properties"/>
 
 
-       <mvc:annotation-driven />
+    <mvc:annotation-driven/>
 
-       <bean id="accountRepository" class="org.mockito.Mockito" factory-method="mock">
-              <constructor-arg value="pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository"/>
-       </bean>
+    <bean id="accountRepository" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository"/>
+    </bean>
 
-       <import resource="validator-context.xml"/>
+    <import resource="validator-context.xml"/>
 
-       <!-- only for mocking purpose -->
-       <bean id="roleRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.role.RoleRepository"/>
+    <!-- only for mocking purpose -->
+    <bean id="roleRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.role.RoleRepository"/>
 </beans>

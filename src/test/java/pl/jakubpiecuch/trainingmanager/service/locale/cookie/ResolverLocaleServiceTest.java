@@ -16,20 +16,16 @@ import java.util.Locale;
 @RunWith(MockitoJUnitRunner.class)
 public class ResolverLocaleServiceTest {
 
+    private final static String[] supported = new String[]{"pl", "en"};
+    private final static Locale LOCALE = new Locale("en");
     @InjectMocks
-    private ResolverLocaleService service ;
-
+    private ResolverLocaleService service;
     @Mock
     private LocaleResolver localeResolver;
-
     @Mock
     private HttpServletResponse response;
-
     @Mock
     private HttpServletRequest request;
-
-    private final static String[] supported = new String[] {"pl","en"};
-    private final static Locale LOCALE = new Locale("en");
 
     @Before
     public void setUp() {
@@ -59,7 +55,7 @@ public class ResolverLocaleServiceTest {
     }
 
     @Test
-    public void testUpdate()  {
+    public void testUpdate() {
         service.update(request, response, LOCALE);
     }
 }

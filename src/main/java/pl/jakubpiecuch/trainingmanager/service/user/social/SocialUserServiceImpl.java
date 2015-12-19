@@ -42,7 +42,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
     }
 
     @Override
-    public boolean isValidCredentials(Account entity, UserDetails user)  {
+    public boolean isValidCredentials(Account entity, UserDetails user) {
         SecurityUser securityUser = (SecurityUser) user;
         return socialServices.get(securityUser.getSocial()).createConnection(securityUser);
     }

@@ -9,7 +9,6 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,12 +64,12 @@ public class Version1Service implements ApiVersionService {
 
     @Override
     public void activate(String code) {
-        ((LocalUserService)userServices.get(Provider.Type.LOCAL)).activate(code);
+        ((LocalUserService) userServices.get(Provider.Type.LOCAL)).activate(code);
     }
 
     @Override
     public void resetPassword(String email, Locale locale) {
-        ((LocalUserService)userServices.get(Provider.Type.LOCAL)).password(email, locale);
+        ((LocalUserService) userServices.get(Provider.Type.LOCAL)).password(email, locale);
     }
 
     @Override
@@ -117,7 +116,7 @@ public class Version1Service implements ApiVersionService {
     public Equipment resolve(InputStream stream, Equipment.Type type) throws IOException {
         try {
             return (Equipment) mapper.readValue(stream, type.getTypeClass());
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
     }
@@ -177,14 +176,14 @@ public class Version1Service implements ApiVersionService {
         } else {
             final HttpHeaders headers = new HttpHeaders();
             headers.setContentType(resourceService.getMediaType(handler));
-            return new ResponseEntity(resourceService.read(handler),headers, HttpStatus.OK);
+            return new ResponseEntity(resourceService.read(handler), headers, HttpStatus.OK);
         }
     }
 
     @Override
     public Object language(final String lang) {
         final List<PropertiesConfiguration> configurations = propertiesConfigurations.get(lang);
-        if(CollectionUtils.isEmpty(configurations)) {
+        if (CollectionUtils.isEmpty(configurations)) {
             throw new NotFoundException();
         }
         Map<String, String> result = new HashMap<String, String>();
