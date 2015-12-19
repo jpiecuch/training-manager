@@ -2,7 +2,7 @@ package pl.jakubpiecuch.trainingmanager.service.user.workout.session.execution;
 
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
-import pl.jakubpiecuch.trainingmanager.dao.ExecutionDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.Execution;
 import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
 import pl.jakubpiecuch.trainingmanager.service.repository.UpdatableRepository;
@@ -15,7 +15,7 @@ public class ExecutionUpdatableRepository implements UpdatableRepository<Executi
 
     private Converter<ExecutionDto, Execution> converter;
     private Validator validator;
-    private ExecutionDao executionDao;
+    private CoreDao<Execution> executionDao;
 
     @Override
     public void update(ExecutionDto element) {
@@ -31,7 +31,7 @@ public class ExecutionUpdatableRepository implements UpdatableRepository<Executi
         this.converter = converter;
     }
 
-    public void setExecutionDao(ExecutionDao executionDao) {
+    public void setExecutionDao(CoreDao<Execution> executionDao) {
         this.executionDao = executionDao;
     }
 }

@@ -24,6 +24,7 @@ public class SocialSupportServiceTest {
             types.remove(provider.getSocialType());
         }
 
-        Assert.assertEquals(0, types.size());
+        Assert.assertEquals(1, types.size());
+        Assert.assertEquals(SocialProvider.SocialType.NONE, types.get(0));
     }
 }

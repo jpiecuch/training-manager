@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import pl.jakubpiecuch.trainingmanager.dao.PlanDao;
+import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.domain.Phase;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
@@ -42,7 +42,7 @@ public class PlanConverterTest {
     PhaseConverter phaseConverter;
 
     @Mock
-    PlanDao planDao;
+    RepoDao<Plan, PlanCriteria> planDao;
 
 
     @Before

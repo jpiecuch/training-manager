@@ -1,6 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.user.workout;
 
-import pl.jakubpiecuch.trainingmanager.dao.ExecutionDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.Execution;
 import pl.jakubpiecuch.trainingmanager.service.converter.AbstractConverter;
 import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
@@ -12,7 +12,7 @@ import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.
 public class ExecutionConverter extends AbstractConverter<ExecutionDto, Execution> {
 
     private Converter exerciseConverter;
-    private ExecutionDao executionDao;
+    private CoreDao<Execution> executionDao;
 
     @Override
     protected ExecutionDto convertTo(Execution entity) {
@@ -43,7 +43,7 @@ public class ExecutionConverter extends AbstractConverter<ExecutionDto, Executio
         this.exerciseConverter = exerciseConverter;
     }
 
-    public void setExecutionDao(ExecutionDao executionDao) {
+    public void setExecutionDao(CoreDao<Execution> executionDao) {
         this.executionDao = executionDao;
     }
 }

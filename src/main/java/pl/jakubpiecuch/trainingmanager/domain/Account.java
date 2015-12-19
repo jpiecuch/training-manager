@@ -5,6 +5,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
+import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
@@ -23,11 +24,11 @@ public class Account extends VersionedEntity implements RepoObject {
     public static final String CONFIG_FIELD_NAME = "config";
     public static final String PROVIDER_FIELD_NAME = "provider";
     public static final String ROLE_FIELD_NAME = "role";
+    public static final String SOCIAL_TYPE_FIELD_NAME = "social_type";
 
     public enum Status {
         ACTIVE, RESET_PASSWORD, EXPIRED, CREATED
     }
-
 
     private String name;
     private String password;
@@ -36,6 +37,7 @@ public class Account extends VersionedEntity implements RepoObject {
     private Status status;
     private String config;
     private Provider.Type provider;
+    private SocialProvider.SocialType socialType;
     private List<Role> roles = new ArrayList<Role>();
 
     public Account() {
@@ -109,6 +111,16 @@ public class Account extends VersionedEntity implements RepoObject {
 
     public void setProvider(Provider.Type provider) {
         this.provider = provider;
+    }
+
+    @Column(name = SOCIAL_TYPE_FIELD_NAME)
+    @Enumerated(EnumType.ORDINAL)
+    public SocialProvider.SocialType getSocialType() {
+        return socialType;
+    }
+
+    public void setSocialType(SocialProvider.SocialType socialType) {
+        this.socialType = socialType;
     }
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

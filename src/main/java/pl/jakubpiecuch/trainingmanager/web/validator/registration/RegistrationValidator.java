@@ -42,45 +42,45 @@ public class RegistrationValidator implements Validator {
         Assert.notNull(errors);
 
         if (object.getProvider() == null) {
-            errors.rejectValue("provider", RestrictionCode.REQUIRED);
+            errors.rejectValue(Registration.PROVIDER_FIELD, RestrictionCode.REQUIRED);
         } else if (Provider.Type.SOCIAL == object.getProvider() && object.getSocial() == null) {
-            errors.rejectValue("social", RestrictionCode.REQUIRED);
+            errors.rejectValue(Registration.SOCIAL_FIELD, RestrictionCode.REQUIRED);
         }
 
         if (StringUtils.isEmpty(object.getPassword())) {
-            errors.rejectValue("password", RestrictionCode.REQUIRED);
+            errors.rejectValue(Registration.PASSWORD_FIELD, RestrictionCode.REQUIRED);
         } else if (!object.getPassword().matches(passwordPattern)) {
-            errors.rejectValue("password", RestrictionCode.PATTERN, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.PATTERN, passwordPattern).build()}, null);
+            errors.rejectValue(Registration.PASSWORD_FIELD, RestrictionCode.PATTERN, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.PATTERN, passwordPattern).build()}, null);
         } else if (minPasswordLength > object.getPassword().length()) {
-            errors.rejectValue("password", RestrictionCode.MIN_LENGTH, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.MIN_LENGTH, minPasswordLength).build()}, null);
+            errors.rejectValue(Registration.PASSWORD_FIELD, RestrictionCode.MIN_LENGTH, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.MIN_LENGTH, minPasswordLength).build()}, null);
         } else if (maxPasswordLength < object.getPassword().length()) {
-            errors.rejectValue("password", RestrictionCode.MAX_LENGTH, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.MAX_LENGTH, maxPasswordLength).build()}, null);
+            errors.rejectValue(Registration.PASSWORD_FIELD, RestrictionCode.MAX_LENGTH, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.MAX_LENGTH, maxPasswordLength).build()}, null);
         }
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", RestrictionCode.REQUIRED);
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, Registration.FIRST_NAME_FIELD, RestrictionCode.REQUIRED);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, Registration.LAST_NAME_FIELD, RestrictionCode.REQUIRED);
 
         if (StringUtils.isEmpty(object.getEmail())) {
-            errors.rejectValue("email", RestrictionCode.REQUIRED);
+            errors.rejectValue(Registration.EMAIL_FIELD, RestrictionCode.REQUIRED);
         } else if (!object.getEmail().matches(emailPattern)) {
-            errors.rejectValue("email", RestrictionCode.PATTERN, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.PATTERN, emailPattern).build()}, null);
-        } else if (repository.read(new AccountCriteria().addEmailRestrictions(object.getEmail())).getCount() > 0) {
-            errors.rejectValue("email", RestrictionCode.EXISTS);
+            errors.rejectValue(Registration.EMAIL_FIELD, RestrictionCode.PATTERN, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.PATTERN, emailPattern).build()}, null);
+        } else if (repository.read(new AccountCriteria().addEmailRestrictions(object.getEmail()).addProviderRestrictions(Provider.Type.LOCAL)).getCount() > 0) {
+            errors.rejectValue(Registration.EMAIL_FIELD, RestrictionCode.EXISTS);
         }
 
         if (StringUtils.isEmpty(object.getUsername())) {
-            errors.rejectValue("username", RestrictionCode.REQUIRED);
+            errors.rejectValue(Registration.USERNAME_FIELD, RestrictionCode.REQUIRED);
         } else if (!object.getUsername().matches(namePattern)) {
-            errors.rejectValue("username", RestrictionCode.PATTERN, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.PATTERN, namePattern).build()}, null);
+            errors.rejectValue(Registration.USERNAME_FIELD, RestrictionCode.PATTERN, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.PATTERN, namePattern).build()}, null);
         } else if (minNameLength > object.getUsername().length()) {
-            errors.rejectValue("username", RestrictionCode.MIN_LENGTH, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.MIN_LENGTH, minNameLength).build()}, null);
+            errors.rejectValue(Registration.USERNAME_FIELD, RestrictionCode.MIN_LENGTH, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.MIN_LENGTH, minNameLength).build()}, null);
         } else if (maxNameLength < object.getUsername().length()) {
-            errors.rejectValue("username", RestrictionCode.MAX_LENGTH, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.MAX_LENGTH, maxNameLength).build()}, null);
+            errors.rejectValue(Registration.USERNAME_FIELD, RestrictionCode.MAX_LENGTH, new Object[] {new ParamsMapBuilder().addParam(RestrictionCode.MAX_LENGTH, maxNameLength).build()}, null);
         } else if (repository.read(new AccountCriteria().addNameRestrictions(object.getUsername())).getCount() > 0) {
-            errors.rejectValue("username", RestrictionCode.EXISTS);
+            errors.rejectValue(Registration.USERNAME_FIELD, RestrictionCode.EXISTS);
         }
 
         if (!object.isAccepted()) {
-            errors.rejectValue("accepted", RestrictionCode.CHECKED);
+            errors.rejectValue(Registration.ACCEPTED_FIELD, RestrictionCode.CHECKED);
         }
         if (errors.hasErrors()) {
             throw new ValidationException(errors);

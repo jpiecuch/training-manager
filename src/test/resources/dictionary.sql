@@ -1,4 +1,4 @@
-INSERT INTO account (id, name, password, salt, created, updated, status, email, config, provider) VALUES (1, 'test.user', 'f0e734ab8910dee9762d0ee07964288dd8ffd95be9ab646af02ba1c1256e5037', '3994c7aea794c1cf', '2014-12-07 13:52:56.805', '2014-12-07 13:53:16.062', 0, 'test.user@test.com', '{"firstName":"Test","lastName":"User"}', 0);
+INSERT INTO account (id, name, password, salt, created, updated, status, email, config, provider, social_type) VALUES (1, 'test.user', 'f0e734ab8910dee9762d0ee07964288dd8ffd95be9ab646af02ba1c1256e5037', '3994c7aea794c1cf', '2014-12-07 13:52:56.805', '2014-12-07 13:53:16.062', 0, 'test.user@test.com', '{"firstName":"Test","lastName":"User"}', 0, 3);
 
 INSERT INTO role (id, name, permissions, modifiable) VALUES (1, 'ADMIN', '0,1,2', true);
 
@@ -26,8 +26,8 @@ INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUE
 
 INSERT INTO user_workout (id, account, date, remind, comment, workout, state) VALUES (1, 1, '2014-12-07 13:52:56.805', false, null, 1, 0);
 
-INSERT INTO execution (id, reps, weights, exercise, state, comment, workout) VALUES (1,'12;12;12;12','30;30;30;30',1,0,null,1);
-INSERT INTO execution (id, reps, weights, exercise, state, comment, workout) VALUES (2,'12;12;11;12','30;30;30.5;30',2,0,null,1);
+INSERT INTO execution (id, result, exercise, state, comment, workout) VALUES (1,'{"results":[{"side":null,"weights":[80.0,80.0,80.0],"sets":[15,15,15]}]}',1,0,null,1);
+INSERT INTO execution (id, result, exercise, state, comment, workout) VALUES (2,'{"results":[{"side":"LEFT","weights":[17.0,18.0,19.25,20.25,21.25],"sets":[12,10,8,8,6]},{"side":"RIGHT","weights":[17.0,18.0,19.25,20.25,21.25],"sets":[12,10,8,8,6]}]}',2,0,null,1);
 
 INSERT INTO equipment (id, type, data, length, weight, strength) VALUES (3, 4, '{"connectedLoad": false,"type":"STRAIGHT"}', 180, 8, 150);
 INSERT INTO equipment (id, type, data, length, weight, strength) VALUES (1, 0, '{"handles":6}', 120, NULL, 200);

@@ -68,6 +68,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
         account.setSalt(KeyGenerators.string().generateKey());
         account.setPassword(SecurityUser.OAUTH);
         account.setProvider(Provider.Type.SOCIAL);
+        account.setSocialType(registration.getSocial());
         account.getRoles().addAll(roleRepository.read(new RoleCriteria().addNameRestrictions(Role.ADMIN_ROLE)).getResult());
 
         repository.create(account);

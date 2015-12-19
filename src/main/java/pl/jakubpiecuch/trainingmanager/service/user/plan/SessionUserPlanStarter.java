@@ -1,9 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.service.user.plan;
 
 import org.joda.time.DateTime;
-import pl.jakubpiecuch.trainingmanager.dao.ExecutionDao;
-import pl.jakubpiecuch.trainingmanager.dao.PlanDao;
-import pl.jakubpiecuch.trainingmanager.dao.UserWorkoutDao;
+import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.*;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanCriteria;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanDto;
@@ -12,6 +11,7 @@ import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.GroupDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.ExerciseDto;
 import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
+import pl.jakubpiecuch.trainingmanager.service.user.workout.session.UserWorkoutCriteria;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
 import javax.annotation.PostConstruct;
@@ -27,9 +27,9 @@ public class SessionUserPlanStarter implements UserPlanStarter {
 
     private Map<Integer, Integer> dayOfWeekMapper = new HashMap<Integer, Integer>();
     private Repository<PlanDto, PlanCriteria> manager;
-    private ExecutionDao executionDao;
-    private UserWorkoutDao userWorkoutDao;
-    private PlanDao planDao;
+    private CoreDao<Execution> executionDao;
+    private RepoDao<UserWorkout, UserWorkoutCriteria> userWorkoutDao;
+    private RepoDao<Plan, PlanCriteria> planDao;
 
     @Override
     public void start(UserPlan userPlan) {
@@ -84,11 +84,11 @@ public class SessionUserPlanStarter implements UserPlanStarter {
         planDao.update(entity);
     }
 
-    public void setExecutionDao(ExecutionDao executionDao) {
+    public void setExecutionDao(CoreDao<Execution> executionDao) {
         this.executionDao = executionDao;
     }
 
-    public void setUserWorkoutDao(UserWorkoutDao userWorkoutDao) {
+    public void setUserWorkoutDao(RepoDao<UserWorkout, UserWorkoutCriteria> userWorkoutDao) {
         this.userWorkoutDao = userWorkoutDao;
     }
 
@@ -96,7 +96,7 @@ public class SessionUserPlanStarter implements UserPlanStarter {
         this.manager = manager;
     }
 
-    public void setPlanDao(PlanDao planDao) {
+    public void setPlanDao(RepoDao<Plan, PlanCriteria> planDao) {
         this.planDao = planDao;
     }
 

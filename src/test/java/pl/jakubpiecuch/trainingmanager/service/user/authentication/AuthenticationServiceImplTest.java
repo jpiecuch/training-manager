@@ -10,7 +10,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
+import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
+import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanCriteria;
+import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.UserService;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
@@ -36,7 +39,7 @@ public class AuthenticationServiceImplTest {
     private AuthenticationServiceImpl authenticationService;
 
     @Mock
-    private AccountDao accountDao;
+    private RepoDao<Account, AccountCriteria> accountDao;
 
     @Mock
     private Validator validator;

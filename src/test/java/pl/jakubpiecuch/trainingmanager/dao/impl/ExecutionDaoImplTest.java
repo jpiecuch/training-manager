@@ -1,51 +1,61 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
+import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
 import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
-import pl.jakubpiecuch.trainingmanager.dao.ExecutionDao;
-import pl.jakubpiecuch.trainingmanager.dao.PageResult;
-import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.Execution;
-import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
-import pl.jakubpiecuch.trainingmanager.service.user.workout.session.UserWorkoutCriteria;
 
-import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class ExecutionDaoImplTest extends BaseIntegrationTestCase {
 
-    public static final Integer[] SETS = new Integer[]{12, 12, 12, 12};
+    public static final Long BILATERAL_EXECUTION = 1l;
+    public static final Long UNILATERAL_EXECUTION = 2l;
+
+    public static final List<Integer> SETS = Lists.newArrayList(15, 15, 15);
+    private static final List<Double> WEIGHTS = Lists.newArrayList(80.0, 80.0, 80.0);
+
+    public static final List<Integer> LEFT_SETS = Lists.newArrayList(12, 10, 8, 8, 6);
+    private static final List<Double> LEFT_WEIGHTS = Lists.newArrayList(17.0, 18.0, 19.25, 20.25, 21.25);
+
+    public static final List<Integer> RIGHT_SETS = Lists.newArrayList(12, 10, 8, 8, 6);
+    private static final List<Double> RIGHT_WEIGHTS = Lists.newArrayList(17.0, 18.0, 19.25, 20.25, 21.25);
+
     @Autowired
-    private ExecutionDao executionDao;
+    private CoreDao<Execution> executionDao;
 
     @Test
     public void testFindById() throws Exception {
-        Execution execution = executionDao.findById(1l);
-        assertNotNull(execution);
-        /*for (int i = 0; i < execution.getSets().length; i++) {
-            assertEquals(SETS[i], execution.getSets()[i]);
-        }*/
-    }
+        Execution bilateralExecution = executionDao.findById(BILATERAL_EXECUTION);
 
-    @Test
-    public void testFindByParentId() throws Exception {
-        assertFalse(executionDao.findByParentId(1l).isEmpty());
-    }
+        assertNotNull(bilateralExecution);
+        assertEquals(1, bilateralExecution.getResults().size());
+        Execution.Result result = bilateralExecution.getResults().get(0);
 
-    @Test
-    public void testFindByCriteria() {
-        SecurityContextHolder.getContext().setAuthentication( new UsernamePasswordAuthenticationToken(new SecurityUser(1l, "user", "password", null, AuthorityUtils.createAuthorityList("ROLE_ADMIN")), "password", AuthorityUtils.createAuthorityList("ROLE_ADMIN")));
-        PageResult result = ((RepoDao) executionDao).findByCriteria(new UserWorkoutCriteria("en").setIdRestriction(1l));
-        assertNotNull(result);
-        assertEquals(1l, result.getCount());
+        assertNull(result.getSide());
+        assertEquals(SETS, result.getSets());
+        assertEquals(WEIGHTS, result.getWeights());
+        Execution unilateralExecution = executionDao.findById(UNILATERAL_EXECUTION);
 
-        result = ((RepoDao) executionDao).findByCriteria(new UserWorkoutCriteria("en").addDateRangeRestriction(new Date(0), null));
-        assertNotNull(result);
-        assertEquals(1l, result.getCount());
+        assertNotNull(unilateralExecution);
+        assertEquals(2, unilateralExecution.getResults().size());
+
+        Execution.Result leftResult = unilateralExecution.getResults().get(0);
+
+        assertEquals(Execution.Result.LEFT_SIDE_CODE, leftResult.getSide());
+        assertEquals(LEFT_SETS, leftResult.getSets());
+        assertEquals(LEFT_WEIGHTS, leftResult.getWeights());
+
+        Execution.Result rightResult = unilateralExecution.getResults().get(1);
+
+        assertEquals(Execution.Result.RIGHT_SIDE_CODE, rightResult.getSide());
+        assertEquals(RIGHT_SETS, rightResult.getSets());
+        assertEquals(RIGHT_WEIGHTS, rightResult.getWeights());
+
+
     }
 }

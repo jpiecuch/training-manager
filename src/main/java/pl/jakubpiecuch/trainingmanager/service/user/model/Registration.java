@@ -7,6 +7,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Account;
  */
 public class Registration extends Authentication {
     public static final String NAME = "registration";
+    public static final String ACCEPTED_FIELD = "accepted";
 
     boolean accepted;
 

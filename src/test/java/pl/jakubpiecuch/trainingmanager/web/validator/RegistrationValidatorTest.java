@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.ValidationTestUtils;
 import pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository;
 import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
@@ -19,8 +20,7 @@ import pl.jakubpiecuch.trainingmanager.web.validator.registration.RegistrationVa
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -34,40 +34,37 @@ public class RegistrationValidatorTest {
     @Autowired
     private ReadRepository accountRepository;
 
-    @Test(expected = ValidationException.class)
+    @Test
     public void validateExceptionTest() {
+
         Registration registration = new Registration();
         BeanPropertyBindingResult errors = new BeanPropertyBindingResult(registration, "registration");
-        validator.validate(registration, errors);
 
+        try {
+            validator.validate(registration, errors);
+            fail();
+        } catch (ValidationException ex) {
+
+        }
         assertTrue(errors.hasErrors());
+        assertEquals(7, errors.getFieldErrorCount());
+
+        ValidationTestUtils.createAssertBuilder()
+                .addAssert(Registration.USERNAME_FIELD, RestrictionCode.REQUIRED)
+                .addAssert(Registration.FIRST_NAME_FIELD, RestrictionCode.REQUIRED)
+                .addAssert(Registration.LAST_NAME_FIELD, RestrictionCode.REQUIRED)
+                .addAssert(Registration.PROVIDER_FIELD, RestrictionCode.REQUIRED)
+                .addAssert(Registration.EMAIL_FIELD, RestrictionCode.REQUIRED)
+                .addAssert(Registration.PASSWORD_FIELD, RestrictionCode.REQUIRED)
+                .addAssert(Registration.ACCEPTED_FIELD, RestrictionCode.CHECKED)
+                .assertion(errors);
     }
 
     @Test
     public void validateTest() {
-        Mockito.when(accountRepository.read(new AccountCriteria().addEmailRestrictions("test@test.com"))).thenReturn(new PageResult() {
-            @Override
-            public List getResult() {
-                return new ArrayList();
-            }
+        Mockito.when(accountRepository.read(new AccountCriteria().addEmailRestrictions("test@test.com").addProviderRestrictions(Provider.Type.LOCAL))).thenReturn(createPage(new ArrayList(), 0));
 
-            @Override
-            public long getCount() {
-                return 0;
-            }
-        });
-
-        Mockito.when(accountRepository.read(new AccountCriteria().addNameRestrictions("test123"))).thenReturn(new PageResult() {
-            @Override
-            public List getResult() {
-                return new ArrayList();
-            }
-
-            @Override
-            public long getCount() {
-                return 0;
-            }
-        });
+        Mockito.when(accountRepository.read(new AccountCriteria().addNameRestrictions("test123"))).thenReturn(createPage(new ArrayList(), 0));
 
         Registration registration = new Registration();
 
@@ -82,5 +79,19 @@ public class RegistrationValidatorTest {
         validator.validate(registration, errors);
         
         assertFalse(errors.hasErrors());
+    }
+
+    private PageResult createPage(final List list, final long count) {
+        return new PageResult() {
+            @Override
+            public List getResult() {
+                return list;
+            }
+
+            @Override
+            public long getCount() {
+                return count;
+            }
+        };
     }
 }

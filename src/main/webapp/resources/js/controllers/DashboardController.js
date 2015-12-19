@@ -16,7 +16,7 @@ app.controller('DashboardController', function($scope, userWorkoutService, accou
              $scope.dashboard.nextWorkouts = data.data;
          });
 
-        accountRecordService.retrieve({type: ['WEIGHT'], maxResults: 100}).then(function(data) {
+        accountRecordService.retrieve({type: ['WEIGHT'], maxResults: 200}).then(function(data) {
 
             var chart = AmCharts.makeChart("chartdiv", {
                 language: $rootScope.settings.lang,

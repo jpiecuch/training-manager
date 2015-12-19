@@ -10,6 +10,7 @@ import pl.jakubpiecuch.trainingmanager.service.identify.IdentifyObject;
 public class ExerciseDto implements IdentifyObject {
 
     public static final String DESCRIPTION_ID = Exercise.DESCRIPTION_FIELD + "Id";
+    public static final String SETS_FIELD = "sets";
     private Long id;
     private Long workoutId;
     private Long descriptionId;

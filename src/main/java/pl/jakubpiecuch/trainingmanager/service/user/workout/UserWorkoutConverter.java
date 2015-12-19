@@ -1,7 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.user.workout;
 
 import org.springframework.transaction.annotation.Transactional;
-import pl.jakubpiecuch.trainingmanager.dao.UserWorkoutDao;
+import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.domain.Phase;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.domain.UserWorkout;
@@ -9,6 +9,7 @@ import pl.jakubpiecuch.trainingmanager.service.converter.AbstractConverter;
 import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
+import pl.jakubpiecuch.trainingmanager.service.user.workout.session.UserWorkoutCriteria;
 
 /**
  * Created by Rico on 2015-01-18.
@@ -16,7 +17,7 @@ import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
 public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, UserWorkout> {
 
     private Converter executionConverter;
-    private UserWorkoutDao userWorkoutDao;
+    private RepoDao<UserWorkout, UserWorkoutCriteria> userWorkoutDao;
 
     @Override
     protected UserWorkout convertFrom(UserWorkoutDto dto, UserWorkout entity) {
@@ -66,7 +67,7 @@ public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, User
         this.executionConverter = executionConverter;
     }
 
-    public void setUserWorkoutDao(UserWorkoutDao userWorkoutDao) {
+    public void setUserWorkoutDao(RepoDao<UserWorkout, UserWorkoutCriteria> userWorkoutDao) {
         this.userWorkoutDao = userWorkoutDao;
     }
 }

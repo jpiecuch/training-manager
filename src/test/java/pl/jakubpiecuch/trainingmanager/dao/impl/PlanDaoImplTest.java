@@ -4,11 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
-import pl.jakubpiecuch.trainingmanager.dao.PhaseDao;
-import pl.jakubpiecuch.trainingmanager.dao.PlanDao;
+import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.domain.Phase;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
+import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanCriteria;
 
 import java.util.ArrayList;
 
@@ -29,10 +30,10 @@ public class PlanDaoImplTest extends BaseIntegrationTestCase {
     private static Phase PHASE = new Phase();
 
     @Autowired
-    private PlanDao planDao;
+    private RepoDao<Plan, PlanCriteria> planDao;
 
     @Autowired
-    private PhaseDao phaseDao;
+    private CoreDao<Phase> phaseDao;
 
     @Before
     public void setUp() {

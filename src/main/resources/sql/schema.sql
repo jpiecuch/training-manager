@@ -10,7 +10,8 @@ CREATE TABLE account (
     status integer DEFAULT 0 NOT NULL,
     email character varying(50),
     config character varying(50000),
-    provider integer NOT NULL
+    provider integer NOT NULL,
+    social_type integer NOT NULL
 );
 
 CREATE TABLE role (
@@ -129,8 +130,8 @@ CREATE TABLE account_record (
 
 ALTER TABLE userconnection ADD CONSTRAINT userconnection_pkey PRIMARY KEY (userid, providerid, provideruserid);
 
-ALTER TABLE account ADD CONSTRAINT account_email_unique UNIQUE (email);
-ALTER TABLE account ADD CONSTRAINT account_name_unique UNIQUE (name);
+ALTER TABLE account ADD CONSTRAINT account_email_unique UNIQUE (email, social_type);
+ALTER TABLE account ADD CONSTRAINT account_name_unique UNIQUE (name, social_type);
 
 ALTER TABLE role ADD CONSTRAINT role_name_unique UNIQUE (name);
 

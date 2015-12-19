@@ -12,7 +12,7 @@ public class SocialProvider extends LocalProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(SocialProvider.class);
 
     public enum SocialType {
-        FACEBOOK("facebook"), GOOGLE("google"), TWITTER("twitter");
+        FACEBOOK("facebook"), GOOGLE("google"), TWITTER("twitter"), NONE("none");
 
         private String providerId;
 

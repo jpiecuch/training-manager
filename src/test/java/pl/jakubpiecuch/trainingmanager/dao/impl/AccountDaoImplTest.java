@@ -6,11 +6,12 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
-import pl.jakubpiecuch.trainingmanager.dao.AccountDao;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
+import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
+import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,7 +47,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
     }
 
     @Autowired
-    private AccountDao accountDao;
+    private RepoDao<Account, AccountCriteria> accountDao;
 
     @Test
     @Transactional
@@ -57,6 +58,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         account.setPassword(PASSWORD);
         account.setStatus(Account.Status.CREATED);
         account.setProvider(Provider.Type.LOCAL);
+        account.setSocialType(SocialProvider.SocialType.NONE);
         accountDao.create(account);
         accountDao.flush();
         assertNotNull(account.getId());
@@ -73,6 +75,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         account.setPassword(PASSWORD);
         account.setStatus(Account.Status.CREATED);
         account.setProvider(Provider.Type.LOCAL);
+        account.setSocialType(SocialProvider.SocialType.NONE);
         accountDao.create(account);
         accountDao.flush();
         assertEquals(0l, accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions("email")).getCount());
@@ -90,6 +93,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         account.setPassword(PASSWORD);
         account.setStatus(Account.Status.CREATED);
         account.setProvider(Provider.Type.LOCAL);
+        account.setSocialType(SocialProvider.SocialType.NONE);
         accountDao.create(account);
         accountDao.flush();
         assertNotNull(account.getId());
@@ -126,6 +130,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         //null name
         try {
             Account account = new Account();
+            account.setEmail(EMAIL);
             accountDao.create(account);
         } catch (ConstraintViolationException ex) {
             counter++; //1
@@ -134,6 +139,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         //null password
         try {
             Account account = new Account();
+            account.setEmail(EMAIL);
             account.setName(NAME);
             accountDao.create(account);
         } catch (ConstraintViolationException ex) {
@@ -143,6 +149,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         //null salt
         try {
             Account account = new Account();
+            account.setEmail(EMAIL);
             account.setName(NAME);
             account.setPassword(PASSWORD);
             accountDao.create(account);
@@ -153,6 +160,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         //null status
         try {
             Account account = new Account();
+            account.setEmail(EMAIL);
             account.setName(NAME);
             account.setPassword(PASSWORD);
             account.setSalt(SALT);
@@ -164,6 +172,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         //null provider
         try {
             Account account = new Account();
+            account.setEmail(EMAIL);
             account.setName(NAME);
             account.setPassword(PASSWORD);
             account.setSalt(SALT);
@@ -173,30 +182,64 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
             counter++; //5
         }
 
-        //not unique name
+        //null social type
         try {
             Account account = new Account();
+            account.setEmail(EMAIL);
             account.setName(NAME);
             account.setPassword(PASSWORD);
             account.setSalt(SALT);
             account.setStatus(STATUS);
+            account.setProvider(Provider.Type.LOCAL);
             accountDao.create(account);
         } catch (ConstraintViolationException ex) {
             counter++; //6
         }
 
-        //unique name
+        //not unique name + social type
+        try {
+            Account account = new Account();
+            account.setEmail(EMAIL);
+            account.setName(NAME);
+            account.setPassword(PASSWORD);
+            account.setSalt(SALT);
+            account.setStatus(STATUS);
+            account.setProvider(Provider.Type.LOCAL);
+            account.setSocialType(SocialProvider.SocialType.NONE);
+            accountDao.create(account);
+        } catch (ConstraintViolationException ex) {
+            counter++; //7
+        }
+
+        //not unique email + social type
+        try {
         Account account = new Account();
+        account.setEmail(EMAIL);
         account.setName(NAME + "unique_name");
         account.setPassword(PASSWORD);
         account.setSalt(SALT);
         account.setStatus(STATUS);
         account.setProvider(Provider.Type.LOCAL);
+        account.setSocialType(SocialProvider.SocialType.NONE);
+        accountDao.create(account);
+        } catch (ConstraintViolationException ex) {
+            counter++; //8
+        }
+
+        //unique social type
+        Account account = new Account();
+        account.setEmail(EMAIL);
+        account.setName(NAME);
+        account.setPassword(PASSWORD);
+        account.setSalt(SALT);
+        account.setStatus(STATUS);
+        account.setProvider(Provider.Type.LOCAL);
+        account.setSocialType(SocialProvider.SocialType.FACEBOOK);
         accountDao.create(account);
 
         assertNotNull(account.getId());
         assertNotNull(account.getCreated());
-        assertEquals(6, counter);
+        assertEquals(8, counter);
     }
 
     @Test

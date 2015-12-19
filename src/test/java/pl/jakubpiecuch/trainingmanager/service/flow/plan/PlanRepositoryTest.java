@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import pl.jakubpiecuch.trainingmanager.dao.PlanDao;
+import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
@@ -28,7 +28,7 @@ public class PlanRepositoryTest {
     private PlanRepository planRepository;
 
     @Mock
-    PlanDao dao;
+    RepoDao<Plan, PlanCriteria> dao;
 
     @Mock
     PlanConverter converter;

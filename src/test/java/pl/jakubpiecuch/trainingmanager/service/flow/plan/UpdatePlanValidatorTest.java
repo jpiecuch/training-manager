@@ -6,6 +6,7 @@ import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
+import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 
 import static org.junit.Assert.*;
 
@@ -32,19 +33,19 @@ public class UpdatePlanValidatorTest extends InsertPlanValidatorTest {
     public void testValidate() throws Exception {
         BeanPropertyBindingResult errors = new BeanPropertyBindingResult(getPlan(), NAME);
 
-        boolean assertionPerformed = false;
         try {
             getValidator().validate(getPlan(), errors);
+            fail();
         } catch (ValidationException ex) {
             assertTrue(errors.hasErrors());
             assertEquals(3, errors.getFieldErrorCount());
 
-            assertRequiredFields(errors, CommonEntity.ID_FIELD_NAME, InsertPlanValidator.PHASES_FIELD, Plan.NAME_FIELD, InsertPlanValidator.PHASES_FIELD);
+            ValidationTestUtils.AssertBuilder assertBuilder = ValidationTestUtils.createAssertBuilder();
 
-            assertionPerformed = true;
+            for (String fullField : new String[] {CommonEntity.ID_FIELD_NAME, InsertPlanValidator.PHASES_FIELD, Plan.NAME_FIELD, InsertPlanValidator.PHASES_FIELD}) {
+                assertBuilder.addAssert(fullField, RestrictionCode.REQUIRED);
+            }
         }
-
-        assertTrue(assertionPerformed);
 
         getPlan().setId(1l);
 

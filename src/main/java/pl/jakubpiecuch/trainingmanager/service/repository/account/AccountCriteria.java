@@ -6,6 +6,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
+import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +22,7 @@ public class AccountCriteria extends Criteria<AccountCriteria> {
     private List<String> names = new ArrayList<String>();
     private List<String> emails = new ArrayList<String>();
     private List<Account.Status> statuses = new ArrayList<Account.Status>();
+    private List<Provider.Type> providers = new ArrayList<Provider.Type>();
 
     public AccountCriteria() {
         super("a", "Account", null);
@@ -47,6 +49,13 @@ public class AccountCriteria extends Criteria<AccountCriteria> {
         return this;
     }
 
+    public AccountCriteria addProviderRestrictions(Provider.Type... provider) {
+        if (ArrayUtils.isNotEmpty(provider)) {
+            this.providers.addAll(Arrays.asList(provider));
+        }
+        return this;
+    }
+
     @Override
     protected String[] getValidFields() {
         return PROPERTIES;
@@ -58,6 +67,7 @@ public class AccountCriteria extends Criteria<AccountCriteria> {
             collection(this.names, Account.NAME_FIELD_NAME, "IN");
             collection(this.emails, Account.EMAIL_FIELD_NAME, "IN");
             collection(this.statuses, Account.STATUS_FIELD_NAME, "IN");
+            collection(this.providers, Account.PROVIDER_FIELD_NAME, "IN");
         }
     }
 
@@ -79,6 +89,7 @@ public class AccountCriteria extends Criteria<AccountCriteria> {
                 .append(this.names, rhs.names)
                 .append(this.emails, rhs.emails)
                 .append(this.statuses, rhs.statuses)
+                .append(this.providers, rhs.providers)
                 .isEquals();
     }
 
@@ -88,7 +99,7 @@ public class AccountCriteria extends Criteria<AccountCriteria> {
                 .appendSuper(super.hashCode())
                 .append(names)
                 .append(emails)
-                .append(statuses)
+                .append(providers)
                 .toHashCode();
     }
 }

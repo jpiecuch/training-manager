@@ -8,7 +8,7 @@ import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 
 @Transactional
-public abstract class CoreDaoImpl<T extends CommonEntity> implements CoreDao<T> {
+public class CoreDaoImpl<T extends CommonEntity> implements CoreDao<T> {
 
     private SessionFactory sessionFactory;
     private Class clazz;
