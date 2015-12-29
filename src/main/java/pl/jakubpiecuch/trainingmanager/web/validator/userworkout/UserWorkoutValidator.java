@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.web.validator.userworkout;
 
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -20,7 +21,7 @@ public class UserWorkoutValidator implements Validator {
     public void validate(Object target, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "state", RestrictionCode.REQUIRED);
         if (errors.hasErrors()) {
-            throw new ValidationException(errors);
+            throw new ValidationException((BeanPropertyBindingResult) errors);
         }
     }
 

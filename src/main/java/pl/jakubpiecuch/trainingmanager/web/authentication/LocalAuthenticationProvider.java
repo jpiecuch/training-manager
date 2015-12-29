@@ -26,11 +26,11 @@ public class LocalAuthenticationProvider implements org.springframework.security
             throw new BadCredentialsException("Username not found.");
         }
         Account account = result.getResult().get(0);
-        if (!((UserDetails) a.getPrincipal()).getPassword().equals(account.getPassword())) {
+        if (!((UserDetails) a.getPrincipal()).getPassword().equals(account.getCredential())) {
             throw new BadCredentialsException("Wrong password.");
         }
         List<GrantedAuthority> authorities = CollectionUtils.isNotEmpty(account.getGrantedPermissions()) ? AuthorityUtils.createAuthorityList(account.getGrantedPermissions().toArray(new String[account.getGrantedPermissions().size()])) : AuthorityUtils.NO_AUTHORITIES;
-        return new UsernamePasswordAuthenticationToken(new SecurityUser(account.getId(), account.getName(), account.getPassword(), null, authorities), account.getPassword(), authorities);
+        return new UsernamePasswordAuthenticationToken(new SecurityUser(account.getId(), account.getName(), account.getCredential(), null, authorities), account.getCredential(), authorities);
     }
 
     @Override

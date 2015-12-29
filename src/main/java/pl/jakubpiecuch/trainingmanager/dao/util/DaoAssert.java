@@ -9,6 +9,10 @@ import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 public class DaoAssert {
     public static final String NOT_EXISTS_ERROR = "not.exists.error";
 
+    private DaoAssert() {
+
+    }
+
     public static <E extends CommonEntity> void notNull(E entity) {
         notNull(entity, NOT_EXISTS_ERROR);
     }

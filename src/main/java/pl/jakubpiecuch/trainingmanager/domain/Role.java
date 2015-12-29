@@ -1,6 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.util.Assert;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 
@@ -24,6 +26,7 @@ public class Role extends CommonEntity implements RepoObject {
     private Boolean modifiable;
 
     public Role() {
+        super();
     }
 
     public Role(Long id) {
@@ -50,7 +53,7 @@ public class Role extends CommonEntity implements RepoObject {
 
     @Transient
     public String[] getGrantedPermissions() {
-        return ADMIN_ROLE.equals(name) ? Permissions.ALL : USER_ROLE.equals(name) ? Permissions.USER_ROLE_PERMISSIONS : StringUtils.splitByWholeSeparatorPreserveAllTokens(permissions, PERMISSIONS_SEPARATOR);
+        return ADMIN_ROLE.equals(name) ? Permissions.getAllPermissions() : USER_ROLE.equals(name) ? Permissions.getUserPermissions() : StringUtils.splitByWholeSeparatorPreserveAllTokens(permissions, PERMISSIONS_SEPARATOR);
     }
 
     public void setGrantedPermissions(String[] grantedPermissions) {
@@ -66,5 +69,36 @@ public class Role extends CommonEntity implements RepoObject {
 
     public void setModifiable(Boolean modifiable) {
         this.modifiable = modifiable;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Role rhs = (Role) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.name, rhs.name)
+                .append(this.permissions, rhs.permissions)
+                .append(this.modifiable, rhs.modifiable)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(name)
+                .append(permissions)
+                .append(modifiable)
+                .toHashCode();
     }
 }

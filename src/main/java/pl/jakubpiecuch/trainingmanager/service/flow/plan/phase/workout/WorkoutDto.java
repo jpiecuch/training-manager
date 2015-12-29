@@ -19,10 +19,12 @@ public class WorkoutDto implements IdentifyObject {
     private Long phaseId;
     private List<GroupDto> groups = new ArrayList<GroupDto>();
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

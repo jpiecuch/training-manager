@@ -18,7 +18,7 @@ import static org.junit.Assert.assertFalse;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:test-validator-context.xml")
+@ContextConfiguration(locations = "classpath:context/unit/test-validator-context.xml")
 public class AuthenticationValidatorTest {
 
     public static final String AUTH_OBJECT_NAME = "authentication";

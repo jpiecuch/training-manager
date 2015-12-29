@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
+import pl.jakubpiecuch.trainingmanager.BaseUnitDaoTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-public class PlanDaoImplTest extends BaseIntegrationTestCase {
+public class PlanDaoImplTest extends BaseUnitDaoTestCase {
 
     private static final Long ID = 1l;
     private static final Plan.Goal GOAL = Plan.Goal.MUSCLES;

@@ -1,7 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,6 +14,7 @@ public class CommonEntity implements Serializable {
     private Long id;
 
     public CommonEntity() {
+        //jackson needs default public constructor
     }
 
     public CommonEntity(Long id) {

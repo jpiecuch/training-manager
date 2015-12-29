@@ -16,7 +16,7 @@ import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = "classpath:test-controller-context.xml")
+@ContextConfiguration(locations = "classpath:context/unit/test-controller-context.xml")
 public abstract class BaseControllerTestCase {
 
     protected final static ObjectMapper OBJECT_MAPPER = new ObjectMapper();

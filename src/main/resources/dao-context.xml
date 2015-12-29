@@ -13,7 +13,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
     <bean id="coreDao" class="pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl" abstract="true">
         <property name="sessionFactory" ref="sessionFactory"/>

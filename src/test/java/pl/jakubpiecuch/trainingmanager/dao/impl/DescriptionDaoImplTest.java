@@ -3,6 +3,7 @@ package pl.jakubpiecuch.trainingmanager.dao.impl;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
+import pl.jakubpiecuch.trainingmanager.BaseUnitDaoTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
@@ -11,7 +12,7 @@ import pl.jakubpiecuch.trainingmanager.service.repository.description.Descriptio
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class DescriptionDaoImplTest extends BaseIntegrationTestCase {
+public class DescriptionDaoImplTest extends BaseUnitDaoTestCase {
 
     @Autowired
     private RepoDao<Description, DescriptionCriteria> descriptionDao;

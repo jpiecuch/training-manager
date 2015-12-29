@@ -29,7 +29,7 @@ public class WorkoutConverter extends AbstractConverter<WorkoutDto, Workout> {
         for (GroupDto group : dto.getGroups()) {
             exerciseDtos.addAll(group.getExercises());
         }
-        Map<Long, ? extends IdentifyObject> map = uniqueMap(exerciseDtos);
+        Map<Long, IdentifyObject> map = uniqueMap(exerciseDtos);
 
         List<Exercise> exercises = new ArrayList<Exercise>();
         for (Exercise exercise : entity.getExercises()) {

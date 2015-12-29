@@ -2,6 +2,7 @@ package pl.jakubpiecuch.trainingmanager.service.repository;
 
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
+import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
 import pl.jakubpiecuch.trainingmanager.dao.util.DaoAssert;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.web.validator.ValidationType;

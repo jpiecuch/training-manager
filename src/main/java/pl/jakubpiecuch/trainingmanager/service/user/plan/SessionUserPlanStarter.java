@@ -14,26 +14,21 @@ import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
 import pl.jakubpiecuch.trainingmanager.service.user.workout.session.UserWorkoutCriteria;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Rico on 2015-01-22.
  */
 public class SessionUserPlanStarter implements UserPlanStarter {
 
-    private Map<Integer, Integer> dayOfWeekMapper = new HashMap<Integer, Integer>();
-    private Repository<PlanDto, PlanCriteria> manager;
+    private Repository<PlanDto, PlanCriteria> planRepository;
     private CoreDao<Execution> executionDao;
     private RepoDao<UserWorkout, UserWorkoutCriteria> userWorkoutDao;
-    private RepoDao<Plan, PlanCriteria> planDao;
 
     @Override
     public void start(UserPlan userPlan) {
-        PlanDto plan = manager.retrieve(userPlan.getPlanId());
+        PlanDto plan = planRepository.retrieve(userPlan.getPlanId());
         int weekIncrease = 0;
         for (PhaseDto phase : plan.getPhases()) {
             for (int i = 0; i < phase.getWeeks(); i++) {
@@ -44,7 +39,7 @@ public class SessionUserPlanStarter implements UserPlanStarter {
                         dateTime = dateTime.plusYears(1);
                         currentWeek = currentWeek - dateTime.weekOfWeekyear().getMaximumValue();
                     }
-                    dateTime = dateTime.withWeekOfWeekyear(currentWeek).withDayOfWeek(dayOfWeekMapper.get(workout.getWeekDay().ordinal()));
+                    dateTime = dateTime.withWeekOfWeekyear(currentWeek).withDayOfWeek(workout.getWeekDay().getDayInWeek()).withTime(0,0,0,0);
                     UserWorkout userWorkout = new UserWorkout();
                     userWorkout.setDate(dateTime.toDate());
                     userWorkout.setWorkout(new Workout(workout.getId()));
@@ -79,9 +74,8 @@ public class SessionUserPlanStarter implements UserPlanStarter {
                 weekIncrease++;
             }
         }
-        Plan entity = planDao.findById(userPlan.getPlanId());
-        entity.setUsed(true);
-        planDao.update(entity);
+        plan.setUsed(true);
+        planRepository.update(plan);
     }
 
     public void setExecutionDao(CoreDao<Execution> executionDao) {
@@ -92,22 +86,7 @@ public class SessionUserPlanStarter implements UserPlanStarter {
         this.userWorkoutDao = userWorkoutDao;
     }
 
-    public void setManager(Repository<PlanDto, PlanCriteria> manager) {
-        this.manager = manager;
-    }
-
-    public void setPlanDao(RepoDao<Plan, PlanCriteria> planDao) {
-        this.planDao = planDao;
-    }
-
-    @PostConstruct
-    protected void afterPropertiesSet() {
-        dayOfWeekMapper.put(0, 7);
-        dayOfWeekMapper.put(1, 1);
-        dayOfWeekMapper.put(2, 2);
-        dayOfWeekMapper.put(3, 3);
-        dayOfWeekMapper.put(4, 4);
-        dayOfWeekMapper.put(5, 5);
-        dayOfWeekMapper.put(6, 6);
+    public void setPlanRepository(Repository<PlanDto, PlanCriteria> planRepository) {
+        this.planRepository = planRepository;
     }
 }

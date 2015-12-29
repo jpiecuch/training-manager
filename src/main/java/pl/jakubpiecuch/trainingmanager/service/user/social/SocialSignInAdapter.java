@@ -1,7 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.user.social;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.social.connect.Connection;

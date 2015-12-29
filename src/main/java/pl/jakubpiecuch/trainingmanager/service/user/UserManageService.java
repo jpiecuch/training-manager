@@ -7,6 +7,5 @@ import java.util.Locale;
  */
 public interface UserManageService {
     void password(String email, Locale locale);
-
     void activate(String id);
 }

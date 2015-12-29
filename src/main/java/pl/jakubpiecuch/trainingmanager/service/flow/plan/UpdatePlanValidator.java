@@ -10,7 +10,6 @@ import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
  */
 public class UpdatePlanValidator extends InsertPlanValidator {
 
-
     @Override
     public void validate(Object target, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, CommonEntity.ID_FIELD_NAME, RestrictionCode.REQUIRED);

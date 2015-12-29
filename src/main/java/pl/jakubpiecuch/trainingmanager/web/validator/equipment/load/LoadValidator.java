@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.web.validator.equipment.load;
 
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -22,7 +23,7 @@ public class LoadValidator implements Validator {
 
 
         if (errors.hasErrors()) {
-            throw new ValidationException(errors);
+            throw new ValidationException((BeanPropertyBindingResult) errors);
         }
     }
 

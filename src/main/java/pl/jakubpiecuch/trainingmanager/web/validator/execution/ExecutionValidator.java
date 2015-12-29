@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.web.validator.execution;
 
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -24,7 +25,7 @@ public class ExecutionValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "exercise", RestrictionCode.REQUIRED);
 
         if (errors.hasErrors()) {
-            throw new ValidationException(errors);
+            throw new ValidationException((BeanPropertyBindingResult) errors);
         }
     }
 }

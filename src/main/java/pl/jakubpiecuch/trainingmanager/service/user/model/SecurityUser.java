@@ -1,5 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.user.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.social.security.SocialUser;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
@@ -35,5 +37,34 @@ public class SecurityUser extends SocialUser {
 
     public void setSocial(SocialProvider.SocialType social) {
         this.social = social;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        SecurityUser rhs = (SecurityUser) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.id, rhs.id)
+                .append(this.social, rhs.social)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(id)
+                .append(social)
+                .toHashCode();
     }
 }

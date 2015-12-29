@@ -97,8 +97,7 @@
     <bean id="sessionUserPlanStarter" class="pl.jakubpiecuch.trainingmanager.service.user.plan.SessionUserPlanStarter">
         <property name="executionDao" ref="executionDao"/>
         <property name="userWorkoutDao" ref="userWorkoutDao"/>
-        <property name="manager" ref="planRepository"/>
-        <property name="planDao" ref="planDao"/>
+        <property name="planRepository" ref="planRepository"/>
     </bean>
 
     <bean id="passwordService" class="pl.jakubpiecuch.trainingmanager.service.password.StaticPasswordService">

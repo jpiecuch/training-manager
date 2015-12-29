@@ -1,11 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.service.repository.account;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
-import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
+import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 
 import java.util.ArrayList;

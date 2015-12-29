@@ -1,5 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 
 import javax.persistence.*;
@@ -11,7 +13,7 @@ public class Description extends CommonEntity implements RepoObject {
     public static final String PROPERTY_NAME = "name";
     private String name;
     private String movieUrl;
-    private String description;
+    private String content;
     private Muscles muscles;
     private Type type;
     private Integer equipment;
@@ -24,6 +26,7 @@ public class Description extends CommonEntity implements RepoObject {
         super(id);
     }
     public Description() {
+        super();
     }
 
     @Column(name = PROPERTY_NAME)
@@ -55,12 +58,12 @@ public class Description extends CommonEntity implements RepoObject {
     }
 
     @Column(name = "description")
-    public String getDescription() {
-        return description;
+    public String getContent() {
+        return content;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setContent(String description) {
+        this.content = description;
     }
 
     @Column(name = "equipment")
@@ -124,6 +127,52 @@ public class Description extends CommonEntity implements RepoObject {
 
     public void setSets(Sets sets) {
         this.sets = sets;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Description rhs = (Description) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.name, rhs.name)
+                .append(this.movieUrl, rhs.movieUrl)
+                .append(this.content, rhs.content)
+                .append(this.muscles, rhs.muscles)
+                .append(this.type, rhs.type)
+                .append(this.equipment, rhs.equipment)
+                .append(this.level, rhs.level)
+                .append(this.mechanics, rhs.mechanics)
+                .append(this.force, rhs.force)
+                .append(this.lateral, rhs.lateral)
+                .append(this.sets, rhs.sets)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(name)
+                .append(movieUrl)
+                .append(content)
+                .append(muscles)
+                .append(type)
+                .append(equipment)
+                .append(level)
+                .append(mechanics)
+                .append(force)
+                .append(lateral)
+                .append(sets)
+                .toHashCode();
     }
 
     public enum Muscles {

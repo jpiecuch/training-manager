@@ -1,7 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.web.validator.registration;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -48,13 +49,13 @@ public class RegistrationValidator implements Validator {
         }
 
         if (StringUtils.isEmpty(object.getPassword())) {
-            errors.rejectValue(Registration.PASSWORD_FIELD, RestrictionCode.REQUIRED);
+            errors.rejectValue(Registration.CREDENTIAL_FIELD, RestrictionCode.REQUIRED);
         } else if (!object.getPassword().matches(passwordPattern)) {
-            errors.rejectValue(Registration.PASSWORD_FIELD, RestrictionCode.PATTERN, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.PATTERN, passwordPattern).build()}, null);
+            errors.rejectValue(Registration.CREDENTIAL_FIELD, RestrictionCode.PATTERN, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.PATTERN, passwordPattern).build()}, null);
         } else if (minPasswordLength > object.getPassword().length()) {
-            errors.rejectValue(Registration.PASSWORD_FIELD, RestrictionCode.MIN_LENGTH, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.MIN_LENGTH, minPasswordLength).build()}, null);
+            errors.rejectValue(Registration.CREDENTIAL_FIELD, RestrictionCode.MIN_LENGTH, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.MIN_LENGTH, minPasswordLength).build()}, null);
         } else if (maxPasswordLength < object.getPassword().length()) {
-            errors.rejectValue(Registration.PASSWORD_FIELD, RestrictionCode.MAX_LENGTH, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.MAX_LENGTH, maxPasswordLength).build()}, null);
+            errors.rejectValue(Registration.CREDENTIAL_FIELD, RestrictionCode.MAX_LENGTH, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.MAX_LENGTH, maxPasswordLength).build()}, null);
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, Registration.FIRST_NAME_FIELD, RestrictionCode.REQUIRED);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, Registration.LAST_NAME_FIELD, RestrictionCode.REQUIRED);
@@ -83,7 +84,7 @@ public class RegistrationValidator implements Validator {
             errors.rejectValue(Registration.ACCEPTED_FIELD, RestrictionCode.CHECKED);
         }
         if (errors.hasErrors()) {
-            throw new ValidationException(errors);
+            throw new ValidationException((BeanPropertyBindingResult) errors);
         }
     }
 

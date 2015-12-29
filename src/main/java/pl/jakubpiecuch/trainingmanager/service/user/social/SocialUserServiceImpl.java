@@ -54,7 +54,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
             throw new UsernameNotFoundException("User not exists");
         }
         List<GrantedAuthority> authorities = CollectionUtils.isNotEmpty(account.getGrantedPermissions()) ? AuthorityUtils.createAuthorityList(account.getGrantedPermissions().toArray(new String[account.getGrantedPermissions().size()])) : AuthorityUtils.NO_AUTHORITIES;
-        return new SecurityUser(account.getId(), account.getName(), account.getPassword(), null, authorities);
+        return new SecurityUser(account.getId(), account.getName(), account.getCredential(), null, authorities);
 
     }
 
@@ -66,7 +66,7 @@ public class SocialUserServiceImpl extends AbstractUserService implements Social
         account.setName(registration.getUsername());
         account.setStatus(Account.Status.ACTIVE);
         account.setSalt(KeyGenerators.string().generateKey());
-        account.setPassword(SecurityUser.OAUTH);
+        account.setCredential(SecurityUser.OAUTH);
         account.setProvider(Provider.Type.SOCIAL);
         account.setSocialType(registration.getSocial());
         account.getRoles().addAll(roleRepository.read(new RoleCriteria().addNameRestrictions(Role.ADMIN_ROLE)).getResult());

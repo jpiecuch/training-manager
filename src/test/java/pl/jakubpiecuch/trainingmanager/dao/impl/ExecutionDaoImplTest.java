@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
+import pl.jakubpiecuch.trainingmanager.BaseUnitDaoTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.Execution;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class ExecutionDaoImplTest extends BaseIntegrationTestCase {
+public class ExecutionDaoImplTest extends BaseUnitDaoTestCase {
 
     public static final Long BILATERAL_EXECUTION = 1l;
     public static final Long UNILATERAL_EXECUTION = 2l;

@@ -1,5 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 
 import javax.persistence.*;
@@ -93,6 +95,44 @@ public class UserWorkout extends CommonEntity implements RepoObject {
     public void setExecutions(List<Execution> executions) {
         this.executions = executions;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        UserWorkout rhs = (UserWorkout) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.comment, rhs.comment)
+                .append(this.account, rhs.account)
+                .append(this.remind, rhs.remind)
+                .append(this.date, rhs.date)
+                .append(this.workout, rhs.workout)
+                .append(this.state, rhs.state)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(comment)
+                .append(account)
+                .append(remind)
+                .append(date)
+                .append(workout)
+                .append(state)
+                .toHashCode();
+    }
+
 
     public enum State {
         PLANNED, IN_PROGRESS, REJECTED, COMPLETED

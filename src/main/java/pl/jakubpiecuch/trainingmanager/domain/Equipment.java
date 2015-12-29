@@ -1,7 +1,9 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
@@ -85,6 +87,41 @@ public abstract class Equipment<T> extends CommonEntity implements EquipmentDesc
     public void setConfig(T config) {
         this.data = WebUtil.toJson(config);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Equipment rhs = (Equipment) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.type, rhs.type)
+                .append(this.data, rhs.data)
+                .append(this.weight, rhs.weight)
+                .append(this.length, rhs.length)
+                .append(this.strength, rhs.strength)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(type)
+                .append(data)
+                .append(weight)
+                .append(length)
+                .append(strength)
+                .toHashCode();
+    }
+
 
     public enum Type {
         BAR(Bar.class), BENCH(Bench.class), DUMBBELL(Dumbbell.class), LOAD(Load.class),

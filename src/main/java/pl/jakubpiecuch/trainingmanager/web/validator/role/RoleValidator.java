@@ -1,6 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.web.validator.role;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -29,7 +30,7 @@ public class RoleValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, Role.NAME_FIELD_NAME, RestrictionCode.REQUIRED);
         if (ArrayUtils.isNotEmpty(object.getGrantedPermissions())) {
             for (int i = 0; i < object.getGrantedPermissions().length; i++) {
-                if (!ArrayUtils.contains(Permissions.ALL, object.getGrantedPermissions()[i])) {
+                if (!ArrayUtils.contains(Permissions.getAllPermissions(), object.getGrantedPermissions()[i])) {
                     errors.rejectValue(Role.GRANTED_PERMISSIONS_FIELD_NAME + "[" + i + "]", RestrictionCode.INVALID);
                 }
             }
@@ -42,7 +43,7 @@ public class RoleValidator implements Validator {
             errors.rejectValue(Role.NAME_FIELD_NAME, RestrictionCode.UNIQUE);
         }
         if (errors.hasErrors()) {
-            throw new ValidationException(errors);
+            throw new ValidationException((BeanPropertyBindingResult) errors);
         }
     }
 

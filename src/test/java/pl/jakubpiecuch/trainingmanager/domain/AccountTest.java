@@ -34,7 +34,7 @@ public class AccountTest extends AbstractEntityTest<Account> {
         account.setStatus(STATUS);
         account.setCreated(CREATED);
         account.setName(NAME);
-        account.setPassword(PASSWORD);
+        account.setCredential(PASSWORD);
         account.setSalt(SALT);
         account.setUpdated(UPDATED);
 
@@ -67,7 +67,7 @@ public class AccountTest extends AbstractEntityTest<Account> {
         assertEquals(STATUS, account.getStatus());
         assertEquals(CREATED, account.getCreated());
         assertEquals(NAME, account.getName());
-        assertEquals(PASSWORD, account.getPassword());
+        assertEquals(PASSWORD, account.getCredential());
         assertEquals(SALT, account.getSalt());
         assertEquals(UPDATED, account.getUpdated());
     }

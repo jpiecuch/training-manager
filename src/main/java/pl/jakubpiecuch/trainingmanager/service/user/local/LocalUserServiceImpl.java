@@ -37,8 +37,7 @@ import java.util.Locale;
  * Created by Rico on 2014-11-22.
  */
 public class LocalUserServiceImpl extends AbstractUserService implements LocalUserService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(LocalUserServiceImpl.class);
+    
     private static final int EMAIL_CRYPT_POSITION = 1;
 
     private PasswordEncoder passwordEncoder;
@@ -58,7 +57,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
     @Override
     public boolean isValidCredentials(Account entity, UserDetails user) {
         AccountAssert.isTrue(entity != null && Account.Status.ACTIVE == entity.getStatus());
-        if (!entity.getPassword().equals(user.getPassword())) {
+        if (!entity.getCredential().equals(user.getPassword())) {
             throw new ValidationException();
         }
         return true;
@@ -69,7 +68,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
         Account account = findUser(username);
         AccountAssert.isTrue(account != null && Account.Status.ACTIVE == account.getStatus());
         List<GrantedAuthority> authorities = CollectionUtils.isNotEmpty(account.getGrantedPermissions()) ? AuthorityUtils.createAuthorityList(account.getGrantedPermissions().toArray(new String[account.getGrantedPermissions().size()])) : AuthorityUtils.NO_AUTHORITIES;
-        return new SecurityUser(account.getId(), account.getName(), account.getPassword(), null, authorities);
+        return new SecurityUser(account.getId(), account.getName(), account.getCredential(), null, authorities);
     }
 
     @Override
@@ -77,7 +76,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
         Account account = findByEmail(email);
         AccountAssert.isTrue(account != null && Account.Status.ACTIVE == account.getStatus());
         String password = passwordService.generate();
-        account.setPassword(passwordEncoder.encode(password, account.getSalt()));
+        account.setCredential(passwordEncoder.encode(password, account.getSalt()));
         emailService.sendEmail(new Object[]{password, account, WebUtil.fromJson(account.getConfig(), Account.Config.class)}, locale, EmailService.Template.NEW_PASSWORD, account.getEmail());
         repository.update(account);
     }
@@ -105,7 +104,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
             account.setConfig(new Account.Config.Builder().firstName(registration.getFirstName()).lastName(registration.getLastName()).build().toString());
             account.setStatus(Account.Status.CREATED);
             account.setSalt(KeyGenerators.string().generateKey());
-            account.setPassword(passwordEncoder.encode(registration.getPassword(), account.getSalt()));
+            account.setCredential(passwordEncoder.encode(registration.getPassword(), account.getSalt()));
             account.setProvider(Provider.Type.LOCAL);
             account.getRoles().addAll(roleRepository.read(new RoleCriteria().addNameRestrictions(Role.ADMIN_ROLE)).getResult());
             repository.create(account);

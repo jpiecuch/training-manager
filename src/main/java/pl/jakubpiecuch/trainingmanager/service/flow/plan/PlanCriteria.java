@@ -1,8 +1,10 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
-import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
+import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,5 +38,32 @@ public class PlanCriteria extends Criteria<PlanCriteria> {
         if (this.id == null) {
             collection(this.goals, "goal", "IN");
         }
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        PlanCriteria rhs = (PlanCriteria) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.goals, rhs.goals)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(goals)
+                .toHashCode();
     }
 }

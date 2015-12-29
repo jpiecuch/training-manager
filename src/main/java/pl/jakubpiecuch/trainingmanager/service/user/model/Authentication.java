@@ -14,7 +14,7 @@ import java.util.List;
 public class Authentication {
     public static final String BEAN_NAME = "authentication";
     public static final String USERNAME_FIELD = "username";
-    public static final String PASSWORD_FIELD = "password";
+    public static final String CREDENTIAL_FIELD = "password";
     public static final String FIRST_NAME_FIELD = "firstName";
     public static final String LAST_NAME_FIELD = "lastName";
     public static final String EMAIL_FIELD = "email";
@@ -33,14 +33,13 @@ public class Authentication {
     private List<String> authorities;
 
     public Authentication() {
-
+        //jackson requires default public constructor
     }
 
     public Authentication(Account account) {
         this.id = account.getId();
         this.email = account.getEmail();
         this.username = account.getName();
-        this.password = account.getPassword();
         this.authorities = account.getGrantedPermissions();
         Account.Config config = WebUtil.fromJson(account.getConfig(), Account.Config.class);
         this.firstName = config.getFirstName();

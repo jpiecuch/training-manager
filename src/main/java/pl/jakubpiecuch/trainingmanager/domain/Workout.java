@@ -1,8 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
@@ -25,6 +25,7 @@ public class Workout extends CommonEntity implements Serializable {
     private String muscle;
     private List<Exercise> exercises = new ArrayList<Exercise>();
     public Workout() {
+        super();
     }
 
     public Workout(Long id) {
@@ -131,6 +132,16 @@ public class Workout extends CommonEntity implements Serializable {
     }
 
     public enum WeekDay {
-        SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
+        SUNDAY(7), MONDAY(1), TUESDAY(2), WEDNESDAY(3), THURSDAY(4), FRIDAY(5), SATURDAY(6);
+
+        private int dayInWeek;
+
+        WeekDay(int dayInWeek) {
+            this.dayInWeek = dayInWeek;
+        }
+
+        public int getDayInWeek() {
+            return dayInWeek;
+        }
     }
 }

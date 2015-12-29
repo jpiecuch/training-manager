@@ -12,7 +12,7 @@ app.controller('DashboardController', function($scope, userWorkoutService, accou
     };
 
     $scope.init = function() {
-         userWorkoutService.retrieve({from: moment(new Date()).format('YYYY-MM-DD'), maxResults: 5}).then(function(data) {
+         userWorkoutService.retrieve({from: moment(new Date()).format('YYYY-MM-DD'), state: ['PLANNED', 'IN_PROGRESS'], maxResults: 5}).then(function(data) {
              $scope.dashboard.nextWorkouts = data.data;
          });
 

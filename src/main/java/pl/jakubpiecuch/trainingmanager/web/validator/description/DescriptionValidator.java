@@ -1,6 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.web.validator.description;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -42,7 +43,7 @@ public class DescriptionValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "sets", RestrictionCode.REQUIRED);
 
         if (errors.hasErrors()) {
-            throw new ValidationException(errors);
+            throw new ValidationException((BeanPropertyBindingResult) errors);
         }
     }
 

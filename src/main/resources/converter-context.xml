@@ -10,7 +10,6 @@
 
     <bean id="userWorkoutConverter" class="pl.jakubpiecuch.trainingmanager.service.user.workout.UserWorkoutConverter">
         <property name="executionConverter" ref="executionConverter"/>
-        <property name="userWorkoutDao" ref="userWorkoutDao"/>
     </bean>
 
     <bean id="exerciseConverter"

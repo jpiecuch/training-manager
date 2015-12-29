@@ -15,11 +15,11 @@ import java.io.IOException;
 /**
  * Created by Rico on 2015-03-01.
  */
-public class AuthenticationEntryPoint implements org.springframework.security.web.AuthenticationEntryPoint {
+public class JsonAuthenticationEntryPoint implements org.springframework.security.web.AuthenticationEntryPoint {
 
     private ObjectMapper mapper;
 
-    public AuthenticationEntryPoint() {
+    public JsonAuthenticationEntryPoint() {
         mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }

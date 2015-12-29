@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:test-validator-context.xml")
+@ContextConfiguration(locations = "classpath:context/unit/test-validator-context.xml")
 public class RegistrationValidatorTest {
 
     @Autowired
@@ -55,7 +55,7 @@ public class RegistrationValidatorTest {
                 .addAssert(Registration.LAST_NAME_FIELD, RestrictionCode.REQUIRED)
                 .addAssert(Registration.PROVIDER_FIELD, RestrictionCode.REQUIRED)
                 .addAssert(Registration.EMAIL_FIELD, RestrictionCode.REQUIRED)
-                .addAssert(Registration.PASSWORD_FIELD, RestrictionCode.REQUIRED)
+                .addAssert(Registration.CREDENTIAL_FIELD, RestrictionCode.REQUIRED)
                 .addAssert(Registration.ACCEPTED_FIELD, RestrictionCode.CHECKED)
                 .assertion(errors);
     }

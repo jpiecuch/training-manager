@@ -1,9 +1,10 @@
 package pl.jakubpiecuch.trainingmanager.service.repository.accountrecord;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.domain.AccountRecord;
-import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
-import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
+import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,18 +45,41 @@ public class AccountRecordCriteria extends Criteria<AccountRecordCriteria> {
 
     @Override
     protected void appendRestrictions() {
-        restrictions.add(" " + alias + ".account.id = :accountId ");
-        params.put("accountId", AuthenticatedUserUtil.getUser().getId());
+        appendCurrentUserRestriction("account.id");
+        appendFromToRestrictions("date", this.from, this.to);
         if (this.id == null) {
-            if (this.from != null) {
-                restrictions.add(" " + alias + ".date >= :from ");
-                params.put("from", this.from);
-            }
-            if (this.to != null) {
-                restrictions.add(" " + alias + ".date <= :to ");
-                params.put("to", this.to);
-            }
             collection(this.types, "type", "IN");
         }
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        AccountRecordCriteria rhs = (AccountRecordCriteria) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.from, rhs.from)
+                .append(this.to, rhs.to)
+                .append(this.types, rhs.types)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(from)
+                .append(to)
+                .append(types)
+                .toHashCode();
     }
 }

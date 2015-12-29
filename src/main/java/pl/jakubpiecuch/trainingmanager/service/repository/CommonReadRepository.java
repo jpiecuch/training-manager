@@ -2,6 +2,7 @@ package pl.jakubpiecuch.trainingmanager.service.repository;
 
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
+import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
 import pl.jakubpiecuch.trainingmanager.dao.util.DaoAssert;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 

@@ -3,7 +3,7 @@ package pl.jakubpiecuch.trainingmanager.service.api;
 import org.springframework.http.ResponseEntity;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
-import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
+import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 import pl.jakubpiecuch.trainingmanager.service.repository.Repositories;
 import pl.jakubpiecuch.trainingmanager.service.resolver.OrderResolver;

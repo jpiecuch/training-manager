@@ -48,10 +48,10 @@ public abstract class AbstractConverter<T extends IdentifyObject, E extends Comm
 
     protected abstract E getEmpty();
 
-    protected Map<Long, ? extends IdentifyObject> uniqueMap(List<? extends IdentifyObject> list) {
-        return Maps.uniqueIndex(Collections2.filter(list, new Predicate<IdentifyObject>() {
+    protected <U extends IdentifyObject> Map<Long, U> uniqueMap(List list) {
+        return Maps.uniqueIndex(Collections2.filter(list, new Predicate<U>() {
             @Override
-            public boolean apply(IdentifyObject input) {
+            public boolean apply(U input) {
                 return input.getId() != null;
             }
         }), new Function<IdentifyObject, Long>() {
@@ -62,10 +62,10 @@ public abstract class AbstractConverter<T extends IdentifyObject, E extends Comm
         });
     }
 
-    protected Collection<? extends IdentifyObject> filterNew(Collection<? extends IdentifyObject> collection) {
-        return Collections2.filter(collection, new Predicate<IdentifyObject>() {
+    protected <U extends IdentifyObject> Collection<U> filterNew(Collection collection) {
+        return Collections2.filter(collection, new Predicate<U>() {
             @Override
-            public boolean apply(IdentifyObject input) {
+            public boolean apply(U input) {
                 return input.getId() == null;
             }
         });

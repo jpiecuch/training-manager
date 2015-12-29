@@ -2,9 +2,11 @@ package pl.jakubpiecuch.trainingmanager.service.repository.equipment;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.domain.Equipment;
-import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
+import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,5 +47,32 @@ public class EquipmentCriteria extends Criteria<EquipmentCriteria> {
             }), "discriminatorType", "IN");
 
         }
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        EquipmentCriteria rhs = (EquipmentCriteria) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.types, rhs.types)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(types)
+                .toHashCode();
     }
 }

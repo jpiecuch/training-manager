@@ -1,7 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan.phase;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.WorkoutDto;
 import pl.jakubpiecuch.trainingmanager.service.identify.IdentifyObject;
@@ -22,10 +22,12 @@ public class PhaseDto implements IdentifyObject {
     private Integer weeks;
     private List<WorkoutDto> workouts = new ArrayList<WorkoutDto>();
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

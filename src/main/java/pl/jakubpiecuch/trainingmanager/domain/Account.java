@@ -1,23 +1,26 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "account")
 public class Account extends VersionedEntity implements RepoObject {
 
     public static final String NAME_FIELD_NAME = "name";
-    public static final String PASSWORD_FIELD_NAME = "password";
+    public static final String CREDENTIAL_FIELD_NAME = "password";
     public static final String SALT_FIELD_NAME = "salt";
     public static final String STATUS_FIELD_NAME = "status";
     public static final String EMAIL_FIELD_NAME = "email";
@@ -26,7 +29,7 @@ public class Account extends VersionedEntity implements RepoObject {
     public static final String ROLE_FIELD_NAME = "role";
     public static final String SOCIAL_TYPE_FIELD_NAME = "social_type";
     private String name;
-    private String password;
+    private String credential;
     private String email;
     private String salt;
     private Status status;
@@ -51,13 +54,13 @@ public class Account extends VersionedEntity implements RepoObject {
         this.name = name;
     }
 
-    @Column(name = PASSWORD_FIELD_NAME)
-    public String getPassword() {
-        return password;
+    @Column(name = CREDENTIAL_FIELD_NAME)
+    public String getCredential() {
+        return credential;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setCredential(String password) {
+        this.credential = password;
     }
 
     @Column(name = SALT_FIELD_NAME)
@@ -129,18 +132,15 @@ public class Account extends VersionedEntity implements RepoObject {
 
     @Transient
     public List<String> getGrantedPermissions() {
-        List<String> authorities = null;
+        Set<String> authorities = new HashSet<>();
         if (CollectionUtils.isNotEmpty(this.roles)) {
-            authorities = new ArrayList<String>();
             for (Role role : this.roles) {
                 for (String permission : role.getGrantedPermissions()) {
-                    if (!authorities.contains(permission)) {
-                        authorities.add(permission);
-                    }
+                    authorities.add(permission);
                 }
             }
         }
-        return authorities;
+        return new ArrayList<>(authorities);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class Account extends VersionedEntity implements RepoObject {
         return new EqualsBuilder()
                 .appendSuper(super.equals(obj))
                 .append(this.name, rhs.name)
-                .append(this.password, rhs.password)
+                .append(this.credential, rhs.credential)
                 .append(this.email, rhs.email)
                 .append(this.salt, rhs.salt)
                 .append(this.status, rhs.status)
@@ -171,7 +171,7 @@ public class Account extends VersionedEntity implements RepoObject {
         return new HashCodeBuilder()
                 .appendSuper(super.hashCode())
                 .append(name)
-                .append(password)
+                .append(credential)
                 .append(email)
                 .append(salt)
                 .append(status)

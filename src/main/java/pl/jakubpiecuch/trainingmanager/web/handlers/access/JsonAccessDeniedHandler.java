@@ -15,11 +15,11 @@ import java.io.IOException;
 /**
  * Created by Rico on 2015-03-01.
  */
-public class AccessDeniedHandler implements org.springframework.security.web.access.AccessDeniedHandler {
+public class JsonAccessDeniedHandler implements org.springframework.security.web.access.AccessDeniedHandler {
 
     private ObjectMapper mapper;
 
-    public AccessDeniedHandler() {
+    public JsonAccessDeniedHandler() {
         mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }

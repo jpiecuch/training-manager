@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
+import pl.jakubpiecuch.trainingmanager.BaseUnitDaoTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
@@ -19,13 +20,13 @@ import java.util.Date;
 
 import static org.junit.Assert.*;
 
-public class AccountDaoImplTest extends BaseIntegrationTestCase {
+public class AccountDaoImplTest extends BaseUnitDaoTestCase {
 
     private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
     private static final Long ID = 1l;
     private static final String NAME = "test.user";
-    private static final String PASSWORD = "f0e734ab8910dee9762d0ee07964288dd8ffd95be9ab646af02ba1c1256e5037";
-    private static final String SALT = "3994c7aea794c1cf";
+    private static final String PASSWORD = "dcc4cec778c00b632fba26da142d95d0b46a05e0a5f944a0484346c0656def67";
+    private static final String SALT = "jp88";
     private static final String CREATED_STRING = "2014-12-07 13:52:56.805";
     private static final Long NOT_EXISTS_ID = 99l;
     private static final String ROLE_NAME = "ADMIN";
@@ -51,7 +52,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
 
     private static void assertAccount(Account account) {
         assertEquals(ID, account.getId());
-        assertEquals(PASSWORD, account.getPassword());
+        assertEquals(PASSWORD, account.getCredential());
         assertEquals(NAME, account.getName());
         assertEquals(SALT, account.getSalt());
         assertEquals(UPDATED, account.getUpdated());
@@ -69,7 +70,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         Account account = new Account();
         account.setName(NAME + "delete");
         account.setSalt(SALT);
-        account.setPassword(PASSWORD);
+        account.setCredential(PASSWORD);
         account.setStatus(Account.Status.CREATED);
         account.setProvider(Provider.Type.LOCAL);
         account.setSocialType(SocialProvider.SocialType.NONE);
@@ -86,7 +87,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         Account account = new Account();
         account.setName(NAME + "update");
         account.setSalt(SALT);
-        account.setPassword(PASSWORD);
+        account.setCredential(PASSWORD);
         account.setStatus(Account.Status.CREATED);
         account.setProvider(Provider.Type.LOCAL);
         account.setSocialType(SocialProvider.SocialType.NONE);
@@ -104,7 +105,7 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         Account account = new Account();
         account.setName(NAME + "new");
         account.setSalt(SALT);
-        account.setPassword(PASSWORD);
+        account.setCredential(PASSWORD);
         account.setStatus(Account.Status.CREATED);
         account.setProvider(Provider.Type.LOCAL);
         account.setSocialType(SocialProvider.SocialType.NONE);
@@ -136,115 +137,95 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
         accountDao.create(null);
     }
 
-    @Test
-    @Transactional
-    public void testSaveValidity() {
-        int counter = 0;
+    @Test(expected = ConstraintViolationException.class)
+    public void testSaveValidityNoName() {
+        Account account = new Account();
+        account.setEmail(EMAIL);
+        accountDao.create(account);
+    }
 
-        //null name
-        try {
-            Account account = new Account();
-            account.setEmail(EMAIL);
-            accountDao.create(account);
-        } catch (ConstraintViolationException ex) {
-            counter++; //1
-        }
-
-        //null password
-        try {
-            Account account = new Account();
-            account.setEmail(EMAIL);
-            account.setName(NAME);
-            accountDao.create(account);
-        } catch (ConstraintViolationException ex) {
-            counter++; //2
-        }
-
-        //null salt
-        try {
-            Account account = new Account();
-            account.setEmail(EMAIL);
-            account.setName(NAME);
-            account.setPassword(PASSWORD);
-            accountDao.create(account);
-        } catch (ConstraintViolationException ex) {
-            counter++; //3
-        }
-
-        //null status
-        try {
-            Account account = new Account();
-            account.setEmail(EMAIL);
-            account.setName(NAME);
-            account.setPassword(PASSWORD);
-            account.setSalt(SALT);
-            accountDao.create(account);
-        } catch (ConstraintViolationException ex) {
-            counter++; //4
-        }
-
-        //null provider
-        try {
-            Account account = new Account();
-            account.setEmail(EMAIL);
-            account.setName(NAME);
-            account.setPassword(PASSWORD);
-            account.setSalt(SALT);
-            account.setStatus(STATUS);
-            accountDao.create(account);
-        } catch (ConstraintViolationException ex) {
-            counter++; //5
-        }
-
-        //null social type
-        try {
-            Account account = new Account();
-            account.setEmail(EMAIL);
-            account.setName(NAME);
-            account.setPassword(PASSWORD);
-            account.setSalt(SALT);
-            account.setStatus(STATUS);
-            account.setProvider(Provider.Type.LOCAL);
-            accountDao.create(account);
-        } catch (ConstraintViolationException ex) {
-            counter++; //6
-        }
-
-        //not unique name + social type
-        try {
-            Account account = new Account();
-            account.setEmail(EMAIL);
-            account.setName(NAME);
-            account.setPassword(PASSWORD);
-            account.setSalt(SALT);
-            account.setStatus(STATUS);
-            account.setProvider(Provider.Type.LOCAL);
-            account.setSocialType(SocialProvider.SocialType.NONE);
-            accountDao.create(account);
-        } catch (ConstraintViolationException ex) {
-            counter++; //7
-        }
-
-        //not unique email + social type
-        try {
-            Account account = new Account();
-            account.setEmail(EMAIL);
-            account.setName(NAME + "unique_name");
-            account.setPassword(PASSWORD);
-            account.setSalt(SALT);
-            account.setStatus(STATUS);
-            account.setProvider(Provider.Type.LOCAL);
-            account.setSocialType(SocialProvider.SocialType.NONE);
-            accountDao.create(account);
-        } catch (ConstraintViolationException ex) {
-            counter++; //8
-        }
-
-        //unique social type
+    @Test(expected = ConstraintViolationException.class)
+    public void testSaveValidityNoPassword() {
         Account account = new Account();
         account.setEmail(EMAIL);
         account.setName(NAME);
-        account.setPassword(PASSWORD);
+        accountDao.create(account);
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void testSaveValidityNoSalt() {
+        Account account = new Account();
+        account.setEmail(EMAIL);
+        account.setName(NAME);
+        account.setCredential(PASSWORD);
+        accountDao.create(account);
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void testSaveValidityNoStatus() {
+        Account account = new Account();
+        account.setEmail(EMAIL);
+        account.setName(NAME);
+        account.setCredential(PASSWORD);
+        account.setSalt(SALT);
+        accountDao.create(account);
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void testSaveValidityNoProvider() {
+        Account account = new Account();
+        account.setEmail(EMAIL);
+        account.setName(NAME);
+        account.setCredential(PASSWORD);
+        account.setSalt(SALT);
+        account.setStatus(STATUS);
+        accountDao.create(account);
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void testSaveValidityNoSocialType() {
+        Account account = new Account();
+        account.setEmail(EMAIL);
+        account.setName(NAME);
+        account.setCredential(PASSWORD);
+        account.setSalt(SALT);
+        account.setStatus(STATUS);
+        account.setProvider(Provider.Type.LOCAL);
+        accountDao.create(account);
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void testSaveValidityNoUniqueNameInSocial() {
+        Account account = new Account();
+        account.setEmail(EMAIL);
+        account.setName(NAME);
+        account.setCredential(PASSWORD);
+        account.setSalt(SALT);
+        account.setStatus(STATUS);
+        account.setProvider(Provider.Type.LOCAL);
+        account.setSocialType(SocialProvider.SocialType.NONE);
+        accountDao.create(account);
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void testSaveValidityNoUniqueEmailInSocial() {
+        Account account = new Account();
+        account.setEmail(EMAIL);
+        account.setName(NAME + "uniqueName");
+        account.setCredential(PASSWORD);
+        account.setSalt(SALT);
+        account.setStatus(STATUS);
+        account.setProvider(Provider.Type.LOCAL);
+        account.setSocialType(SocialProvider.SocialType.NONE);
+        accountDao.create(account);
+    }
+
+    @Test
+    public void testSaveValiditySuccess() {
+        Account account = new Account();
+        account.setEmail(EMAIL);
+        account.setName(NAME);
+        account.setCredential(PASSWORD);
         account.setSalt(SALT);
         account.setStatus(STATUS);
         account.setProvider(Provider.Type.LOCAL);
@@ -253,7 +234,6 @@ public class AccountDaoImplTest extends BaseIntegrationTestCase {
 
         assertNotNull(account.getId());
         assertNotNull(account.getCreated());
-        assertEquals(8, counter);
     }
 
     @Test

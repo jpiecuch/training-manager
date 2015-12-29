@@ -1,4 +1,4 @@
-INSERT INTO account (id, name, password, salt, created, updated, status, email, config, provider, social_type) VALUES (1, 'test.user', 'f0e734ab8910dee9762d0ee07964288dd8ffd95be9ab646af02ba1c1256e5037', '3994c7aea794c1cf', '2014-12-07 13:52:56.805', '2014-12-07 13:53:16.062', 0, 'test.user@test.com', '{"firstName":"Test","lastName":"User"}', 0, 3);
+INSERT INTO account (id, name, password, salt, created, updated, status, email, config, provider, social_type) VALUES (1, 'test.user', 'dcc4cec778c00b632fba26da142d95d0b46a05e0a5f944a0484346c0656def67', 'jp88', '2014-12-07 13:52:56.805', '2014-12-07 13:53:16.062', 0, 'test.user@test.com', '{"firstName":"Test","lastName":"User"}', 0, 3);
 
 INSERT INTO role (id, name, permissions, modifiable) VALUES (1, 'ADMIN', '0,1,2', true);
 
@@ -6,11 +6,15 @@ INSERT INTO account_role (account, role) VALUES (1,1);
 
 INSERT INTO account_record (id, type, value, date, account) VALUES (1, 0, '80.0', '2014-12-07 13:52:56.805', 1);
 
-INSERT INTO plan (id, name, goal, creator, used) VALUES (1, 'Main plan', 0, 1, true);
+INSERT INTO plan (id, name, goal, creator, used) VALUES (1, 'Main plan', 0, 1, false);
 
-INSERT INTO phase (id, position, goal, description, plan, weeks) VALUES (1, 1, 1, 'Main phase', 1, 3);
+INSERT INTO phase (id, position, goal, description, plan, weeks) VALUES (1, 1, 1, 'First phase', 1, 3);
+INSERT INTO phase (id, position, goal, description, plan, weeks) VALUES (2, 1, 1, 'Second phase', 1, 3);
 
 INSERT INTO workout (id, week_day, phase, muscles, position) VALUES (1, 1, 1, '2', 1);
+INSERT INTO workout (id, week_day, phase, muscles, position) VALUES (2, 3, 1, '3;5', 2);
+INSERT INTO workout (id, week_day, phase, muscles, position) VALUES (3, 2, 2, '7', 1);
+INSERT INTO workout (id, week_day, phase, muscles, position) VALUES (4, 6, 2, '11', 2);
 
 INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force, sides, sets) VALUES (1, '{"pl":"pl_1","en":"en_1"}', 'url_1', NULL, 0, 0, NULL, 0, 0, 0, 0, 0);
 INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force, sides, sets) VALUES (2, '{"pl":"pl_2","en":"en_2"}', 'url_2', NULL, 2, 1, NULL, 1, 1, 1,0, 0);
@@ -23,6 +27,10 @@ INSERT INTO description (id, name, movie_url, description, party_muscles, type, 
 
 INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (1, 1, 2, '12;12;12;12', 1, 1);
 INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (2, 1, 3, '12;10;8;6', 2, 2);
+INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (3, 2, 7, '12;10;8;6', 1, 1);
+INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (4, 2, 8, '12;10;8;6', 2, 1);
+INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (5, 3, 5, '12;10;8;6;2', 1, 1);
+INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (6, 4, 1, '12;12;12', 1, 1);
 
 INSERT INTO user_workout (id, account, date, remind, comment, workout, state) VALUES (1, 1, '2014-12-07 13:52:56.805', false, null, 1, 0);
 

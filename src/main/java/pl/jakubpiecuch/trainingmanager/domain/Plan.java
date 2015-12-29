@@ -1,7 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 
 import javax.persistence.*;
@@ -19,9 +19,10 @@ public class Plan extends CommonEntity implements RepoObject {
     private String name;
     private Goal goal;
     private Account creator;
-    private Boolean used = false;
+    private boolean used;
     private List<Phase> phases = new ArrayList<Phase>();
     public Plan() {
+        super();
     }
 
     public Plan(Long id) {
@@ -58,11 +59,11 @@ public class Plan extends CommonEntity implements RepoObject {
     }
 
     @Column(name = USED_FIELD)
-    public Boolean getUsed() {
+    public boolean isUsed() {
         return used;
     }
 
-    public void setUsed(Boolean used) {
+    public void setUsed(boolean used) {
         this.used = used;
     }
 

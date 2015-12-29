@@ -78,7 +78,7 @@ public class AuthenticationServiceImplTest {
     }
 
     @Test(expected = ValidationException.class)
-    public void testSignInNotValidAuthenitcation() throws Exception {
+    public void testSignInNotValidAuthentication() throws Exception {
         authenticationService.signIn(request, response, NOT_VALID_AUTHENTICATION);
     }
 

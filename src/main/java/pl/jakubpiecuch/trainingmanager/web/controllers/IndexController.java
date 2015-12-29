@@ -1,5 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.web.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,8 @@ import java.util.Locale;
 @RequestMapping(value = {"/", "/index"})
 public class IndexController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
+
     private SocialSignOnAdapter socialSignOnAdapter;
     private AuthenticationService authenticationService;
 
@@ -28,7 +32,7 @@ public class IndexController {
         try {
             model.addAttribute("user", authenticationService.signed());
         } catch (NotFoundException ex) {
-
+            LOGGER.debug("User not found", ex);
         }
         return "index";
     }

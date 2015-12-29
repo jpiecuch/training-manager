@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by jakub on 19.09.2015.
  */
-public class StaticPasswordServiceTest extends BaseIntegrationTestCase {
+public class StaticPasswordServiceIT extends BaseIntegrationTestCase {
 
     @Autowired
     private StaticPasswordService passwordService;

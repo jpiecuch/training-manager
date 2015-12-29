@@ -23,6 +23,7 @@ public class ExecutionDto implements RepoObject {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

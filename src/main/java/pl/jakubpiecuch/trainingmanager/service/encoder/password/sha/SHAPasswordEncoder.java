@@ -1,6 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.encoder.password.sha;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;

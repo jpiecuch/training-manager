@@ -1,7 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -30,7 +30,6 @@ public class ExerciseComment extends BaseComment<Description> {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        ExerciseComment rhs = (ExerciseComment) obj;
         return new EqualsBuilder()
                 .appendSuper(super.equals(obj))
                 .isEquals();

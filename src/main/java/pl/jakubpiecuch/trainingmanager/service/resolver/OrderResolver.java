@@ -1,6 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.resolver;
 
-import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
+import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
 
 /**
  * Created by Rico on 2015-01-19.

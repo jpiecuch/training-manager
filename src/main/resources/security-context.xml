@@ -22,10 +22,10 @@
     </beans:bean>
 
     <beans:bean id="authenticationEntryPoint"
-                class="pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationEntryPoint"></beans:bean>
+                class="pl.jakubpiecuch.trainingmanager.web.authentication.JsonAuthenticationEntryPoint"></beans:bean>
 
     <beans:bean id="accessDeniedHandler"
-                class="pl.jakubpiecuch.trainingmanager.web.handlers.access.AccessDeniedHandler"></beans:bean>
+                class="pl.jakubpiecuch.trainingmanager.web.handlers.access.JsonAccessDeniedHandler"></beans:bean>
 
     <beans:bean id="authenticationProvider"
                 class="pl.jakubpiecuch.trainingmanager.web.authentication.LocalAuthenticationProvider">

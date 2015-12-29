@@ -1,5 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
@@ -21,6 +23,7 @@ public class Execution extends CommonEntity {
     }
 
     public Execution() {
+        super();
     }
 
     @Column(name = "result")
@@ -80,10 +83,45 @@ public class Execution extends CommonEntity {
         result = WebUtil.toJson(new ResultContainer(results));
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Execution rhs = (Execution) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.exercise, rhs.exercise)
+                .append(this.comment, rhs.comment)
+                .append(this.workout, rhs.workout)
+                .append(this.state, rhs.state)
+                .append(this.result, rhs.result)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(exercise)
+                .append(comment)
+                .append(workout)
+                .append(state)
+                .append(result)
+                .toHashCode();
+    }
+
     public static class ResultContainer {
         private List<Result> results;
 
         public ResultContainer() {
+            //jackson requires default public constructor
         }
 
         public ResultContainer(List<Result> results) {

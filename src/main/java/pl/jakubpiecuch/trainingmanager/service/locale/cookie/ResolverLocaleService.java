@@ -1,6 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.locale.cookie;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.util.Assert;
 import org.springframework.web.servlet.LocaleResolver;
 import pl.jakubpiecuch.trainingmanager.service.locale.LocaleService;

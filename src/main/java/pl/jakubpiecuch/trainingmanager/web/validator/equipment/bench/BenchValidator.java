@@ -2,6 +2,7 @@ package pl.jakubpiecuch.trainingmanager.web.validator.equipment.bench;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -40,7 +41,7 @@ public class BenchValidator implements Validator {
             errors.rejectValue("config", RestrictionCode.INVALID);
         }
         if (errors.hasErrors()) {
-            throw new ValidationException(errors);
+            throw new ValidationException((BeanPropertyBindingResult) errors);
         }
     }
 

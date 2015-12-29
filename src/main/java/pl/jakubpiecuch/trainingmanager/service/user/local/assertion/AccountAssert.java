@@ -9,6 +9,9 @@ public class AccountAssert {
 
     private static final String WRONG_USER = "wrong.user";
 
+    private AccountAssert() {
+    }
+
     public static void isTrue(boolean expression) {
         if (!expression) {
             throw new NotFoundException(WRONG_USER);

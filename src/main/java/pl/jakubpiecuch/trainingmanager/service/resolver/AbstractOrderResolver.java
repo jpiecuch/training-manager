@@ -1,7 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.resolver;
 
-import org.apache.commons.lang.ArrayUtils;
-import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
+import org.apache.commons.lang3.ArrayUtils;
+import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
 
 import java.util.Map;
 

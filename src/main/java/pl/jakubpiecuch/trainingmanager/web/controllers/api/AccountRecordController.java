@@ -7,7 +7,7 @@ import pl.jakubpiecuch.trainingmanager.domain.AccountRecord;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.domain.Permissions;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
-import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
+import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
 import pl.jakubpiecuch.trainingmanager.service.repository.Repositories;
 import pl.jakubpiecuch.trainingmanager.service.repository.accountrecord.AccountRecordCriteria;
 import pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionCriteria;

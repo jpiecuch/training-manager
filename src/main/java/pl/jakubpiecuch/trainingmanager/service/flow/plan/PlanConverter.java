@@ -32,9 +32,9 @@ public class PlanConverter extends AbstractConverter<PlanDto, Plan> {
         flow.setName(entity.getName());
         flow.setGoal(entity.getGoal());
         flow.setCreatorId(entity.getCreator().getId());
-        flow.setEditable(!entity.getUsed() && authenticationService.signed().getId() == entity.getCreator().getId());
+        flow.setEditable(!entity.isUsed() && authenticationService.signed().getId() == entity.getCreator().getId());
         flow.setPhases(phaseConverter.fromEntities(entity.getPhases()));
-        flow.setUsed(entity.getUsed());
+        flow.setUsed(entity.isUsed());
         return flow;
     }
 
@@ -42,6 +42,7 @@ public class PlanConverter extends AbstractConverter<PlanDto, Plan> {
     protected Plan convertFrom(PlanDto dto, Plan entity) {
         entity.setName(dto.getName());
         entity.setGoal(dto.getGoal());
+        entity.setUsed(entity.isUsed() || dto.getUsed());
         if (dto.getId() == null) {
             Authentication signed = authenticationService.signed();
             entity.setCreator(new Account(signed.getId()));

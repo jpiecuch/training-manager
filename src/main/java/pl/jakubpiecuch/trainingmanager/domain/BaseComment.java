@@ -2,8 +2,8 @@ package pl.jakubpiecuch.trainingmanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 
@@ -15,10 +15,21 @@ public class BaseComment<T extends CommonEntity> extends VersionedEntity {
     private T commented;
 
     public BaseComment() {
+        super();
     }
 
     public BaseComment(Long id) {
         super(id);
+    }
+
+    @JoinColumn(name = "creator")
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @JoinColumn(name = "commented")
@@ -40,16 +51,6 @@ public class BaseComment<T extends CommonEntity> extends VersionedEntity {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    @JoinColumn(name = "creator")
-    @ManyToOne(fetch = FetchType.LAZY)
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
 

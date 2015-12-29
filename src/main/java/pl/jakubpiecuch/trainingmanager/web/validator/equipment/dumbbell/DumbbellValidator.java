@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.web.validator.equipment.dumbbell;
 
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -23,7 +24,7 @@ public class DumbbellValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "weight", RestrictionCode.REQUIRED);
 
         if (errors.hasErrors()) {
-            throw new ValidationException(errors);
+            throw new ValidationException((BeanPropertyBindingResult) errors);
         }
     }
 

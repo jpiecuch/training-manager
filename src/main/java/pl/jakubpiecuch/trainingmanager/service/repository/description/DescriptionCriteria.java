@@ -1,9 +1,11 @@
 package pl.jakubpiecuch.trainingmanager.service.repository.description;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
-import pl.jakubpiecuch.trainingmanager.service.repository.Criteria;
+import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,5 +87,44 @@ public class DescriptionCriteria extends Criteria<DescriptionCriteria> {
                 params.put("name", "%" + name.toLowerCase() + "%");
             }
         }
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        DescriptionCriteria rhs = (DescriptionCriteria) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(this.muscles, rhs.muscles)
+                .append(this.force, rhs.force)
+                .append(this.level, rhs.level)
+                .append(this.mechanics, rhs.mechanics)
+                .append(this.type, rhs.type)
+                .append(this.excludedIds, rhs.excludedIds)
+                .append(this.name, rhs.name)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .appendSuper(super.hashCode())
+                .append(muscles)
+                .append(force)
+                .append(level)
+                .append(mechanics)
+                .append(type)
+                .append(excludedIds)
+                .append(name)
+                .toHashCode();
     }
 }

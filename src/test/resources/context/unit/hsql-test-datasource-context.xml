@@ -8,7 +8,7 @@
     <jdbc:embedded-database id="dataSource" type="HSQL">
         <jdbc:script location="classpath:sql/schema.sql"/>
         <jdbc:script location="classpath:sql/hsql/sequences.sql"/>
-        <jdbc:script location="dictionary.sql"/>
+        <jdbc:script location="classpath:sql/dictionary.sql"/>
     </jdbc:embedded-database>
 
 
@@ -19,11 +19,11 @@
             <props>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
-                <prop key="hibernate.dialect">pl.jakubpiecuch.trainingmanager.org.hibernate.dialect.HSQLDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
             </props>
         </property>
     </bean>
 
-    <import resource="dao-context.xml"/>
+    <import resource="classpath:dao-context.xml"/>
 
 </beans>

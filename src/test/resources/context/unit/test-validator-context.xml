@@ -22,7 +22,7 @@
         <constructor-arg value="pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository"/>
     </bean>
 
-    <import resource="validator-context.xml"/>
+    <import resource="classpath:validator-context.xml"/>
 
     <!-- only for mocking purpose -->
     <bean id="roleRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.role.RoleRepository"/>

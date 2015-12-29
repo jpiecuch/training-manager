@@ -1,8 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
@@ -29,6 +29,7 @@ public class PlanDto implements RepoObject {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

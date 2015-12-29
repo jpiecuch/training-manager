@@ -19,10 +19,12 @@ public class ExerciseDto implements IdentifyObject {
     private Integer position;
     private Integer group;
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

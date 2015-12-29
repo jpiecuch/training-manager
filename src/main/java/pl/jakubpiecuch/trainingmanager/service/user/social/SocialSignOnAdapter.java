@@ -38,7 +38,7 @@ public class SocialSignOnAdapter {
             userService.signOn(registration, locale);
             providerSignInUtils.doPostSignUp(profile.getName(), request);
             Account entity = findUser(String.format(SecurityUser.SOCIAL_USERNAME_FORMAT, connection.getKey().getProviderId(), connection.getKey().getProviderUserId()));
-            WebUtil.authenticate(new SecurityUser(entity.getId(), entity.getName(), entity.getPassword(), SocialProvider.SocialType.valueOf(connection.getKey().getProviderId().toUpperCase()),
+            WebUtil.authenticate(new SecurityUser(entity.getId(), entity.getName(), entity.getCredential(), SocialProvider.SocialType.valueOf(connection.getKey().getProviderId().toUpperCase()),
                     CollectionUtils.isNotEmpty(entity.getGrantedPermissions()) ? AuthorityUtils.createAuthorityList(entity.getGrantedPermissions().toArray(new String[entity.getGrantedPermissions().size()])) : AuthorityUtils.NO_AUTHORITIES));
         }
     }
