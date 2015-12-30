@@ -19,13 +19,13 @@ public class SignInController extends AbstractController {
     @PreAuthorize(value = Permissions.IS_ANONYMOUS)
     @RequestMapping(method = {RequestMethod.POST})
     public ResponseEntity signIn(@PathVariable ApiVersionService.Version version, @RequestBody Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
-        versionServices.get(version).signIn(request, response, authentication);
+        versionServices.get(version).authentication().signIn(request, response, authentication);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PreAuthorize(value = Permissions.IS_AUTHENTICATED)
     @RequestMapping(method = {RequestMethod.GET})
     public Authentication signed(@PathVariable ApiVersionService.Version version) {
-        return versionServices.get(version).signed();
+        return versionServices.get(version).authentication().signed();
     }
 }

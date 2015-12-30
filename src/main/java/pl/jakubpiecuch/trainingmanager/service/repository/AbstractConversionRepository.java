@@ -20,7 +20,7 @@ public abstract class AbstractConversionRepository<T extends RepoObject, E exten
 
     @Override
     @Transactional
-    public PageResult<T> read(C criteria) {
+    public PageResult<T> page(C criteria) {
         final PageResult result = dao.findByCriteria(criteria);
         final List<T> entities = converter.fromEntities(result.getResult());
         return new PageResult<T>() {
@@ -52,8 +52,9 @@ public abstract class AbstractConversionRepository<T extends RepoObject, E exten
     }
 
     @Override
-    public T retrieve(long id) {
-        return converter.fromEntity((E) super.retrieve(id));
+    @Transactional
+    public T unique(long id) {
+        return converter.fromEntity((E) super.unique(id));
     }
 
     public abstract E getEmpty();

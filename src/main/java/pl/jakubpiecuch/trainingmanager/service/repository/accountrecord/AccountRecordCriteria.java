@@ -3,8 +3,8 @@ package pl.jakubpiecuch.trainingmanager.service.repository.accountrecord;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import pl.jakubpiecuch.trainingmanager.domain.AccountRecord;
 import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
+import pl.jakubpiecuch.trainingmanager.domain.AccountRecord;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -2,8 +2,6 @@ package pl.jakubpiecuch.trainingmanager.service.user.local;
 
 import com.springcryptoutils.core.cipher.symmetric.SymmetricEncryptionException;
 import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -106,7 +104,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
             account.setSalt(KeyGenerators.string().generateKey());
             account.setCredential(passwordEncoder.encode(registration.getPassword(), account.getSalt()));
             account.setProvider(Provider.Type.LOCAL);
-            account.getRoles().addAll(roleRepository.read(new RoleCriteria().addNameRestrictions(Role.ADMIN_ROLE)).getResult());
+            account.getRoles().addAll(roleRepository.page(new RoleCriteria().addNameRestrictions(Role.ADMIN_ROLE)).getResult());
             repository.create(account);
             emailService.sendEmail(new Object[]{UriUtils.encodeQueryParam(cryptService.encrypt(account.getName(), account.getEmail()), "UTF-8"), account, WebUtil.fromJson(account.getConfig(), Account.Config.class), serviceUri}, locale, EmailService.Template.REGISTER, account.getEmail());
         } catch (UnsupportedEncodingException e) {
@@ -115,7 +113,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
     }
 
     private Account findByEmail(String email) {
-        PageResult<Account> result = repository.read(new AccountCriteria().addEmailRestrictions(email));
+        PageResult<Account> result = repository.page(new AccountCriteria().addEmailRestrictions(email));
         if (result.getCount() > 0) {
             return result.getResult().get(0);
         }

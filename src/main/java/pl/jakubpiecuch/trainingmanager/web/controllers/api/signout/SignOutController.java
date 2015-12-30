@@ -21,7 +21,7 @@ public class SignOutController extends AbstractController {
     @PreAuthorize(value = Permissions.IS_AUTHENTICATED)
     @RequestMapping(method = {RequestMethod.POST})
     public ResponseEntity signOut(@PathVariable ApiVersionService.Version version, HttpServletRequest request, HttpServletResponse response) {
-        versionServices.get(version).signOut(request, response);
+        versionServices.get(version).authentication().signOut(request, response);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

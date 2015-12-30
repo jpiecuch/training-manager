@@ -55,7 +55,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (object instanceof String) {
             throw new NotFoundException();
         }
-        PageResult<Account> result = repository.read(new AccountCriteria().setIdRestriction(((SecurityUser) object).getId()).addNameRestrictions(((SecurityUser) object).getUsername()));
+        PageResult<Account> result = repository.page(new AccountCriteria().setIdRestriction(((SecurityUser) object).getId()).addNameRestrictions(((SecurityUser) object).getUsername()));
         if (result.getCount() == 0) {
             throw new NotFoundException();
         }

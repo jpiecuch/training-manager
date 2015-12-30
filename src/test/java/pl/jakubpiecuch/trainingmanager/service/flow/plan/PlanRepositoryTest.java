@@ -49,13 +49,13 @@ public class PlanRepositoryTest {
 
     @Test
     public void testGetElement() {
-        PlanDto flow = planRepository.retrieve(ID);
+        PlanDto flow = planRepository.unique(ID);
         assertEquals(flow, PLAN_FLOW);
     }
 
     @Test(expected = NotFoundException.class)
     public void testGetElementNotPersist() {
-        planRepository.retrieve(NOT_PERSIST_ID);
+        planRepository.unique(NOT_PERSIST_ID);
     }
 
     @Test

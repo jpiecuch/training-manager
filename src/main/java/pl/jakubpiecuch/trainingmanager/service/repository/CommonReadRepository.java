@@ -14,12 +14,12 @@ public class CommonReadRepository<E extends RepoObject, C extends Criteria> impl
     protected RepoDao dao;
 
     @Override
-    public PageResult<E> read(C criteria) {
+    public PageResult<E> page(C criteria) {
         return dao.findByCriteria(criteria);
     }
 
     @Override
-    public E retrieve(long id) {
+    public E unique(long id) {
         CommonEntity entity = dao.findById(id);
         DaoAssert.notNull(entity);
         return (E) entity;

@@ -14,6 +14,7 @@ import pl.jakubpiecuch.trainingmanager.web.controllers.api.BaseControllerTestCas
 public class SignInControllerTest extends BaseControllerTestCase {
 
     private static Authentication VALID_AUTHENTICATION = new Authentication();
+
     @Autowired
     SignInController controller;
 

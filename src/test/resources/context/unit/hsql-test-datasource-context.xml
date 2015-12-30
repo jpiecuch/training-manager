@@ -25,5 +25,6 @@
     </bean>
 
     <import resource="classpath:dao-context.xml"/>
+    <import resource="classpath:order-resolver-context.xml"/>
 
 </beans>

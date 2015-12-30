@@ -62,9 +62,9 @@ public class RegistrationValidatorTest {
 
     @Test
     public void validateTest() {
-        Mockito.when(accountRepository.read(new AccountCriteria().addEmailRestrictions("test@test.com").addProviderRestrictions(Provider.Type.LOCAL))).thenReturn(createPage(new ArrayList(), 0));
+        Mockito.when(accountRepository.page(new AccountCriteria().addEmailRestrictions("test@test.com").addProviderRestrictions(Provider.Type.LOCAL))).thenReturn(createPage(new ArrayList(), 0));
 
-        Mockito.when(accountRepository.read(new AccountCriteria().addNameRestrictions("test123"))).thenReturn(createPage(new ArrayList(), 0));
+        Mockito.when(accountRepository.page(new AccountCriteria().addNameRestrictions("test123"))).thenReturn(createPage(new ArrayList(), 0));
 
         Registration registration = new Registration();
 

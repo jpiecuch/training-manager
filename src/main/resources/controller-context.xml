@@ -24,7 +24,10 @@
           parent="abstractController"/>
 
     <bean id="planController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.plan.PlanController"
-          parent="abstractController"/>
+          parent="abstractController">
+        <property name="repositoryType" value="PLAN"/>
+        <property name="defaultOrderBy" value="id"/>
+    </bean>
 
     <bean id="dictionaryController"
           class="pl.jakubpiecuch.trainingmanager.web.controllers.api.dictionary.DictionaryController"
@@ -32,11 +35,17 @@
 
     <bean id="descriptionController"
           class="pl.jakubpiecuch.trainingmanager.web.controllers.api.description.DescriptionController"
-          parent="abstractController"/>
+          parent="abstractRepositoryController">
+        <property name="repositoryType" value="DESCRIPTION"/>
+        <property name="defaultOrderBy" value="id"/>
+    </bean>
 
     <bean id="equipmentController"
           class="pl.jakubpiecuch.trainingmanager.web.controllers.api.equipment.EquipmentController"
-          parent="abstractController"/>
+          parent="abstractRepositoryController">
+        <property name="repositoryType" value="EQUIPMENT"/>
+        <property name="defaultOrderBy" value="id"/>
+    </bean>
 
     <bean id="executionController"
           class="pl.jakubpiecuch.trainingmanager.web.controllers.api.execution.ExecutionController"
@@ -48,14 +57,20 @@
 
     <bean id="userWorkoutsController"
           class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.workouts.UserWorkoutsController"
-          parent="abstractController"/>
+          parent="abstractRepositoryController">
+        <property name="repositoryType" value="WORKOUT"/>
+        <property name="defaultOrderBy" value="date"/>
+    </bean>
 
     <bean id="roleController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.role.RoleController"
           parent="abstractController"/>
 
     <bean id="accountRecordController"
           class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AccountRecordController"
-          parent="abstractController"/>
+          parent="abstractRepositoryController">
+        <property name="repositoryType" value="ACCOUNT_RECORD"/>
+        <property name="defaultOrderBy" value="date"/>
+    </bean>
 
     <bean id="resetPasswordController"
           class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.password.ResetPasswordController"
@@ -64,4 +79,6 @@
     <bean id="activateUserController"
           class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.activate.ActivateUserController"
           parent="abstractController"/>
+
+    <bean id="abstractRepositoryController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractRepositoryController" abstract="true" parent="abstractController"/>
 </beans>

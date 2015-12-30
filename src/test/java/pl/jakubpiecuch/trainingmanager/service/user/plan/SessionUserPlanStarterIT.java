@@ -58,7 +58,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
     @Transactional
     public void testStart() {
 
-        Authentication authentication = new Authentication(accountRepository.retrieve(ACCOUNT_ID));
+        Authentication authentication = new Authentication(accountRepository.unique(ACCOUNT_ID));
         authentication.setProvider(Provider.Type.LOCAL);
         authentication.setPassword("Piecu29");
 
@@ -69,7 +69,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
         userPlan.setWeek(12);
         userPlan.setYear(2016);
 
-        assertFalse(planRepository.retrieve(1l).getUsed());
+        assertFalse(planRepository.unique(1l).getUsed());
 
         userPlanStarter.start(userPlan);
 
@@ -77,7 +77,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
         sessionFactory.getCurrentSession().clear();
 
 
-        PageResult<UserWorkoutDto> result = userWorkoutRepository.read(new UserWorkoutCriteria(EN)
+        PageResult<UserWorkoutDto> result = userWorkoutRepository.page(new UserWorkoutCriteria(EN)
                 .addDateRangeRestriction(new DateTime(2016, 3, 1, 8, 0).toDate(), new DateTime(2016, 4, 1, 8, 0).toDate()));
 
         assertEquals(4l, result.getCount());
@@ -105,7 +105,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
         assertEquals(Workout.WeekDay.WEDNESDAY, workout4.getWeekDay());
         assertEquals(2, workout3.getExecutions().size());
 
-        assertTrue(planRepository.retrieve(1l).getUsed());
+        assertTrue(planRepository.unique(1l).getUsed());
 
     }
 

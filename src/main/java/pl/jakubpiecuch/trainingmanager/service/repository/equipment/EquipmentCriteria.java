@@ -5,8 +5,8 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
+import pl.jakubpiecuch.trainingmanager.domain.Equipment;
 
 import java.util.ArrayList;
 import java.util.Arrays;

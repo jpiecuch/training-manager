@@ -19,6 +19,7 @@ import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationExcepti
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -52,10 +53,12 @@ public class Version1ServiceTest {
     @Mock
     private HttpServletResponse response;
 
+    @Mock
+    private TranslatesService translatesService;
+
 
     @Before
     public void setUp() {
-        service.setLangs(LANGS);
         NOT_VALID_AUTHENTICATION.setUsername(NOT_VALID_USERNAME);
         NOT_VALID_AUTHENTICATION.setPassword(NOT_VALID_PASSWORD);
 
@@ -64,11 +67,13 @@ public class Version1ServiceTest {
 
         NOT_FOUND_SOCIAL_USER_AUTHENTICATION.setUsername(NOT_VALID_USERNAME);
         NOT_FOUND_SOCIAL_USER_AUTHENTICATION.setPassword(NOT_PERSISTED_USER_PASSWORD);
+
+        Mockito.when(translatesService.languages()).thenReturn(Arrays.asList(LANGS));
     }
 
     @Test
     public void testLanguages() throws Exception {
-        List<String> languages = service.languages();
+        List<String> languages = service.translates().languages();
         assertEquals(2, languages.size());
         assertEquals(LANG_EN, languages.get(0));
         assertEquals(LANG_PL, languages.get(1));
@@ -93,25 +98,25 @@ public class Version1ServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void testSignInWithNullAuthentication() throws Exception {
         Mockito.doThrow(IllegalArgumentException.class).when(authenticationService).signIn(request, response, null);
-        service.signIn(request, response, null);
+        service.authentication().signIn(request, response, null);
     }
 
     @Test(expected = ValidationException.class)
     public void testSignInWithNotValidAuthentication() throws Exception {
         Mockito.doThrow(ValidationException.class).when(authenticationService).signIn(request, response, NOT_VALID_AUTHENTICATION);
-        service.signIn(request, response, NOT_VALID_AUTHENTICATION);
+        service.authentication().signIn(request, response, NOT_VALID_AUTHENTICATION);
     }
 
     @Test(expected = ObjectNotFoundException.class)
     public void testSignInWithNotPersistedUser() throws Exception {
         Mockito.doThrow(ObjectNotFoundException.class).when(authenticationService).signIn(request, response, NOT_PERSISTED_USER_AUTHENTICATION);
-        service.signIn(request, response, NOT_PERSISTED_USER_AUTHENTICATION);
+        service.authentication().signIn(request, response, NOT_PERSISTED_USER_AUTHENTICATION);
     }
 
     @Test(expected = NotFoundException.class)
     public void testSignInWithNotFoundSocialUser() throws Exception {
         Mockito.doThrow(NotFoundException.class).when(authenticationService).signIn(request, response, NOT_FOUND_SOCIAL_USER_AUTHENTICATION);
-        service.signIn(request, response, NOT_FOUND_SOCIAL_USER_AUTHENTICATION);
+        service.authentication().signIn(request, response, NOT_FOUND_SOCIAL_USER_AUTHENTICATION);
     }
 
     @Test

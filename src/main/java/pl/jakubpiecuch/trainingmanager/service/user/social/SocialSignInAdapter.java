@@ -31,7 +31,7 @@ public class SocialSignInAdapter implements SignInAdapter {
     }
 
     private Account findUser(String username) {
-        PageResult<Account> result = repository.read(new AccountCriteria().addNameRestrictions(username));
+        PageResult<Account> result = repository.page(new AccountCriteria().addNameRestrictions(username));
         if (result.getCount() > 0) {
             return result.getResult().get(0);
         }

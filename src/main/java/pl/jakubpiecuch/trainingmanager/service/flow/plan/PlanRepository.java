@@ -16,8 +16,8 @@ public class PlanRepository extends AbstractConversionRepository<PlanDto, Plan, 
 
     @Override
     @Transactional
-    public PlanDto retrieve(long id) {
-        return super.retrieve(id);
+    public PlanDto unique(long id) {
+        return super.unique(id);
     }
 
     @Override

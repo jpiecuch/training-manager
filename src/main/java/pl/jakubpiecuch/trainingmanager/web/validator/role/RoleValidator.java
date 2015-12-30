@@ -39,7 +39,7 @@ public class RoleValidator implements Validator {
         if (object.getId() != null) {
             criteria.addExcludedIdRestriction(object.getId());
         }
-        if (!readRepository.read(criteria).getResult().isEmpty()) {
+        if (!readRepository.page(criteria).getResult().isEmpty()) {
             errors.rejectValue(Role.NAME_FIELD_NAME, RestrictionCode.UNIQUE);
         }
         if (errors.hasErrors()) {

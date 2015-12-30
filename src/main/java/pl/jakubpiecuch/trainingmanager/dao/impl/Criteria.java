@@ -1,7 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -43,6 +41,8 @@ public abstract class Criteria<T extends Criteria> {
     protected String order;
     private List<Long> excludedIds = new ArrayList<>();
     private List<String> joins = new ArrayList<>();
+    private Map<String, OrderResolver> orderResolverMap = new HashMap<>();
+
     public Criteria(String alias, String entity, String lang) {
         this.alias = alias;
         this.entity = entity;
@@ -143,7 +143,7 @@ public abstract class Criteria<T extends Criteria> {
         return (T) this;
     }
 
-    public T setOrderBy(String property, OrderMode mode, Map<String, OrderResolver> orderResolverMap) {
+    public T setOrderBy(String property, OrderMode mode) {
         validateProperty(property);
         OrderResolver orderResolver = MapUtils.isNotEmpty(orderResolverMap) ? orderResolverMap.get(entity + "-" + property) : null;
         this.order = orderResolver != null ? orderResolver.resolve(lang, alias, property, mode) : (property + " " + mode);
@@ -154,6 +154,11 @@ public abstract class Criteria<T extends Criteria> {
         if (ArrayUtils.isNotEmpty(ids)) {
             this.excludedIds.addAll(Arrays.asList(ids));
         }
+        return (T) this;
+    }
+
+    T appendOrderResolvers(Map<String, OrderResolver> orderResolverMap) {
+        this.orderResolverMap.putAll(orderResolverMap);
         return (T) this;
     }
 

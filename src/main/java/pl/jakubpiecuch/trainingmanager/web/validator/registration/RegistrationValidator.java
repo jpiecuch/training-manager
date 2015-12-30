@@ -64,7 +64,7 @@ public class RegistrationValidator implements Validator {
             errors.rejectValue(Registration.EMAIL_FIELD, RestrictionCode.REQUIRED);
         } else if (!object.getEmail().matches(emailPattern)) {
             errors.rejectValue(Registration.EMAIL_FIELD, RestrictionCode.PATTERN, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.PATTERN, emailPattern).build()}, null);
-        } else if (repository.read(new AccountCriteria().addEmailRestrictions(object.getEmail()).addProviderRestrictions(Provider.Type.LOCAL)).getCount() > 0) {
+        } else if (repository.page(new AccountCriteria().addEmailRestrictions(object.getEmail()).addProviderRestrictions(Provider.Type.LOCAL)).getCount() > 0) {
             errors.rejectValue(Registration.EMAIL_FIELD, RestrictionCode.EXISTS);
         }
 
@@ -76,7 +76,7 @@ public class RegistrationValidator implements Validator {
             errors.rejectValue(Registration.USERNAME_FIELD, RestrictionCode.MIN_LENGTH, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.MIN_LENGTH, minNameLength).build()}, null);
         } else if (maxNameLength < object.getUsername().length()) {
             errors.rejectValue(Registration.USERNAME_FIELD, RestrictionCode.MAX_LENGTH, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.MAX_LENGTH, maxNameLength).build()}, null);
-        } else if (repository.read(new AccountCriteria().addNameRestrictions(object.getUsername())).getCount() > 0) {
+        } else if (repository.page(new AccountCriteria().addNameRestrictions(object.getUsername())).getCount() > 0) {
             errors.rejectValue(Registration.USERNAME_FIELD, RestrictionCode.EXISTS);
         }
 

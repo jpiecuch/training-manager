@@ -20,7 +20,17 @@
     </bean>
 
     <bean id="repoDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.AbstractRepoDao" abstract="true"
-          parent="coreDao"/>
+          parent="coreDao">
+        <property name="orderResolvers">
+            <map>
+                <entry key="Description-muscles" value-ref="descriptionMusclesOrderResolver"/>
+                <entry key="Description-type" value-ref="descriptionTypeOrderResolver"/>
+                <entry key="Description-level" value-ref="descriptionLevelOrderResolver"/>
+                <entry key="Description-mechanics" value-ref="descriptionMechanicsOrderResolver"/>
+                <entry key="Description-force" value-ref="descriptionForceOrderResolver"/>
+            </map>
+        </property>
+    </bean>
 
     <bean id="equipmentDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.CommonRepoDaoImpl" parent="repoDao">
         <property name="clazz" value="pl.jakubpiecuch.trainingmanager.domain.Equipment"/>
@@ -62,7 +72,7 @@
         <property name="clazz" value="pl.jakubpiecuch.trainingmanager.domain.Role"/>
     </bean>
 
-    <bean id="accountRecordDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.CommonRepoDaoImpl" parent="coreDao">
+    <bean id="accountRecordDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.CommonRepoDaoImpl" parent="repoDao">
         <property name="clazz" value="pl.jakubpiecuch.trainingmanager.domain.AccountRecord"/>
     </bean>
 

@@ -1,6 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -13,6 +15,17 @@ import java.io.IOException;
 @Entity
 @Table(name = "equipment")
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Equipment.Bar.class, name = "BAR"),
+        @JsonSubTypes.Type(value = Equipment.Bench.class, name = "BENCH"),
+        @JsonSubTypes.Type(value = Equipment.Dumbbell.class, name = "DUMBBELL"),
+        @JsonSubTypes.Type(value = Equipment.Load.class, name = "LOAD"),
+        @JsonSubTypes.Type(value = Equipment.Neck.class, name = "NECK"),
+        @JsonSubTypes.Type(value = Equipment.Press.class, name = "PRESS"),
+        @JsonSubTypes.Type(value = Equipment.Rack.class, name = "RACK"),
+        @JsonSubTypes.Type(value = Equipment.Stand.class, name = "STAND")
+})
 public abstract class Equipment<T> extends CommonEntity implements EquipmentDescriptor, RepoObject {
     private int type;
     private String data;

@@ -4,8 +4,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
+import pl.jakubpiecuch.trainingmanager.domain.Description;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -11,11 +11,17 @@
             </map>
         </property>
     </bean>
-
-    <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
+    
+    <bean id="translatesService" class="pl.jakubpiecuch.trainingmanager.service.api.v1.TranslatesVersion1Service">
+        <property name="languages" value="${app.langs}"/>
         <property name="messageSourceFiles"
                   value="/bundles/web/web_%s.properties,/bundles/policy/policy_%s.properties,/bundles/terms/terms_%s.properties"/>
-        <property name="langs" value="${app.langs}"/>
+    </bean>
+
+    <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
+        <property name="translatesService" ref="translatesService"/>
+        <property name="cryptService" ref="cryptService"/>
+        <property name="localeService" ref="localeService"/>
         <property name="userServices">
             <map>
                 <entry key="SOCIAL" value-ref="socialUserService"/>
@@ -49,17 +55,18 @@
                 <entry key="ACCOUNT_RECORD" value-ref="accountRecordRepository"/>
             </map>
         </property>
-        <property name="orderResolverMap">
+        <property name="userPlanStarter" ref="sessionUserPlanStarter"/>
+        <property name="updateRepositories" >
             <map>
-                <entry key="Description-muscles" value-ref="descriptionMusclesOrderResolver"/>
-                <entry key="Description-type" value-ref="descriptionTypeOrderResolver"/>
-                <entry key="Description-level" value-ref="descriptionLevelOrderResolver"/>
-                <entry key="Description-mechanics" value-ref="descriptionMechanicsOrderResolver"/>
-                <entry key="Description-force" value-ref="descriptionForceOrderResolver"/>
+                <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
+                <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
+                <entry key="ROLE" value-ref="roleRepository"/>
+                <entry key="WORKOUT" value-ref="userWorkoutRepository"/>
+                <entry key="PLAN" value-ref="planRepository"/>
+                <entry key="ACCOUNT_RECORD" value-ref="accountRecordRepository"/>
+                <entry key="EXECUTION" value-ref="executionRepository"/>
             </map>
         </property>
-        <property name="userPlanStarter" ref="sessionUserPlanStarter"/>
-        <property name="updatableRepository" ref="executionRepository"/>
     </bean>
 
     <import resource="controller-context.xml"/>

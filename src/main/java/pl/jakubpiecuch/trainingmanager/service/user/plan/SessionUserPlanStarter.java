@@ -28,7 +28,7 @@ public class SessionUserPlanStarter implements UserPlanStarter {
 
     @Override
     public void start(UserPlan userPlan) {
-        PlanDto plan = planRepository.retrieve(userPlan.getPlanId());
+        PlanDto plan = planRepository.unique(userPlan.getPlanId());
         int weekIncrease = 0;
         for (PhaseDto phase : plan.getPhases()) {
             for (int i = 0; i < phase.getWeeks(); i++) {

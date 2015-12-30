@@ -5,6 +5,5 @@ package pl.jakubpiecuch.trainingmanager.service.repository;
  */
 public interface StorageRepository<T extends RepoObject> extends UpdatableRepository<T> {
     long create(T element);
-
     void delete(long id);
 }

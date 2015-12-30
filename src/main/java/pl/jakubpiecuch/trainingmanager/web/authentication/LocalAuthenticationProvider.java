@@ -21,7 +21,7 @@ public class LocalAuthenticationProvider implements org.springframework.security
 
     @Override
     public Authentication authenticate(Authentication a) {
-        PageResult<Account> result = repository.read(new AccountCriteria().addNameRestrictions(a.getName()));
+        PageResult<Account> result = repository.page(new AccountCriteria().addNameRestrictions(a.getName()));
         if (result.getCount() == 0) {
             throw new BadCredentialsException("Username not found.");
         }

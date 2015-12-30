@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
-import pl.jakubpiecuch.trainingmanager.service.repository.Repositories;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.BaseControllerTestCase;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
@@ -31,12 +30,12 @@ public class PlanControllerTest extends BaseControllerTestCase {
         mockMvc.perform(MockMvcRequestBuilders.delete(ApiURI.API_PLAN_PATH + ApiURI.ID_PATH_PARAM, ApiVersionService.Version.v1, PLAN_ID)
                 .accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.doThrow(IllegalArgumentException.class).when(versionService).removeFromRepository(USED_ID, Repositories.PLAN);
+        Mockito.doThrow(IllegalArgumentException.class).when(planRepository).delete(USED_ID);
 
         mockMvc.perform(MockMvcRequestBuilders.delete(ApiURI.API_PLAN_PATH + ApiURI.ID_PATH_PARAM, ApiVersionService.Version.v1, USED_ID)
                 .accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-        Mockito.doThrow(NotFoundException.class).when(versionService).removeFromRepository(NOT_EXISTS_ID, Repositories.PLAN);
+        Mockito.doThrow(NotFoundException.class).when(planRepository).delete(NOT_EXISTS_ID);
 
         mockMvc.perform(MockMvcRequestBuilders.delete(ApiURI.API_PLAN_PATH + ApiURI.ID_PATH_PARAM, ApiVersionService.Version.v1, NOT_EXISTS_ID)
                 .accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isNotFound());
