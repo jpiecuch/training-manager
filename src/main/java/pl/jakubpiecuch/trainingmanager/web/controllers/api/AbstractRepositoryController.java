@@ -74,7 +74,7 @@ public abstract class AbstractRepositoryController<T extends RepoObject, C exten
             Stream<T> tStream = values.stream().map(s -> T.valueOf(clazz, s));
             return tStream.collect(Collectors.toList()).toArray((T[]) Array.newInstance(clazz, values.size()));
         }
-        return null;
+        return (T[]) Array.newInstance(clazz, 0);
     }
 
     protected Date resolveDate(String date) {

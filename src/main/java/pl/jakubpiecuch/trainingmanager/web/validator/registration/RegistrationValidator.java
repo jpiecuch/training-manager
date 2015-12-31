@@ -42,32 +42,27 @@ public class RegistrationValidator implements Validator {
         Assert.notNull(target);
         Assert.notNull(errors);
 
-        if (object.getProvider() == null) {
-            errors.rejectValue(Registration.PROVIDER_FIELD, RestrictionCode.REQUIRED);
-        } else if (Provider.Type.SOCIAL == object.getProvider() && object.getSocial() == null) {
-            errors.rejectValue(Registration.SOCIAL_FIELD, RestrictionCode.REQUIRED);
-        }
-
-        if (StringUtils.isEmpty(object.getPassword())) {
-            errors.rejectValue(Registration.CREDENTIAL_FIELD, RestrictionCode.REQUIRED);
-        } else if (!object.getPassword().matches(passwordPattern)) {
-            errors.rejectValue(Registration.CREDENTIAL_FIELD, RestrictionCode.PATTERN, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.PATTERN, passwordPattern).build()}, null);
-        } else if (minPasswordLength > object.getPassword().length()) {
-            errors.rejectValue(Registration.CREDENTIAL_FIELD, RestrictionCode.MIN_LENGTH, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.MIN_LENGTH, minPasswordLength).build()}, null);
-        } else if (maxPasswordLength < object.getPassword().length()) {
-            errors.rejectValue(Registration.CREDENTIAL_FIELD, RestrictionCode.MAX_LENGTH, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.MAX_LENGTH, maxPasswordLength).build()}, null);
-        }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, Registration.FIRST_NAME_FIELD, RestrictionCode.REQUIRED);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, Registration.LAST_NAME_FIELD, RestrictionCode.REQUIRED);
 
-        if (StringUtils.isEmpty(object.getEmail())) {
-            errors.rejectValue(Registration.EMAIL_FIELD, RestrictionCode.REQUIRED);
-        } else if (!object.getEmail().matches(emailPattern)) {
-            errors.rejectValue(Registration.EMAIL_FIELD, RestrictionCode.PATTERN, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.PATTERN, emailPattern).build()}, null);
-        } else if (repository.page(new AccountCriteria().addEmailRestrictions(object.getEmail()).addProviderRestrictions(Provider.Type.LOCAL)).getCount() > 0) {
-            errors.rejectValue(Registration.EMAIL_FIELD, RestrictionCode.EXISTS);
-        }
+        validateProvider(errors, object);
+        validatePassword(errors, object);
+        validateEmail(errors, object);
+        validateUsername(errors, object);
+        validateAccpted(errors, object);
 
+        if (errors.hasErrors()) {
+            throw new ValidationException((BeanPropertyBindingResult) errors);
+        }
+    }
+
+    private void validateAccpted(Errors errors, Registration object) {
+        if (!object.isAccepted()) {
+            errors.rejectValue(Registration.ACCEPTED_FIELD, RestrictionCode.CHECKED);
+        }
+    }
+
+    private void validateUsername(Errors errors, Registration object) {
         if (StringUtils.isEmpty(object.getUsername())) {
             errors.rejectValue(Registration.USERNAME_FIELD, RestrictionCode.REQUIRED);
         } else if (!object.getUsername().matches(namePattern)) {
@@ -79,12 +74,35 @@ public class RegistrationValidator implements Validator {
         } else if (repository.page(new AccountCriteria().addNameRestrictions(object.getUsername())).getCount() > 0) {
             errors.rejectValue(Registration.USERNAME_FIELD, RestrictionCode.EXISTS);
         }
+    }
 
-        if (!object.isAccepted()) {
-            errors.rejectValue(Registration.ACCEPTED_FIELD, RestrictionCode.CHECKED);
+    private void validateEmail(Errors errors, Registration object) {
+        if (StringUtils.isEmpty(object.getEmail())) {
+            errors.rejectValue(Registration.EMAIL_FIELD, RestrictionCode.REQUIRED);
+        } else if (!object.getEmail().matches(emailPattern)) {
+            errors.rejectValue(Registration.EMAIL_FIELD, RestrictionCode.PATTERN, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.PATTERN, emailPattern).build()}, null);
+        } else if (repository.page(new AccountCriteria().addEmailRestrictions(object.getEmail()).addProviderRestrictions(Provider.Type.LOCAL)).getCount() > 0) {
+            errors.rejectValue(Registration.EMAIL_FIELD, RestrictionCode.EXISTS);
         }
-        if (errors.hasErrors()) {
-            throw new ValidationException((BeanPropertyBindingResult) errors);
+    }
+
+    private void validatePassword(Errors errors, Registration object) {
+        if (StringUtils.isEmpty(object.getPassword())) {
+            errors.rejectValue(Registration.CREDENTIAL_FIELD, RestrictionCode.REQUIRED);
+        } else if (!object.getPassword().matches(passwordPattern)) {
+            errors.rejectValue(Registration.CREDENTIAL_FIELD, RestrictionCode.PATTERN, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.PATTERN, passwordPattern).build()}, null);
+        } else if (minPasswordLength > object.getPassword().length()) {
+            errors.rejectValue(Registration.CREDENTIAL_FIELD, RestrictionCode.MIN_LENGTH, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.MIN_LENGTH, minPasswordLength).build()}, null);
+        } else if (maxPasswordLength < object.getPassword().length()) {
+            errors.rejectValue(Registration.CREDENTIAL_FIELD, RestrictionCode.MAX_LENGTH, new Object[]{new ParamsMapBuilder().addParam(RestrictionCode.MAX_LENGTH, maxPasswordLength).build()}, null);
+        }
+    }
+
+    private void validateProvider(Errors errors, Registration object) {
+        if (object.getProvider() == null) {
+            errors.rejectValue(Registration.PROVIDER_FIELD, RestrictionCode.REQUIRED);
+        } else if (Provider.Type.SOCIAL == object.getProvider() && object.getSocial() == null) {
+            errors.rejectValue(Registration.SOCIAL_FIELD, RestrictionCode.REQUIRED);
         }
     }
 

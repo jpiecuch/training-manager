@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.service.social;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +45,8 @@ public abstract class AbstractSocialService<T> implements SocialService {
     @Override
     public boolean createConnection(SecurityUser user) {
         try {
-            Map<String, String> res = rest.getForObject(String.format(getRestUrl(), user.getPassword()), HashMap.class);
-            String id = res.get("id");
-            ConnectionData connectionData = id != null && id.equals(user.getUsername()) ? new ConnectionData(user.getSocial().getProviderId(), res.get("id"), res.get("name"), res.get("link"), null, user.getPassword(), null, null, null) : null;
+
+            ConnectionData connectionData = connectionData(user, rest.getForObject(String.format(getRestUrl(), user.getPassword()), HashMap.class));
 
             if (connectionData != null) {
                 ConnectionFactory cf = connectionFactoryRegistry.getConnectionFactory(user.getSocial().getProviderId());
@@ -54,37 +54,48 @@ public abstract class AbstractSocialService<T> implements SocialService {
                 OAuth2Connection<?> con = (OAuth2Connection<?>) cf.createConnection(connectionData);
                 List<String> userIDs = usersConnectionRepository.findUserIdsWithConnection(con);
 
-                if (userIDs.size() == 1) {
-                    String userId = userIDs.get(0);
-                    ConnectionRepository conRep = usersConnectionRepository.createConnectionRepository(userId);
-                    con = (OAuth2Connection<?>) conRep.getConnection(new ConnectionKey(user.getSocial().getProviderId(), user.getUsername()));
-                    conRep.updateConnection(con);
-                    return true;
-                } else if (userIDs.isEmpty()) {
-                    ProviderSignInAttempt signInAttempt = new ProviderSignInAttempt(con, connectionFactoryRegistry, usersConnectionRepository);
-                    request.setAttribute("org.springframework.social.connect.web.ProviderSignInAttempt", signInAttempt, RequestAttributes.SCOPE_SESSION);
-                    Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
-                    UserProfile profile = connection.fetchUserProfile();
-
-                    Registration registration = new Registration();
-                    registration.setUsername(String.format("%s:%s", connection.getKey().getProviderId(), connection.getKey().getProviderUserId()));
-                    registration.setEmail(profile.getEmail());
-                    registration.setFirstName(profile.getFirstName());
-                    registration.setLastName(profile.getLastName());
-
-                    userService.signOn(registration, request.getLocale());
-                    providerSignInUtils.doPostSignUp(registration.getUsername(), request);
-                    return true;
-                } else {
-                    throw new IllegalArgumentException("Multiple oauth connections for single user");
+                if (CollectionUtils.isEmpty(userIDs)) {
+                    return createFromNotExistsingUser(con);
+                } else if (userIDs.size() == 1) {
+                    return createFromExistingUser(user, userIDs);
                 }
-            } else {
-                throw new NotFoundException();
+                throw new IllegalArgumentException("Multiple oauth connections for single user");
             }
         } catch (HttpClientErrorException e) {
             LOGGER.warn("", e);
-            throw new NotFoundException();
         }
+        throw new NotFoundException();
+    }
+
+    private ConnectionData connectionData(SecurityUser user, Map<String, String> social) {
+        String id = social.get("id");
+        return id != null && id.equals(user.getUsername()) ? new ConnectionData(user.getSocial().getProviderId(), social.get("id"), social.get("name"), social.get("link"), null, user.getPassword(), null, null, null) : null;
+    }
+
+    private boolean createFromNotExistsingUser(OAuth2Connection<?> con) {
+        ProviderSignInAttempt signInAttempt = new ProviderSignInAttempt(con, connectionFactoryRegistry, usersConnectionRepository);
+        request.setAttribute("org.springframework.social.connect.web.ProviderSignInAttempt", signInAttempt, RequestAttributes.SCOPE_SESSION);
+        Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
+        UserProfile profile = connection.fetchUserProfile();
+
+        Registration registration = new Registration();
+        registration.setUsername(String.format("%s:%s", connection.getKey().getProviderId(), connection.getKey().getProviderUserId()));
+        registration.setEmail(profile.getEmail());
+        registration.setFirstName(profile.getFirstName());
+        registration.setLastName(profile.getLastName());
+
+        userService.signOn(registration, request.getLocale());
+        providerSignInUtils.doPostSignUp(registration.getUsername(), request);
+        return true;
+    }
+
+    private boolean createFromExistingUser(SecurityUser user, List<String> ids) {
+        OAuth2Connection<?> con;
+        String userId = ids.get(0);
+        ConnectionRepository conRep = usersConnectionRepository.createConnectionRepository(userId);
+        con = (OAuth2Connection<?>) conRep.getConnection(new ConnectionKey(user.getSocial().getProviderId(), user.getUsername()));
+        conRep.updateConnection(con);
+        return true;
     }
 
 

@@ -8,6 +8,8 @@ import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanDto;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.PhaseDto;
 
+import java.util.Collections;
+
 /**
  * Created by Rico on 2015-01-18.
  */
@@ -31,6 +33,7 @@ public class UserWorkoutConverter extends AbstractConverter<UserWorkoutDto, User
         result.setPlan(getPlan(entity.getWorkout().getPhase().getPlan()));
         result.setPhase(getPhase(entity.getWorkout().getPhase()));
         result.setExecutions(executionConverter.fromEntities(entity.getExecutions()));
+        Collections.sort(result.getExecutions(), (o1, o2) -> o1.getExercise().getPosition().compareTo(o2.getExercise().getPosition()));
         result.setWeekDay(entity.getWorkout().getWeekDay());
         result.setState(entity.getState());
         result.setComment(entity.getComment());

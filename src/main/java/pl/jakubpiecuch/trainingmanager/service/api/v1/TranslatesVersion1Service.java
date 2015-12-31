@@ -36,9 +36,7 @@ public class TranslatesVersion1Service implements TranslatesService {
         }
         Map<String, String> result = new HashMap<>();
         for (final PropertiesConfiguration propertiesConfiguration : configurations) {
-            result.putAll(Maps.toMap(propertiesConfiguration.getKeys(), input -> {
-                return propertiesConfiguration.getString(input);
-            }));
+            result.putAll(Maps.toMap(propertiesConfiguration.getKeys(), input -> propertiesConfiguration.getString(input)));
         }
         return result;
     }
