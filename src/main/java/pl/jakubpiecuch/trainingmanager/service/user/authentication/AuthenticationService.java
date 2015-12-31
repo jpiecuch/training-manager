@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 public interface AuthenticationService {
 
     void signIn(HttpServletRequest request, HttpServletResponse response, Authentication authentication);
-
     void signOut(HttpServletRequest request, HttpServletResponse response);
-
     Authentication signed();
 }

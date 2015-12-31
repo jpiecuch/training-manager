@@ -1,6 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.service.dictionary.constants;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,18 +14,13 @@ public class SecuredConstantsDictionary extends ConstantsDictionary {
 
     @Override
     @PreAuthorize("isAuthenticated()")
-    public Object retrieve(long id) {
+    public List retrieve(long id) {
         return map.get(id);
     }
 
     @Override
     @PreAuthorize("isAuthenticated()")
-    public Object retrieve(final Long[] ids) {
-        return Maps.filterEntries(map, new Predicate<Map.Entry<Long, List>>() {
-            @Override
-            public boolean apply(Map.Entry<Long, List> input) {
-                return ArrayUtils.contains(ids, input.getKey());
-            }
-        });
+    public Map<Long, List> retrieve(final long[] ids) {
+        return Maps.filterEntries(map, input -> ArrayUtils.contains(ids, input.getKey()));
     }
 }

@@ -27,14 +27,14 @@ public class SessionUserPlanStarter implements UserPlanStarter {
     private RepoDao<UserWorkout, UserWorkoutCriteria> userWorkoutDao;
 
     @Override
-    public void start(UserPlan userPlan) {
-        PlanDto plan = planRepository.unique(userPlan.getPlanId());
+    public void start(long planId, int year, int week) {
+        PlanDto plan = planRepository.unique(planId);
         int weekIncrease = 0;
         for (PhaseDto phase : plan.getPhases()) {
             for (int i = 0; i < phase.getWeeks(); i++) {
                 for (WorkoutDto workout : phase.getWorkouts()) {
-                    DateTime dateTime = new DateTime().withYear(userPlan.getYear());
-                    int currentWeek = userPlan.getWeek() + weekIncrease;
+                    DateTime dateTime = new DateTime().withYear(year);
+                    int currentWeek = week + weekIncrease;
                     if (dateTime.weekOfWeekyear().getMaximumValue() < currentWeek) {
                         dateTime = dateTime.plusYears(1);
                         currentWeek = currentWeek - dateTime.weekOfWeekyear().getMaximumValue();

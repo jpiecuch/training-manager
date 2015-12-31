@@ -84,7 +84,7 @@ public class Version1ServiceTest {
         MockHttpServletRequest httpServletRequest = new MockHttpServletRequest();
         MockHttpServletResponse httpServletResponse = new MockHttpServletResponse();
         Mockito.doThrow(IllegalArgumentException.class).when(localeService).update(httpServletRequest, httpServletResponse, null);
-        service.locale(httpServletRequest, httpServletResponse, null);
+        service.locale().update(httpServletRequest, httpServletResponse, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -92,7 +92,7 @@ public class Version1ServiceTest {
         MockHttpServletRequest httpServletRequest = new MockHttpServletRequest();
         MockHttpServletResponse httpServletResponse = new MockHttpServletResponse();
         Mockito.doThrow(IllegalArgumentException.class).when(localeService).update(httpServletRequest, httpServletResponse, StringUtils.parseLocaleString(NOT_VALID_LOCALE));
-        service.locale(httpServletRequest, httpServletResponse, NOT_VALID_LOCALE);
+        service.locale().update(httpServletRequest, httpServletResponse, StringUtils.parseLocaleString(NOT_VALID_LOCALE));
     }
 
     @Test(expected = IllegalArgumentException.class)

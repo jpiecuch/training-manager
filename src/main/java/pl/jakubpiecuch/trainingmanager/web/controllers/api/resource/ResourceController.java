@@ -18,6 +18,6 @@ public class ResourceController extends AbstractController {
 
     @RequestMapping(value = ApiURI.KEY_PATH_PARAM, method = RequestMethod.GET)
     public ResponseEntity resource(@PathVariable ApiVersionService.Version version, @PathVariable ResourceService.Type type, @PathVariable String key) throws IOException {
-        return versionServices.get(version).resource(type, key);
+        return versionServices.get(version).resources(type).resource(key);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.util.StringUtils;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.BaseControllerTestCase;
@@ -22,7 +23,11 @@ public class LocaleControllerTest extends BaseControllerTestCase {
     @Before
     public void setUp() {
         super.setUp();
-        Mockito.doThrow(IllegalArgumentException.class).when(versionService).locale(Mockito.any(HttpServletRequest.class), Mockito.any(HttpServletResponse.class), Mockito.eq(NOT_SUPPORTED_LOCALE));
+        Mockito.doThrow(IllegalArgumentException.class)
+                .when(localeService)
+                .update(Mockito.any(HttpServletRequest.class),
+                        Mockito.any(HttpServletResponse.class),
+                        Mockito.eq(StringUtils.parseLocaleString(NOT_SUPPORTED_LOCALE)));
     }
 
     @Test

@@ -41,9 +41,9 @@ public class ResourceControllerTest extends BaseControllerTestCase {
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
         super.setUp();
-        Mockito.when(versionService.resource(TYPE, DIRECTORY_KEY)).thenReturn(new ResponseEntity(LIST, HttpStatus.OK));
-        Mockito.when(versionService.resource(TYPE, FILE_KEY)).thenReturn(new ResponseEntity(FIRST.getBytes(), headers, HttpStatus.OK));
-        Mockito.when(versionService.resource(TYPE, NOT_EXISTS_DIRECTORY_KEY)).thenThrow(NotFoundException.class);
+        Mockito.when(versionService.resources(TYPE).resource(DIRECTORY_KEY)).thenReturn(new ResponseEntity(LIST, HttpStatus.OK));
+        Mockito.when(versionService.resources(TYPE).resource(FILE_KEY)).thenReturn(new ResponseEntity(FIRST.getBytes(), headers, HttpStatus.OK));
+        Mockito.when(versionService.resources(TYPE).resource(NOT_EXISTS_DIRECTORY_KEY)).thenThrow(NotFoundException.class);
     }
 
     @Test

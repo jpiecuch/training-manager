@@ -64,14 +64,9 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
 
         authenticationService.signIn(request, response, authentication);
 
-        UserPlan userPlan = new UserPlan();
-        userPlan.setPlanId(1l);
-        userPlan.setWeek(12);
-        userPlan.setYear(2016);
-
         assertFalse(planRepository.unique(1l).getUsed());
 
-        userPlanStarter.start(userPlan);
+        userPlanStarter.start(1l, 2016, 12);
 
         sessionFactory.getCurrentSession().flush();
         sessionFactory.getCurrentSession().clear();

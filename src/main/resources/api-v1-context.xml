@@ -20,9 +20,8 @@
 
     <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
         <property name="translatesService" ref="translatesService"/>
-        <property name="cryptService" ref="cryptService"/>
         <property name="localeService" ref="localeService"/>
-        <property name="userServices">
+        <property name="signOnServices">
             <map>
                 <entry key="SOCIAL" value-ref="socialUserService"/>
                 <entry key="LOCAL" value-ref="localUserService"/>

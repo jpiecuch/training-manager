@@ -1,19 +1,13 @@
 package pl.jakubpiecuch.trainingmanager.service.resource;
 
-import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
-import java.util.List;
 
 public interface ResourceService {
 
-    List<String> resources(String handler);
 
-    byte[] read(String handler) throws IOException;
-
-    MediaType getMediaType(String handler) throws IOException;
-
-    boolean isCatalog(String handler);
+    ResponseEntity resource(String key) throws IOException;
 
     enum Type {
         image("jpg", "png");

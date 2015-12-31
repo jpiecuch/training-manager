@@ -36,18 +36,18 @@ public class ConstantsDictionary implements Dictionary {
             EQUIPMENT_TYPE_ID, EXERCISE_MECHANICS_ID, EXERCISE_FORCE_ID, EQUIPMENT_TYPE_ID,
             NECK_TYPE_ID, EXERCISE_SETS_ID
     };
-    protected Map<Long, List> map = new HashMap<Long, List>();
+    protected Map<Long, List> map = new HashMap<>();
     private SupportService socialSupportService;
     private Dictionary securedDictionary;
     private String[] langs;
 
     @Override
-    public Object retrieve(long id) {
+    public List retrieve(long id) {
         return ArrayUtils.contains(SECURED_IDS, id) ? securedDictionary.retrieve(id) : map.get(id);
     }
 
     @Override
-    public Object retrieve(Long[] ids) {
+    public Map<Long, List> retrieve(long[] ids) {
         return securedDictionary.retrieve(ids);
     }
 
