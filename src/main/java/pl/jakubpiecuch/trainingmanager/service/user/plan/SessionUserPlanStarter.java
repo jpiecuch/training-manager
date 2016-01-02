@@ -92,16 +92,7 @@ public class SessionUserPlanStarter implements UserPlanStarter {
             currentYear = yearWeek[0];
             currentWeek = yearWeek[1];
         }
-        new LocalDate().withDayOfWeek(dayInWeek).withWeekOfWeekyear(currentWeek).withYear(year);
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, currentYear);
-        cal.set(Calendar.WEEK_OF_YEAR, currentWeek);
-        cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-        return new DateTime()
-                .withDayOfWeek(dayInWeek)
-                .withWeekOfWeekyear(currentWeek)
-                .withYear(currentYear)
-                .withTime(0,0,0,0).toDate();
+        return new LocalDate().withYear(currentYear).withDayOfWeek(dayInWeek).plusWeeks(currentWeek).toDate();
     }
 
     private Integer[] resolveYearAndWeek(Integer year, Integer weeks) {
