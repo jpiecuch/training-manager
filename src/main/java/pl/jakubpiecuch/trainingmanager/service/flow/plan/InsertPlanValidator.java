@@ -17,6 +17,10 @@ import pl.jakubpiecuch.trainingmanager.service.flow.plan.phase.workout.exercise.
 import pl.jakubpiecuch.trainingmanager.web.exception.validator.ValidationException;
 import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Created by Rico on 2014-11-29.
  */
@@ -42,9 +46,11 @@ public class InsertPlanValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, PHASES_FIELD, RestrictionCode.REQUIRED);
         PlanDto plan = (PlanDto) target;
         if (CollectionUtils.isNotEmpty(plan.getPhases())) {
+            List<Integer> positions = new ArrayList<>();
             for (int i = 0; i < plan.getPhases().size(); i++) {
-                validatePhase(plan.getPhases().get(i), errors, i);
+                positions.add(validatePhase(plan.getPhases().get(i), errors, i));
             }
+            validatePositions(positions, plan.getPhases().size(), errors, PHASES_FIELD);
         } else {
             errors.rejectValue(PHASES_FIELD, RestrictionCode.REQUIRED);
         }
@@ -53,7 +59,19 @@ public class InsertPlanValidator implements Validator {
         }
     }
 
-    private void validatePhase(PhaseDto phase, Errors errors, int index) {
+    private void validatePositions(List<Integer> positions, int size, Errors errors, String field) {
+        positions = positions.stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
+        List<Integer> expected = new ArrayList<>(size);
+        for (int i = 1; i <= size; i++) {
+            expected.add(i);
+        }
+
+        if (!positions.equals(expected)) {
+            errors.rejectValue(field, RestrictionCode.INVALID_ORDER);
+        }
+    }
+
+    private Integer validatePhase(PhaseDto phase, Errors errors, int index) {
         String phaseName = String.format(ARRAY_PROPERTY_FORMAT, PHASES_FIELD, index);
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, Phase.POSITION_FIELD), RestrictionCode.REQUIRED);
@@ -68,6 +86,7 @@ public class InsertPlanValidator implements Validator {
         } else {
             errors.rejectValue(path(phaseName, WORKOUTS_FIELD), RestrictionCode.REQUIRED);
         }
+        return phase.getPosition();
     }
 
     private void validateWorkout(WorkoutDto workout, Errors errors, int index, String phaseName) {
@@ -75,32 +94,35 @@ public class InsertPlanValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, Workout.MUSCLES_FIELD), RestrictionCode.REQUIRED);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, Workout.WEEK_DAY_FIELD), RestrictionCode.REQUIRED);
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, Workout.POSITION_FIELD), RestrictionCode.REQUIRED);
 
         if (CollectionUtils.isNotEmpty(workout.getGroups())) {
+            List<Integer> positions = new ArrayList<>();
             for (int i = 0; i < workout.getGroups().size(); i++) {
-                validateGroup(workout.getGroups().get(i), errors, i, phaseName, workoutName);
+                positions.add(validateGroup(workout.getGroups().get(i), errors, i, phaseName, workoutName));
             }
+            validatePositions(positions, workout.getGroups().size(), errors, path(phaseName, workoutName, GROUPS_FIELD));
         } else {
             errors.rejectValue(path(phaseName, workoutName, GROUPS_FIELD), RestrictionCode.REQUIRED);
         }
     }
 
-    private void validateGroup(GroupDto group, Errors errors, int index, String phaseName, String workoutName) {
+    private Integer validateGroup(GroupDto group, Errors errors, int index, String phaseName, String workoutName) {
         String groupName = String.format(ARRAY_PROPERTY_FORMAT, GROUPS_FIELD, index);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, groupName, CommonEntity.ID_FIELD_NAME), RestrictionCode.REQUIRED);
 
-        if (CollectionUtils.isEmpty(group.getExercises())) {
+        if (CollectionUtils.isNotEmpty(group.getExercises())) {
+            List<Integer> positions = new ArrayList<>();
+            for (int l = 0; l < group.getExercises().size(); l++) {
+                positions.add(validateExercise(group.getExercises().get(l), errors, l, phaseName, workoutName, groupName));
+            }
+            validatePositions(positions, group.getExercises().size(), errors, path(phaseName, workoutName, groupName, EXERCISES_FIELD));
+        } else {
             errors.rejectValue(path(phaseName, workoutName, groupName, EXERCISES_FIELD), RestrictionCode.REQUIRED);
         }
-        if (CollectionUtils.isNotEmpty(group.getExercises())) {
-            for (int l = 0; l < group.getExercises().size(); l++) {
-                validateExercise(group.getExercises().get(l), errors, l, phaseName, workoutName, groupName);
-            }
-        }
+        return group.getId();
     }
 
-    private void validateExercise(ExerciseDto exercise, Errors errors, int index, String phaseName, String workoutName, String groupName) {
+    private Integer validateExercise(ExerciseDto exercise, Errors errors, int index, String phaseName, String workoutName, String groupName) {
         String exerciseName = String.format(ARRAY_PROPERTY_FORMAT, EXERCISES_FIELD, index);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, groupName, exerciseName, ExerciseDto.DESCRIPTION_ID), RestrictionCode.REQUIRED);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, path(phaseName, workoutName, groupName, exerciseName, Exercise.POSITION_FIELD), RestrictionCode.REQUIRED);
@@ -116,6 +138,7 @@ public class InsertPlanValidator implements Validator {
         } else {
             errors.rejectValue(path(phaseName, workoutName, groupName, exerciseName, SETS_FIELD), RestrictionCode.REQUIRED);
         }
+        return exercise.getPosition();
     }
 
     private String path(String... chunks) {

@@ -9,12 +9,12 @@ INSERT INTO account_record (id, type, value, date, account) VALUES (1, 0, '80.0'
 INSERT INTO plan (id, name, goal, creator, used) VALUES (1, 'Main plan', 0, 1, false);
 
 INSERT INTO phase (id, position, goal, description, plan, weeks) VALUES (1, 1, 1, 'First phase', 1, 3);
-INSERT INTO phase (id, position, goal, description, plan, weeks) VALUES (2, 1, 1, 'Second phase', 1, 3);
+INSERT INTO phase (id, position, goal, description, plan, weeks) VALUES (2, 2, 1, 'Second phase', 1, 3);
 
-INSERT INTO workout (id, week_day, phase, muscles, position) VALUES (1, 0, 1, '2', 1);
-INSERT INTO workout (id, week_day, phase, muscles, position) VALUES (2, 1, 1, '3;5', 2);
-INSERT INTO workout (id, week_day, phase, muscles, position) VALUES (3, 3, 2, '7', 1);
-INSERT INTO workout (id, week_day, phase, muscles, position) VALUES (4, 5, 2, '11', 2);
+INSERT INTO workout (id, week_day, phase, muscles) VALUES (1, 0, 1, '2');
+INSERT INTO workout (id, week_day, phase, muscles) VALUES (2, 1, 1, '3;5');
+INSERT INTO workout (id, week_day, phase, muscles) VALUES (3, 3, 2, '7');
+INSERT INTO workout (id, week_day, phase, muscles) VALUES (4, 5, 2, '11');
 
 INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force, sides, sets) VALUES (1, '{"pl":"pl_1","en":"en_1"}', 'url_1', NULL, 0, 0, NULL, 0, 0, 0, 0, 0);
 INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force, sides, sets) VALUES (2, '{"pl":"pl_2","en":"en_2"}', 'url_2', NULL, 2, 1, NULL, 1, 1, 1,0, 0);
@@ -26,7 +26,7 @@ INSERT INTO description (id, name, movie_url, description, party_muscles, type, 
 INSERT INTO description (id, name, movie_url, description, party_muscles, type, equipment, level, mechanics, force, sides, sets) VALUES (8, '{"pl":"pl_8","en":"en_8"}', 'url_8', NULL, 3, 2, NULL, 1, 1, 2, 1, 1);
 
 INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (1, 1, 2, '12;12;12;12', 1, 1);
-INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (2, 1, 3, '12;10;8;6', 2, 2);
+INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (2, 1, 3, '12;10;8;6', 1, 2);
 INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (3, 2, 7, '12;10;8;6', 1, 1);
 INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (4, 2, 8, '12;10;8;6', 2, 1);
 INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (5, 3, 5, '12;10;8;6;2', 1, 1);

@@ -29,7 +29,7 @@ public class ValidationTestUtils {
         return new AssertBuilder();
     }
 
-    public static FieldPathBuilder createFieldPathBuilder() {
+    public static FieldPathBuilder newInstance() {
         return new FieldPathBuilder();
     }
 
@@ -60,6 +60,10 @@ public class ValidationTestUtils {
 
         public String build(String suffix) {
             return build() + DELIMITER + suffix;
+        }
+
+        public String build(String suffix, int index) {
+            return build(suffix) + OPEN_ARRAY + index + CLOSE_ARRAY;
         }
 
     }

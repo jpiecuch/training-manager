@@ -15,7 +15,6 @@ public class WorkoutDto implements IdentifyObject {
     private Long id;
     private Description.Muscles[] muscles;
     private Workout.WeekDay weekDay;
-    private Integer position;
     private Long phaseId;
     private List<GroupDto> groups = new ArrayList<GroupDto>();
 
@@ -43,14 +42,6 @@ public class WorkoutDto implements IdentifyObject {
 
     public void setWeekDay(Workout.WeekDay weekDay) {
         this.weekDay = weekDay;
-    }
-
-    public Integer getPosition() {
-        return position;
-    }
-
-    public void setPosition(Integer position) {
-        this.position = position;
     }
 
     public Long getPhaseId() {

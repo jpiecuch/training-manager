@@ -69,7 +69,6 @@ CREATE TABLE workout (
   id       BIGINT PRIMARY KEY      NOT NULL,
   week_day INTEGER                 NOT NULL,
   muscles  CHARACTER VARYING(1024) NOT NULL,
-  position INTEGER                 NOT NULL,
   phase    BIGINT
 );
 

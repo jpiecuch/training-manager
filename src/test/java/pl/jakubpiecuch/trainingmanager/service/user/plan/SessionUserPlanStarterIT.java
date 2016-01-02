@@ -1,7 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.service.user.plan;
 
-import com.google.common.collect.Lists;
-import org.apache.commons.lang.ArrayUtils;
 import org.hibernate.SessionFactory;
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -68,7 +66,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
 
         authenticationService.signIn(request, response, authentication);
 
-        assertFalse(planRepository.unique(1l).getUsed());
+        assertFalse(planRepository.unique(1l).isUsed());
 
         userPlanStarter.start(1l, 2016, 52);
 
@@ -212,7 +210,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
 
         assertPhase2Day2(date, workout);
 
-        assertTrue(planRepository.unique(1l).getUsed());
+        assertTrue(planRepository.unique(1l).isUsed());
 
 
     }

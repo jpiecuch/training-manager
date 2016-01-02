@@ -20,9 +20,9 @@ public class PlanDto implements RepoObject {
     private String name;
     private Plan.Goal goal;
     private Long creatorId;
-    private List<PhaseDto> phases = new ArrayList<PhaseDto>();
+    private List<PhaseDto> phases = new ArrayList<>();
     private Boolean editable;
-    private Boolean used;
+    private boolean used;
 
     @Override
     public Long getId() {
@@ -74,11 +74,11 @@ public class PlanDto implements RepoObject {
         this.editable = editable;
     }
 
-    public Boolean getUsed() {
+    public boolean isUsed() {
         return used;
     }
 
-    public void setUsed(Boolean used) {
+    public void setUsed(boolean used) {
         this.used = used;
     }
 

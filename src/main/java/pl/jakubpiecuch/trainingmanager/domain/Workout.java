@@ -14,14 +14,12 @@ import java.util.List;
 @Table(name = "workout")
 public class Workout extends CommonEntity implements Serializable {
     public static final String PHASE_FIELD = "phase";
-    public static final String POSITION_FIELD = "position";
     public static final String WEEK_DAY_FIELD = "weekDay";
     public static final String MUSCLES_FIELD = "muscles";
     private static final long serialVersionUID = 1L;
     private static final String MUSCLE_DELIMITER = ";";
     private WeekDay weekDay;
     private Phase phase;
-    private Integer position;
     private String muscle;
     private List<Exercise> exercises = new ArrayList<Exercise>();
     public Workout() {
@@ -30,15 +28,6 @@ public class Workout extends CommonEntity implements Serializable {
 
     public Workout(Long id) {
         super(id);
-    }
-
-    @Column(name = POSITION_FIELD)
-    public Integer getPosition() {
-        return position;
-    }
-
-    public void setPosition(Integer position) {
-        this.position = position;
     }
 
     @Column(name = "week_day")
@@ -113,7 +102,6 @@ public class Workout extends CommonEntity implements Serializable {
                 .appendSuper(super.equals(obj))
                 .append(this.weekDay, rhs.weekDay)
                 .append(this.phase, rhs.phase)
-                .append(this.position, rhs.position)
                 .append(this.muscle, rhs.muscle)
                 .append(this.exercises, rhs.exercises)
                 .isEquals();
@@ -125,7 +113,6 @@ public class Workout extends CommonEntity implements Serializable {
                 .appendSuper(super.hashCode())
                 .append(weekDay)
                 .append(phase)
-                .append(position)
                 .append(muscle)
                 .append(exercises)
                 .toHashCode();

@@ -1,6 +1,7 @@
 package pl.jakubpiecuch.trainingmanager.service.user.plan;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.*;
@@ -15,6 +16,7 @@ import pl.jakubpiecuch.trainingmanager.service.user.workout.session.UserWorkoutC
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -90,10 +92,15 @@ public class SessionUserPlanStarter implements UserPlanStarter {
             currentYear = yearWeek[0];
             currentWeek = yearWeek[1];
         }
+        new LocalDate().withDayOfWeek(dayInWeek).withWeekOfWeekyear(currentWeek).withYear(year);
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, currentYear);
+        cal.set(Calendar.WEEK_OF_YEAR, currentWeek);
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
         return new DateTime()
-                .withYear(currentYear)
-                .withWeekOfWeekyear(currentWeek)
                 .withDayOfWeek(dayInWeek)
+                .withWeekOfWeekyear(currentWeek)
+                .withYear(currentYear)
                 .withTime(0,0,0,0).toDate();
     }
 

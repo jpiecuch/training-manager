@@ -23,7 +23,6 @@ public class WorkoutConverter extends AbstractConverter<WorkoutDto, Workout> {
         entity.setId(dto.getId());
         entity.setMuscles(dto.getMuscles());
         entity.setPhase(new Phase(dto.getPhaseId()));
-        entity.setPosition(dto.getPosition());
         entity.setWeekDay(dto.getWeekDay());
         List<ExerciseDto> exerciseDtos = new ArrayList<ExerciseDto>();
         for (GroupDto group : dto.getGroups()) {
@@ -57,7 +56,6 @@ public class WorkoutConverter extends AbstractConverter<WorkoutDto, Workout> {
         WorkoutDto dto = new WorkoutDto();
 
         dto.setId(entity.getId());
-        dto.setPosition(entity.getPosition());
         dto.setWeekDay(entity.getWeekDay());
         dto.setMuscles(entity.getMuscles());
         dto.setPhaseId(entity.getPhase().getId());

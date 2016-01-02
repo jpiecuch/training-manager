@@ -14,6 +14,7 @@ public class RestrictionCode {
     public static final String UNIQUE = "unique";
     public static final String CHECKED = "checked";
     public static final String EXISTS = "exists";
+    public static final String INVALID_ORDER = "invalidOrder";
 
     private RestrictionCode() {
     }
