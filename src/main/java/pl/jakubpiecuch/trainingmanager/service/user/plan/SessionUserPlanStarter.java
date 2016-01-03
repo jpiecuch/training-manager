@@ -1,6 +1,5 @@
 package pl.jakubpiecuch.trainingmanager.service.user.plan;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
@@ -16,8 +15,6 @@ import pl.jakubpiecuch.trainingmanager.service.user.workout.session.UserWorkoutC
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,7 +44,7 @@ public class SessionUserPlanStarter implements UserPlanStarter {
 
     private void createUserWorkout(int year, int week, int weekIncrease, WorkoutDto workout) {
         UserWorkout userWorkout = new UserWorkout();
-        userWorkout.setDate(getDate(year, week, weekIncrease, workout.getWeekDay().getDayInWeek()));
+        userWorkout.setDate(new LocalDate().withWeekOfWeekyear(week).withYear(year).withDayOfWeek(workout.getWeekDay().getDayInWeek()).plusWeeks(weekIncrease).toDate());
         userWorkout.setWorkout(new Workout(workout.getId()));
         userWorkout.setAccount(AuthenticatedUserUtil.getUser());
         userWorkout.setState(UserWorkout.State.PLANNED);
@@ -78,30 +75,6 @@ public class SessionUserPlanStarter implements UserPlanStarter {
         }
         execution.setResults(results);
         executionDao.create(execution);
-    }
-
-    private Date getDate(int year, int week, int weekIncrease, int dayInWeek) {
-
-        Integer currentWeek = week + weekIncrease;
-        Integer currentYear = year;
-
-        int weeksInYear = weeksInYear(year);
-
-        if (weeksInYear < currentWeek) {
-            Integer[] yearWeek = resolveYearAndWeek(currentYear, currentWeek);
-            currentYear = yearWeek[0];
-            currentWeek = yearWeek[1];
-        }
-        return new LocalDate().withYear(currentYear).withDayOfWeek(dayInWeek).plusWeeks(currentWeek).toDate();
-    }
-
-    private Integer[] resolveYearAndWeek(Integer year, Integer weeks) {
-        int weeksInYear = weeksInYear(year);
-        return weeksInYear < weeks ? resolveYearAndWeek(year + 1, weeks - weeksInYear) : new Integer[] {year, weeks};
-    }
-
-    private int weeksInYear(int year) {
-        return new DateTime().withYear(year).weekOfWeekyear().getMaximumValue();
     }
 
     public void setExecutionDao(CoreDao<Execution> executionDao) {

@@ -20,6 +20,9 @@ app.controller('PlanController', function($scope, $stateParams, dictionaryServic
                 $scope.plan.addPhase();
                 $scope.plan.activatePhase($scope.plan.phases[0]);
             }
+            if (!$scope.plan.id) {
+                $scope.plan.addRelation($scope.starter, 'planId');
+            }
         });
     };
 });

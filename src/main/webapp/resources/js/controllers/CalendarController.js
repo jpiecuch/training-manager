@@ -19,7 +19,7 @@ app.controller('CalendarController', function($scope, $http, urlService, $filter
                             angular.forEach(event.muscles ,function(index) {
                                 title.push($filter('translate')(index));
                             });
-                            events.push({title: title.join(', '), date: event.date, allDay: true, id: event.id, color: userWorkoutService.state(event.state).color.code, borderColor: userWorkoutService.state(event.state).color.code});
+                            events.push({title: title.join(', '), date: moment(event.date).format('YYYY-MM-DD'), allDay: true, id: event.id, color: userWorkoutService.state(event.state).color.code, borderColor: userWorkoutService.state(event.state).color.code});
                         }
                         $scope.calendar.events[0] = events;
                     });

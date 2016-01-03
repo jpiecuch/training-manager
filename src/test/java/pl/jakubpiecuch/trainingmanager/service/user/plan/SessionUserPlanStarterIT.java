@@ -2,6 +2,7 @@ package pl.jakubpiecuch.trainingmanager.service.user.plan;
 
 import org.hibernate.SessionFactory;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -55,11 +56,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
 
     private MockHttpServletResponse response = new MockHttpServletResponse();
 
-
-    @Test
-    @Transactional
-    public void testStart() {
-
+    private void testStartPlan1(int year, int week, Date... dates) {
         Authentication authentication = new Authentication(accountRepository.unique(ACCOUNT_ID));
         authentication.setProvider(Provider.Type.LOCAL);
         authentication.setPassword("Piecu29");
@@ -68,13 +65,13 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
 
         assertFalse(planRepository.unique(1l).isUsed());
 
-        userPlanStarter.start(1l, 2016, 52);
+        userPlanStarter.start(1l, year, week);
 
         sessionFactory.getCurrentSession().flush();
         sessionFactory.getCurrentSession().clear();
 
         //phase 1 - week 1 - day 1
-        Date date = new DateTime(2016, 12, 26, 0, 0).toDate();
+        Date date = dates[0];
         PageResult<UserWorkoutDto> result = userWorkoutRepository.page(new UserWorkoutCriteria(EN)
                 .addDateRangeRestriction(date, date));
 
@@ -85,7 +82,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
         assertPhase1Day1(date, workout);
 
         //phase 1 - week 1 - day 2
-        date = new DateTime(2017, 1, 1, 0, 0).toDate();
+        date = dates[1];
         result = userWorkoutRepository.page(new UserWorkoutCriteria(EN)
                 .addDateRangeRestriction(date, date));
 
@@ -96,7 +93,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
 
 
         //phase 1 - week 2 - day 1
-        date = new DateTime(2017, 1, 2, 0, 0).toDate();
+        date = dates[2];
         result = userWorkoutRepository.page(new UserWorkoutCriteria(EN)
                 .addDateRangeRestriction(date, date));
 
@@ -108,7 +105,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
 
 
         //phase 1 - week 2 - day 2
-        date = new DateTime(2017, 1, 8, 0, 0).toDate();
+        date = dates[3];
         result = userWorkoutRepository.page(new UserWorkoutCriteria(EN)
                 .addDateRangeRestriction(date, date));
 
@@ -119,7 +116,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
         assertPhase1Day2(date, workout);
 
         //phase 1 - week 3 - day 1
-        date = new DateTime(2017, 1, 9, 0, 0).toDate();
+        date = dates[4];
         result = userWorkoutRepository.page(new UserWorkoutCriteria(EN)
                 .addDateRangeRestriction(date, date));
 
@@ -131,7 +128,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
 
 
         //phase 1 - week 3 - day 2
-        date = new DateTime(2017, 1, 15, 0, 0).toDate();
+        date = dates[5];
         result = userWorkoutRepository.page(new UserWorkoutCriteria(EN)
                 .addDateRangeRestriction(date, date));
 
@@ -142,7 +139,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
         assertPhase1Day2(date, workout);
 
         //phase 2 - week 1 - day 1
-        date = new DateTime(2017, 1, 18, 0, 0).toDate();
+        date = dates[6];
         result = userWorkoutRepository.page(new UserWorkoutCriteria(EN)
                 .addDateRangeRestriction(date, date));
 
@@ -154,7 +151,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
 
 
         //phase 2 - week 1 - day 2
-        date = new DateTime(2017, 1, 20, 0, 0).toDate();
+        date = dates[7];
         result = userWorkoutRepository.page(new UserWorkoutCriteria(EN)
                 .addDateRangeRestriction(date, date));
 
@@ -165,7 +162,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
         assertPhase2Day2(date, workout);
 
         //phase 2 - week 2 - day 1
-        date = new DateTime(2017, 1, 25, 0, 0).toDate();
+        date = dates[8];
         result = userWorkoutRepository.page(new UserWorkoutCriteria(EN)
                 .addDateRangeRestriction(date, date));
 
@@ -177,7 +174,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
 
 
         //phase 2 - week 2 - day 2
-        date = new DateTime(2017, 1, 27, 0, 0).toDate();
+        date = dates[9];
         result = userWorkoutRepository.page(new UserWorkoutCriteria(EN)
                 .addDateRangeRestriction(date, date));
 
@@ -188,7 +185,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
         assertPhase2Day2(date, workout);
 
         //phase 2 - week 3 - day 1
-        date = new DateTime(2017, 2, 1, 0, 0).toDate();
+        date = dates[10];
         result = userWorkoutRepository.page(new UserWorkoutCriteria(EN)
                 .addDateRangeRestriction(date, date));
 
@@ -200,7 +197,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
 
 
         //phase 2 - week 3 - day 2
-        date = new DateTime(2017, 2, 3, 0, 0).toDate();
+        date = dates[11];
         result = userWorkoutRepository.page(new UserWorkoutCriteria(EN)
                 .addDateRangeRestriction(date, date));
 
@@ -211,8 +208,79 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
         assertPhase2Day2(date, workout);
 
         assertTrue(planRepository.unique(1l).isUsed());
+    }
 
 
+    @Test
+    @Transactional
+    public void testStart2015And2016() {
+        testStartPlan1(2015, 52,
+                new DateTime(2015, 12, 21, 0, 0).toDate(),
+                new DateTime(2015, 12, 27, 0, 0).toDate(),
+                new DateTime(2015, 12, 28, 0, 0).toDate(),
+                new DateTime(2016, 1, 3, 0, 0).toDate(),
+                new DateTime(2016, 1, 4, 0, 0).toDate(),
+                new DateTime(2016, 1, 10, 0, 0).toDate(),
+                new DateTime(2016, 1, 13, 0, 0).toDate(),
+                new DateTime(2016, 1, 15, 0, 0).toDate(),
+                new DateTime(2016, 1, 20, 0, 0).toDate(),
+                new DateTime(2016, 1, 22, 0, 0).toDate(),
+                new DateTime(2016, 1, 27, 0, 0).toDate(),
+                new DateTime(2016, 1, 29, 0, 0).toDate());
+    }
+
+    @Test
+    @Transactional
+    public void testStart2016And2017() {
+        testStartPlan1(2016, 52,
+                new DateTime(2016, 12, 26, 0, 0).toDate(),
+                new DateTime(2017, 1, 1, 0, 0).toDate(),
+                new DateTime(2017, 1, 2, 0, 0).toDate(),
+                new DateTime(2017, 1, 8, 0, 0).toDate(),
+                new DateTime(2017, 1, 9, 0, 0).toDate(),
+                new DateTime(2017, 1, 15, 0, 0).toDate(),
+                new DateTime(2017, 1, 18, 0, 0).toDate(),
+                new DateTime(2017, 1, 20, 0, 0).toDate(),
+                new DateTime(2017, 1, 25, 0, 0).toDate(),
+                new DateTime(2017, 1, 27, 0, 0).toDate(),
+                new DateTime(2017, 2, 1, 0, 0).toDate(),
+                new DateTime(2017, 2, 3, 0, 0).toDate());
+    }
+
+    @Test
+    @Transactional
+    public void testStart2017And2018() {
+        testStartPlan1(2017, 52,
+                new DateTime(2017, 12, 25, 0, 0).toDate(),
+                new DateTime(2017, 12, 31, 0, 0).toDate(),
+                new DateTime(2018, 1, 1, 0, 0).toDate(),
+                new DateTime(2018, 1, 7, 0, 0).toDate(),
+                new DateTime(2018, 1, 8, 0, 0).toDate(),
+                new DateTime(2018, 1, 14, 0, 0).toDate(),
+                new DateTime(2018, 1, 17, 0, 0).toDate(),
+                new DateTime(2018, 1, 19, 0, 0).toDate(),
+                new DateTime(2018, 1, 24, 0, 0).toDate(),
+                new DateTime(2018, 1, 26, 0, 0).toDate(),
+                new DateTime(2018, 1, 31, 0, 0).toDate(),
+                new DateTime(2018, 2, 2, 0, 0).toDate());
+    }
+
+    @Test
+    @Transactional
+    public void testStart2018And2019() {
+        testStartPlan1(2018, 52,
+                new DateTime(2018, 12, 24, 0, 0).toDate(),
+                new DateTime(2018, 12, 30, 0, 0).toDate(),
+                new DateTime(2018, 12, 31, 0, 0).toDate(),
+                new DateTime(2019, 1, 6, 0, 0).toDate(),
+                new DateTime(2019, 1, 7, 0, 0).toDate(),
+                new DateTime(2019, 1, 13, 0, 0).toDate(),
+                new DateTime(2019, 1, 16, 0, 0).toDate(),
+                new DateTime(2019, 1, 18, 0, 0).toDate(),
+                new DateTime(2019, 1, 23, 0, 0).toDate(),
+                new DateTime(2019, 1, 25, 0, 0).toDate(),
+                new DateTime(2019, 1, 30, 0, 0).toDate(),
+                new DateTime(2019, 2, 1, 0, 0).toDate());
     }
 
     private void assertPhase2Day2(Date date, UserWorkoutDto workout) {
