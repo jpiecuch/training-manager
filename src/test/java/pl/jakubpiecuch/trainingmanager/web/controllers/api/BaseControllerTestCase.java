@@ -3,7 +3,6 @@ package pl.jakubpiecuch.trainingmanager.web.controllers.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.cglib.core.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -14,8 +13,8 @@ import org.springframework.web.context.WebApplicationContext;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.api.v1.TranslatesService;
 import pl.jakubpiecuch.trainingmanager.service.locale.LocaleService;
-import pl.jakubpiecuch.trainingmanager.service.repository.RepositoryType;
 import pl.jakubpiecuch.trainingmanager.service.repository.Repository;
+import pl.jakubpiecuch.trainingmanager.service.repository.RepositoryType;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
 

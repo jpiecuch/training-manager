@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.BaseControllerTestCase;

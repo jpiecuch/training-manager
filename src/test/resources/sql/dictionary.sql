@@ -4,7 +4,7 @@ INSERT INTO role (id, name, permissions, modifiable) VALUES (1, 'ADMIN', '0,1,2'
 
 INSERT INTO account_role (account, role) VALUES (1,1);
 
-INSERT INTO account_record (id, type, value, date, account) VALUES (1, 0, '80.0', '2014-12-07 13:52:56.805', 1);
+INSERT INTO account_record (id, type, value, date, account) VALUES (1, 0, '80.0', '2014-12-07 00:00:00', 1);
 
 INSERT INTO plan (id, name, goal, creator, used) VALUES (1, 'Main plan', 0, 1, false);
 
@@ -32,7 +32,7 @@ INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUE
 INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (5, 3, 5, '12;10;8;6;2', 1, 1);
 INSERT INTO exercise (id, workout, description, reps, position, super_set) VALUES (6, 4, 1, '12;12;12', 1, 1);
 
-INSERT INTO user_workout (id, account, date, remind, comment, workout, state) VALUES (1, 1, '2014-12-07 13:52:56.805', false, null, 1, 0);
+INSERT INTO user_workout (id, account, date, remind, comment, workout, state) VALUES (1, 1, '2014-12-07 00:00:00', false, null, 1, 0);
 
 INSERT INTO execution (id, result, exercise, state, comment, workout) VALUES (1,'{"results":[{"side":null,"weights":[80.0,80.0,80.0],"sets":[15,15,15]}]}',1,0,null,1);
 INSERT INTO execution (id, result, exercise, state, comment, workout) VALUES (2,'{"results":[{"side":"LEFT","weights":[17.0,18.0,19.25,20.25,21.25],"sets":[12,10,8,8,6]},{"side":"RIGHT","weights":[17.0,18.0,19.25,20.25,21.25],"sets":[12,10,8,8,6]}]}',2,0,null,1);

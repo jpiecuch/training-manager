@@ -5,18 +5,22 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
 import pl.jakubpiecuch.trainingmanager.BaseUnitDaoTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.domain.Permissions;
+import pl.jakubpiecuch.trainingmanager.domain.Role;
 import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
+import pl.jakubpiecuch.trainingmanager.service.repository.role.RoleCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -29,7 +33,6 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
     private static final String SALT = "jp88";
     private static final String CREATED_STRING = "2014-12-07 13:52:56.805";
     private static final Long NOT_EXISTS_ID = 99l;
-    private static final String ROLE_NAME = "ADMIN";
     private static final String UPDATED_STRING = "2014-12-07 13:53:16.062";
     private static final Account.Status STATUS = Account.Status.ACTIVE;
     private static final String EMAIL = "test.user@test.com";
@@ -50,7 +53,10 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
     @Autowired
     private RepoDao<Account, AccountCriteria> accountDao;
 
-    private static void assertAccount(Account account) {
+    @Autowired
+    private RepoDao<Role, RoleCriteria> roleDao;
+
+    private static void assertAccount(Account account, Role role) {
         assertEquals(ID, account.getId());
         assertEquals(PASSWORD, account.getCredential());
         assertEquals(NAME, account.getName());
@@ -60,8 +66,8 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
         assertEquals(STATUS, account.getStatus());
         assertEquals(EMAIL, account.getEmail());
         assertEquals(CONFIG, account.getConfig());
-        assertNotNull(account.getRoles());
-        assertEquals(ROLE_NAME, account.getRoles().get(0).getName());
+        assertEquals(role, account.getRoles().get(0));
+        assertEquals(Arrays.asList(Permissions.getAllPermissions()).stream().sorted().collect(Collectors.toList()), account.getGrantedPermissions().stream().sorted().collect(Collectors.toList()));
     }
 
     @Test
@@ -238,6 +244,7 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
 
     @Test
     public void testFindByCriteria() {
+        Role role = roleDao.findById(1l);
         PageResult<Account> result = accountDao.findByCriteria(null);
 
         assertEquals(0l, result.getCount());
@@ -245,7 +252,7 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
         result = accountDao.findByCriteria(new AccountCriteria());
 
         assertEquals(1l, result.getCount());
-        assertAccount(result.getResult().get(0));
+        assertAccount(result.getResult().get(0), role);
 
         result = accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions("wrong@email.com"));
 
@@ -254,7 +261,7 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
         result = accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions(EMAIL));
 
         assertEquals(1l, result.getCount());
-        assertAccount(result.getResult().get(0));
+        assertAccount(result.getResult().get(0), role);
 
         result = accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions(EMAIL).addNameRestrictions("wrong.name"));
 
@@ -263,6 +270,6 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
         result = accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions(EMAIL).addNameRestrictions(NAME));
 
         assertEquals(1l, result.getCount());
-        assertAccount(result.getResult().get(0));
+        assertAccount(result.getResult().get(0), role);
     }
 }

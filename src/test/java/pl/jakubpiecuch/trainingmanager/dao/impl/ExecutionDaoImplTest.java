@@ -3,7 +3,6 @@ package pl.jakubpiecuch.trainingmanager.dao.impl;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import pl.jakubpiecuch.trainingmanager.BaseIntegrationTestCase;
 import pl.jakubpiecuch.trainingmanager.BaseUnitDaoTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.Execution;
