@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "account_record")
-public class AccountRecord extends CommonEntity implements RepoObject {
+public class AccountRecord extends RepoCommonEntity {
 
     private Type type;
     private String value;

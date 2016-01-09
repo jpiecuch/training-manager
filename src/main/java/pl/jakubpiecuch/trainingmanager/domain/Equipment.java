@@ -26,7 +26,7 @@ import java.io.IOException;
         @JsonSubTypes.Type(value = Equipment.Rack.class, name = "RACK"),
         @JsonSubTypes.Type(value = Equipment.Stand.class, name = "STAND")
 })
-public abstract class Equipment<T> extends CommonEntity implements EquipmentDescriptor, RepoObject {
+public abstract class Equipment<T> extends RepoCommonEntity implements EquipmentDescriptor {
     private int type;
     private String data;
     private Double weight;

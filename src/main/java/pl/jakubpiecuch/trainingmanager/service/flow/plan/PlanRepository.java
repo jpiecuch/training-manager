@@ -28,7 +28,7 @@ public class PlanRepository extends AbstractConversionRepository<PlanDto, Plan, 
 
     @Override
     public void delete(long id) {
-        Plan plan = (Plan) dao.findById(id);
+        Plan plan = dao.findById(id);
         DaoAssert.notNull(plan);
         Assert.isTrue(!plan.isUsed(), PLAN_USED_CODE);
         super.delete(plan);

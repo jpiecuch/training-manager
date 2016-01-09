@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "description")
-public class Description extends CommonEntity implements RepoObject {
+public class Description extends RepoCommonEntity {
 
     public static final String PROPERTY_NAME = "name";
     private String name;

@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "user_workout")
-public class UserWorkout extends CommonEntity implements RepoObject {
+public class UserWorkout extends RepoCommonEntity {
 
     private String comment;
     private Account account;

@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "account")
-public class Account extends VersionedEntity implements RepoObject {
+public class Account extends VersionedEntity {
 
     public static final String NAME_FIELD_NAME = "name";
     public static final String CREDENTIAL_FIELD_NAME = "password";

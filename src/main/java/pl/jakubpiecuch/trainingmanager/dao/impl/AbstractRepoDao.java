@@ -6,6 +6,8 @@ import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
+import pl.jakubpiecuch.trainingmanager.domain.RepoCommonEntity;
+import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 import pl.jakubpiecuch.trainingmanager.service.resolver.OrderResolver;
 
 import java.util.Map;
@@ -13,7 +15,7 @@ import java.util.Map;
 /**
  * Created by Rico on 2015-02-21.
  */
-public abstract class AbstractRepoDao<E extends CommonEntity, C extends Criteria> extends CoreDaoImpl<E> implements RepoDao<E, C> {
+public abstract class AbstractRepoDao<E extends RepoCommonEntity, C extends Criteria> extends CoreDaoImpl<E> implements RepoDao<E, C> {
 
     private Map<String, OrderResolver> orderResolvers;
 

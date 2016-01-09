@@ -13,7 +13,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "role")
-public class Role extends CommonEntity implements RepoObject {
+public class Role extends RepoCommonEntity {
     public static final String NAME_FIELD_NAME = "name";
     public static final String GRANTED_PERMISSIONS_FIELD_NAME = "grantedPermissions";
     public static final String ADMIN_ROLE = "ADMIN";

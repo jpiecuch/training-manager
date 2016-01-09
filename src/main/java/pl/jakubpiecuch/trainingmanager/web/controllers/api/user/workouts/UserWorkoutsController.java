@@ -22,6 +22,6 @@ public class UserWorkoutsController extends AbstractRepositoryController<UserWor
     protected UserWorkoutCriteria createCriteria(MultiValueMap<String, String> parameters, Locale locale) {
         return new UserWorkoutCriteria(locale.getLanguage())
                 .addDateRangeRestriction(resolveDate(parameters.getFirst("from")), resolveDate(parameters.getFirst("to")))
-                .addStateRestrictions(resolveEnumValues(parameters.get("states"), UserWorkout.State.class));
+                .addStateRestrictions(resolveEnumValues(parameters.get("state"), UserWorkout.State.class));
     }
 }

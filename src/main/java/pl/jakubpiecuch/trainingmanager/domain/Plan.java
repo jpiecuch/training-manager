@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "plan")
-public class Plan extends CommonEntity implements RepoObject {
+public class Plan extends RepoCommonEntity {
     public static final String NAME_FIELD = "name";
     public static final String GOAL_FIELD = "goal";
     public static final String CREATOR_FIELD = "creator";

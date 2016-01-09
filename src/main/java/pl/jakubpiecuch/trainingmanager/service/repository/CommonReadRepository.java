@@ -5,13 +5,14 @@ import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
 import pl.jakubpiecuch.trainingmanager.dao.util.DaoAssert;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
+import pl.jakubpiecuch.trainingmanager.domain.RepoCommonEntity;
 
 /**
  * Created by Rico on 2015-02-22.
  */
-public class CommonReadRepository<E extends RepoObject, C extends Criteria> implements ReadRepository<E, C> {
+public class CommonReadRepository<E extends RepoCommonEntity, C extends Criteria> implements ReadRepository<E, C> {
 
-    protected RepoDao dao;
+    protected RepoDao<E, C> dao;
 
     @Override
     public PageResult<E> page(C criteria) {
@@ -20,9 +21,9 @@ public class CommonReadRepository<E extends RepoObject, C extends Criteria> impl
 
     @Override
     public E unique(long id) {
-        CommonEntity entity = dao.findById(id);
+        E entity = dao.findById(id);
         DaoAssert.notNull(entity);
-        return (E) entity;
+        return entity;
     }
 
     public void setDao(RepoDao dao) {

@@ -2,21 +2,28 @@ package pl.jakubpiecuch.trainingmanager.service.repository;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Validator;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
+import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
 import pl.jakubpiecuch.trainingmanager.dao.util.DaoAssert;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
+import pl.jakubpiecuch.trainingmanager.domain.RepoCommonEntity;
 import pl.jakubpiecuch.trainingmanager.service.converter.Converter;
 import pl.jakubpiecuch.trainingmanager.web.validator.ValidationType;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Rico on 2015-02-22.
  */
-public abstract class AbstractConversionRepository<T extends RepoObject, E extends RepoObject, C extends Criteria> extends CommonRepository<T, C> {
+public abstract class AbstractConversionRepository<T extends RepoObject, E extends RepoCommonEntity, C extends Criteria> implements Repository<T, C> {
 
     protected Converter<T, E> converter;
+    protected Map<ValidationType, Validator> validators;
+    protected RepoDao<E, C> dao;
+    protected String name;
 
     @Override
     @Transactional
@@ -39,7 +46,7 @@ public abstract class AbstractConversionRepository<T extends RepoObject, E exten
     @Override
     public long create(T element) {
         validators.get(ValidationType.INSERT).validate(element, new BeanPropertyBindingResult(element, name));
-        element.setId(dao.create((CommonEntity) converter.toEntity(element, getEmpty())));
+        element.setId(dao.create(converter.toEntity(element, getEmpty())));
         return element.getId();
     }
 
@@ -48,18 +55,43 @@ public abstract class AbstractConversionRepository<T extends RepoObject, E exten
         CommonEntity entity = dao.findById(element.getId());
         DaoAssert.notNull(entity);
         validators.get(ValidationType.UPDATE).validate(element, new BeanPropertyBindingResult(element, name));
-        dao.update((CommonEntity) converter.toEntity(element, (E) entity));
+        dao.update(converter.toEntity(element, (E) entity));
     }
 
     @Override
     @Transactional
     public T unique(long id) {
-        return converter.fromEntity((E) super.unique(id));
+        E entity = dao.findById(id);
+        DaoAssert.notNull(entity);
+        return converter.fromEntity(entity);
+    }
+
+    @Override
+    public void delete(long id) {
+        E entity = dao.findById(id);
+        DaoAssert.notNull(entity);
+        delete(entity);
+    }
+
+    protected void delete(E entity) {
+        dao.delete(entity);
     }
 
     public abstract E getEmpty();
 
     public void setConverter(Converter<T, E> converter) {
         this.converter = converter;
+    }
+
+    public void setDao(RepoDao<E, C> dao) {
+        this.dao = dao;
+    }
+
+    public void setValidators(Map<ValidationType, Validator> validators) {
+        this.validators = validators;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -44,7 +44,7 @@ public class SessionUserPlanStarter implements UserPlanStarter {
 
     private void createUserWorkout(int year, int week, int weekIncrease, WorkoutDto workout) {
         UserWorkout userWorkout = new UserWorkout();
-        userWorkout.setDate(new LocalDate().withWeekOfWeekyear(week).withYear(year).withDayOfWeek(workout.getWeekDay().getDayInWeek()).plusWeeks(weekIncrease).toDate());
+        userWorkout.setDate(new LocalDate().withWeekOfWeekyear(1).withYear(year).withWeekOfWeekyear(week).withDayOfWeek(workout.getWeekDay().getDayInWeek()).plusWeeks(weekIncrease).toDate());
         userWorkout.setWorkout(new Workout(workout.getId()));
         userWorkout.setAccount(AuthenticatedUserUtil.getUser());
         userWorkout.setState(UserWorkout.State.PLANNED);

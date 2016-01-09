@@ -11,7 +11,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 @MappedSuperclass
-public class VersionedEntity extends CommonEntity {
+public class VersionedEntity extends RepoCommonEntity {
 
     private Date created;
     private Date updated;
