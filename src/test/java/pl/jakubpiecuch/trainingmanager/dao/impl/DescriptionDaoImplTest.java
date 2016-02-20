@@ -27,7 +27,7 @@ public class DescriptionDaoImplTest extends BaseUnitDaoTestCase {
         assertEquals(3, list.getResult().size());
         assertNotNull(list.getCount());
 
-        list = descriptionDao.findByCriteria(new DescriptionCriteria("en").addMuscleRestriction(Description.Muscles.ABS).addForceRestriction(Description.Force.PULL));
+        list = descriptionDao.findByCriteria(new DescriptionCriteria("en").addMuscleRestriction(Description.Muscles.CALVES).addForceRestriction(Description.Force.PULL));
         assertEquals(0, list.getResult().size());
         assertEquals(0, list.getCount());
     }

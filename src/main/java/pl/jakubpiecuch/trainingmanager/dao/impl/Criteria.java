@@ -38,10 +38,11 @@ public abstract class Criteria<T extends Criteria> {
     protected Long id;
     protected Integer firstResult;
     protected Integer maxResults;
-    protected String order;
     private List<Long> excludedIds = new ArrayList<>();
     private List<String> joins = new ArrayList<>();
     private Map<String, OrderResolver> orderResolverMap = new HashMap<>();
+    private String orderProperty;
+    private OrderMode orderMode;
 
     public Criteria(String alias, String entity, String lang) {
         this.alias = alias;
@@ -104,8 +105,12 @@ public abstract class Criteria<T extends Criteria> {
         boolean isSearchById = this.id != null;
         StringBuilder sb = createCommonQuery(PREFIX_FORMAT, isSearchById);
 
-        if (StringUtils.isNotEmpty(order)) {
-            sb.append(" ORDER BY " + order + " ");
+        if (StringUtils.isNoneEmpty(orderProperty)) {
+            OrderResolver orderResolver = MapUtils.isNotEmpty(orderResolverMap) ? orderResolverMap.get(entity + "-" + orderProperty) : null;
+            String order = orderResolver != null ? orderResolver.resolve(lang, alias, orderProperty, orderMode) : (orderProperty + " " + orderMode);
+            if (StringUtils.isNotEmpty(order)) {
+                sb.append(" ORDER BY " + order + " ");
+            }
         }
 
         Query query = session.createQuery(sb.toString());
@@ -145,8 +150,8 @@ public abstract class Criteria<T extends Criteria> {
 
     public T setOrderBy(String property, OrderMode mode) {
         validateProperty(property);
-        OrderResolver orderResolver = MapUtils.isNotEmpty(orderResolverMap) ? orderResolverMap.get(entity + "-" + property) : null;
-        this.order = orderResolver != null ? orderResolver.resolve(lang, alias, property, mode) : (property + " " + mode);
+        this.orderProperty = property;
+        this.orderMode = mode;
         return (T) this;
     }
 
@@ -234,7 +239,6 @@ public abstract class Criteria<T extends Criteria> {
                 .append(this.id, rhs.id)
                 .append(this.firstResult, rhs.firstResult)
                 .append(this.maxResults, rhs.maxResults)
-                .append(this.order, rhs.order)
                 .isEquals();
     }
 
@@ -252,7 +256,6 @@ public abstract class Criteria<T extends Criteria> {
                 .append(id)
                 .append(firstResult)
                 .append(maxResults)
-                .append(order)
                 .toHashCode();
     }
 

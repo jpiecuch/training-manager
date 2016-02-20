@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.util.Assert;
-import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

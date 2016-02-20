@@ -2,7 +2,6 @@ package pl.jakubpiecuch.trainingmanager.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 
 import javax.persistence.*;
 
@@ -176,7 +175,7 @@ public class Description extends RepoCommonEntity {
     }
 
     public enum Muscles {
-        ABDUCTORS, ABS, BICEPS, CALVES, CHEST, FOREARM, GLUTES, HAMSTRINGS, LATS, LOWER_BACK, MIDDLE_BACK, NECK, QUADS, SHOULDERS, TRAPS, TRICEPS
+        ABS, BICEPS, CALVES, CHEST, FOREARM, GLUTES, HAMSTRINGS, LATS, QUADS, SHOULDERS, TRAPS, TRICEPS
     }
 
     public enum Type {

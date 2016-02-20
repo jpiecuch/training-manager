@@ -36,7 +36,7 @@ public abstract class AbstractOrderResolverTest {
         String orderQuery = getResolver().resolve(PL_LANG, ALIAS, PROPERTY, ORDER_MODE);
         StringBuilder expectedOrder = new StringBuilder();
         for (int i = 0; i < ORDER_MAP.get(PL_LANG).length; i++) {
-            expectedOrder.append(" WHEN " + i + " THEN " + ORDER_MAP.get(PL_LANG)[i]);
+            expectedOrder.append(" WHEN " + ORDER_MAP.get(PL_LANG)[i] + " THEN " + i);
         }
         assertNotNull(orderQuery);
         assertEquals(" CASE " + ALIAS + "." + PROPERTY + expectedOrder.toString() + " END " + ORDER_MODE, orderQuery);

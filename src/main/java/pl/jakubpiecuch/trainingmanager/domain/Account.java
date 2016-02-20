@@ -3,7 +3,6 @@ package pl.jakubpiecuch.trainingmanager.domain;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;

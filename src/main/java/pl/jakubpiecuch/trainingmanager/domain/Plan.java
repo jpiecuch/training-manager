@@ -2,7 +2,6 @@ package pl.jakubpiecuch.trainingmanager.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import pl.jakubpiecuch.trainingmanager.service.repository.RepoObject;
 
 import javax.persistence.*;
 import java.util.ArrayList;

@@ -87,7 +87,7 @@ public class InsertPlanValidatorTest {
         }
 
 
-        getPlan().getPhases().get(0).getWorkouts().get(0).setMuscles(new Description.Muscles[]{Description.Muscles.ABDUCTORS});
+        getPlan().getPhases().get(0).getWorkouts().get(0).setMuscles(new Description.Muscles[]{Description.Muscles.ABS});
         getPlan().getPhases().get(0).getWorkouts().get(0).setWeekDay(Workout.WeekDay.FRIDAY);
         getPlan().getPhases().get(0).getWorkouts().get(0).getGroups().add(new GroupDto());
 

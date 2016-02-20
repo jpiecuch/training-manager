@@ -296,7 +296,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
         assertArrayEquals(new String[] {"12", "12", "12"}, execution1.getExercise().getSets());
 
         assertEquals(1, workout.getMuscles().length);
-        assertEquals(Description.Muscles.NECK, workout.getMuscles()[0]);
+        assertEquals(Description.Muscles.TRICEPS, workout.getMuscles()[0]);
     }
 
     private void assertPhase2Day1(Date date, UserWorkoutDto workout) {
@@ -310,7 +310,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
         assertArrayEquals(new String[] {"12", "10", "8", "6", "2"}, execution1.getExercise().getSets());
 
         assertEquals(1, workout.getMuscles().length);
-        assertEquals(Description.Muscles.HAMSTRINGS, workout.getMuscles()[0]);
+        assertEquals(Description.Muscles.LATS, workout.getMuscles()[0]);
     }
 
     private void assertPhase1Day2(Date date, UserWorkoutDto workout) {
@@ -329,7 +329,7 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
         assertArrayEquals(new String[] {"12", "10", "8", "6"}, execution2.getExercise().getSets());
 
         assertEquals(1, workout.getMuscles().length);
-        assertEquals(Description.Muscles.BICEPS, workout.getMuscles()[0]);
+        assertEquals(Description.Muscles.CALVES, workout.getMuscles()[0]);
     }
 
     private void assertPhase1Day1(Date date, UserWorkoutDto workout) {
@@ -348,8 +348,8 @@ public class SessionUserPlanStarterIT extends BaseIntegrationTestCase {
         assertArrayEquals(new String[] {"12", "10", "8", "6"}, execution2.getExercise().getSets());
 
         assertEquals(2, workout.getMuscles().length);
-        assertEquals(Description.Muscles.CALVES, workout.getMuscles()[0]);
-        assertEquals(Description.Muscles.FOREARM, workout.getMuscles()[1]);
+        assertEquals(Description.Muscles.CHEST, workout.getMuscles()[0]);
+        assertEquals(Description.Muscles.GLUTES, workout.getMuscles()[1]);
     }
 
 }

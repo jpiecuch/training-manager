@@ -20,7 +20,7 @@ public abstract class AbstractOrderResolver<T extends Enum> implements OrderReso
         Integer[] map = orderMap.get(ArrayUtils.contains(langs, lang) ? lang : defaultLang);
         StringBuilder builder = new StringBuilder(" CASE " + alias + "." + property);
         for (T en : values()) {
-            builder.append(" WHEN " + en.ordinal() + " THEN " + map[en.ordinal()]);
+            builder.append(" WHEN " + map[en.ordinal()] + " THEN " + en.ordinal());
         }
         builder.append(" END ").append(mode);
         return builder.toString();

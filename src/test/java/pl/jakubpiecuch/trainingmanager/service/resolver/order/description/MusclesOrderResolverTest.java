@@ -11,8 +11,8 @@ public class MusclesOrderResolverTest extends AbstractOrderResolverTest {
     public MusclesOrderResolverTest() {
         super(new HashMap<String, Integer[]>() {
             {
-                put(DEFAULT_LANG, new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
-                put(PL_LANG, new Integer[]{9, 2, 1, 7, 6, 11, 10, 12, 8, 5, 13, 14, 12, 0, 3, 15});
+                put(DEFAULT_LANG, new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
+                put(PL_LANG,      new Integer[]{9, 1, 0, 10, 8, 3, 2, 7, 6, 5, 4, 11});
             }
         });
     }
