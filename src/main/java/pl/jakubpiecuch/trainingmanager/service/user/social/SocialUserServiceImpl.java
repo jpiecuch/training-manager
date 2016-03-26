@@ -14,6 +14,7 @@ import pl.jakubpiecuch.trainingmanager.domain.Role;
 import pl.jakubpiecuch.trainingmanager.service.repository.role.RoleCriteria;
 import pl.jakubpiecuch.trainingmanager.service.social.SocialService;
 import pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService;
+import pl.jakubpiecuch.trainingmanager.service.user.local.assertion.AccountAssert;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;

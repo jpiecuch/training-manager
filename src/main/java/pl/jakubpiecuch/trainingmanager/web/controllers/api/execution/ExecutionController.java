@@ -1,8 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.web.controllers.api.execution;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import pl.jakubpiecuch.trainingmanager.domain.Permissions;
 import pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService;
 import pl.jakubpiecuch.trainingmanager.service.repository.RepositoryType;
 import pl.jakubpiecuch.trainingmanager.service.user.workout.ExecutionDto;
@@ -16,7 +14,6 @@ import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 @RestController
 public class ExecutionController extends AbstractController {
 
-    @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.EXECUTION_UPDATER + Permissions.HAS_ROLE_SUFFIX)
     @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = {RequestMethod.PUT})
     public void update(@PathVariable ApiVersionService.Version version, @PathVariable long id, @RequestBody ExecutionDto execution) {
         execution.setId(id);

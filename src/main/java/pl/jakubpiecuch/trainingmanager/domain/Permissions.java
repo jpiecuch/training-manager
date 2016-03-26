@@ -16,7 +16,6 @@ public class Permissions {
     public static final String PLAN_DELETER = "PLAN_D";
     public static final String PLAN_VIEWER = "PLAN_V";
     public static final String PLAN_APPROVER = "PLAN_A";
-    public static final String PLAN_STARTER = "PLAN_S";
     public static final String DESCRIPTION_CREATOR = "DESCRIPTION_C";
     public static final String DESCRIPTION_UPDATER = "DESCRIPTION_U";
     public static final String DESCRIPTION_DELETER = "DESCRIPTION_D";
@@ -45,7 +44,7 @@ public class Permissions {
     public static final String USER_RECORD_DELETER = "USER_RECORD_D";
 
     private static final String[] ALL = new String[]{
-            PLAN_CREATOR, PLAN_UPDATER, PLAN_DELETER, PLAN_VIEWER, PLAN_APPROVER, PLAN_STARTER,
+            PLAN_CREATOR, PLAN_UPDATER, PLAN_DELETER, PLAN_VIEWER, PLAN_APPROVER,
             EQUIPMENT_CREATOR, EQUIPMENT_UPDATER, EQUIPMENT_DELETER, EQUIPMENT_VIEWER, EQUIPMENT_APPROVER,
             DESCRIPTION_CREATOR, DESCRIPTION_UPDATER, DESCRIPTION_DELETER, DESCRIPTION_VIEWER, DESCRIPTION_APPROVER,
             ROLE_CREATOR, ROLE_UPDATER, ROLE_DELETER, ROLE_VIEWER,
