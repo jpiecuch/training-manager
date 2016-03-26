@@ -24,6 +24,7 @@ import pl.jakubpiecuch.trainingmanager.service.user.model.Authentication;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Registration;
 import pl.jakubpiecuch.trainingmanager.service.user.model.SecurityUser;
+import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.validation.ValidationException;
@@ -104,6 +105,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
             account.setSalt(KeyGenerators.string().generateKey());
             account.setCredential(passwordEncoder.encode(registration.getPassword(), account.getSalt()));
             account.setProvider(Provider.Type.LOCAL);
+            account.setSocialType(SocialProvider.SocialType.NONE);
             account.getRoles().addAll(roleRepository.page(new RoleCriteria().addNameRestrictions(Role.ADMIN_ROLE)).getResult());
             repository.create(account);
             emailService.sendEmail(new Object[]{UriUtils.encodeQueryParam(cryptService.encrypt(account.getName(), account.getEmail()), "UTF-8"), account, WebUtil.fromJson(account.getConfig(), Account.Config.class), serviceUri}, locale, EmailService.Template.REGISTER, account.getEmail());
@@ -113,7 +115,7 @@ public class LocalUserServiceImpl extends AbstractUserService implements LocalUs
     }
 
     private Account findByEmail(String email) {
-        PageResult<Account> result = repository.page(new AccountCriteria().addEmailRestrictions(email));
+        PageResult<Account> result = repository.page(new AccountCriteria().addEmailRestrictions(email).addProviderRestrictions(Provider.Type.LOCAL));
         if (result.getCount() > 0) {
             return result.getResult().get(0);
         }
