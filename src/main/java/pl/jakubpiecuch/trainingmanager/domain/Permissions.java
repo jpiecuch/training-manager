@@ -27,7 +27,7 @@ public class Permissions {
     public static final String EQUIPMENT_DELETER = "EQUIPMENT_D";
     public static final String EQUIPMENT_VIEWER = "EQUIPMENT_V";
     public static final String EQUIPMENT_APPROVER = "EQUIPMENT_A";
-    public static final String EXECUTION_CREATOR = "EXECUTION_C";
+    public static final String EXECUTION_UPDATER = "EXECUTION_U";
     public static final String ROLE_VIEWER = "ROLE_V";
     public static final String ROLE_CREATOR = "ROLE_C";
     public static final String ROLE_UPDATER = "ROLE_U";
@@ -38,16 +38,31 @@ public class Permissions {
     public static final String ACCOUNT_RECORD_CREATOR = "ACCOUNT_RECORD_C";
     public static final String ACCOUNT_RECORD_UPDATER = "ACCOUNT_RECORD_U";
     public static final String ACCOUNT_RECORD_DELETER = "ACCOUNT_RECORD_D";
+    public static final String PLAN_STARTER_CREATOR = "PLAN_STARTER_C";
+    public static final String USER_RECORD_VIEWER = "USER_RECORD_V";
+    public static final String USER_RECORD_CREATOR = "USER_RECORD_C";
+    public static final String USER_RECORD_UPDATER = "USER_RECORD_U";
+    public static final String USER_RECORD_DELETER = "USER_RECORD_D";
 
-    private static final String[] ALL = new String[]{PLAN_CREATOR, PLAN_UPDATER, PLAN_DELETER, PLAN_VIEWER, PLAN_APPROVER, PLAN_STARTER,
+    private static final String[] ALL = new String[]{
+            PLAN_CREATOR, PLAN_UPDATER, PLAN_DELETER, PLAN_VIEWER, PLAN_APPROVER, PLAN_STARTER,
             EQUIPMENT_CREATOR, EQUIPMENT_UPDATER, EQUIPMENT_DELETER, EQUIPMENT_VIEWER, EQUIPMENT_APPROVER,
             DESCRIPTION_CREATOR, DESCRIPTION_UPDATER, DESCRIPTION_DELETER, DESCRIPTION_VIEWER, DESCRIPTION_APPROVER,
             ROLE_CREATOR, ROLE_UPDATER, ROLE_DELETER, ROLE_VIEWER,
             WORKOUT_VIEWER, WORKOUT_UPDATER,
-            EXECUTION_CREATOR,
-            ACCOUNT_RECORD_VIEWER, ACCOUNT_RECORD_CREATOR, ACCOUNT_RECORD_UPDATER, ACCOUNT_RECORD_DELETER};
+            EXECUTION_UPDATER,
+            ACCOUNT_RECORD_VIEWER, ACCOUNT_RECORD_CREATOR, ACCOUNT_RECORD_UPDATER, ACCOUNT_RECORD_DELETER,
+            USER_RECORD_VIEWER, USER_RECORD_CREATOR, USER_RECORD_UPDATER, USER_RECORD_DELETER,
+            PLAN_STARTER_CREATOR};
 
-    private static final String[] USER_ROLE_PERMISSIONS = new String[]{PLAN_VIEWER, DESCRIPTION_VIEWER};
+    private static final String[] USER_ROLE_PERMISSIONS = new String[]{
+            PLAN_VIEWER,
+            EQUIPMENT_VIEWER,
+            DESCRIPTION_VIEWER,
+            WORKOUT_VIEWER, WORKOUT_UPDATER,
+            EXECUTION_UPDATER,
+            USER_RECORD_VIEWER,
+            PLAN_STARTER_CREATOR};
 
     public static String[] getAllPermissions() {
         return ALL;

@@ -27,7 +27,7 @@ public class JsonAccessDeniedHandler implements org.springframework.security.web
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
         httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());
         httpServletResponse.getOutputStream().println(mapper.writeValueAsString(new RestExceptionHandler.ErrorResource(e.getMessage())));
     }
 }

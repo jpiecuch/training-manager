@@ -1,5 +1,5 @@
-app.service('accountRecordService', function($http, urlService) {
+app.service('accountRecordService', function($http, urlService, authenticateService) {
     this.retrieve = function(params) {
-        return $http.get(urlService.apiURL('/accountrecords'), { params: params });
+        return $http.get(urlService.apiURL('/users/' + authenticateService.signed().id +'/records'), { params: params });
     };
 });

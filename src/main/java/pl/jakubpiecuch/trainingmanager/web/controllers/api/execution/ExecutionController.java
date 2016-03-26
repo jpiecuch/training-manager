@@ -16,7 +16,7 @@ import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
 @RestController
 public class ExecutionController extends AbstractController {
 
-    @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.EXECUTION_CREATOR + Permissions.HAS_ROLE_SUFFIX)
+    @PreAuthorize(value = Permissions.HAS_ROLE_PREFIX + Permissions.EXECUTION_UPDATER + Permissions.HAS_ROLE_SUFFIX)
     @RequestMapping(value = ApiURI.ID_PATH_PARAM, method = {RequestMethod.PUT})
     public void update(@PathVariable ApiVersionService.Version version, @PathVariable long id, @RequestBody ExecutionDto execution) {
         execution.setId(id);
