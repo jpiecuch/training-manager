@@ -125,4 +125,5 @@
     <import resource="repository-context.xml"/>
     <import resource="dao-context.xml"/>
     <import resource="security-context.xml"/>
+    <import resource="http-security-context.xml"/>
 </beans>

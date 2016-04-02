@@ -44,7 +44,7 @@ public abstract class AbstractUserService implements UserService {
             for (Role role : entity.getRoles()) {
                 roles.addAll(Arrays.asList(role.getGrantedPermissions()));
             }
-            AbstractAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, user.getPassword(), AuthorityUtils.createAuthorityList(roles.toArray(new String[roles.size()])));
+            AbstractAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
 
             auth.setDetails(user);
             SecurityContextHolder.getContext().setAuthentication(auth);

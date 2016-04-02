@@ -86,7 +86,7 @@ public abstract class AbstractRepositoryController<T extends RepoObject, C exten
     }
 
     private ReadRepository readRepository(ApiVersionService.Version version) {
-        return versionServices.get(version).read().get(repositoryType);
+        return versionServices.get(version).read(repositoryType);
     }
 
     private StorageRepository storageRepository(ApiVersionService.Version version) {

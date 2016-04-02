@@ -41,6 +41,6 @@ public class LocaleControllerTest extends BaseControllerTestCase {
     public void testPostNotSupportedLocale() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post(ApiURI.API_LOCALE_PATH, ApiVersionService.Version.v1).content(NOT_SUPPORTED_LOCALE)
                 .accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest()).andDo(MockMvcResultHandlers.print());
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 }

@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
@@ -67,7 +68,7 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
         assertEquals(EMAIL, account.getEmail());
         assertEquals(CONFIG, account.getConfig());
         assertEquals(role, account.getRoles().get(0));
-        assertEquals(Arrays.asList(Permissions.getAllPermissions()).stream().sorted().collect(Collectors.toList()), account.getGrantedPermissions().stream().sorted().collect(Collectors.toList()));
+        assertEquals(Arrays.asList(Permissions.getAllPermissions()).stream().map(s -> Permissions.ROLE_PREFIX + s).sorted().collect(Collectors.toList()), account.getGrantedPermissions().stream().sorted().collect(Collectors.toList()));
     }
 
     @Test

@@ -11,6 +11,7 @@
     <mvc:annotation-driven/>
 
     <import resource="classpath:controller-context.xml"/>
+    <import resource="classpath:http-security-context.xml"/>
 
     <bean id="abstractController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController"
           abstract="true">
@@ -23,6 +24,14 @@
 
     <bean id="version1Service" class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService"/>
+    </bean>
+
+    <bean id="authenticationProvider" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="org.springframework.security.authentication.AuthenticationProvider"/>
+    </bean>
+
+    <bean id="localUserService" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="org.springframework.security.core.userdetails.UserDetailsService"/>
     </bean>
 
     <bean id="exceptionHandler" class="pl.jakubpiecuch.trainingmanager.web.handlers.exception.RestExceptionHandler"/>

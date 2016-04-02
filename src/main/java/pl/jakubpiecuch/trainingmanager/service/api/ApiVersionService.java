@@ -14,14 +14,12 @@ import pl.jakubpiecuch.trainingmanager.service.user.authentication.Authenticatio
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.plan.UserPlanStarter;
 
-import java.util.Map;
-
 public interface ApiVersionService {
 
     TranslatesService translates();
     UserManageService manageUser();
     AuthenticationService authentication();
-    Map<RepositoryType, ReadRepository> read();
+    ReadRepository read(RepositoryType repository);
     StorageRepository store(RepositoryType repository);
     UpdatableRepository update(RepositoryType repository);
     ResourceService resources(ResourceService.Type type);

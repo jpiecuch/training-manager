@@ -3,60 +3,7 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns="http://www.springframework.org/schema/security"
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
-
-    <global-method-security pre-post-annotations="enabled"/>
-
-    <http use-expressions="true" auto-config="true" entry-point-ref="authenticationEntryPoint">
-        <remember-me services-ref="rememberMeServices"/>
-        <access-denied-handler ref="accessDeniedHandler"/>
-        <intercept-url pattern="/api/*/plans/**" method="DELETE" access="hasRole('PLAN_D')"/>
-        <intercept-url pattern="/api/*/plans/**" method="GET" access="hasRole('PLAN_V')"/>
-        <intercept-url pattern="/api/*/plans/**" method="POST" access="hasRole('PLAN_C')"/>
-        <intercept-url pattern="/api/*/plans/**" method="PUT" access="hasRole('PLAN_U')"/>
-
-        <intercept-url pattern="/api/*/descriptions/**" method="DELETE" access="hasRole('DESCRIPTION_D')"/>
-        <intercept-url pattern="/api/*/descriptions/**" method="GET" access="hasRole('DESCRIPTION_V')"/>
-        <intercept-url pattern="/api/*/descriptions/**" method="POST" access="hasRole('DESCRIPTION_C')"/>
-        <intercept-url pattern="/api/*/descriptions/**" method="PUT" access="hasRole('DESCRIPTION_U')"/>
-
-        <intercept-url pattern="/api/*/equipments/**" method="DELETE" access="hasRole('EQUIPMENT_D')"/>
-        <intercept-url pattern="/api/*/equipments/**" method="GET" access="hasRole('EQUIPMENT_V')"/>
-        <intercept-url pattern="/api/*/equipments/**" method="POST" access="hasRole('EQUIPMENT_C')"/>
-        <intercept-url pattern="/api/*/equipments/**" method="PUT" access="hasRole('EQUIPMENT_U')"/>
-
-        <intercept-url pattern="/api/*/roles/**" method="DELETE" access="hasRole('ROLE_D')"/>
-        <intercept-url pattern="/api/*/roles/**" method="GET" access="hasRole('ROLE_V')"/>
-        <intercept-url pattern="/api/*/roles/**" method="POST" access="hasRole('ROLE_C')"/>
-        <intercept-url pattern="/api/*/roles/**" method="PUT" access="hasRole('ROLE_U')"/>
-
-        <intercept-url pattern="/api/*/users/*/workouts/**" method="DELETE" access="hasRole('WORKOUT_D')"/>
-        <intercept-url pattern="/api/*/users/*/workouts/**" method="GET" access="hasRole('WORKOUT_V')"/>
-        <intercept-url pattern="/api/*/users/*/workouts/**" method="POST" access="hasRole('WORKOUT_C')"/>
-        <intercept-url pattern="/api/*/users/*/workouts/**" method="PUT" access="hasRole('WORKOUT_U')"/>
-
-        <intercept-url pattern="/api/*/users/*/plans/**" method="POST" access="hasRole('PLAN_STARTER_C')"/>
-
-        <intercept-url pattern="/api/*/users/*/records/**" method="DELETE" access="hasRole('USER_RECORD_D')"/>
-        <intercept-url pattern="/api/*/users/*/records/**" method="GET" access="hasRole('USER_RECORD_V')"/>
-        <intercept-url pattern="/api/*/users/*/records/**" method="POST" access="hasRole('USER_RECORD_C')"/>
-        <intercept-url pattern="/api/*/users/*/records/**" method="PUT" access="hasRole('USER_RECORD_U')"/>
-    </http>
-
-    <beans:bean id="rememberMeServices"
-                class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
-        <beans:constructor-arg name="key" value="gym.home.2015"/>
-        <beans:constructor-arg name="userDetailsService" ref="localUserService"/>
-        <beans:property name="cookieName" value="remember-me"/>
-        <beans:property name="parameter" value="rememberMe"/>
-        <beans:property name="tokenValiditySeconds" value="864000"/>
-    </beans:bean>
-
-    <beans:bean id="authenticationEntryPoint"
-                class="pl.jakubpiecuch.trainingmanager.web.authentication.JsonAuthenticationEntryPoint"></beans:bean>
-
-    <beans:bean id="accessDeniedHandler"
-                class="pl.jakubpiecuch.trainingmanager.web.handlers.access.JsonAccessDeniedHandler"></beans:bean>
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
     <beans:bean id="authenticationProvider"
                 class="pl.jakubpiecuch.trainingmanager.web.authentication.LocalAuthenticationProvider">
@@ -84,8 +31,4 @@
                 class="pl.jakubpiecuch.trainingmanager.service.encoder.password.sha.SHAPasswordEncoder">
         <beans:property name="strength" value="256"/>
     </beans:bean>
-
-    <authentication-manager>
-        <authentication-provider ref="authenticationProvider"></authentication-provider>
-    </authentication-manager>
 </beans:beans>

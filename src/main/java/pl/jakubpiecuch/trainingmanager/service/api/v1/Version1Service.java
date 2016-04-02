@@ -42,8 +42,8 @@ public class Version1Service implements ApiVersionService {
     }
 
     @Override
-    public Map<RepositoryType, ReadRepository> read() {
-        return readRepositories;
+    public ReadRepository read(RepositoryType repository) {
+        return readRepositories.get(repository);
     }
 
     @Override

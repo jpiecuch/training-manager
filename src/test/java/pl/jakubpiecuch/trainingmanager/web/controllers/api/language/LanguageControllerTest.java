@@ -32,7 +32,7 @@ public class LanguageControllerTest extends BaseControllerTestCase {
     }
 
     @Test
-    public void testLang() throws Exception {
+    public void shouldReturnLang() throws Exception {
         Mockito.when(versionService.translates().languages()).thenReturn(LANGS);
 
         mockMvc.perform(MockMvcRequestBuilders.get(ApiURI.API_LANGUAGE_PATH, ApiVersionService.Version.v1)
@@ -41,13 +41,16 @@ public class LanguageControllerTest extends BaseControllerTestCase {
     }
 
     @Test
-    public void testLangs() throws Exception {
-        Mockito.when(versionService.translates().translates(VALID_LANG)).thenReturn(new HashMap<String, String>());
+    public void shouldReturnTranslates() throws Exception {
+        Mockito.when(versionService.translates().translates(VALID_LANG)).thenReturn(new HashMap<>());
 
         mockMvc.perform(MockMvcRequestBuilders.get(ApiURI.API_LANGUAGE_PATH + ApiURI.KEY_PATH_PARAM, ApiVersionService.Version.v1, VALID_LANG)
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
 
+    @Test
+    public void shouldNotReturnTranslatesBecauseWrongKey() throws Exception {
         Mockito.when(versionService.translates().translates(NOT_VALID_LANG)).thenThrow(NotFoundException.class);
 
         mockMvc.perform(MockMvcRequestBuilders.get(ApiURI.API_LANGUAGE_PATH + ApiURI.KEY_PATH_PARAM, ApiVersionService.Version.v1, NOT_VALID_LANG)

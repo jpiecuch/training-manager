@@ -134,7 +134,7 @@ public class Account extends VersionedEntity {
         if (CollectionUtils.isNotEmpty(this.roles)) {
             for (Role role : this.roles) {
                 for (String permission : role.getGrantedPermissions()) {
-                    authorities.add(permission);
+                    authorities.add(Permissions.ROLE_PREFIX + permission);
                 }
             }
         }

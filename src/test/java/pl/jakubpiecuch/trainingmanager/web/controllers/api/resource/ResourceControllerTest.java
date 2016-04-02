@@ -49,12 +49,12 @@ public class ResourceControllerTest extends BaseControllerTestCase {
     @Test
     public void testGET() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(ApiURI.API_RESOURCE_PATH + ApiURI.KEY_PATH_PARAM, ApiVersionService.Version.v1, TYPE, FILE_KEY)
-                .accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
+                .accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk());
 
         mockMvc.perform(MockMvcRequestBuilders.get(ApiURI.API_RESOURCE_PATH + ApiURI.KEY_PATH_PARAM, ApiVersionService.Version.v1, TYPE, DIRECTORY_KEY)
-                .accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
+                .accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk());
 
         mockMvc.perform(MockMvcRequestBuilders.get(ApiURI.API_RESOURCE_PATH + ApiURI.KEY_PATH_PARAM, ApiVersionService.Version.v1, TYPE, NOT_EXISTS_DIRECTORY_KEY)
-                .accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isNotFound()).andDo(MockMvcResultHandlers.print());
+                .accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }

@@ -8,8 +8,7 @@ public class Permissions {
     public static final String IS_AUTHENTICATED = "isAuthenticated()";
     public static final String IS_ANONYMOUS = "isAnonymous()";
 
-    public static final String HAS_ROLE_PREFIX = "hasRole('";
-    public static final String HAS_ROLE_SUFFIX = "')";
+    public static final String ROLE_PREFIX = "ROLE_";
 
     public static final String PLAN_CREATOR = "PLAN_C";
     public static final String PLAN_UPDATER = "PLAN_U";

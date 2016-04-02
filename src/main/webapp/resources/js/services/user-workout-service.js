@@ -31,7 +31,7 @@ app.service('userWorkoutService', function($q, $http, urlService, authenticateSe
     };
 
     this.retrieve = function(params) {
-        return $http.get(urlService.apiURL('/users/' + authenticateService.signed().id + '/workouts/'), { params: params });
+        return $http.get(urlService.apiURL('/users/' + authenticateService.signed().id + '/workouts'), { params: params });
     };
 
     this.get = function (id) {

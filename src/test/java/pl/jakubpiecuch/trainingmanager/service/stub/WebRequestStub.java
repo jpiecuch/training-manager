@@ -87,6 +87,11 @@ public class WebRequestStub implements WebRequest {
     }
 
     @Override
+    public boolean checkNotModified(String s, long l) {
+        return false;
+    }
+
+    @Override
     public String getDescription(boolean b) {
         return null;
     }

@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,6 +20,7 @@ import pl.jakubpiecuch.trainingmanager.service.repository.RepositoryType;
 import pl.jakubpiecuch.trainingmanager.service.resource.ResourceService;
 import pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationService;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
 /**
  * Created by Rico on 2014-12-20.
  */
@@ -29,18 +32,16 @@ public abstract class BaseControllerTestCase {
     protected final static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     @Autowired
     protected ApiVersionService versionService;
-    protected MockMvc mockMvc;
+
     @Autowired
     private WebApplicationContext wac;
 
+
+    protected MockMvc mockMvc;
     protected TranslatesService translateService;
-
     protected AuthenticationService authenticationService;
-
     protected Repository planRepository;
-
     protected ResourceService imageResourceService;
-
     protected LocaleService localeService;
 
     protected void setUp() {
@@ -53,8 +54,9 @@ public abstract class BaseControllerTestCase {
         Mockito.when(versionService.translates()).thenReturn(translateService);
         Mockito.when(versionService.authentication()).thenReturn(authenticationService);
         Mockito.when(versionService.store(RepositoryType.PLAN)).thenReturn(planRepository);
+        Mockito.when(versionService.read(RepositoryType.PLAN)).thenReturn(planRepository);
         Mockito.when(versionService.resources(ResourceService.Type.image)).thenReturn(imageResourceService);
         Mockito.when(versionService.locale()).thenReturn(localeService);
-        mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(wac).apply(springSecurity()).build();
     }
 }
