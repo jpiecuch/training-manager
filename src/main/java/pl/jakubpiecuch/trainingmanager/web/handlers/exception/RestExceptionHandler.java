@@ -27,11 +27,11 @@ import java.util.Map;
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private static final Logger REH_LOGGER = LoggerFactory.getLogger(RestExceptionHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestExceptionHandler.class);
 
     @ExceptionHandler({ValidationException.class})
     protected ResponseEntity<Object> handleValidation(RuntimeException e, WebRequest request) {
-        REH_LOGGER.error("", e);
+        LOGGER.error("", e);
         ValidationException ire = (ValidationException) e;
 
         ErrorResource error = new ErrorResource(ire.getMessage());
@@ -48,7 +48,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({IllegalArgumentException.class})
     protected ResponseEntity<Object> handleInvalidRequest(RuntimeException e, WebRequest request) {
-        REH_LOGGER.error("", e);
+        LOGGER.error("", e);
         IllegalArgumentException ire = (IllegalArgumentException) e;
 
         ErrorResource error = new ErrorResource(ire.getMessage());
@@ -61,7 +61,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({NotFoundException.class})
     protected ResponseEntity<Object> handleNotFound(RuntimeException e, WebRequest request) {
-        REH_LOGGER.error("", e);
+        LOGGER.error("", e);
 
         ErrorResource error = new ErrorResource(e.getMessage());
 
@@ -73,7 +73,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     protected ResponseEntity<Object> handleAccessDenied(RuntimeException e, WebRequest request) {
-        REH_LOGGER.error("", e);
+        LOGGER.error("", e);
 
         ErrorResource error = new ErrorResource(e.getMessage());
 
@@ -85,7 +85,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        REH_LOGGER.error("", ex);
+        LOGGER.error("", ex);
         headers.setContentType(MediaType.APPLICATION_JSON);
         return super.handleExceptionInternal(ex, body == null ? new ErrorResource(ex.getMessage()) : body, headers, status, request);
     }

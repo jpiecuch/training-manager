@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "exercise")
@@ -34,6 +35,7 @@ public class Exercise extends CommonEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = DESCRIPTION_FIELD)
+    @NotNull
     public Description getDescription() {
         return description;
     }
@@ -45,6 +47,7 @@ public class Exercise extends CommonEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = WORKOUT_FIELD)
     @JsonIgnore
+    @NotNull
     public Workout getWorkout() {
         return workout;
     }
@@ -63,6 +66,7 @@ public class Exercise extends CommonEntity {
     }
 
     @Column(name = SUPER_SET_FIELD)
+    @NotNull
     public Integer getGroup() {
         return group;
     }
@@ -72,6 +76,7 @@ public class Exercise extends CommonEntity {
     }
 
     @Column(name = POSITION_FIELD)
+    @NotNull
     public Integer getPosition() {
         return position;
     }

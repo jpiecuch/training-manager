@@ -3,18 +3,25 @@ package pl.jakubpiecuch.trainingmanager.domain;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.Email;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static pl.jakubpiecuch.trainingmanager.domain.Account.*;
+
 @Entity
-@Table(name = "account")
+@Table(name = "account",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {NAME_FIELD_NAME, SOCIAL_TYPE_FIELD_NAME}),
+        @UniqueConstraint(columnNames = {EMAIL_FIELD_NAME, SOCIAL_TYPE_FIELD_NAME})}  )
 public class Account extends VersionedEntity {
 
     public static final String NAME_FIELD_NAME = "name";
@@ -44,6 +51,8 @@ public class Account extends VersionedEntity {
     }
 
     @Column(name = NAME_FIELD_NAME)
+    @NotNull
+    @Pattern(regexp = "^([a-zA-Z0-9\\-\\.])+$")
     public String getName() {
         return name;
     }
@@ -53,6 +62,7 @@ public class Account extends VersionedEntity {
     }
 
     @Column(name = CREDENTIAL_FIELD_NAME)
+    @NotNull
     public String getCredential() {
         return credential;
     }
@@ -62,6 +72,7 @@ public class Account extends VersionedEntity {
     }
 
     @Column(name = SALT_FIELD_NAME)
+    @NotNull
     public String getSalt() {
         return salt;
     }
@@ -72,6 +83,7 @@ public class Account extends VersionedEntity {
 
     @Column(name = STATUS_FIELD_NAME)
     @Enumerated(EnumType.ORDINAL)
+    @NotNull
     public Status getStatus() {
         return status;
     }
@@ -100,6 +112,7 @@ public class Account extends VersionedEntity {
 
     @Column(name = PROVIDER_FIELD_NAME)
     @Enumerated(EnumType.ORDINAL)
+    @NotNull
     public Provider.Type getProvider() {
         return provider;
     }
@@ -110,6 +123,7 @@ public class Account extends VersionedEntity {
 
     @Column(name = SOCIAL_TYPE_FIELD_NAME)
     @Enumerated(EnumType.ORDINAL)
+    @NotNull
     public SocialProvider.SocialType getSocialType() {
         return socialType;
     }

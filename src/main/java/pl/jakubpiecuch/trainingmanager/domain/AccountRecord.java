@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -17,6 +18,7 @@ public class AccountRecord extends RepoCommonEntity {
 
     @Column(name = "type")
     @Enumerated(EnumType.ORDINAL)
+    @NotNull
     public Type getType() {
         return type;
     }
@@ -26,6 +28,7 @@ public class AccountRecord extends RepoCommonEntity {
     }
 
     @Column(name = "value")
+    @NotNull
     public String getValue() {
         return value;
     }
@@ -35,6 +38,7 @@ public class AccountRecord extends RepoCommonEntity {
     }
 
     @Column(name = "date")
+    @NotNull
     public Date getDate() {
         return date;
     }
@@ -45,6 +49,7 @@ public class AccountRecord extends RepoCommonEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account")
+    @NotNull
     public Account getAccount() {
         return account;
     }

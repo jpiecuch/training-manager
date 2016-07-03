@@ -1,6 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.domain;
 
-import org.apache.commons.lang.SerializationUtils;
+import org.apache.commons.lang3.SerializationUtils;
 
 import static org.junit.Assert.*;
 

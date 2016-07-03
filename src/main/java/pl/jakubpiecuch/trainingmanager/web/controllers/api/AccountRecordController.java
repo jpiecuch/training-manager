@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.jakubpiecuch.trainingmanager.domain.AccountRecord;
 import pl.jakubpiecuch.trainingmanager.service.repository.accountrecord.AccountRecordCriteria;
+import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
 import java.util.Locale;
 
@@ -17,7 +18,7 @@ public class AccountRecordController extends AbstractRepositoryController<Accoun
 
     @Override
     protected AccountRecordCriteria createCriteria(MultiValueMap<String, String> parameters, Locale locale) {
-        return new AccountRecordCriteria(locale.getLanguage())
+        return new AccountRecordCriteria(locale.getLanguage()).setAccountIdRestriction(AuthenticatedUserUtil.getAuthenticatedUserDetails().getId())
                 .addDateRangeRestriction(resolveDate(parameters.getFirst("from")), resolveDate(parameters.getFirst("to")))
                 .addTypeRestrictions(resolveEnumValues(parameters.get("type"), AccountRecord.Type.class));
     }

@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class UserWorkout extends RepoCommonEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account")
+    @NotNull
     public Account getAccount() {
         return account;
     }
@@ -58,6 +60,7 @@ public class UserWorkout extends RepoCommonEntity {
     }
 
     @Column(name = "date")
+    @NotNull
     public Date getDate() {
         return date;
     }
@@ -68,6 +71,7 @@ public class UserWorkout extends RepoCommonEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workout")
+    @NotNull
     public Workout getWorkout() {
         return workout;
     }
@@ -78,6 +82,7 @@ public class UserWorkout extends RepoCommonEntity {
 
     @Column(name = "state")
     @Enumerated(EnumType.ORDINAL)
+    @NotNull
     public State getState() {
         return state;
     }

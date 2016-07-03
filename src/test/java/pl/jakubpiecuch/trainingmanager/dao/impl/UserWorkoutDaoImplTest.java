@@ -1,14 +1,17 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
+import com.google.common.collect.Lists;
 import org.joda.time.LocalDate;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jakubpiecuch.trainingmanager.BaseUnitDaoTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.UserWorkout;
 import pl.jakubpiecuch.trainingmanager.service.user.workout.session.UserWorkoutCriteria;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -19,11 +22,6 @@ public class UserWorkoutDaoImplTest extends BaseUnitDaoTestCase {
 
     @Autowired
     private RepoDao<UserWorkout, UserWorkoutCriteria> userWorkoutDao;
-
-    @Before
-    public void setUp() {
-        addUserToContext();
-    }
 
     @Test
     public void testFindByCriteriaNull() {
@@ -110,6 +108,21 @@ public class UserWorkoutDaoImplTest extends BaseUnitDaoTestCase {
 
         assertEquals(0l, page.getCount());
         assertTrue(page.getResult().isEmpty());
+    }
+
+    @Override
+    protected List<String> getNotNullProperties() {
+        return Lists.newArrayList("account", "date", "workout", "state");
+    }
+
+    @Override
+    protected CoreDao getDao() {
+        return userWorkoutDao;
+    }
+
+    @Override
+    protected UserWorkout getEntity() {
+        return new UserWorkout();
     }
 
 }

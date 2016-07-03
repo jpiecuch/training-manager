@@ -11,7 +11,7 @@ app.controller('CalendarController', function($scope, $http, urlService, $filter
                     disableResizing: true
                 },
                 viewRender: function(view) {
-                    userWorkoutService.retrieve({from: moment(view.start).format('YYYY-MM-DD'),  to: moment(view.end).format('YYYY-MM-DD'), maxResults: 50}).then(function(data) {
+                    userWorkoutService.retrieve({from: moment(view.start).format('YYYY-MM-DD'),  to: moment(view.end).format('YYYY-MM-DD'), maxResults: 100}).then(function(data) {
                         var events = [];
                         for ( var i = 0; i < data.data.result.length; i++) {
                             var event = data.data.result[i];

@@ -20,6 +20,7 @@ public class AccountRecordCriteria extends Criteria<AccountRecordCriteria> {
     private Date from;
     private Date to;
     private List<AccountRecord.Type> types = new ArrayList<AccountRecord.Type>();
+    private Long accountId;
 
     public AccountRecordCriteria(String lang) {
         super("a", "AccountRecord", lang);
@@ -38,6 +39,11 @@ public class AccountRecordCriteria extends Criteria<AccountRecordCriteria> {
         return this;
     }
 
+    public AccountRecordCriteria setAccountIdRestriction(Long accountId) {
+        this.accountId = accountId;
+        return this;
+    }
+
     @Override
     protected String[] getValidFields() {
         return PROPERTIES;
@@ -45,7 +51,7 @@ public class AccountRecordCriteria extends Criteria<AccountRecordCriteria> {
 
     @Override
     protected void appendRestrictions() {
-        appendCurrentUserRestriction("account.id");
+        appendUserRestriction("account.id", accountId);
         appendFromToRestrictions("date", this.from, this.to);
         if (this.id == null) {
             collection(this.types, "type", "IN");

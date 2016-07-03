@@ -8,6 +8,7 @@ import pl.jakubpiecuch.trainingmanager.service.user.workout.UserWorkoutDto;
 import pl.jakubpiecuch.trainingmanager.service.user.workout.session.UserWorkoutCriteria;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractRepositoryController;
 import pl.jakubpiecuch.trainingmanager.web.controllers.api.ApiURI;
+import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
 import java.util.Locale;
 
@@ -20,7 +21,7 @@ public class UserWorkoutsController extends AbstractRepositoryController<UserWor
 
     @Override
     protected UserWorkoutCriteria createCriteria(MultiValueMap<String, String> parameters, Locale locale) {
-        return new UserWorkoutCriteria(locale.getLanguage())
+        return new UserWorkoutCriteria(locale.getLanguage()).setAccountIdRestriction(AuthenticatedUserUtil.getAuthenticatedUserDetails().getId())
                 .addDateRangeRestriction(resolveDate(parameters.getFirst("from")), resolveDate(parameters.getFirst("to")))
                 .addStateRestrictions(resolveEnumValues(parameters.get("state"), UserWorkout.State.class));
     }

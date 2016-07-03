@@ -2,7 +2,7 @@ package pl.jakubpiecuch.trainingmanager.service.flow.plan;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 

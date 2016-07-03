@@ -4,12 +4,14 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "description")
 public class Description extends RepoCommonEntity {
 
     public static final String PROPERTY_NAME = "name";
+    public static final String LATERAL_NAME = "lateral";
     private String name;
     private String movieUrl;
     private String content;
@@ -29,6 +31,7 @@ public class Description extends RepoCommonEntity {
     }
 
     @Column(name = PROPERTY_NAME)
+    @NotNull
     public String getName() {
         return name;
     }
@@ -48,6 +51,7 @@ public class Description extends RepoCommonEntity {
 
     @Column(name = "party_muscles")
     @Enumerated(EnumType.ORDINAL)
+    @NotNull
     public Muscles getMuscles() {
         return muscles;
     }
@@ -75,6 +79,7 @@ public class Description extends RepoCommonEntity {
     }
 
     @Column(name = "type")
+    @NotNull
     public Type getType() {
         return type;
     }
@@ -84,6 +89,7 @@ public class Description extends RepoCommonEntity {
     }
 
     @Column(name = "level")
+    @NotNull
     public Level getLevel() {
         return level;
     }
@@ -93,6 +99,7 @@ public class Description extends RepoCommonEntity {
     }
 
     @Column(name = "mechanics")
+    @NotNull
     public Mechanics getMechanics() {
         return mechanics;
     }
@@ -102,6 +109,7 @@ public class Description extends RepoCommonEntity {
     }
 
     @Column(name = "force")
+    @NotNull
     public Force getForce() {
         return force;
     }
@@ -111,6 +119,7 @@ public class Description extends RepoCommonEntity {
     }
 
     @Column(name = "sides")
+    @NotNull
     public Lateral getLateral() {
         return lateral;
     }
@@ -120,6 +129,7 @@ public class Description extends RepoCommonEntity {
     }
 
     @Column(name = "sets")
+    @NotNull
     public Sets getSets() {
         return sets;
     }

@@ -1,31 +1,30 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
+import com.google.common.collect.Lists;
 import org.joda.time.LocalDate;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakubpiecuch.trainingmanager.BaseUnitDaoTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.AccountRecord;
+import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.service.repository.accountrecord.AccountRecordCriteria;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Rico on 2015-06-13.
  */
-public class AccountRecordDaoImplTest extends BaseUnitDaoTestCase {
+public class AccountRecordDaoImplTest extends BaseUnitDaoTestCase<AccountRecord> {
 
     private static final Long ID = 1l;
     @Autowired
     private RepoDao<AccountRecord, AccountRecordCriteria> accountRecordDao;
-
-    @Before
-    public void setUp() {
-        addUserToContext();
-    }
 
     @Test
     public void testFindByCriteriaNull() {
@@ -39,9 +38,15 @@ public class AccountRecordDaoImplTest extends BaseUnitDaoTestCase {
     public void testFindByCriteriaEmpty() {
         PageResult<AccountRecord> result = accountRecordDao.findByCriteria(new AccountRecordCriteria("en"));
 
-        assertEquals(1l, result.getCount());
+        assertEquals(2l, result.getCount());
         AccountRecord record = result.getResult().get(0);
 
+        assertRecord(record);
+
+        result = accountRecordDao.findByCriteria(new AccountRecordCriteria("en").setAccountIdRestriction(1l));
+
+        assertEquals(1l, result.getCount());
+        record = result.getResult().get(0);
         assertRecord(record);
     }
 
@@ -53,4 +58,18 @@ public class AccountRecordDaoImplTest extends BaseUnitDaoTestCase {
         assertEquals("80.0", record.getValue());
     }
 
+    @Override
+    protected List<String> getNotNullProperties() {
+        return Lists.newArrayList("type", "value", "date", "account");
+    }
+
+    @Override
+    protected CoreDao getDao() {
+        return accountRecordDao;
+    }
+
+    @Override
+    protected AccountRecord getEntity() {
+        return new AccountRecord();
+    }
 }

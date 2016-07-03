@@ -38,6 +38,9 @@
                             <th data-ng-click="table.sort('mechanics')">
                                 {{'description.mechanics' | translate}}
                             </th>
+                            <th data-ng-click="table.sort('lateral')">
+                                {{'description.lateral' | translate}}
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -59,6 +62,9 @@
                             </td>
                             <td>
                                 {{description.mechanics}}
+                            </td>
+                            <td>
+                                {{description.lateral}}
                             </td>
                         </tr>
                         </tbody>

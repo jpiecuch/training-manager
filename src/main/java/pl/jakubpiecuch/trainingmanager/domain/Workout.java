@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class Workout extends CommonEntity implements Serializable {
 
     @Column(name = "week_day")
     @Enumerated(EnumType.ORDINAL)
+    @NotNull
     public WeekDay getWeekDay() {
         return weekDay;
     }
@@ -42,6 +44,7 @@ public class Workout extends CommonEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = PHASE_FIELD)
+    @NotNull
     public Phase getPhase() {
         return phase;
     }
@@ -51,6 +54,7 @@ public class Workout extends CommonEntity implements Serializable {
     }
 
     @Column(name = MUSCLES_FIELD)
+    @NotNull
     protected String getMuscle() {
         return muscle;
     }

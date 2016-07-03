@@ -19,6 +19,7 @@ public class UserWorkoutCriteria extends Criteria<UserWorkoutCriteria> {
     private Date from;
     private Date to;
     private List<UserWorkout.State> states = new ArrayList<>();
+    private Long accountId;
 
     public UserWorkoutCriteria(String lang) {
         super("u", "UserWorkout", lang);
@@ -45,11 +46,16 @@ public class UserWorkoutCriteria extends Criteria<UserWorkoutCriteria> {
         return this;
     }
 
+    public UserWorkoutCriteria setAccountIdRestriction(Long accountId) {
+        this.accountId = accountId;
+        return this;
+    }
+
     @Override
     protected void appendRestrictions() {
 
         if (id == null) {
-            appendCurrentUserRestriction("account.id");
+            appendUserRestriction("account.id", accountId);
             appendFromToRestrictions("date", this.from, this.to);
             collection(states, "state", "IN");
         }

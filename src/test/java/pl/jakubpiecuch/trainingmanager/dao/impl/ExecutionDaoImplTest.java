@@ -5,13 +5,14 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jakubpiecuch.trainingmanager.BaseUnitDaoTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
+import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.domain.Execution;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class ExecutionDaoImplTest extends BaseUnitDaoTestCase {
+public class ExecutionDaoImplTest extends BaseUnitDaoTestCase<Execution> {
 
     public static final Long BILATERAL_EXECUTION = 1l;
     public static final Long UNILATERAL_EXECUTION = 2l;
@@ -55,5 +56,20 @@ public class ExecutionDaoImplTest extends BaseUnitDaoTestCase {
         assertEquals(RIGHT_WEIGHTS, rightResult.getWeights());
 
 
+    }
+
+    @Override
+    protected List<String> getNotNullProperties() {
+        return Lists.newArrayList("exercise", "workout", "state");
+    }
+
+    @Override
+    protected CoreDao getDao() {
+        return executionDao;
+    }
+
+    @Override
+    protected Execution getEntity() {
+        return new Execution();
     }
 }

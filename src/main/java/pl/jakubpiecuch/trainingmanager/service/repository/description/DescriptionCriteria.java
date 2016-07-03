@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Rico on 2015-01-02.
  */
 public class DescriptionCriteria extends Criteria<DescriptionCriteria> {
-    private static final String[] PROPERTIES = new String[]{"id", "type", "muscles", "mechanics", "force", "level", Description.PROPERTY_NAME};
+    private static final String[] PROPERTIES = new String[]{Description.ID_FIELD_NAME, "type", "muscles", "mechanics", "force", "level", Description.PROPERTY_NAME, Description.LATERAL_NAME};
     private List<Description.Muscles> muscles = new ArrayList<Description.Muscles>();
     private List<Description.Force> force = new ArrayList<Description.Force>();
     private List<Description.Level> level = new ArrayList<Description.Level>();

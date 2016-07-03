@@ -9,6 +9,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
 @Entity
@@ -38,6 +39,7 @@ public abstract class Equipment<T> extends RepoCommonEntity implements Equipment
     }
 
     @Column(name = "type", nullable = false, updatable = false, insertable = false)
+    @NotNull
     protected int getDiscriminatorType() {
         return type;
     }

@@ -20,7 +20,7 @@
         <jdbc:script location="classpath:sql/postgresql/update_sequences.sql"/>
     </jdbc:initialize-database>
 
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan" value="pl.jakubpiecuch.trainingmanager.domain"/>
         <property name="configLocation" value="classpath:hibernate.cfg.xml"/>

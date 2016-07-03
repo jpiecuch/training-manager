@@ -5,9 +5,6 @@ package pl.jakubpiecuch.trainingmanager.domain;
  */
 public class Permissions {
 
-    public static final String IS_AUTHENTICATED = "isAuthenticated()";
-    public static final String IS_ANONYMOUS = "isAnonymous()";
-
     public static final String ROLE_PREFIX = "ROLE_";
 
     public static final String PLAN_CREATOR = "PLAN_C";
@@ -62,15 +59,14 @@ public class Permissions {
             USER_RECORD_VIEWER,
             PLAN_STARTER_CREATOR};
 
+    private Permissions() {
+    }
+
     public static String[] getAllPermissions() {
         return ALL;
     }
 
     public static String[] getUserPermissions() {
         return USER_ROLE_PERMISSIONS;
-    }
-
-
-    private Permissions() {
     }
 }

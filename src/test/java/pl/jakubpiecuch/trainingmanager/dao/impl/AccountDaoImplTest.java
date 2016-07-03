@@ -1,14 +1,16 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
-import org.hibernate.HibernateException;
-import org.hibernate.exception.ConstraintViolationException;
+import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import pl.jakubpiecuch.trainingmanager.BaseUnitDaoTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.domain.Permissions;
 import pl.jakubpiecuch.trainingmanager.domain.Role;
 import pl.jakubpiecuch.trainingmanager.service.repository.account.AccountCriteria;
@@ -16,16 +18,17 @@ import pl.jakubpiecuch.trainingmanager.service.repository.role.RoleCriteria;
 import pl.jakubpiecuch.trainingmanager.service.user.model.Provider;
 import pl.jakubpiecuch.trainingmanager.service.user.social.SocialProvider;
 
+import javax.validation.ConstraintViolationException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.function.Function;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
-public class AccountDaoImplTest extends BaseUnitDaoTestCase {
+public class AccountDaoImplTest extends BaseUnitDaoTestCase<Account> {
 
     private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
     private static final Long ID = 1l;
@@ -73,7 +76,7 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
 
     @Test
     @Transactional
-    public void testDelete() {
+    public void shouldDelete() {
         Account account = new Account();
         account.setName(NAME + "delete");
         account.setSalt(SALT);
@@ -90,7 +93,7 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
 
     @Test
     @Transactional
-    public void testUpdate() {
+    public void shouldUpdate() {
         Account account = new Account();
         account.setName(NAME + "update");
         account.setSalt(SALT);
@@ -107,8 +110,7 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
     }
 
     @Test
-    @Transactional
-    public void testSave() {
+    public void shouldSave() {
         Account account = new Account();
         account.setName(NAME + "new");
         account.setSalt(SALT);
@@ -120,101 +122,37 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
         accountDao.flush();
         assertNotNull(account.getId());
         assertNotNull(account.getCreated());
+    }
 
-        account.setStatus(Account.Status.ACTIVE);
-        accountDao.create(account);
-        accountDao.flush();
-        assertNotNull(account.getUpdated());
-
-        boolean exFlag = false;
+    @Test
+    public void shouldThrowIllegalArgumentExceptionOfNullObject() {
         try {
-            account.setStatus(Account.Status.ACTIVE);
-            account.setId(NOT_EXISTS_ID);
-            accountDao.create(account);
-            accountDao.flush();
-        } catch (HibernateException ex) {
-            exFlag = true;
+            accountDao.create(null);
+            fail();
+        } catch(IllegalArgumentException ex) {
+            assertEquals(CoreDaoImpl.NOT_NULL_OBJECT_REQUIRED, ex.getMessage());
         }
-        assertTrue(exFlag);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    @Transactional
-    public void testSaveNull() {
-        accountDao.create(null);
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void testSaveValidityNoName() {
+    @Test
+    public void shouldThrowConstraintViolationExceptionNoUniqueNameInSocial() {
         Account account = new Account();
-        account.setEmail(EMAIL);
-        accountDao.create(account);
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void testSaveValidityNoPassword() {
-        Account account = new Account();
-        account.setEmail(EMAIL);
-        account.setName(NAME);
-        accountDao.create(account);
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void testSaveValidityNoSalt() {
-        Account account = new Account();
-        account.setEmail(EMAIL);
-        account.setName(NAME);
-        account.setCredential(PASSWORD);
-        accountDao.create(account);
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void testSaveValidityNoStatus() {
-        Account account = new Account();
-        account.setEmail(EMAIL);
-        account.setName(NAME);
-        account.setCredential(PASSWORD);
-        account.setSalt(SALT);
-        accountDao.create(account);
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void testSaveValidityNoProvider() {
-        Account account = new Account();
-        account.setEmail(EMAIL);
-        account.setName(NAME);
-        account.setCredential(PASSWORD);
-        account.setSalt(SALT);
-        account.setStatus(STATUS);
-        accountDao.create(account);
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void testSaveValidityNoSocialType() {
-        Account account = new Account();
-        account.setEmail(EMAIL);
-        account.setName(NAME);
-        account.setCredential(PASSWORD);
-        account.setSalt(SALT);
-        account.setStatus(STATUS);
-        account.setProvider(Provider.Type.LOCAL);
-        accountDao.create(account);
-    }
-
-    @Test(expected = ConstraintViolationException.class)
-    public void testSaveValidityNoUniqueNameInSocial() {
-        Account account = new Account();
-        account.setEmail(EMAIL);
+        account.setEmail(EMAIL + "unique");
         account.setName(NAME);
         account.setCredential(PASSWORD);
         account.setSalt(SALT);
         account.setStatus(STATUS);
         account.setProvider(Provider.Type.LOCAL);
         account.setSocialType(SocialProvider.SocialType.NONE);
-        accountDao.create(account);
+        try {
+            accountDao.create(account);
+            fail();
+        } catch (org.hibernate.exception.ConstraintViolationException ex) {
+            assertEquals("ACCOUNT_NAME_UNIQUE", ex.getConstraintName());
+        }
     }
 
-    @Test(expected = ConstraintViolationException.class)
+    @Test
     public void testSaveValidityNoUniqueEmailInSocial() {
         Account account = new Account();
         account.setEmail(EMAIL);
@@ -224,23 +162,12 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
         account.setStatus(STATUS);
         account.setProvider(Provider.Type.LOCAL);
         account.setSocialType(SocialProvider.SocialType.NONE);
-        accountDao.create(account);
-    }
-
-    @Test
-    public void testSaveValiditySuccess() {
-        Account account = new Account();
-        account.setEmail(EMAIL);
-        account.setName(NAME);
-        account.setCredential(PASSWORD);
-        account.setSalt(SALT);
-        account.setStatus(STATUS);
-        account.setProvider(Provider.Type.LOCAL);
-        account.setSocialType(SocialProvider.SocialType.FACEBOOK);
-        accountDao.create(account);
-
-        assertNotNull(account.getId());
-        assertNotNull(account.getCreated());
+        try {
+            accountDao.create(account);
+            fail();
+        } catch (org.hibernate.exception.ConstraintViolationException ex) {
+            assertEquals("ACCOUNT_EMAIL_UNIQUE", ex.getConstraintName());
+        }
     }
 
     @Test
@@ -252,7 +179,7 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
 
         result = accountDao.findByCriteria(new AccountCriteria());
 
-        assertEquals(1l, result.getCount());
+        assertEquals(2l, result.getCount());
         assertAccount(result.getResult().get(0), role);
 
         result = accountDao.findByCriteria(new AccountCriteria().addEmailRestrictions("wrong@email.com"));
@@ -272,5 +199,20 @@ public class AccountDaoImplTest extends BaseUnitDaoTestCase {
 
         assertEquals(1l, result.getCount());
         assertAccount(result.getResult().get(0), role);
+    }
+
+    @Override
+    protected Account getEntity() {
+        return new Account();
+    }
+
+    @Override
+    protected CoreDao<Account> getDao() {
+        return accountDao;
+    }
+
+    @Override
+    protected List<String> getNotNullProperties() {
+        return Lists.newArrayList("name", "provider", "credential", "socialType", "salt", "status");
     }
 }

@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "role")
@@ -33,6 +34,7 @@ public class Role extends RepoCommonEntity {
     }
 
     @Column(name = NAME_FIELD_NAME)
+    @NotNull
     public String getName() {
         return name;
     }

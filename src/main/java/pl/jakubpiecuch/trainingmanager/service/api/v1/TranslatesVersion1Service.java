@@ -1,26 +1,19 @@
 package pl.jakubpiecuch.trainingmanager.service.api.v1;
 
-import com.google.common.collect.Maps;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
 import pl.jakubpiecuch.trainingmanager.web.exception.notfound.NotFoundException;
 
-import javax.annotation.PostConstruct;
-import java.io.File;
-import java.net.URISyntaxException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * Created by jakub on 29.12.2015.
  */
 public class TranslatesVersion1Service implements TranslatesService {
 
-    private static final char LIST_DELIMITER = ';';
-
-    private Map<String, List<PropertiesConfiguration>> propertiesConfigurations;
+    private Map<String, Properties> properties;
     private List<String> languages;
-    private String[] messageSourceFiles;
 
 
     @Override
@@ -30,38 +23,20 @@ public class TranslatesVersion1Service implements TranslatesService {
 
     @Override
     public Map<String, String> translates(String language) {
-        final List<PropertiesConfiguration> configurations = propertiesConfigurations.get(language);
-        if (CollectionUtils.isEmpty(configurations)) {
+        Properties property = properties.get(language);
+        if (property == null) {
             throw new NotFoundException();
         }
         Map<String, String> result = new HashMap<>();
-        for (final PropertiesConfiguration propertiesConfiguration : configurations) {
-            result.putAll(Maps.toMap(propertiesConfiguration.getKeys(), input -> propertiesConfiguration.getString(input)));
-        }
+        property.entrySet().forEach(objectObjectEntry -> result.put(objectObjectEntry.getKey().toString(), objectObjectEntry.getValue().toString()));
         return result;
     }
 
-    public void setLanguages(String[] languages) {
-        this.languages = Arrays.asList(languages);
+    public void setProperties(Map<String, Properties> properties) {
+        this.properties = properties;
     }
 
-    public void setMessageSourceFiles(String[] messageSourceFiles) {
-        this.messageSourceFiles = messageSourceFiles;
-    }
-
-    @PostConstruct
-    protected void afterPropertiesSet() throws URISyntaxException, ConfigurationException {
-        this.propertiesConfigurations = new HashMap<String, List<PropertiesConfiguration>>();
-        for (String lang : languages) {
-            List<PropertiesConfiguration> configurations = new ArrayList<PropertiesConfiguration>();
-            for (String messageSourceFile : messageSourceFiles) {
-                PropertiesConfiguration configuration = new PropertiesConfiguration();
-                configuration.setListDelimiter(LIST_DELIMITER);
-                configuration.setFile(new File(getClass().getResource(String.format(messageSourceFile, lang)).toURI()));
-                configuration.load();
-                configurations.add(configuration);
-            }
-            this.propertiesConfigurations.put(lang, configurations);
-        }
+    public void setLanguages(List<String> languages) {
+        this.languages = languages;
     }
 }

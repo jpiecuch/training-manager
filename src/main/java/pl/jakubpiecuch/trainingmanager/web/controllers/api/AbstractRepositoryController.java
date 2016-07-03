@@ -24,9 +24,10 @@ import java.util.stream.Stream;
  */
 public abstract class AbstractRepositoryController<T extends RepoObject, C extends Criteria> extends AbstractController implements RepositoryController<T> {
 
-    protected abstract C createCriteria(MultiValueMap<String, String> parameters, Locale locale);
     private String defaultOrderBy;
     private RepositoryType repositoryType;
+
+    protected abstract C createCriteria(MultiValueMap<String, String> parameters, Locale locale);
 
     @Override
     @RequestMapping(method = RequestMethod.GET)

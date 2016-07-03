@@ -13,7 +13,6 @@ import pl.jakubpiecuch.trainingmanager.dao.EmptyPageResult;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.service.resolver.OrderResolver;
-import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
 import java.util.*;
 
@@ -82,9 +81,12 @@ public abstract class Criteria<T extends Criteria> {
         }
     }
 
-    protected void appendCurrentUserRestriction(String field) {
-        restrictions.add(" " + alias + "."+field+" = :accountId ");
-        params.put("accountId", AuthenticatedUserUtil.getUser().getId());
+    protected void appendUserRestriction(String field, Long accountId) {
+        if (accountId != null) {
+            restrictions.add(" " + alias + "." + field + " = :accountId ");
+            params.put("accountId", accountId);
+        }
+
     }
 
     protected abstract String[] getValidFields();

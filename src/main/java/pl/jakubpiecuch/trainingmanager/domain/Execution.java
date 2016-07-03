@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.jakubpiecuch.trainingmanager.web.util.WebUtil;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class Execution extends CommonEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise")
+    @NotNull
     public Exercise getExercise() {
         return exercise;
     }
@@ -47,6 +49,7 @@ public class Execution extends CommonEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workout")
+    @NotNull
     public UserWorkout getWorkout() {
         return workout;
     }
@@ -66,6 +69,7 @@ public class Execution extends CommonEntity {
 
     @Column(name = "state")
     @Enumerated(value = EnumType.ORDINAL)
+    @NotNull
     public UserWorkout.State getState() {
         return state;
     }

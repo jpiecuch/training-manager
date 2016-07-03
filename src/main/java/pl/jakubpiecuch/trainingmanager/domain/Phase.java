@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class Phase extends CommonEntity implements Serializable {
 
     @Column(name = GOAL_FIELD)
     @Enumerated(EnumType.ORDINAL)
+    @NotNull
     public Plan.Goal getGoal() {
         return goal;
     }
@@ -43,6 +45,7 @@ public class Phase extends CommonEntity implements Serializable {
     }
 
     @Column(name = POSITION_FIELD)
+    @NotNull
     public Integer getPosition() {
         return position;
     }
@@ -52,6 +55,7 @@ public class Phase extends CommonEntity implements Serializable {
     }
 
     @Column(name = DESCRIPTION_FIELD)
+    @NotNull
     public String getDescription() {
         return description;
     }
@@ -62,6 +66,7 @@ public class Phase extends CommonEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = PLAN_FIELD)
+    @NotNull
     public Plan getPlan() {
         return plan;
     }
@@ -71,6 +76,7 @@ public class Phase extends CommonEntity implements Serializable {
     }
 
     @Column(name = WEEKS_FIELD)
+    @NotNull
     public Integer getWeeks() {
         return weeks;
     }

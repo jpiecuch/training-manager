@@ -1,10 +1,12 @@
 INSERT INTO account (id, name, password, salt, created, updated, status, email, config, provider, social_type) VALUES (1, 'test.user', 'dcc4cec778c00b632fba26da142d95d0b46a05e0a5f944a0484346c0656def67', 'jp88', '2014-12-07 13:52:56.805', '2014-12-07 13:53:16.062', 0, 'test.user@test.com', '{"firstName":"Test","lastName":"User"}', 0, 3);
+INSERT INTO account (id, name, password, salt, created, updated, status, email, config, provider, social_type) VALUES (2, 'test.user.2', 'dcc4cec778c00b632fba26da142d95d0b46a05e0a5f944a0484346c0656def67', 'jp88', '2014-12-07 13:52:56.805', '2014-12-07 13:53:16.062', 0, 'test.user2@test.com', '{"firstName":"Test","lastName":"User2"}', 0, 3);
 
 INSERT INTO role (id, name, permissions, modifiable) VALUES (1, 'ADMIN', '0,1,2', true);
 
 INSERT INTO account_role (account, role) VALUES (1,1);
 
 INSERT INTO account_record (id, type, value, date, account) VALUES (1, 0, '80.0', '2014-12-07 00:00:00', 1);
+INSERT INTO account_record (id, type, value, date, account) VALUES (2, 0, '80.5', '2014-12-07 00:00:00', 2);
 
 INSERT INTO plan (id, name, goal, creator, used) VALUES (1, 'Main plan', 0, 1, false);
 

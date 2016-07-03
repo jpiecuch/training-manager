@@ -1,17 +1,23 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
+import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.jakubpiecuch.trainingmanager.BaseUnitDaoTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
+import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
+import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.domain.Description;
 import pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionCriteria;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class DescriptionDaoImplTest extends BaseUnitDaoTestCase {
+public class DescriptionDaoImplTest extends BaseUnitDaoTestCase<Description> {
 
     @Autowired
     private RepoDao<Description, DescriptionCriteria> descriptionDao;
@@ -30,5 +36,20 @@ public class DescriptionDaoImplTest extends BaseUnitDaoTestCase {
         list = descriptionDao.findByCriteria(new DescriptionCriteria("en").addMuscleRestriction(Description.Muscles.CALVES).addForceRestriction(Description.Force.PULL));
         assertEquals(0, list.getResult().size());
         assertEquals(0, list.getCount());
+    }
+
+    @Override
+    protected List<String> getNotNullProperties() {
+        return Lists.newArrayList("name", "muscles", "type", "level", "mechanics", "force", "sets", "lateral");
+    }
+
+    @Override
+    protected CoreDao getDao() {
+        return descriptionDao;
+    }
+
+    @Override
+    protected Description getEntity() {
+        return new Description();
     }
 }

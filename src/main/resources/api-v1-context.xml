@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+       xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <bean id="abstractController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController"
           abstract="true">
@@ -14,8 +14,32 @@
     
     <bean id="translatesService" class="pl.jakubpiecuch.trainingmanager.service.api.v1.TranslatesVersion1Service">
         <property name="languages" value="${app.langs}"/>
-        <property name="messageSourceFiles"
-                  value="/bundles/web/web_%s.properties,/bundles/policy/policy_%s.properties,/bundles/terms/terms_%s.properties"/>
+        <property name="properties">
+            <map>
+                <entry key="pl">
+                    <bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+                        <property name="locations">
+                            <list>
+                                <value>classpath:bundles/web/web_pl.properties</value>
+                                <value>classpath:bundles/policy/policy_pl.properties</value>
+                                <value>classpath:bundles/terms/terms_pl.properties</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+                <entry key="en">
+                    <bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+                        <property name="locations">
+                            <list>
+                                <value>classpath:bundles/web/web_en.properties</value>
+                                <value>classpath:bundles/policy/policy_en.properties</value>
+                                <value>classpath:bundles/terms/terms_en.properties</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+            </map>
+        </property>
     </bean>
 
     <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">

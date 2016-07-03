@@ -1,5 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,15 +8,16 @@ import pl.jakubpiecuch.trainingmanager.BaseUnitDaoTestCase;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.Account;
+import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.domain.Phase;
 import pl.jakubpiecuch.trainingmanager.domain.Plan;
 import pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanCriteria;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class PlanDaoImplTest extends BaseUnitDaoTestCase {
+public class PlanDaoImplTest extends BaseUnitDaoTestCase<Plan> {
 
     private static final Long ID = 1l;
     private static final Plan.Goal GOAL = Plan.Goal.MUSCLES;
@@ -32,9 +34,6 @@ public class PlanDaoImplTest extends BaseUnitDaoTestCase {
     @Autowired
     private RepoDao<Plan, PlanCriteria> planDao;
 
-    @Autowired
-    private CoreDao<Phase> phaseDao;
-
     @Before
     public void setUp() {
         PLAN.setName(NAME_SAVE);
@@ -47,7 +46,6 @@ public class PlanDaoImplTest extends BaseUnitDaoTestCase {
         PHASE.setWeeks(2);
         PHASE.setPlan(PLAN);
 
-        PLAN.setPhases(new ArrayList<Phase>());
         PLAN.getPhases().add(PHASE);
     }
 
@@ -66,10 +64,20 @@ public class PlanDaoImplTest extends BaseUnitDaoTestCase {
         planDao.create(PLAN);
         planDao.flush();
         assertNotNull(PLAN.getId());
-
-        PLAN.getPhases().get(0).setPlan(null);
-        planDao.update(PLAN);
-        planDao.flush();
     }
 
+    @Override
+    protected List<String> getNotNullProperties() {
+        return Lists.newArrayList("name", "goal", "creator");
+    }
+
+    @Override
+    protected CoreDao getDao() {
+        return planDao;
+    }
+
+    @Override
+    protected Plan getEntity() {
+        return new Plan();
+    }
 }

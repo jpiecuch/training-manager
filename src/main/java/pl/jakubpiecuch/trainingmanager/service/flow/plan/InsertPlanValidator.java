@@ -19,7 +19,9 @@ import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.IntPredicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Created by Rico on 2014-11-29.
@@ -60,13 +62,13 @@ public class InsertPlanValidator implements Validator {
     }
 
     private void validatePositions(List<Integer> positions, int size, Errors errors, String field) {
-        positions = positions.stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
+        List<Integer> sorted = positions.stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
         List<Integer> expected = new ArrayList<>(size);
         for (int i = 1; i <= size; i++) {
             expected.add(i);
         }
 
-        if (!positions.equals(expected)) {
+        if (!sorted.equals(expected)) {
             errors.rejectValue(field, RestrictionCode.INVALID_ORDER);
         }
     }

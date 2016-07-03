@@ -4,12 +4,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import pl.jakubpiecuch.trainingmanager.dao.core.CoreDao;
 import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 
 @Transactional
 public class CoreDaoImpl<T extends CommonEntity> implements CoreDao<T> {
 
+    public static final String NOT_NULL_OBJECT_REQUIRED = "Object cannot be null";
     private SessionFactory sessionFactory;
     private Class clazz;
 
@@ -24,6 +26,7 @@ public class CoreDaoImpl<T extends CommonEntity> implements CoreDao<T> {
 
     @Override
     public Long create(T o) {
+        Assert.notNull(o, NOT_NULL_OBJECT_REQUIRED);
         return (Long) session().save(o);
     }
 

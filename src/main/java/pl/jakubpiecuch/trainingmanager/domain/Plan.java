@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Plan extends RepoCommonEntity {
     private Goal goal;
     private Account creator;
     private boolean used;
-    private List<Phase> phases = new ArrayList<Phase>();
+    private List<Phase> phases = new ArrayList<>();
     public Plan() {
         super();
     }
@@ -29,6 +30,7 @@ public class Plan extends RepoCommonEntity {
     }
 
     @Column(name = NAME_FIELD)
+    @NotNull
     public String getName() {
         return name;
     }
@@ -39,6 +41,7 @@ public class Plan extends RepoCommonEntity {
 
     @Column(name = GOAL_FIELD)
     @Enumerated(EnumType.ORDINAL)
+    @NotNull
     public Goal getGoal() {
         return goal;
     }
@@ -49,6 +52,7 @@ public class Plan extends RepoCommonEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = CREATOR_FIELD)
+    @NotNull
     public Account getCreator() {
         return creator;
     }
@@ -58,6 +62,7 @@ public class Plan extends RepoCommonEntity {
     }
 
     @Column(name = USED_FIELD)
+    @NotNull
     public boolean isUsed() {
         return used;
     }
