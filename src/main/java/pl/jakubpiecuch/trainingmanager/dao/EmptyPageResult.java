@@ -1,6 +1,6 @@
 package pl.jakubpiecuch.trainingmanager.dao;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -9,7 +9,7 @@ import java.util.List;
 public class EmptyPageResult<T> implements PageResult<T> {
     @Override
     public List<T> getResult() {
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     @Override

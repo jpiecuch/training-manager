@@ -53,12 +53,4 @@ public class WebUtil {
             return null;
         }
     }
-
-    public static Double[] toDoubleArray(String[] array) {
-        Double[] res = new Double[array.length];
-        for (int i = 0; i < array.length; i++) {
-            res[i] = StringUtils.isNotBlank(array[i]) ? Double.parseDouble(array[i]) : null;
-        }
-        return res;
-    }
 }

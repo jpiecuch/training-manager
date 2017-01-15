@@ -22,6 +22,10 @@
         <constructor-arg value="pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository"/>
     </bean>
 
+    <bean id="accountRecordRepository" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository"/>
+    </bean>
+
     <import resource="classpath:validator-context.xml"/>
 
     <!-- only for mocking purpose -->

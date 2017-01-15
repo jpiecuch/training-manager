@@ -31,25 +31,22 @@ public class VelocityEmailService implements EmailService {
     public void sendEmail(final Object[] data, final Locale locale, final Template template, final String... recipients) {
         Assert.notNull(template);
         Assert.notNull(locale);
-        MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            @Override
-            public void prepare(MimeMessage mimeMessage) throws MessagingException {
+        MimeMessagePreparator preparator = mimeMessage -> {
 
-                MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, encoding);
-                message.setTo(recipients);
-                message.setFrom(sender);
-                message.setSubject(messageSource.getMessage("mail." + template + ".subject", null, locale));
+            MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, encoding);
+            message.setTo(recipients);
+            message.setFrom(sender);
+            message.setSubject(messageSource.getMessage("mail." + template + ".subject", null, locale));
 
-                Map<String, Object> model = new HashMap<String, Object>();
-                model.put("messageSource", messageSource);
-                model.put("locale", locale);
-                model.put("data", data);
-                model.put("date", new DateTool());
+            Map<String, Object> model = new HashMap<>();
+            model.put("messageSource", messageSource);
+            model.put("locale", locale);
+            model.put("data", data);
+            model.put("date", new DateTool());
 
 
-                message.setText(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, String.format(templateLocation, template.toString().toLowerCase()), encoding, model), true);
+            message.setText(VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, String.format(templateLocation, template.name().toLowerCase()), encoding, model), true);
 
-            }
         };
 
         this.mailSender.send(preparator);

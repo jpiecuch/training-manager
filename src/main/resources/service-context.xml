@@ -60,6 +60,7 @@
 
     <bean id="imageResource" class="pl.jakubpiecuch.trainingmanager.service.resource.image.ImageResource">
         <property name="root" value="${resource.directory}/images/"/>
+        <property name="cryptService" ref="cryptService"/>
     </bean>
 
     <bean id="cryptService" class="pl.jakubpiecuch.trainingmanager.service.crypt.SymmetricCryptService">

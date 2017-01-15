@@ -14,7 +14,6 @@ import pl.jakubpiecuch.trainingmanager.web.validator.RestrictionCode;
  */
 public class DescriptionValidator implements Validator {
 
-
     private int minNameLength;
     private int maxNameLength;
 

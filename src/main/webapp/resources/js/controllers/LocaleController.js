@@ -9,8 +9,10 @@ app.controller('LocaleController', function($scope, $http, lang, $translate, url
             $http.post(urlService.apiURL('/locale'), lang).success(function() {
                 me.current = lang;
                 $translate.use(lang);
-                tmhDynamicLocale.set(lang);
-                $rootScope.$broadcast('changeLang', {lang: lang});
+                tmhDynamicLocale.set(lang).then(function() {
+                    $rootScope.$broadcast('changeLang', {lang: lang});
+                });
+
             });
         },
         init: function() {

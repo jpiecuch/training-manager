@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.jakubpiecuch.trainingmanager.domain.AccountRecord;
 import pl.jakubpiecuch.trainingmanager.service.repository.accountrecord.AccountRecordCriteria;
+import pl.jakubpiecuch.trainingmanager.service.repository.accountrecord.AccountRecordDto;
 import pl.jakubpiecuch.trainingmanager.web.util.AuthenticatedUserUtil;
 
 import java.util.Locale;
@@ -14,7 +15,7 @@ import java.util.Locale;
  */
 @RequestMapping(ApiURI.API_ACCOUNT_RECORD_PATH)
 @RestController
-public class AccountRecordController extends AbstractRepositoryController<AccountRecord, AccountRecordCriteria> {
+public class AccountRecordController extends AbstractRepositoryController<AccountRecordDto, AccountRecordCriteria> {
 
     @Override
     protected AccountRecordCriteria createCriteria(MultiValueMap<String, String> parameters, Locale locale) {

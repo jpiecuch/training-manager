@@ -131,6 +131,7 @@ ALTER TABLE account ADD CONSTRAINT account_email_unique UNIQUE (email, social_ty
 ALTER TABLE account ADD CONSTRAINT account_name_unique UNIQUE (name, social_type);
 
 ALTER TABLE role ADD CONSTRAINT role_name_unique UNIQUE (name);
+ALTER TABLE account_record ADD CONSTRAINT account_record_date_unique UNIQUE (type, date, account);
 
 ALTER TABLE exercise ADD CONSTRAINT description_fkey FOREIGN KEY (description) REFERENCES description (id);
 ALTER TABLE exercise ADD CONSTRAINT workout_fkey FOREIGN KEY (workout) REFERENCES workout (id);

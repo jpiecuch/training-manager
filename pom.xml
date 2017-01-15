@@ -45,6 +45,8 @@
         <spring.social>1.1.0.RELEASE</spring.social>
         <log4j.version>2.1</log4j.version>
         <slf4j.version>1.7.7</slf4j.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.target.source>1.8</maven.target.source>
     </properties>
 
     <dependencies>

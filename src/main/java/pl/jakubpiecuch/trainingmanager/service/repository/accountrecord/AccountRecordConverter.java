@@ -17,10 +17,10 @@ public class AccountRecordConverter extends AbstractConverter<AccountRecordDto, 
     @Override
     protected AccountRecord convertFrom(AccountRecordDto dto, AccountRecord entity) {
         entity.setAccount(entity.getId() == null ? new Account(authenticationService.signed().getId()) : entity.getAccount());
-        entity.setDate(entity.getId() == null ? new Date() : entity.getDate());
+        entity.setDate(entity.getId() == null ? dto.getDate() : entity.getDate());
         entity.setType(dto.getType());
         entity.setValue(dto.getValue());
-        return null;
+        return entity;
     }
 
     @Override

@@ -14,6 +14,32 @@ var app = angular.module("app", [
     'chart.js'
 ]);
 
+angular.module('ui.bootstrap.datepicker')
+    .config(function($provide) {
+        $provide.decorator('datepickerDirective', function($delegate) {
+            var directive = $delegate[0];
+            var link = directive.link;
+
+            directive.compile = function() {
+                return function(scope, element, attrs, ctrls) {
+                    link.apply(this, arguments);
+
+                    var datepickerCtrl = ctrls[0];
+                    var ngModelCtrl = ctrls[1];
+
+                    if (ngModelCtrl) {
+                        // Listen for 'refreshDatepickers' event...
+                        scope.$on('changeLang', function refreshView() {
+                            console.log(datepickerCtrl);
+                            datepickerCtrl.refreshView();
+                        });
+                    }
+                }
+            };
+            return $delegate;
+        });
+    });
+
 app.config(['$animateProvider',
     function($animateProvider) {
         $animateProvider.classNameFilter(/has-animate/);
@@ -243,8 +269,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             'resources/assets/admin/pages/css/todo.css',
                             'resources/js/services/user-workout-service.js',
                             'resources/js/services/form-validate-service.js',
-                            'resources/js/services/account-record-service.js'
-                        ] 
+                            'resources/js/services/account-record-service.js',
+                            'resources/js/services/chart-service.js'
+                        ]
                     });
                 }]
             }

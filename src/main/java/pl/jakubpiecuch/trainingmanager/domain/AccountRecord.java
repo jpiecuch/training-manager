@@ -8,7 +8,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(name = "account_record")
+@Table(name = "account_record",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"type", "date", "account"})})
 public class AccountRecord extends RepoCommonEntity {
 
     private Type type;

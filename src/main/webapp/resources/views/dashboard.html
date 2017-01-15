@@ -6,7 +6,7 @@
 		</li>
 	</ul>
 </div>
-<div ng-controller="DashboardController" data-ng-init="init()">
+<div ng-controller="DashboardController" data-ng-init="init(recordForm)">
 	<div class="row">
 		<div class="col-md-6">
 			<div class="portlet light bordered">
@@ -52,6 +52,26 @@
 				</div>
 				<div class="portlet-body">
 			        <div id="chartdiv" style="width: 100%; height: 300px;"></div>
+					<form name="recordForm" data-ng-submit="dashboard.record.create()" novalidate>
+						<div id="add-value" class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<input name="value" type="text" class="form-control" placeholder="Weight in kg" data-ng-model="dashboard.record.value">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p class="input-group">
+										<input name="date" class="form-control form-control-inline date-picker" is-open="dashboard.record.date.opened" datepicker-popup="{{dashboard.record.date.format}}" type="text" placeholder="Date" data-ng-model="dashboard.record.date.value">
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default" ng-click="dashboard.record.date.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+										</span>
+									</p>
+								</div>
+							</div>
+							<button type="submit" class="btn green" data-ng-bind="'save' | translate"></button>
+						</div>
+					</form>
                 </div>
 		</div>
 	</div>

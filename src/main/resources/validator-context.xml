@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
     <bean id="authenticationValidator"
           class="pl.jakubpiecuch.trainingmanager.web.validator.authentication.AuthenticationValidator"/>
@@ -71,5 +73,10 @@
           class="pl.jakubpiecuch.trainingmanager.web.validator.userworkout.UserWorkoutValidator"/>
 
     <bean id="accountRecordValidator"
-          class="pl.jakubpiecuch.trainingmanager.web.validator.accountrecord.AccountRecordValidator"/>
+          class="pl.jakubpiecuch.trainingmanager.web.validator.accountrecord.AccountRecordValidator">
+        <property name="repository" ref="accountRecordRepository"/>
+        <property name="precision" ref="dayOfMonthPrecision"/>
+    </bean>
+
+    <util:constant id="dayOfMonthPrecision" static-field="java.util.Calendar.DAY_OF_MONTH"/>
 </beans>
