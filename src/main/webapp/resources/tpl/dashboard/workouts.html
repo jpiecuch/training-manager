@@ -18,7 +18,7 @@
                     {{workout.plan.name}} | {{workout.phase.description}}
                 </div>
                 <div class="todo-tasklist-controls pull-left">
-                    <span class="todo-tasklist-date"> {{workout.executions.length}} exercises </span>
+                    <span class="todo-tasklist-date">{{'exercises.amount' | translate}}: {{workout.executions.length}}</span>
                     <span class="todo-tasklist-badge badge badge-roundless badge-primary" style="margin-right: 5px;" data-ng-repeat="muscle in workout.muscles">{{muscle | translate}}</span>
                 </div>
             </div>

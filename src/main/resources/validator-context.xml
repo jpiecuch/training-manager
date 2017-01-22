@@ -37,7 +37,7 @@
                 <entry key="BENCH" value-ref="benchValidator"/>
                 <entry key="DUMBBELL" value-ref="dumbbellValidator"/>
                 <entry key="LOAD" value-ref="loadValidator"/>
-                <entry key="NECK" value-ref="neckValidator"/>
+                <entry key="BARBELL" value-ref="barbellValidator"/>
                 <entry key="PRESS" value-ref="pressValidator"/>
                 <entry key="STAND" value-ref="standValidator"/>
             </map>
@@ -56,7 +56,7 @@
 
     <bean id="benchValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.bench.BenchValidator"/>
 
-    <bean id="neckValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.neck.NeckValidator"/>
+    <bean id="barbellValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.barbell.BarbellValidator"/>
 
     <bean id="loadValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.load.LoadValidator"/>
 

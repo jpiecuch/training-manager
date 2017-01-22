@@ -39,7 +39,7 @@
                         <tbody>
                         <tr data-ng-repeat="equipment in table.data.result">
                             <td>
-                                <a href="#/equipment?id={{equipment.id}}">{{equipment.type}}</a>
+                                <a href="#/equipment?id={{equipment.id}}">{{equipment.type | translate}}</a>
                             </td>
                             <td>
                                 {{equipment.weight}}

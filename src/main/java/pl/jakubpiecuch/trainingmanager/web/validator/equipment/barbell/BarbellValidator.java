@@ -1,4 +1,4 @@
-package pl.jakubpiecuch.trainingmanager.web.validator.equipment.neck;
+package pl.jakubpiecuch.trainingmanager.web.validator.equipment.barbell;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +15,9 @@ import java.io.IOException;
 /**
  * Created by Rico on 2014-12-07.
  */
-public class NeckValidator implements Validator {
+public class BarbellValidator implements Validator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NeckValidator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BarbellValidator.class);
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -30,7 +30,7 @@ public class NeckValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "strength", RestrictionCode.REQUIRED);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "weight", RestrictionCode.REQUIRED);
 
-        Equipment.Neck object = (Equipment.Neck) target;
+        Equipment.Barbell object = (Equipment.Barbell) target;
         try {
             if (object.getConfig() == null) {
                 errors.rejectValue("config", RestrictionCode.REQUIRED);

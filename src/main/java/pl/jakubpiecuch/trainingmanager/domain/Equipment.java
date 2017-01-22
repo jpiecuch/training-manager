@@ -15,13 +15,13 @@ import java.io.IOException;
 @Entity
 @Table(name = "equipment")
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type", visible = true)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Equipment.Bar.class, name = "BAR"),
         @JsonSubTypes.Type(value = Equipment.Bench.class, name = "BENCH"),
         @JsonSubTypes.Type(value = Equipment.Dumbbell.class, name = "DUMBBELL"),
         @JsonSubTypes.Type(value = Equipment.Load.class, name = "LOAD"),
-        @JsonSubTypes.Type(value = Equipment.Neck.class, name = "NECK"),
+        @JsonSubTypes.Type(value = Equipment.Barbell.class, name = "BARBELL"),
         @JsonSubTypes.Type(value = Equipment.Press.class, name = "PRESS"),
         @JsonSubTypes.Type(value = Equipment.Rack.class, name = "RACK"),
         @JsonSubTypes.Type(value = Equipment.Stand.class, name = "STAND")
@@ -44,7 +44,7 @@ public abstract class Equipment<T> extends RepoCommonEntity implements Equipment
         return type;
     }
 
-    protected void setDiscriminatorType(int type) {
+    public void setDiscriminatorType(int type) {
         this.type = type;
     }
 
@@ -139,7 +139,7 @@ public abstract class Equipment<T> extends RepoCommonEntity implements Equipment
 
     public enum Type {
         BAR(Bar.class), BENCH(Bench.class), DUMBBELL(Dumbbell.class), LOAD(Load.class),
-        NECK(Neck.class), PRESS(Press.class), STAND(Stand.class), RACK(Rack.class);
+        BARBELL(Barbell.class), PRESS(Press.class), STAND(Stand.class), RACK(Rack.class);
 
         private Class clazz;
 
@@ -157,7 +157,7 @@ public abstract class Equipment<T> extends RepoCommonEntity implements Equipment
         protected static final String BENCH = "1";
         protected static final String DUMBBELL = "2";
         protected static final String LOAD = "3";
-        protected static final String NECK = "4";
+        protected static final String BARBELL = "4";
         protected static final String PRESS = "5";
         protected static final String STAND = "6";
         protected static final String RACK = "7";
@@ -191,14 +191,14 @@ public abstract class Equipment<T> extends RepoCommonEntity implements Equipment
     }
 
     @Entity
-    @DiscriminatorValue(DiscriminatorType.NECK)
-    public static class Neck extends Equipment<NeckConfig> {
+    @DiscriminatorValue(DiscriminatorType.BARBELL)
+    public static class Barbell extends Equipment<BarbellConfig> {
 
         @Override
         @Transient
         @JsonIgnore
         public Class getConfigClass() {
-            return NeckConfig.class;
+            return BarbellConfig.class;
         }
     }
 

@@ -12,7 +12,7 @@
                 <div class="col-md-4">
                     <div class="input-icon right" data-ng-if="plan.editable">
                         <i data-ng-if="plan.name.isTouched()" class="fa" data-ng-class="{'fa-check' : plan.name.isValid(), 'fa-exclamation' : !plan.name.isValid()}"></i>
-                        <input name="planName" type="text" class="form-control" placeholder="{{'plan.name.placeholder' | translate}}"
+                        <input name="planName" type="text" class="form-control"
                                data-ng-model="plan.name.value" required data-ng-blur="plan.name.touch()">
                     </div>
                     <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="plan.name.value"></span>

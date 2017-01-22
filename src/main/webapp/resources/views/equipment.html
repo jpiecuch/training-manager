@@ -41,7 +41,7 @@
                                    data-ng-class="{'fa-check' : validate.isValid(form.type), 'fa-exclamation' : validate.isNotValid(form.type)}"></i>
                                 <select name="type" data-ng-model="equipment.type" class="form-control" required
                                         tooltip="{{'field.required' | translate}}" tooltip-placement="right" data-ng-change="equipment.changeType()">
-                                    <option data-ng-repeat="type in dictionary.types" data-ng-bind="type"
+                                    <option data-ng-repeat="type in dictionary.types" data-ng-bind="type | translate"
                                             value="{{type}}"></option>
                                 </select>
                             </div>

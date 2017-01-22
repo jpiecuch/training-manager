@@ -17,7 +17,7 @@ public interface EquipmentDescriptor {
         }
     }
 
-    class NeckConfig {
+    class BarbellConfig {
         private boolean connectedLoad;
         private Type type;
 

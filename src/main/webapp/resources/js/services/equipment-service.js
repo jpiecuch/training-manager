@@ -32,7 +32,7 @@ app.service('equipmentService', function(urlService, $http, $q, formValidateServ
                 case 'LOAD':
                     this.weight = null;
                     break;
-                case 'NECK':
+                case 'BARBELL':
                     this.strength = null;
                     this.length = null;
                     this.weight = null;
