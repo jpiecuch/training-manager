@@ -13,6 +13,7 @@ import pl.jakubpiecuch.trainingmanager.service.repository.description.Descriptio
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -36,6 +37,15 @@ public class DescriptionDaoImplTest extends BaseUnitDaoTestCase<Description> {
         list = descriptionDao.findByCriteria(new DescriptionCriteria("en").addMuscleRestriction(Description.Muscles.CALVES).addForceRestriction(Description.Force.PULL));
         assertEquals(0, list.getResult().size());
         assertEquals(0, list.getCount());
+    }
+
+    @Test
+    public void testGroupBy() {
+        Map<String, Long> group = descriptionDao.group(new DescriptionCriteria("en").addGroupBy("force"));
+        assertEquals(3, group.size());
+        assertEquals(group.get(Description.Force.PULL.toString()).longValue(), 2L);
+        assertEquals(group.get(Description.Force.PUSH.toString()).longValue(), 3L);
+        assertEquals(group.get(Description.Force.STATIC.toString()).longValue(), 3L);
     }
 
     @Override

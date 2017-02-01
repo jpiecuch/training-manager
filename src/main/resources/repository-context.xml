@@ -86,10 +86,14 @@
     </bean>
 
     <bean id="executionRepository"
-          class="pl.jakubpiecuch.trainingmanager.service.user.workout.session.execution.ExecutionUpdatableRepository">
+          class="pl.jakubpiecuch.trainingmanager.service.user.workout.session.execution.ExecutionRepository">
         <property name="converter" ref="executionConverter"/>
-        <property name="executionDao" ref="executionDao"/>
-        <property name="validator" ref="executionValidator"/>
+        <property name="dao" ref="executionDao"/>
+        <property name="validators">
+            <map>
+                <entry key="UPDATE" value-ref="executionValidator"/>
+            </map>
+        </property>
     </bean>
 
 </beans>

@@ -92,7 +92,7 @@ public class AccountRecord extends RepoCommonEntity {
     }
 
     public enum Type {
-        WEIGHT
+        WEIGHT, WAIST
     }
 
 

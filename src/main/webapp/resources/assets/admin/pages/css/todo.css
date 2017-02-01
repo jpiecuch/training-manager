@@ -135,6 +135,10 @@ div .todo-tasklist-item:hover {
   margin: 0 10px 10px 0;
 }
 
+.todo-tasklist-item a {
+  text-decoration: none;
+}
+
 .todo-tasklist-item-title {
   font-size: 15px;
   color: #2b4a5c;

@@ -34,6 +34,10 @@ app.service('userWorkoutService', function($q, $http, urlService, authenticateSe
         return $http.get(urlService.apiURL('/users/' + authenticateService.signed().id + '/workouts'), { params: params });
     };
 
+    this.group = function(params) {
+        return $http.get(urlService.apiURL('/users/' + authenticateService.signed().id + '/workouts/group'), { params: params });
+    };
+
     this.get = function (id) {
         return $http.get(urlService.apiURL('/users/' + authenticateService.signed().id + '/workouts/' + id))
             .then(function (data) {

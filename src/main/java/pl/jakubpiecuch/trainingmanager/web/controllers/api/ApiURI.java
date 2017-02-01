@@ -39,6 +39,8 @@ public class ApiURI {
     public static final String API_EQUIPMENT_PATH = API_VERSION_PATH + EQUIPMENT_PATH;
     private static final String EXECUTION_PATH = "/executions";
     public static final String API_EXECUTION_PATH = API_VERSION_PATH + EXECUTION_PATH;
+    public static final String API_COUNT_PATH = "/count";
+    public static final String API_GROUP_PATH = "/group";
 
 
     private ApiURI() {

@@ -15,6 +15,8 @@ import pl.jakubpiecuch.trainingmanager.domain.CommonEntity;
 import pl.jakubpiecuch.trainingmanager.service.resolver.OrderResolver;
 
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created by Rico on 2015-01-02.
@@ -23,6 +25,7 @@ public abstract class Criteria<T extends Criteria> {
 
     private static final String PREFIX_FORMAT =  "SELECT %s FROM %s %s ";
     private static final String COUNT_PREFIX_FORMAT =  "SELECT COUNT(%s) FROM %s %s ";
+    private static final String GROUP_PREFIX_FORMAT =  "SELECT %s, COUNT(%s) FROM %s %s ";
     private static final String RESTRICTIONS_FORMAT =  " %s.%s = :%s ";
     private static final String FETCH = "FETCH";
     public static final String LEFT_JOIN_FETCH = "LEFT JOIN FETCH ";
@@ -42,12 +45,47 @@ public abstract class Criteria<T extends Criteria> {
     private Map<String, OrderResolver> orderResolverMap = new HashMap<>();
     private String orderProperty;
     private OrderMode orderMode;
+    private String groupBy;
 
     public Criteria(String alias, String entity, String lang) {
         this.alias = alias;
         this.entity = entity;
         this.lang = lang;
         this.restrictionFormat = alias + ".%s %s (:%s) ";
+    }
+
+    public T setIdRestriction(Long id) {
+        this.id = id;
+        return (T) this;
+    }
+
+    public T setFirstResultRestriction(Integer firstResult) {
+        this.firstResult = firstResult;
+        return (T) this;
+    }
+
+    public T setMaxResultsRestriction(Integer maxResults) {
+        this.maxResults = maxResults;
+        return (T) this;
+    }
+
+    public T setOrderBy(String property, OrderMode mode) {
+        validateProperty(property);
+        this.orderProperty = property;
+        this.orderMode = mode;
+        return (T) this;
+    }
+
+    public T addExcludedIdRestriction(Long... ids) {
+        if (ArrayUtils.isNotEmpty(ids)) {
+            this.excludedIds.addAll(Arrays.asList(ids));
+        }
+        return (T) this;
+    }
+
+    public T addGroupBy(String field) {
+        this.groupBy = alias + "." + field;
+        return (T) this;
     }
 
     protected void collection(Collection collection, String property, String clause) {
@@ -86,12 +124,23 @@ public abstract class Criteria<T extends Criteria> {
             restrictions.add(" " + alias + "." + field + " = :accountId ");
             params.put("accountId", accountId);
         }
-
     }
 
     protected abstract String[] getValidFields();
 
     protected abstract void appendRestrictions();
+
+    Map<String, Long> group(Session session) {
+        boolean isSearchById = this.id != null;
+        StringBuilder sb = createCommonQuery(GROUP_PREFIX_FORMAT, isSearchById);
+
+        sb.append(" GROUP BY ").append(groupBy);
+
+        Query query = session.createQuery(sb.toString());
+        fillQueryWithParameters(query);
+
+        return ((List<Object[]>) query.list()).stream().collect(Collectors.toMap(o -> String.valueOf(o[0]), o -> Long.valueOf(String.valueOf(o[1]))));
+    }
 
     long count(Session session) {
         boolean isSearchById = this.id != null;
@@ -135,47 +184,24 @@ public abstract class Criteria<T extends Criteria> {
         } : new EmptyPageResult<>();
     }
 
-    public T setIdRestriction(Long id) {
-        this.id = id;
-        return (T) this;
-    }
-
-    public T setFirstResultRestriction(Integer firstResult) {
-        this.firstResult = firstResult;
-        return (T) this;
-    }
-
-    public T setMaxResultsRestriction(Integer maxResults) {
-        this.maxResults = maxResults;
-        return (T) this;
-    }
-
-    public T setOrderBy(String property, OrderMode mode) {
-        validateProperty(property);
-        this.orderProperty = property;
-        this.orderMode = mode;
-        return (T) this;
-    }
-
-    public T addExcludedIdRestriction(Long... ids) {
-        if (ArrayUtils.isNotEmpty(ids)) {
-            this.excludedIds.addAll(Arrays.asList(ids));
-        }
-        return (T) this;
-    }
-
     T appendOrderResolvers(Map<String, OrderResolver> orderResolverMap) {
         this.orderResolverMap.putAll(orderResolverMap);
         return (T) this;
     }
 
     private StringBuilder createCommonQuery(String prefix, boolean isSearchById) {
-        StringBuilder sb = new StringBuilder(String.format(prefix, alias, entity, alias));
+        boolean isGroup = GROUP_PREFIX_FORMAT == prefix;
+        Object[] values = new Object[] {alias, entity, alias};
+        if (isGroup) {
+            values = ArrayUtils.add(values, 0, groupBy);
+        }
+        StringBuilder sb = new StringBuilder(String.format(prefix, values));
 
         boolean isCount = COUNT_PREFIX_FORMAT == prefix;
 
+
         for (String join : this.joins) {
-            sb.append(isCount ? StringUtils.remove(join, FETCH) : join).append(" ");
+            sb.append(isCount || isGroup ? StringUtils.remove(join, FETCH) : join).append(" ");
         }
 
         if (isSearchById) {

@@ -10,7 +10,7 @@
     <tr data-ng-repeat="plan in table.data.result">
         <td><a href="#/plan?id={{plan.id}}" data-ng-bind="plan.name"></a></td>
         <td data-ng-bind="plan.goal | translate"></td>
-        <td><a data-ng-if="!plan.used" href="#" class="btn btn-sm red" data-ng-click="removeRow(plan.id)"><i class="fa fa-trash"></i> {{'delete' | translate}}</a></td>
+        <td><a data-ng-if="!plan.used" href="#" class="btn btn-sm red" data-ng-click="table.remove(plan, $index)"><i class="fa fa-trash"></i> {{'delete' | translate}}</a></td>
     </tr>
     </tbody>
 </table>

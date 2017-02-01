@@ -6,13 +6,16 @@
 		</li>
 	</ul>
 </div>
-<div ng-controller="DashboardController" data-ng-init="init(recordForm)">
+<div ng-controller="DashboardController" data-ng-init="init()">
 	<div class="row">
 		<div class="col-md-6">
 			<div data-ng-include="'resources/tpl/dashboard/workouts.html'"></div>
+			<div data-ng-include="'resources/tpl/dashboard/weight-chart.html'"></div>
 		</div>
 		<div class="col-md-6">
-            <div data-ng-include="'resources/tpl/dashboard/weight-chart.html'"></div>
+            <div data-ng-include="'resources/tpl/dashboard/waist-chart.html'"></div>
+			<div data-ng-include="'resources/tpl/dashboard/user-workout-groups-chart.html'"></div>
+			<div data-ng-include="'resources/tpl/dashboard/muscle-exercise-chart.html'"></div>
 		</div>
 	</div>
 </div>

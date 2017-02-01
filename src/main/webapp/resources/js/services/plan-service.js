@@ -87,9 +87,7 @@ app.service('planService', function($q, $http, phaseService, formValidateService
                     me.submit(method, this).then(function (data) {
                         if (method === POST_METHOD) {
                             plan.id = data.data;
-                            console.log(plan);
                             _.each(plan.relations, function(relation) {
-                                console.log(relation);
                                 me.addRelation(plan, relation.object, relation.property);
                             });
                         }

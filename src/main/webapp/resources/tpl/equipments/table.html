@@ -1,0 +1,26 @@
+<table class="table table-striped table-bordered table-advance table-hover dataTable">
+    <thead>
+    <tr>
+        <th data-ng-bind="'equipment.type' | translate"></th>
+        <th data-ng-bind="'equipment.weight' | translate"></th>
+        <th data-ng-bind="'equipment.length' | translate"></th>
+        <th data-ng-bind="'equipment.strength' | translate"></th>
+        <th data-ng-bind="'equipment.config' | translate"></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-ng-repeat="equipment in table.data.result">
+        <td>
+            <a href="#/equipment?id={{equipment.id}}" data-ng-bind="equipment.type | translate"></a>
+        </td>
+        <td data-ng-bind="equipment.weight"></td>
+        <td data-ng-bind="equipment.length"></td>
+        <td data-ng-bind="equipment.strength"></td>
+        <td>
+            <div class="col-md-12" data-ng-include="'resources/tpl/equipment/' + equipment.type.toLowerCase() + '-config-row.html'"></div>
+        </td>
+        <td><a href="#" class="btn btn-sm red" data-ng-click="table.remove(equipment, $index)"><i class="fa fa-trash"></i> {{'delete' | translate}}</a></td>
+    </tr>
+    </tbody>
+</table>

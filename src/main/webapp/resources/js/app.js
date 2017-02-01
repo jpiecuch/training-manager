@@ -30,7 +30,6 @@ angular.module('ui.bootstrap.datepicker')
                     if (ngModelCtrl) {
                         // Listen for 'refreshDatepickers' event...
                         scope.$on('changeLang', function refreshView() {
-                            console.log(datepickerCtrl);
                             datepickerCtrl.refreshView();
                         });
                     }
@@ -263,14 +262,22 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                         name: 'app',
                         files: [
                             'resources/assets/global/plugins/amcharts/serial.js',
+                            'resources/assets/global/plugins/amcharts/pie.js',
                             'resources/assets/global/plugins/amcharts/lang/pl.js',
                             'resources/assets/global/plugins/amcharts/themes/light.js',
                             'resources/js/controllers/DashboardController.js',
+                            'resources/js/controllers/ChartController.js',
+                            'resources/js/controllers/PieChartController.js',
+                            'resources/js/controllers/ColumnChartController.js',
                             'resources/assets/admin/pages/css/todo.css',
+                            'resources/js/services/read-service.js',
                             'resources/js/services/user-workout-service.js',
                             'resources/js/services/form-validate-service.js',
                             'resources/js/services/account-record-service.js',
-                            'resources/js/services/chart-service.js'
+                            'resources/js/services/execution-service.js',
+                            'resources/js/services/chart-service.js',
+                            'resources/js/services/pie-chart-service.js',
+                            'resources/js/services/column-chart-service.js'
                         ]
                     });
                 }]
@@ -374,7 +381,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
         .state('descriptions', {
             url: "/descriptions",
-            templateUrl: "resources/views/descriptions.html",
+            templateUrl: "resources/views/table.html",
             data: {pageTitle: 'Description'},
             controller: "DescriptionsController",
             resolve: {
@@ -394,7 +401,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
         .state('equipments', {
             url: "/equipments",
-            templateUrl: "resources/views/equipments.html",
+            templateUrl: "resources/views/table.html",
             data: {pageTitle: 'Equipment'},
             controller: "EquipmentsController",
             resolve: {

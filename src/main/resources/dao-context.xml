@@ -63,7 +63,7 @@
         <property name="clazz" value="pl.jakubpiecuch.trainingmanager.domain.Exercise"/>
     </bean>
 
-    <bean id="executionDao" class="pl.jakubpiecuch.trainingmanager.dao.core.impl.CoreDaoImpl" parent="coreDao">
+    <bean id="executionDao" class="pl.jakubpiecuch.trainingmanager.dao.impl.CommonRepoDaoImpl" parent="coreDao">
         <property name="clazz" value="pl.jakubpiecuch.trainingmanager.domain.Execution"/>
     </bean>
 

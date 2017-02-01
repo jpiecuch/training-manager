@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "execution")
-public class Execution extends CommonEntity {
+public class Execution extends RepoCommonEntity {
 
     private Exercise exercise;
     private String comment;

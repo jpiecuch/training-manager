@@ -76,6 +76,7 @@
                 <entry key="WORKOUT" value-ref="userWorkoutRepository"/>
                 <entry key="ROLE" value-ref="roleRepository"/>
                 <entry key="ACCOUNT_RECORD" value-ref="accountRecordRepository"/>
+                <entry key="EXECUTION" value-ref="executionRepository"/>
             </map>
         </property>
         <property name="userPlanStarter" ref="sessionUserPlanStarter"/>

@@ -1,6 +1,8 @@
 package pl.jakubpiecuch.trainingmanager.dao.impl;
 
 
+import org.apache.commons.collections.MapUtils;
+import pl.jakubpiecuch.trainingmanager.dao.CountResult;
 import pl.jakubpiecuch.trainingmanager.dao.EmptyPageResult;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
@@ -20,6 +22,17 @@ public abstract class AbstractRepoDao<E extends RepoCommonEntity, C extends Crit
     @Override
     public PageResult<E> findByCriteria(C criteria) {
        return criteria != null ? criteria.appendOrderResolvers(orderResolvers).page(session()) : new EmptyPageResult<>();
+    }
+
+    @Override
+    public CountResult count(C criteria) {
+        long count = criteria != null ? criteria.count(session()) : 0;
+        return () -> count;
+    }
+
+    @Override
+    public Map<String, Long> group(C criteria) {
+        return criteria != null ? criteria.group(session()) : MapUtils.EMPTY_MAP;
     }
 
     public void setOrderResolvers(Map<String, OrderResolver> orderResolvers) {

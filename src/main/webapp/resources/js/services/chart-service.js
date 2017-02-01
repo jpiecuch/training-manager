@@ -1,7 +1,8 @@
 app.service('chartService', function() {
-    this.get = function(data, lang) {
+    this.get = function(data, lang, id) {
 
-        return AmCharts.makeChart("chartdiv", {
+        return AmCharts.makeChart(id, {
+            id: id,
             language: lang,
             "type": "serial",
             "theme": "light",
@@ -17,6 +18,7 @@ app.service('chartService', function() {
                 "id":"g1",
                 "balloonText": "[[category]]<br><b><span style='font-size:14px;'>[[value]]</span></b>",
                 "bullet": "round",
+                "fillAlphas": 0.2,
                 "bulletSize": 8,
                 "lineColor": "#d1655d",
                 "lineThickness": 2,

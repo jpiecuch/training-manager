@@ -1,6 +1,6 @@
 app.service('accountRecordService', function($http, urlService, authenticateService, formValidateService, alertService) {
 
-    this.get = function(form) {
+    this.get = function(name, type) {
         return {
             value: null,
             date: {
@@ -17,14 +17,15 @@ app.service('accountRecordService', function($http, urlService, authenticateServ
                 },
                 format: 'dd/MM/yyyy'
             },
-            form: form,
-            create: function() {
-                formValidateService.validate(this.form);
-                if (this.form.$valid) {
+            name: name,
+            type: type,
+            create: function(form) {
+                formValidateService.validate(form);
+                if (form.$valid) {
                     var payload = {
                         value: this.value,
                         date: this.date.value,
-                        type: 'WEIGHT'
+                        type: this.type
                     };
                     $http.post(urlService.apiURL('/users/' + authenticateService.signed().id +'/records'), payload).then(function() {
                         alertService.show({type: 'success', title: 'OK', description: 'Submit'});
@@ -39,5 +40,9 @@ app.service('accountRecordService', function($http, urlService, authenticateServ
 
     this.retrieve = function(params) {
         return $http.get(urlService.apiURL('/users/' + authenticateService.signed().id +'/records'), { params: params });
+    };
+
+    this.count = function(params) {
+        return $http.get(urlService.apiURL('/users/' + authenticateService.signed().id +'/records/count'), { params: params });
     };
 });

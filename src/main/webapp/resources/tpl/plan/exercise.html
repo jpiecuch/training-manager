@@ -54,7 +54,7 @@
                             <li data-ng-if="set.value !== 'FAIL'"><a data-ng-click="exercise.toFail($index)">{{'exercise.toFail' | translate}}</a></li>
                             <li data-ng-if="set.value === 'FAIL'"><a data-ng-click="exercise.reps($index)">{{'exercise.reps' | translate}}</a></li>
                         </ul>
-                        <input data-ng-disabled="set.value === 'FAIL'" data-only-digits name="exerciseSet{{$index}}" type="text" class="form-control" data-ng-model="exercise.sets[$index].value | translate" required data-ng-blur="exercise.sets[$index].touch()">
+                        <input data-ng-disabled="set.value === 'FAIL'" data-only-digits name="exerciseSet{{$index}}" type="text" class="form-control" data-ng-model="exercise.sets[$index].value" required data-ng-blur="exercise.sets[$index].touch()">
                     </div>
                     <span class="form-control-static" data-ng-if="!plan.editable" data-ng-bind="set.value"></span>
                 </div>

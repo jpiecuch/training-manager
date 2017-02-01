@@ -99,5 +99,9 @@ app.service('equipmentService', function(urlService, $http, $q, formValidateServ
     this.retrieve = function(params) {
         return $http.get(urlService.apiURL('/equipments'), { params: params });
     }
+
+    this.delete = function(id) {
+        return $http.delete(urlService.apiURL('/equipments/' + id));
+    }
 });
 

@@ -3,6 +3,7 @@ package pl.jakubpiecuch.trainingmanager.service.repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
+import pl.jakubpiecuch.trainingmanager.dao.CountResult;
 import pl.jakubpiecuch.trainingmanager.dao.PageResult;
 import pl.jakubpiecuch.trainingmanager.dao.RepoDao;
 import pl.jakubpiecuch.trainingmanager.dao.impl.Criteria;
@@ -41,6 +42,16 @@ public abstract class AbstractConversionRepository<T extends RepoObject, E exten
                 return result.getCount();
             }
         };
+    }
+
+    @Override
+    public CountResult count(C criteria) {
+        return dao.count(criteria);
+    }
+
+    @Override
+    public Map<String, Long> group(C criteria) {
+        return dao.group(criteria);
     }
 
     @Override

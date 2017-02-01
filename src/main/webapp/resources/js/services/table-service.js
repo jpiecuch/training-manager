@@ -62,6 +62,13 @@ app.service('tableService', function() {
                 this.service.retrieve(this.filter.params).then(function(data) {
                     me.data = data.data;
                 });
+            },
+            remove: function(row, index) {
+                var me = this;
+                this.service.delete(row.id).then(function() {
+                    me.data.result.splice(index, 1);
+                    me.data.count--;
+                });
             }
         }
     }
