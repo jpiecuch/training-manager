@@ -9,7 +9,7 @@
 </div>
 <div class="portlet-body">
     <div class="todo-tasklist">
-        <div class="todo-tasklist-item todo-tasklist-item-border-green" data-ng-repeat="workout in dashboard.nextWorkouts.result">
+        <div class="todo-tasklist-item todo-tasklist-item-border-green" data-ng-repeat="workout in workouts.result">
             <a href="#/workout/{{workout.id}}">
                 <div class="todo-tasklist-item-title">
                     <i class="fa fa-calendar"></i> {{workout.date | date}}
