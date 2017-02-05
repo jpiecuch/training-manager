@@ -1,20 +1,21 @@
 'use strict';
 
-app.controller('ChartController', function($scope, accountRecordService, chartService, $rootScope) {
+app.controller('ChartController', function($scope, accountRecordService, chartService, $rootScope, queryValueService) {
 
     
-    $scope.init = function(formName, chartName, type) {
+    $scope.init = function(formName, chartName, data) {
         $scope.chart = {
             id: chartName
         };
 
         $scope.record = {
             name: formName,
-            type: type
+            type: data.dataType
         };
+        var query = queryValueService.query(data.query);
 
-        accountRecordService.count({to: moment().add(1, 'days').format('YYYY-MM-DD'), type: [type]}).then(function(count) {
-            accountRecordService.retrieve({to: moment().add(1, 'days').format('YYYY-MM-DD'), type: [type], firstResult: count.data.count - 50, maxResults: 50}).then(function(data) {
+        accountRecordService.count(query).then(function(count) {
+            accountRecordService.retrieve(angular.extend(query, {maxResults: 50, firstResult: count.data.count - 50})).then(function(data) {
 
                 angular.extend($scope.chart, chartService.get(data.data.result, $rootScope.settings.lang, chartName));
                 $scope.$on('changeLang', function(event, args) {

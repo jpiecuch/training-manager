@@ -269,6 +269,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             'resources/js/controllers/ChartController.js',
                             'resources/js/controllers/PieChartController.js',
                             'resources/js/controllers/ColumnChartController.js',
+                            'resources/js/controllers/WorkoutsController.js',
                             'resources/assets/admin/pages/css/todo.css',
                             'resources/js/services/read-service.js',
                             'resources/js/services/user-workout-service.js',
@@ -277,7 +278,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             'resources/js/services/execution-service.js',
                             'resources/js/services/chart-service.js',
                             'resources/js/services/pie-chart-service.js',
-                            'resources/js/services/column-chart-service.js'
+                            'resources/js/services/column-chart-service.js',
+                            'resources/js/services/query-value-service.js'
                         ]
                     });
                 }]

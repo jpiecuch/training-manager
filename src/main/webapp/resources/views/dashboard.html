@@ -9,13 +9,12 @@
 <div ng-controller="DashboardController" data-ng-init="init()">
 	<div class="row">
 		<div class="col-md-6">
-			<div data-ng-include="'resources/tpl/dashboard/workouts.html'"></div>
-			<div data-ng-include="'resources/tpl/dashboard/weight-chart.html'"></div>
-		</div>
+			<div class="portlet light bordered" data-ng-include="'resources/tpl/dashboard/workouts.html'" ng-controller="WorkoutsController" data-ng-init="init(columns[0][0])"></div>
+			<div class="portlet light bordered" data-ng-include="'resources/tpl/dashboard/chart.html'" ng-controller="ChartController" data-ng-init="init('weight-form', 'wieght-chart', columns[0][1])"></div></div>
 		<div class="col-md-6">
-            <div data-ng-include="'resources/tpl/dashboard/waist-chart.html'"></div>
-			<div data-ng-include="'resources/tpl/dashboard/user-workout-groups-chart.html'"></div>
-			<div data-ng-include="'resources/tpl/dashboard/muscle-exercise-chart.html'"></div>
+            <div class="portlet light bordered" data-ng-include="'resources/tpl/dashboard/chart.html'" ng-controller="ChartController" data-ng-init="init('waist-form', 'waist-chart', columns[1][0])"></div>
+			<div class="portlet light bordered" data-ng-include="'resources/tpl/dashboard/column-chart.html'" ng-controller="ColumnChartController" data-ng-init="init('muscle-exercise-chart', 'EXECUTION', columns[1][1])"></div>
+			<div class="portlet light bordered" data-ng-include="'resources/tpl/dashboard/pie-chart.html'" ng-controller="PieChartController" data-ng-init="init('user-workout-group-chart', 'USER_WORKOUT', columns[1][2])"></div>
 		</div>
 	</div>
 </div>
