@@ -12,7 +12,7 @@
     <context:annotation-config/>
 
     <context:property-placeholder location="classpath:configuration/dev.properties,classpath:configuration/common.properties"/>
-    <bean id="webRequest" class="pl.jakubpiecuch.trainingmanager.service.stub.WebRequestStub"/>
+    <bean id="webRequest" class="pl.jakubpiecuch.gymhome.service.stub.WebRequestStub"/>
 
     <import resource="classpath:service-context.xml"/>
     <import resource="postgresql-test-datasource-context.xml"/>

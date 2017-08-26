@@ -3,7 +3,7 @@
        xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="abstractController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController"
+    <bean id="abstractController" class="pl.jakubpiecuch.gymhome.web.controllers.api.AbstractController"
           abstract="true">
         <property name="versionServices">
             <map>
@@ -12,7 +12,7 @@
         </property>
     </bean>
     
-    <bean id="translatesService" class="pl.jakubpiecuch.trainingmanager.service.api.v1.TranslatesVersion1Service">
+    <bean id="translatesService" class="pl.jakubpiecuch.gymhome.service.api.v1.TranslatesVersion1Service">
         <property name="languages" value="${app.langs}"/>
         <property name="properties">
             <map>
@@ -42,7 +42,7 @@
         </property>
     </bean>
 
-    <bean id="version1Service" class="pl.jakubpiecuch.trainingmanager.service.api.v1.Version1Service">
+    <bean id="version1Service" class="pl.jakubpiecuch.gymhome.service.api.v1.Version1Service">
         <property name="translatesService" ref="translatesService"/>
         <property name="localeService" ref="localeService"/>
         <property name="signOnServices">

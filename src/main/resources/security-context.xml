@@ -3,22 +3,22 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns="http://www.springframework.org/schema/security"
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
     <beans:bean id="authenticationProvider"
-                class="pl.jakubpiecuch.trainingmanager.web.authentication.LocalAuthenticationProvider">
+                class="pl.jakubpiecuch.gymhome.web.authentication.LocalAuthenticationProvider">
         <beans:property name="repository" ref="accountRepository"/>
     </beans:bean>
 
     <beans:bean abstract="true" id="abstractUserService"
-                class="pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService">
+                class="pl.jakubpiecuch.gymhome.service.user.AbstractUserService">
         <beans:property name="emailService" ref="emailService"/>
         <beans:property name="repository" ref="accountRepository"/>
         <beans:property name="roleRepository" ref="roleRepository"/>
         <beans:property name="rememberMeServices" ref="rememberMeServices"/>
     </beans:bean>
 
-    <beans:bean id="localUserService" class="pl.jakubpiecuch.trainingmanager.service.user.local.LocalUserServiceImpl"
+    <beans:bean id="localUserService" class="pl.jakubpiecuch.gymhome.service.user.local.LocalUserServiceImpl"
                 parent="abstractUserService">
         <beans:property name="passwordEncoder" ref="shaPasswordEncoder"/>
         <beans:property name="cryptService" ref="cryptService"/>
@@ -27,8 +27,12 @@
         <beans:property name="serviceUri" value="${service.uri}"/>
     </beans:bean>
 
+    <beans:bean id="userDetailsService" class="pl.jakubpiecuch.gymhome.service.user.details.UserDetailsServiceImpl">
+        <beans:property name="repository" ref="accountRepository"/>
+    </beans:bean>
+
     <beans:bean id="shaPasswordEncoder"
-                class="pl.jakubpiecuch.trainingmanager.service.encoder.password.sha.SHAPasswordEncoder">
+                class="pl.jakubpiecuch.gymhome.service.encoder.password.sha.SHAPasswordEncoder">
         <beans:property name="strength" value="256"/>
     </beans:bean>
 </beans:beans>

@@ -10,7 +10,7 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
     <context:annotation-config/>
-    <context:component-scan base-package="pl.jakubpiecuch.trainingmanager.*"/>
+    <context:component-scan base-package="pl.jakubpiecuch.gymhome.*"/>
 
     <mvc:annotation-driven>
     </mvc:annotation-driven>
@@ -25,10 +25,10 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
-    <util:properties id="propertyConfigurerEnv" location="classpath:configuration/${environment}.properties"/>
+    <util:properties id="propertyConfigurerEnv" location="classpath:configuration/${run.environment:prod}.properties"/>
     <util:properties id="propertyConfigurerCommon" location="classpath:configuration/common.properties"/>
     <context:property-placeholder
-            location="classpath:configuration/${environment}.properties,classpath:configuration/common.properties"/>
+            location="classpath:configuration/${run.environment:prod}.properties,classpath:configuration/common.properties"/>
 
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basenames">

@@ -13,7 +13,7 @@
     <import resource="classpath:controller-context.xml"/>
     <import resource="classpath:http-security-context.xml"/>
 
-    <bean id="abstractController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractController"
+    <bean id="abstractController" class="pl.jakubpiecuch.gymhome.web.controllers.api.AbstractController"
           abstract="true">
         <property name="versionServices">
             <map>
@@ -23,7 +23,7 @@
     </bean>
 
     <bean id="version1Service" class="org.mockito.Mockito" factory-method="mock">
-        <constructor-arg value="pl.jakubpiecuch.trainingmanager.service.api.ApiVersionService"/>
+        <constructor-arg value="pl.jakubpiecuch.gymhome.service.api.ApiVersionService"/>
     </bean>
 
     <bean id="authenticationProvider" class="org.mockito.Mockito" factory-method="mock">
@@ -34,6 +34,10 @@
         <constructor-arg value="org.springframework.security.core.userdetails.UserDetailsService"/>
     </bean>
 
-    <bean id="exceptionHandler" class="pl.jakubpiecuch.trainingmanager.web.handlers.exception.RestExceptionHandler"/>
+    <bean id="userDetailsService" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="org.springframework.security.core.userdetails.UserDetailsService"/>
+    </bean>
+
+    <bean id="exceptionHandler" class="pl.jakubpiecuch.gymhome.web.handlers.exception.RestExceptionHandler"/>
 
 </beans>

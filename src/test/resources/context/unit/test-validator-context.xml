@@ -19,15 +19,15 @@
     <mvc:annotation-driven/>
 
     <bean id="accountRepository" class="org.mockito.Mockito" factory-method="mock">
-        <constructor-arg value="pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository"/>
+        <constructor-arg value="pl.jakubpiecuch.gymhome.service.repository.ReadRepository"/>
     </bean>
 
     <bean id="accountRecordRepository" class="org.mockito.Mockito" factory-method="mock">
-        <constructor-arg value="pl.jakubpiecuch.trainingmanager.service.repository.ReadRepository"/>
+        <constructor-arg value="pl.jakubpiecuch.gymhome.service.repository.ReadRepository"/>
     </bean>
 
     <import resource="classpath:validator-context.xml"/>
 
     <!-- only for mocking purpose -->
-    <bean id="roleRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.role.RoleRepository"/>
+    <bean id="roleRepository" class="pl.jakubpiecuch.gymhome.service.repository.role.RoleRepository"/>
 </beans>
