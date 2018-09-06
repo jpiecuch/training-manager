@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
-    <bean id="authenticationValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.authentication.AuthenticationValidator"/>
+    <bean id="authenticationValidator"
+          class="pl.jakubpiecuch.gymhome.web.validator.authentication.AuthenticationValidator"/>
 
-    <bean id="registrationValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.registration.RegistrationValidator">
+    <bean id="registrationValidator"
+          class="pl.jakubpiecuch.gymhome.web.validator.registration.RegistrationValidator">
         <property name="emailPattern" value="${user.email.pattern}"/>
         <property name="maxNameLength" value="${user.name.maxLength}"/>
         <property name="minNameLength" value="${user.name.minLength}"/>
@@ -13,51 +17,66 @@
         <property name="maxPasswordLength" value="${user.password.maxLength}"/>
         <property name="minPasswordLength" value="${user.password.minLength}"/>
         <property name="passwordPattern" value="${user.password.pattern}"/>
-        <property name="authenticationValidator" ref="authenticationValidator"/>
+        <property name="repository" ref="accountRepository"/>
     </bean>
 
-    <bean id="descriptionValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.description.DescriptionValidator">
+    <bean id="descriptionValidator"
+          class="pl.jakubpiecuch.gymhome.web.validator.description.DescriptionValidator">
         <property name="minNameLength" value="${description.name.minLength}"/>
         <property name="maxNameLength" value="${description.name.maxLength}"/>
     </bean>
 
-    <bean id="planValidator" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanValidator"/>
+    <bean id="insertPlanValidator" class="pl.jakubpiecuch.gymhome.service.flow.plan.InsertPlanValidator"/>
 
-    <bean id="equipmentValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.EquipmentValidator">
+    <bean id="updatePlanValidator" class="pl.jakubpiecuch.gymhome.service.flow.plan.UpdatePlanValidator"/>
+
+    <bean id="equipmentValidator" class="pl.jakubpiecuch.gymhome.web.validator.equipment.EquipmentValidator">
         <property name="validators">
             <map>
                 <entry key="BAR" value-ref="barValidator"/>
                 <entry key="BENCH" value-ref="benchValidator"/>
                 <entry key="DUMBBELL" value-ref="dumbbellValidator"/>
                 <entry key="LOAD" value-ref="loadValidator"/>
-                <entry key="NECK" value-ref="neckValidator"/>
+                <entry key="BARBELL" value-ref="barbellValidator"/>
                 <entry key="PRESS" value-ref="pressValidator"/>
                 <entry key="STAND" value-ref="standValidator"/>
             </map>
         </property>
     </bean>
 
-    <bean id="roleValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.role.RoleValidator">
+    <bean id="accountValidator" class="pl.jakubpiecuch.gymhome.web.validator.account.AccountValidator">
+
+    </bean>
+
+    <bean id="roleValidator" class="pl.jakubpiecuch.gymhome.web.validator.role.RoleValidator">
         <property name="readRepository" ref="roleRepository"/>
     </bean>
 
-    <bean id="barValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.bar.BarValidator"/>
+    <bean id="barValidator" class="pl.jakubpiecuch.gymhome.web.validator.equipment.bar.BarValidator"/>
 
-    <bean id="benchValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.bench.BenchValidator"/>
+    <bean id="benchValidator" class="pl.jakubpiecuch.gymhome.web.validator.equipment.bench.BenchValidator"/>
 
-    <bean id="neckValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.neck.NeckValidator"/>
+    <bean id="barbellValidator" class="pl.jakubpiecuch.gymhome.web.validator.equipment.barbell.BarbellValidator"/>
 
-    <bean id="loadValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.load.LoadValidator"/>
+    <bean id="loadValidator" class="pl.jakubpiecuch.gymhome.web.validator.equipment.load.LoadValidator"/>
 
-    <bean id="dumbbellValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.dumbbell.DumbbellValidator"/>
+    <bean id="dumbbellValidator"
+          class="pl.jakubpiecuch.gymhome.web.validator.equipment.dumbbell.DumbbellValidator"/>
 
-    <bean id="pressValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.press.PressValidator"/>
+    <bean id="pressValidator" class="pl.jakubpiecuch.gymhome.web.validator.equipment.press.PressValidator"/>
 
-    <bean id="standValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.equipment.stand.StandValidator"/>
+    <bean id="standValidator" class="pl.jakubpiecuch.gymhome.web.validator.equipment.stand.StandValidator"/>
 
-    <bean id="executionValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.execution.ExecutionValidator"/>
+    <bean id="executionValidator" class="pl.jakubpiecuch.gymhome.web.validator.execution.ExecutionValidator"/>
 
-    <bean id="userWorkoutValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.userworkout.UserWorkoutValidator"/>
+    <bean id="userWorkoutValidator"
+          class="pl.jakubpiecuch.gymhome.web.validator.userworkout.UserWorkoutValidator"/>
 
-    <bean id="accountRecordValidator" class="pl.jakubpiecuch.trainingmanager.web.validator.accountrecord.AccountRecordValidator"/>
+    <bean id="accountRecordValidator"
+          class="pl.jakubpiecuch.gymhome.web.validator.accountrecord.AccountRecordValidator">
+        <property name="repository" ref="accountRecordRepository"/>
+        <property name="precision" ref="dayOfMonthPrecision"/>
+    </bean>
+
+    <util:constant id="dayOfMonthPrecision" static-field="java.util.Calendar.DAY_OF_MONTH"/>
 </beans>

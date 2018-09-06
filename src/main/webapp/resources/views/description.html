@@ -17,8 +17,7 @@
             </li>
         </ul>
     </div>
-    <form name="form" class="form-horizontal"
-          data-ng-submit="description.create()" novalidate>
+    <form name="form" class="form-horizontal" data-ng-submit="description.create()" novalidate>
         <div class="portlet light bg-inverse">
             <div class="portlet-title">
                 <div class="caption">
@@ -40,7 +39,6 @@
                                 <i data-ng-if="form['name'].$touched" class="fa"
                                    data-ng-class="{'fa-check' : validate.isValid(form['name']), 'fa-exclamation' : validate.isNotValid(form['name'])}"></i>
                                 <input name="name" type="text" class="form-control"
-                                       placeholder="{{'description.name.placeholder' | translate}}"
                                        data-ng-model="description.name" required
                                        tooltip="{{'field.required' | translate}}" tooltip-placement="right">
                             </div>
@@ -51,7 +49,6 @@
 
                         <div class="col-md-5">
                             <input name="movieUrl" type="text" class="form-control"
-                                   placeholder="{{'description.movieUrl.placeholder' | translate}}"
                                    data-ng-model="description.movieUrl">
                         </div>
                     </div>
@@ -79,8 +76,8 @@
                                    data-ng-class="{'fa-check' : validate.isValid(form.lateral), 'fa-exclamation' : validate.isNotValid(form.lateral)}"></i>
                                 <select name="lateral" data-ng-model="description.lateral" class="form-control" required
                                         tooltip="{{'field.required' | translate}}" tooltip-placement="right">
-                                    <option data-ng-repeat="set in dictionary.lateral" data-ng-bind="set"
-                                            value="{{set}}"></option>
+                                    <option data-ng-repeat="side in dictionary.lateral" data-ng-bind="side | translate"
+                                            value="{{side}}"></option>
                                 </select>
                             </div>
                         </div>
@@ -96,7 +93,7 @@
                                    data-ng-class="{'fa-check' : validate.isValid(form.sets), 'fa-exclamation' : validate.isNotValid(form.sets)}"></i>
                                 <select name="sets" data-ng-model="description.sets" class="form-control" required
                                         tooltip="{{'field.required' | translate}}" tooltip-placement="right">
-                                    <option data-ng-repeat="set in dictionary.sets" data-ng-bind="set"
+                                    <option data-ng-repeat="set in dictionary.sets" data-ng-bind="set | translate"
                                             value="{{set}}"></option>
                                 </select>
                             </div>
@@ -113,7 +110,7 @@
                                    data-ng-class="{'fa-check' : validate.isValid(form.muscle), 'fa-exclamation' : validate.isNotValid(form.muscle)}"></i>
                                 <select name="muscle" data-ng-model="description.muscles" class="form-control" required
                                         tooltip="{{'field.required' | translate}}" tooltip-placement="right">
-                                    <option data-ng-repeat="muscle in dictionary.muscles" data-ng-bind="muscle"
+                                    <option data-ng-repeat="muscle in dictionary.muscles" data-ng-bind="muscle | translate"
                                             value="{{muscle}}"></option>
                                 </select>
                             </div>
@@ -130,7 +127,7 @@
                                    data-ng-class="{'fa-check' : validate.isValid(form.type), 'fa-exclamation' : validate.isNotValid(form.type)}"></i>
                                 <select name="type" data-ng-model="description.type" class="form-control" required
                                         tooltip="{{'field.required' | translate}}" tooltip-placement="right">
-                                    <option data-ng-repeat="type in dictionary.type" data-ng-bind="type"
+                                    <option data-ng-repeat="type in dictionary.type" data-ng-bind="type | translate"
                                             value="{{type}}"></option>
                                 </select>
                             </div>
@@ -148,7 +145,7 @@
 
                                 <select name="level" data-ng-model="description.level" class="form-control" required
                                         tooltip="{{'field.required' | translate}}" tooltip-placement="right">
-                                    <option data-ng-repeat="level in dictionary.level" data-ng-bind="level"
+                                    <option data-ng-repeat="level in dictionary.level" data-ng-bind="level | translate"
                                             value="{{level}}"></option>
                                 </select>
                             </div>
@@ -166,7 +163,7 @@
                                 <select name="mechanic" data-ng-model="description.mechanics" class="form-control" required
                                         tooltip="{{'field.required' | translate}}" tooltip-placement="right">
                                     <option data-ng-repeat="mechanic in dictionary.mechanics"
-                                            data-ng-bind="mechanic" value="{{mechanic}}"></option>
+                                            data-ng-bind="mechanic | translate" value="{{mechanic}}"></option>
                                 </select>
                             </div>
                         </div>
@@ -183,7 +180,7 @@
 
                                 <select name="force" data-ng-model="description.force" class="form-control" required
                                         tooltip="{{'field.required' | translate}}" tooltip-placement="right">
-                                    <option data-ng-repeat="force in dictionary.force" data-ng-bind="force"
+                                    <option data-ng-repeat="force in dictionary.force" data-ng-bind="force | translate"
                                             value="{{force}}"></option>
                                 </select>
                             </div>

@@ -1,0 +1,24 @@
+<table class="table table-striped table-bordered table-advance table-hover dataTable">
+    <thead>
+    <tr>
+        <th>{{'description.name' | translate}} <input data-ng-model="table.filter.params.name"></th>
+        <th data-ng-bind="'description.muscles' | translate" data-ng-click="table.sort('muscles')"></th>
+        <th data-ng-bind="'description.type' | translate" data-ng-click="table.sort('type')"></th>
+        <th data-ng-bind="'description.force' | translate" data-ng-click="table.sort('force')"></th>
+        <th data-ng-bind="'description.level' | translate" data-ng-click="table.sort('level')"></th>
+        <th data-ng-bind="'description.mechanics' | translate" data-ng-click="table.sort('mechanics')"></th>
+        <th data-ng-bind="'description.lateral' | translate" data-ng-click="table.sort('lateral')"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-ng-repeat="description in table.data.result">
+        <td><a href="#/description?id={{description.id}}" data-ng-bind="description.name"></a></td>
+        <td data-ng-bind="description.muscles | translate"></td>
+        <td data-ng-bind="description.type | translate"></td>
+        <td data-ng-bind="description.force | translate"></td>
+        <td data-ng-bind="description.level | translate"></td>
+        <td data-ng-bind="description.mechanics | translate"></td>
+        <td data-ng-bind="description.lateral | translate"></td>
+    </tr>
+    </tbody>
+</table>

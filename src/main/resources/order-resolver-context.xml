@@ -1,105 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <bean id="descriptionMusclesOrderResolver" class="pl.jakubpiecuch.trainingmanager.service.resolver.order.description.MusclesOrderResolver">
+    <bean id="descriptionMusclesOrderResolver"
+          class="pl.jakubpiecuch.gymhome.service.resolver.order.description.MusclesOrderResolver">
         <property name="defaultLang" value="en"/>
         <property name="langs" value="${app.langs}"/>
         <property name="orderMap">
             <map>
                 <entry key="en">
                     <list>
-                        <value>0</value><value>1</value><value>2</value><value>3</value>
-                        <value>4</value><value>5</value><value>6</value><value>7</value>
-                        <value>8</value><value>9</value><value>10</value><value>11</value>
-                        <value>12</value><value>13</value><value>14</value><value>15</value>
+                        <value>0</value>
+                        <value>1</value>
+                        <value>2</value>
+                        <value>3</value>
+                        <value>4</value>
+                        <value>5</value>
+                        <value>6</value>
+                        <value>7</value>
+                        <value>8</value>
+                        <value>9</value>
+                        <value>10</value>
+                        <value>11</value>
                     </list>
                 </entry>
                 <entry key="pl">
                     <list>
-                        <value>9</value><value>2</value><value>1</value><value>7</value>
-                        <value>6</value><value>11</value><value>10</value><value>12</value>
-                        <value>8</value><value>5</value><value>13</value><value>14</value>
-                        <value>12</value><value>0</value><value>3</value><value>15</value>
+                        <value>9</value>
+                        <value>1</value>
+                        <value>0</value>
+                        <value>10</value>
+                        <value>8</value>
+                        <value>3</value>
+                        <value>2</value>
+                        <value>7</value>
+                        <value>6</value>
+                        <value>5</value>
+                        <value>4</value>
+                        <value>11</value>
                     </list>
                 </entry>
             </map>
         </property>
     </bean>
 
-    <bean id="descriptionTypeOrderResolver" class="pl.jakubpiecuch.trainingmanager.service.resolver.order.description.TypeOrderResolver">
+    <bean id="descriptionTypeOrderResolver"
+          class="pl.jakubpiecuch.gymhome.service.resolver.order.description.TypeOrderResolver">
         <property name="defaultLang" value="en"/>
         <property name="langs" value="${app.langs}"/>
         <property name="orderMap">
             <map>
                 <entry key="en">
                     <list>
-                        <value>0</value><value>1</value><value>2</value><value>3</value>
-                        <value>4</value><value>5</value><value>6</value>
+                        <value>0</value>
+                        <value>1</value>
+                        <value>2</value>
+                        <value>3</value>
+                        <value>4</value>
+                        <value>5</value>
+                        <value>6</value>
                     </list>
                 </entry>
                 <entry key="pl">
                     <list>
-                        <value>2</value><value>1</value><value>5</value><value>4</value>
-                        <value>6</value><value>3</value><value>0</value>
+                        <value>2</value>
+                        <value>1</value>
+                        <value>5</value>
+                        <value>4</value>
+                        <value>6</value>
+                        <value>3</value>
+                        <value>0</value>
                     </list>
                 </entry>
             </map>
         </property>
     </bean>
 
-    <bean id="descriptionLevelOrderResolver" class="pl.jakubpiecuch.trainingmanager.service.resolver.order.description.LevelOrderResolver">
+    <bean id="descriptionLevelOrderResolver"
+          class="pl.jakubpiecuch.gymhome.service.resolver.order.description.LevelOrderResolver">
         <property name="defaultLang" value="en"/>
         <property name="langs" value="${app.langs}"/>
         <property name="orderMap">
             <map>
                 <entry key="en">
                     <list>
-                        <value>0</value><value>2</value><value>1</value>
+                        <value>0</value>
+                        <value>2</value>
+                        <value>1</value>
                     </list>
                 </entry>
                 <entry key="pl">
                     <list>
-                        <value>0</value><value>1</value><value>2</value>
+                        <value>0</value>
+                        <value>1</value>
+                        <value>2</value>
                     </list>
                 </entry>
             </map>
         </property>
     </bean>
 
-    <bean id="descriptionMechanicsOrderResolver" class="pl.jakubpiecuch.trainingmanager.service.resolver.order.description.MechanicsOrderResolver">
+    <bean id="descriptionMechanicsOrderResolver"
+          class="pl.jakubpiecuch.gymhome.service.resolver.order.description.MechanicsOrderResolver">
         <property name="defaultLang" value="en"/>
         <property name="langs" value="${app.langs}"/>
         <property name="orderMap">
             <map>
                 <entry key="en">
                     <list>
-                        <value>0</value><value>1</value>
+                        <value>0</value>
+                        <value>1</value>
                     </list>
                 </entry>
                 <entry key="pl">
                     <list>
-                        <value>1</value><value>0</value>
+                        <value>1</value>
+                        <value>0</value>
                     </list>
                 </entry>
             </map>
         </property>
     </bean>
 
-    <bean id="descriptionForceOrderResolver" class="pl.jakubpiecuch.trainingmanager.service.resolver.order.description.ForceOrderResolver">
+    <bean id="descriptionForceOrderResolver"
+          class="pl.jakubpiecuch.gymhome.service.resolver.order.description.ForceOrderResolver">
         <property name="defaultLang" value="en"/>
         <property name="langs" value="${app.langs}"/>
         <property name="orderMap">
             <map>
                 <entry key="en">
                     <list>
-                        <value>0</value><value>1</value><value>2</value>
+                        <value>0</value>
+                        <value>1</value>
+                        <value>2</value>
                     </list>
                 </entry>
                 <entry key="pl">
                     <list>
-                        <value>1</value><value>0</value><value>2</value>
+                        <value>1</value>
+                        <value>0</value>
+                        <value>2</value>
                     </list>
                 </entry>
             </map>

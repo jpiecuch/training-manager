@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="abstractController" class="pl.jakubpiecuch.gymhome.web.controllers.api.AbstractController"
+          abstract="true">
+        <property name="versionServices">
+            <map>
+                <entry key="v1" value-ref="version1Service"/>
+            </map>
+        </property>
+    </bean>
+    
+    <bean id="translatesService" class="pl.jakubpiecuch.gymhome.service.api.v1.TranslatesVersion1Service">
+        <property name="languages" value="${app.langs}"/>
+        <property name="properties">
+            <map>
+                <entry key="pl">
+                    <bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+                        <property name="locations">
+                            <list>
+                                <value>classpath:bundles/web/web_pl.properties</value>
+                                <value>classpath:bundles/policy/policy_pl.properties</value>
+                                <value>classpath:bundles/terms/terms_pl.properties</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+                <entry key="en">
+                    <bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+                        <property name="locations">
+                            <list>
+                                <value>classpath:bundles/web/web_en.properties</value>
+                                <value>classpath:bundles/policy/policy_en.properties</value>
+                                <value>classpath:bundles/terms/terms_en.properties</value>
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="version1Service" class="pl.jakubpiecuch.gymhome.service.api.v1.Version1Service">
+        <property name="translatesService" ref="translatesService"/>
+        <property name="localeService" ref="localeService"/>
+        <property name="signOnServices">
+            <map>
+                <entry key="SOCIAL" value-ref="socialUserService"/>
+                <entry key="LOCAL" value-ref="localUserService"/>
+            </map>
+        </property>
+        <property name="authenticationService" ref="authenticationService"/>
+        <property name="resourceServices">
+            <map>
+                <entry key="image" value-ref="imageResource"/>
+            </map>
+        </property>
+        <property name="dictionary" ref="constantsDictionary"/>
+        <property name="repositories">
+            <map>
+                <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
+                <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
+                <entry key="ROLE" value-ref="roleRepository"/>
+                <entry key="WORKOUT" value-ref="userWorkoutRepository"/>
+                <entry key="PLAN" value-ref="planRepository"/>
+                <entry key="ACCOUNT_RECORD" value-ref="accountRecordRepository"/>
+            </map>
+        </property>
+        <property name="readRepositories">
+            <map>
+                <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
+                <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
+                <entry key="PLAN" value-ref="planRepository"/>
+                <entry key="WORKOUT" value-ref="userWorkoutRepository"/>
+                <entry key="ROLE" value-ref="roleRepository"/>
+                <entry key="ACCOUNT_RECORD" value-ref="accountRecordRepository"/>
+                <entry key="EXECUTION" value-ref="executionRepository"/>
+            </map>
+        </property>
+        <property name="userPlanStarter" ref="sessionUserPlanStarter"/>
+        <property name="updateRepositories" >
+            <map>
+                <entry key="DESCRIPTION" value-ref="descriptionRepository"/>
+                <entry key="EQUIPMENT" value-ref="equipmentRepository"/>
+                <entry key="ROLE" value-ref="roleRepository"/>
+                <entry key="WORKOUT" value-ref="userWorkoutRepository"/>
+                <entry key="PLAN" value-ref="planRepository"/>
+                <entry key="ACCOUNT_RECORD" value-ref="accountRecordRepository"/>
+                <entry key="EXECUTION" value-ref="executionRepository"/>
+            </map>
+        </property>
+    </bean>
+
+    <import resource="controller-context.xml"/>
+</beans>

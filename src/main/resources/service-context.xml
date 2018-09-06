@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:crypt="http://springcryptoutils.com/schema/crypt" xmlns:util="http://www.springframework.org/schema/util"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:crypt="http://springcryptoutils.com/schema/crypt"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://springcryptoutils.com/schema/crypt http://springcryptoutils.com/schema/crypt.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
-    
+
     <bean id="emailMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basenames" value="classpath:bundles/email/email" />
+        <property name="basenames" value="classpath:bundles/email/email"/>
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="useCodeAsDefaultMessage" value="true"/>
     </bean>
- 
+
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
         <property name="defaultLocale" value="en"/>
         <property name="cookieMaxAge" value="100000"/>
@@ -18,36 +18,38 @@
         <property name="cookiePath" value="/"/>
     </bean>
 
-    <bean id="localeService" class="pl.jakubpiecuch.trainingmanager.service.locale.cookie.ResolverLocaleService">
+    <bean id="localeService" class="pl.jakubpiecuch.gymhome.service.locale.cookie.ResolverLocaleService">
         <property name="localeResolver" ref="localeResolver"/>
         <property name="supportedLocales" value="pl,en"/>
     </bean>
-    
-    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean" >
+
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
         <property name="velocityProperties">
             <props>
                 <prop key="resource.loader">class</prop>
-                <prop key="class.resource.loader.class">org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader</prop>
+                <prop key="class.resource.loader.class">
+                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+                </prop>
                 <prop key="dateToolAttribute">org.apache.velocity.tools.generic.DateTool</prop>
             </props>
         </property>
     </bean>
-    
-    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" >
-        <property name="host" value="smtp.gmail.com" />
-        <property name="port" value="587" />
-        <property name="username" value="${mail.user}" />
-        <property name="password" value="${mail.password}" />
-        <property name="defaultEncoding" value="UTF-8" />
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com"/>
+        <property name="port" value="587"/>
+        <property name="username" value="${mail.user}"/>
+        <property name="password" value="${mail.password}"/>
+        <property name="defaultEncoding" value="UTF-8"/>
         <property name="javaMailProperties">
-	   <props>
-       	      <prop key="mail.smtp.auth">true</prop>
-       	      <prop key="mail.smtp.starttls.enable">true</prop>
-       	   </props>
-	</property>
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+            </props>
+        </property>
     </bean>
-    
-    <bean id="emailService" class="pl.jakubpiecuch.trainingmanager.service.mail.VelocityEmailService">
+
+    <bean id="emailService" class="pl.jakubpiecuch.gymhome.service.mail.VelocityEmailService">
         <property name="encoding" value="UTF-8"/>
         <property name="mailSender" ref="mailSender"/>
         <property name="messageSource" ref="emailMessageSource"/>
@@ -55,12 +57,13 @@
         <property name="templateLocation" value="vm/%s.vm"/>
         <property name="velocityEngine" ref="velocityEngine"/>
     </bean>
-    
-    <bean id="imageResource" class="pl.jakubpiecuch.trainingmanager.service.resource.image.ImageResource">
+
+    <bean id="imageResource" class="pl.jakubpiecuch.gymhome.service.resource.image.ImageResource">
         <property name="root" value="${resource.directory}/images/"/>
+        <property name="cryptService" ref="cryptService"/>
     </bean>
 
-    <bean id="cryptService" class="pl.jakubpiecuch.trainingmanager.service.crypt.SymmetricCryptService">
+    <bean id="cryptService" class="pl.jakubpiecuch.gymhome.service.crypt.SymmetricCryptService">
         <property name="decryptService" ref="decryptService"/>
         <property name="encryptService" ref="encryptService"/>
     </bean>
@@ -68,8 +71,9 @@
     <crypt:b64SymmetricCipherer id="encryptService" mode="ENCRYPT"/>
     <crypt:b64SymmetricCipherer id="decryptService" mode="DECRYPT"/>
 
-    <bean id="authenticationService" class="pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationServiceImpl">
-        <property name="accountDao" ref="usersDao"/>
+    <bean id="authenticationService"
+          class="pl.jakubpiecuch.gymhome.service.user.authentication.AuthenticationServiceImpl">
+        <property name="repository" ref="accountRepository"/>
         <property name="userServices">
             <map>
                 <entry key="LOCAL" value-ref="localUserService"/>
@@ -80,26 +84,28 @@
         <property name="logoutHandler" ref="rememberMeServices"/>
     </bean>
 
-    <bean id="constantsDictionary" class="pl.jakubpiecuch.trainingmanager.service.dictionary.constants.ConstantsDictionary">
+    <bean id="constantsDictionary"
+          class="pl.jakubpiecuch.gymhome.service.dictionary.constants.ConstantsDictionary">
         <property name="langs" value="${app.langs}"/>
         <property name="socialSupportService" ref="supportService"/>
         <property name="securedDictionary" ref="securedConstantsDictionary"/>
     </bean>
 
-    <bean id="securedConstantsDictionary" class="pl.jakubpiecuch.trainingmanager.service.dictionary.constants.SecuredConstantsDictionary" parent="constantsDictionary"/>
+    <bean id="securedConstantsDictionary"
+          class="pl.jakubpiecuch.gymhome.service.dictionary.constants.SecuredConstantsDictionary"
+          parent="constantsDictionary"/>
 
-    <bean id="sessionUserPlanStarter" class="pl.jakubpiecuch.trainingmanager.service.user.plan.SessionUserPlanStarter">
+    <bean id="sessionUserPlanStarter" class="pl.jakubpiecuch.gymhome.service.user.plan.SessionUserPlanStarter">
         <property name="executionDao" ref="executionDao"/>
         <property name="userWorkoutDao" ref="userWorkoutDao"/>
-        <property name="manager" ref="planRepository"/>
-        <property name="planDao" ref="planDao"/>
+        <property name="planRepository" ref="planRepository"/>
     </bean>
 
-    <bean id="passwordService" class="pl.jakubpiecuch.trainingmanager.service.password.StaticPasswordService">
+    <bean id="passwordService" class="pl.jakubpiecuch.gymhome.service.password.StaticPasswordService">
         <property name="passwords" ref="passwords"></property>
     </bean>
 
-    <util:list id="passwords" value-type="java.lang.String" >
+    <util:list id="passwords" value-type="java.lang.String">
         <value>rfty12!Xdr</value>
         <value>sd@rt9P2</value>
         <value>sldk!9Hjsd</value>
@@ -120,4 +126,5 @@
     <import resource="repository-context.xml"/>
     <import resource="dao-context.xml"/>
     <import resource="security-context.xml"/>
+    <import resource="http-security-context.xml"/>
 </beans>

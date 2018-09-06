@@ -32,7 +32,7 @@ app.service('equipmentService', function(urlService, $http, $q, formValidateServ
                 case 'LOAD':
                     this.weight = null;
                     break;
-                case 'NECK':
+                case 'BARBELL':
                     this.strength = null;
                     this.length = null;
                     this.weight = null;
@@ -98,6 +98,10 @@ app.service('equipmentService', function(urlService, $http, $q, formValidateServ
 
     this.retrieve = function(params) {
         return $http.get(urlService.apiURL('/equipments'), { params: params });
+    }
+
+    this.delete = function(id) {
+        return $http.delete(urlService.apiURL('/equipments/' + id));
     }
 });
 

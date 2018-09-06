@@ -1,0 +1,31 @@
+<section data-ng-include="'resources/tpl/' + $state.current.name + '/breadcrumbs.html'"></section>
+<div class="row" data-ng-init="init()">
+    <div class="col-md-12">
+        <div class="portlet">
+            <div class="portlet-body dataTables_extended_wrapper">
+                <div class="table-scrollable" data-ng-include="'resources/tpl/' + $state.current.name + '/table.html'"></div>
+                <div class="col-md-8 col-sm-12">
+                    <div class="dataTables_paginate paging_bootstrap_extended">
+                        <div class="pagination-panel"> {{'page' | translate}}
+                            <a href="#" class="btn btn-sm default prev" data-ng-class="{'disabled' : table.page === 1}" title="Prev" data-ng-click="table.changePage(-1)"><i class="fa fa-angle-left"></i></a>
+                            <input type="text" class="pagination-panel-input form-control input-mini input-inline input-sm" maxlenght="5" style="text-align:center; margin: 0 5px;" data-ng-model="table.page" data-ng-change="table.changePage(0)" data-only-digits>
+                            <a href="#" class="btn btn-sm default next" data-ng-class="{'disabled' : table.data.count <= (table.page * table.count)}" title="Next" data-ng-click="table.changePage(1)"><i class="fa fa-angle-right"></i></a> {{'of' | translate}} <span class="pagination-panel-total">{{table.totalPage()}}</span>
+                        </div>
+                    </div>
+                    <div class="dataTables_length">
+                        <label>
+                            <span class="seperator">|</span>
+                            <select name="count" data-ng-model="table.count" data-ng-change="table.changeCount(table.count)" class="form-control input-xsmall input-sm input-inline">
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="150">150</option>
+                            </select> {{'perPage' | translate}}
+                        </label>
+                    </div>
+                    <div class="dataTables_info"></div></div><div class="col-md-4 col-sm-12"></div>
+            </div>
+        </div>
+    </div>
+</div>

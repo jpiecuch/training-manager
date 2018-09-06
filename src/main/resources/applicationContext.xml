@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
-    <context:annotation-config />
-    <context:component-scan base-package="pl.jakubpiecuch.trainingmanager.*" />
-    
-    <mvc:annotation-driven />
-    <mvc:resources mapping="/resources/**" location="/resources/" />
-    
-    <mvc:interceptors>  
-        <mvc:interceptor>  
-            <mvc:mapping path="/**"/>  
+    <context:annotation-config/>
+    <context:component-scan base-package="pl.jakubpiecuch.gymhome.*"/>
+
+    <mvc:annotation-driven>
+    </mvc:annotation-driven>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
             <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-                <property name="paramName" value="lang" />  
-            </bean>  
-        </mvc:interceptor>  
+                <property name="paramName" value="lang"/>
+            </bean>
+        </mvc:interceptor>
     </mvc:interceptors>
-    
-    <util:properties id="propertyConfigurerEnv" location="classpath:configuration/${environment}.properties"/>
+
+    <util:properties id="propertyConfigurerEnv" location="classpath:configuration/${run.environment:prod}.properties"/>
     <util:properties id="propertyConfigurerCommon" location="classpath:configuration/common.properties"/>
-    <context:property-placeholder location="classpath:configuration/${environment}.properties,classpath:configuration/common.properties" />
+    <context:property-placeholder
+            location="classpath:configuration/${run.environment:prod}.properties,classpath:configuration/common.properties"/>
 
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basenames" >
+        <property name="basenames">
             <list>
                 <value>classpath:bundles/web/web</value>
                 <value>classpath:bundles/policy/policy</value>
@@ -38,9 +40,9 @@
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="useCodeAsDefaultMessage" value="true"/>
     </bean>
-    
 
-    <import resource="controller-context.xml"/>
+
+    <import resource="api-v1-context.xml"/>
     <import resource="service-context.xml"/>
     <import resource="datasource-context.xml"/>
 </beans>

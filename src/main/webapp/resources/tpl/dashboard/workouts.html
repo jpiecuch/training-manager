@@ -1,0 +1,27 @@
+<div class="portlet-title">
+    <div class="caption font-green-sharp">
+        <i class="icon-speech font-green-sharp"></i>
+        <span class="caption-subject bold uppercase"> {{'next.workouts' | translate}}</span>
+    </div>
+    <div class="actions">
+        <a class="btn btn-circle btn-icon-only btn-default fa fa-angle-down" href="#"></a>
+    </div>
+</div>
+<div class="portlet-body">
+    <div class="todo-tasklist">
+        <div class="todo-tasklist-item todo-tasklist-item-border-green" data-ng-repeat="workout in workouts.result">
+            <a href="#/workout/{{workout.id}}">
+                <div class="todo-tasklist-item-title">
+                    <i class="fa fa-calendar"></i> {{workout.date | date}}
+                </div>
+                <div class="todo-tasklist-item-text">
+                    {{workout.plan.name}} | {{workout.phase.description}}
+                </div>
+                <div class="todo-tasklist-controls pull-left">
+                    <span class="todo-tasklist-date">{{'exercises.amount' | translate}}: {{workout.executions.length}}</span>
+                    <span class="todo-tasklist-badge badge badge-roundless badge-primary" style="margin-right: 5px;" data-ng-repeat="muscle in workout.muscles">{{muscle | translate}}</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

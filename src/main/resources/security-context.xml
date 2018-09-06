@@ -1,47 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/security"
-             xmlns:beans="http://www.springframework.org/schema/beans"
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.springframework.org/schema/security"
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
-    <global-method-security pre-post-annotations="enabled"/>
-
-    <http use-expressions="true" auto-config="true" entry-point-ref="authenticationEntryPoint" >
-        <remember-me services-ref="rememberMeServices" />
-        <access-denied-handler ref="accessDeniedHandler" />
-    </http>
-
-    <beans:bean id="rememberMeServices" class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
-        <beans:constructor-arg name="key" value="gym.home.2015"/>
-        <beans:constructor-arg name="userDetailsService" ref="localUserService"/>
-        <beans:property name="cookieName" value="remember-me"/>
-        <beans:property name="parameter" value="rememberMe"/>
-        <beans:property name="tokenValiditySeconds" value="864000"/>
+    <beans:bean id="authenticationProvider"
+                class="pl.jakubpiecuch.gymhome.web.authentication.LocalAuthenticationProvider">
+        <beans:property name="repository" ref="accountRepository"/>
     </beans:bean>
 
-    <beans:bean id="authenticationEntryPoint" class="pl.jakubpiecuch.trainingmanager.web.authentication.AuthenticationEntryPoint"></beans:bean>
-
-    <beans:bean id="accessDeniedHandler" class="pl.jakubpiecuch.trainingmanager.web.handlers.access.AccessDeniedHandler"></beans:bean>
-
-    <beans:bean id="authenticationProvider" class="pl.jakubpiecuch.trainingmanager.web.authentication.LocalAuthenticationProvider">
-        <beans:property name="accountDao" ref="usersDao"/>
-    </beans:bean>
-
-    <beans:bean abstract="true" id="abstractUserService" class="pl.jakubpiecuch.trainingmanager.service.user.AbstractUserService">
+    <beans:bean abstract="true" id="abstractUserService"
+                class="pl.jakubpiecuch.gymhome.service.user.AbstractUserService">
         <beans:property name="emailService" ref="emailService"/>
-        <beans:property name="accountDao" ref="usersDao"/>
+        <beans:property name="repository" ref="accountRepository"/>
+        <beans:property name="roleRepository" ref="roleRepository"/>
         <beans:property name="rememberMeServices" ref="rememberMeServices"/>
     </beans:bean>
-    
-    <beans:bean id="localUserService" class="pl.jakubpiecuch.trainingmanager.service.user.local.LocalUserServiceImpl" parent="abstractUserService">
+
+    <beans:bean id="localUserService" class="pl.jakubpiecuch.gymhome.service.user.local.LocalUserServiceImpl"
+                parent="abstractUserService">
         <beans:property name="passwordEncoder" ref="shaPasswordEncoder"/>
         <beans:property name="cryptService" ref="cryptService"/>
         <beans:property name="validator" ref="registrationValidator"/>
         <beans:property name="passwordService" ref="passwordService"/>
+        <beans:property name="serviceUri" value="${service.uri}"/>
     </beans:bean>
-    
-    <beans:bean id="shaPasswordEncoder" class="pl.jakubpiecuch.trainingmanager.service.encoder.password.sha.SHAPasswordEncoder"><beans:property name="strength" value="256"/></beans:bean>
 
-    <authentication-manager><authentication-provider ref="authenticationProvider"></authentication-provider></authentication-manager>
+    <beans:bean id="userDetailsService" class="pl.jakubpiecuch.gymhome.service.user.details.UserDetailsServiceImpl">
+        <beans:property name="repository" ref="accountRepository"/>
+    </beans:bean>
+
+    <beans:bean id="shaPasswordEncoder"
+                class="pl.jakubpiecuch.gymhome.service.encoder.password.sha.SHAPasswordEncoder">
+        <beans:property name="strength" value="256"/>
+    </beans:bean>
 </beans:beans>

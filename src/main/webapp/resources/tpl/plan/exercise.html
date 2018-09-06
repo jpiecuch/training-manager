@@ -30,7 +30,7 @@
                    data-ng-bind="'description.movieUrl' | translate"></label>
             <div class="col-md-9">
                 <span class="form-control-static">
-                    <a ng-href="{{exercise.description.movieUrl}}" target="_blank">Watch</a>
+                    <a ng-href="{{exercise.description.movieUrl}}" target="_blank">{{'video.watch' | translate}}</a>
                 </span>
             </div>
         </div>
@@ -50,9 +50,9 @@
                     <div class="input-icon right" data-ng-if="plan.editable" dropdown>
                         <i class="fa fa-angle-down" style="cursor: pointer;"  dropdown-toggle></i>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a data-ng-click="exercise.removeSet($index)">Remove</a></li>
-                            <li data-ng-if="set.value !== 'FAIL'"><a data-ng-click="exercise.toFail($index)">To fail</a></li>
-                            <li data-ng-if="set.value === 'FAIL'"><a data-ng-click="exercise.reps($index)">Reps</a></li>
+                            <li><a data-ng-click="exercise.removeSet($index)">{{'exercise.remove' | translate}}</a></li>
+                            <li data-ng-if="set.value !== 'FAIL'"><a data-ng-click="exercise.toFail($index)">{{'exercise.toFail' | translate}}</a></li>
+                            <li data-ng-if="set.value === 'FAIL'"><a data-ng-click="exercise.reps($index)">{{'exercise.reps' | translate}}</a></li>
                         </ul>
                         <input data-ng-disabled="set.value === 'FAIL'" data-only-digits name="exerciseSet{{$index}}" type="text" class="form-control" data-ng-model="exercise.sets[$index].value" required data-ng-blur="exercise.sets[$index].touch()">
                     </div>

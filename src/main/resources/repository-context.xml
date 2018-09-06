@@ -1,50 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <bean  id="roleRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.role.RoleRepository">
+    <bean id="accountRepository" class="pl.jakubpiecuch.gymhome.service.repository.CommonRepository">
+        <property name="dao" ref="accountDao"/>
+        <property name="name" value="account"/>
+        <property name="validators">
+            <map>
+                <entry key="INSERT" value-ref="accountValidator"/>
+                <entry key="UPDATE" value-ref="accountValidator"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="roleRepository" class="pl.jakubpiecuch.gymhome.service.repository.role.RoleRepository">
         <property name="dao" ref="roleDao"/>
-        <property name="validator" ref="roleValidator"/>
+        <property name="validators">
+            <map>
+                <entry key="INSERT" value-ref="roleValidator"/>
+                <entry key="UPDATE" value-ref="roleValidator"/>
+            </map>
+        </property>
         <property name="name" value="role"/>
     </bean>
 
-    <bean  id="descriptionRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.description.DescriptionRepository">
+    <bean id="descriptionRepository" class="pl.jakubpiecuch.gymhome.service.repository.CommonRepository">
         <property name="dao" ref="descriptionDao"/>
-        <property name="validator" ref="descriptionValidator"/>
+        <property name="validators">
+            <map>
+                <entry key="INSERT" value-ref="descriptionValidator"/>
+                <entry key="UPDATE" value-ref="descriptionValidator"/>
+            </map>
+        </property>
         <property name="name" value="description"/>
     </bean>
 
-    <bean id="accountRecordRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.accountrecord.AccountRecordRepository">
+    <bean id="accountRecordRepository"
+          class="pl.jakubpiecuch.gymhome.service.repository.accountrecord.AccountRecordRepository">
         <property name="dao" ref="accountRecordDao"/>
         <property name="name" value="accountRecord"/>
-        <property name="validator" ref="accountRecordValidator"/>
+        <property name="validators">
+            <map>
+                <entry key="INSERT" value-ref="accountRecordValidator"/>
+                <entry key="UPDATE" value-ref="accountRecordValidator"/>
+            </map>
+        </property>
         <property name="converter" ref="accountRecordConverter"/>
     </bean>
 
-    <bean  id="equipmentRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.equipment.EquipmentRepository">
+    <bean id="equipmentRepository" class="pl.jakubpiecuch.gymhome.service.repository.CommonRepository">
         <property name="dao" ref="equipmentDao"/>
-        <property name="validator" ref="equipmentValidator"/>
+        <property name="validators">
+            <map>
+                <entry key="INSERT" value-ref="equipmentValidator"/>
+                <entry key="UPDATE" value-ref="equipmentValidator"/>
+            </map>
+        </property>
         <property name="name" value="equipment"/>
     </bean>
 
-    <bean id="userWorkoutRepository" class="pl.jakubpiecuch.trainingmanager.service.user.workout.session.SessionUserWorkoutRepository">
+    <bean id="userWorkoutRepository"
+          class="pl.jakubpiecuch.gymhome.service.user.workout.session.SessionUserWorkoutRepository">
         <property name="converter" ref="userWorkoutConverter"/>
         <property name="dao" ref="userWorkoutDao"/>
-        <property name="validator" ref="userWorkoutValidator"/>
+        <property name="validators">
+            <map>
+                <entry key="INSERT" value-ref="userWorkoutValidator"/>
+                <entry key="UPDATE" value-ref="userWorkoutValidator"/>
+            </map>
+        </property>
         <property name="name" value="userWorkout"/>
     </bean>
 
-    <bean id="planRepository" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanRepository">
+    <bean id="planRepository" class="pl.jakubpiecuch.gymhome.service.flow.plan.PlanRepository">
         <property name="converter" ref="planConverter"/>
         <property name="dao" ref="planDao"/>
-        <property name="validator" ref="planValidator"/>
+        <property name="validators">
+            <map>
+                <entry key="INSERT" value-ref="insertPlanValidator"/>
+                <entry key="UPDATE" value-ref="updatePlanValidator"/>
+            </map>
+        </property>
+        <property name="name" value="plan"/>
     </bean>
 
-    <bean id="executionRepository" class="pl.jakubpiecuch.trainingmanager.service.user.workout.session.execution.ExecutionUpdatableRepository">
+    <bean id="executionRepository"
+          class="pl.jakubpiecuch.gymhome.service.user.workout.session.execution.ExecutionRepository">
         <property name="converter" ref="executionConverter"/>
-        <property name="executionDao" ref="executionDao"/>
-        <property name="validator" ref="executionValidator"/>
+        <property name="dao" ref="executionDao"/>
+        <property name="validators">
+            <map>
+                <entry key="UPDATE" value-ref="executionValidator"/>
+            </map>
+        </property>
     </bean>
 
 </beans>

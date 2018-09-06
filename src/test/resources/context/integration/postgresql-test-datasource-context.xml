@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd">
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://${jdbc.testUrl:localhost:5432/gym-home-it-test}"/>
+        <property name="username" value="${jdbc.testUsername:postgres}"/>
+        <property name="password" value="${jdbc.testPassword:root}"/>
+    </bean>
+
+    <jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="classpath:sql/postgresql/create-schema.sql"/>
+        <jdbc:script location="classpath:sql/schema.sql"/>
+        <jdbc:script location="classpath:sql/postgresql/sequences.sql"/>
+        <jdbc:script location="classpath:sql/dictionary.sql"/>
+        <jdbc:script location="classpath:sql/postgresql/update_sequences.sql"/>
+    </jdbc:initialize-database>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="pl.jakubpiecuch.gymhome.domain"/>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
+    </bean>
+
+    <import resource="classpath:dao-context.xml"/>
+
+</beans>

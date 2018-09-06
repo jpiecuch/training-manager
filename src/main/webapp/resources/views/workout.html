@@ -111,7 +111,7 @@
                                                    data-ng-bind="'description.movieUrl' | translate"></label>
                                             <div class="col-md-9">
                                                 <span class="form-control-static">
-                                                	<a ng-href="{{execution.exercise.description.movieUrl}}" target="_blank">Watch</a>
+                                                	<a ng-href="{{execution.exercise.description.movieUrl}}" target="_blank">{{'video.watch' | translate}}</a>
 												</span>
 												<span data-ng-if="videoProvider.getProvider(execution.exercise.description.movieUrl) === 'youtube'">
 													<youtube-video video-url="execution.exercise.description.movieUrl" player-width="'100%'"></youtube-video>

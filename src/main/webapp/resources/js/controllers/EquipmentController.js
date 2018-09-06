@@ -11,7 +11,7 @@ app.controller('EquipmentController', function($scope, $stateParams, dictionaryS
         });
 
         dictionaryService.retrieve(9).then(function(data) {
-            $scope.dictionary.neckTypes = data;
+            $scope.dictionary.barbellTypes = data;
         });
     };
 

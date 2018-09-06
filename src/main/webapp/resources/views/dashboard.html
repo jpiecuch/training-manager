@@ -9,51 +9,12 @@
 <div ng-controller="DashboardController" data-ng-init="init()">
 	<div class="row">
 		<div class="col-md-6">
-			<div class="portlet light bordered">
-				<div class="portlet-title">
-					<div class="caption font-green-sharp">
-						<i class="icon-speech font-green-sharp"></i>
-						<span class="caption-subject bold uppercase"> {{'next.workouts' | translate}}</span>
-					</div>
-					<div class="actions">
-						<a class="btn btn-circle btn-icon-only btn-default fa fa-angle-down" href="#" data-original-title="" title="">
-						</a>
-					</div>
-				</div>
-				<div class="portlet-body">
-					<div class="todo-tasklist">
-						<div class="todo-tasklist-item todo-tasklist-item-border-green" data-ng-repeat="workout in dashboard.nextWorkouts.result" data-ng-click="dashboard.goToWorkout(workout.id)">
-							<div class="todo-tasklist-item-title">
-								<i class="fa fa-calendar"></i> {{workout.date | date}}
-							</div>
-							<div class="todo-tasklist-item-text">
-								{{workout.plan.name}} | {{workout.phase.description}}
-							</div>
-							<div class="todo-tasklist-controls pull-left">
-								<span class="todo-tasklist-date"> {{workout.executions.length}} exercises </span>
-								<span class="todo-tasklist-badge badge badge-roundless badge-primary" style="margin-right: 5px;" data-ng-repeat="muscle in workout.muscles">{{muscle | translate}}</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+			<div class="portlet light bordered" data-ng-include="'resources/tpl/dashboard/workouts.html'" ng-controller="WorkoutsController" data-ng-init="init(columns[0][0])"></div>
+			<div class="portlet light bordered" data-ng-include="'resources/tpl/dashboard/chart.html'" ng-controller="ChartController" data-ng-init="init('weight-form', 'wieght-chart', columns[0][1])"></div></div>
 		<div class="col-md-6">
-			<div class="portlet light bordered">
-				<div class="portlet-title">
-					<div class="caption font-green-sharp">
-						<i class="icon-speech font-green-sharp"></i>
-						<span class="caption-subject bold uppercase"> {{'weight.chart' | translate}}</span>
-					</div>
-					<div class="actions">
-						<a class="btn btn-circle btn-icon-only btn-default fa fa-angle-down" href="#" data-original-title="" title="">
-						</a>
-					</div>
-				</div>
-				<div class="portlet-body">
-			        <div id="chartdiv" style="width: 100%; height: 300px;"></div>
-                </div>
+            <div class="portlet light bordered" data-ng-include="'resources/tpl/dashboard/chart.html'" ng-controller="ChartController" data-ng-init="init('waist-form', 'waist-chart', columns[1][0])"></div>
+			<div class="portlet light bordered" data-ng-include="'resources/tpl/dashboard/column-chart.html'" ng-controller="ColumnChartController" data-ng-init="init('muscle-exercise-chart', 'EXECUTION', columns[1][1])"></div>
+			<div class="portlet light bordered" data-ng-include="'resources/tpl/dashboard/pie-chart.html'" ng-controller="PieChartController" data-ng-init="init('user-workout-group-chart', 'USER_WORKOUT', columns[1][2])"></div>
 		</div>
 	</div>
-        </div>
-    </div>
+</div>

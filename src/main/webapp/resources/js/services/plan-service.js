@@ -47,6 +47,10 @@ app.service('planService', function($q, $http, phaseService, formValidateService
         });
     };
 
+    this.addRelation = function(plan, object, property) {
+        object[property] = plan.id;
+    };
+
     this.get = function(id) {
         var me = this;
         var deferred = $q.defer();
@@ -61,6 +65,7 @@ app.service('planService', function($q, $http, phaseService, formValidateService
                 goal: inputService.get(data ? data.data.goal : null),
                 phases: [],
                 editable: data ? data.data.editable : true,
+                relations: [],
                 movePhase: function (idx, count) {
                     me.movePhase(this, idx, count);
                 },
@@ -73,12 +78,18 @@ app.service('planService', function($q, $http, phaseService, formValidateService
                 isValid: function() {
                     return me.isValid(this);
                 },
+                addRelation: function(object, property) {
+                    this.relations.push({object: object, property: property});
+                },
                 submit: function() {
                     var plan = this;
                     var method = plan.id ? PUT_METHOD : POST_METHOD;
                     me.submit(method, this).then(function (data) {
                         if (method === POST_METHOD) {
                             plan.id = data.data;
+                            _.each(plan.relations, function(relation) {
+                                me.addRelation(plan, relation.object, relation.property);
+                            });
                         }
                         alertService.show({type: 'success', title: 'OK', description: 'Submit'});
                     });
@@ -105,5 +116,9 @@ app.service('planService', function($q, $http, phaseService, formValidateService
 
     this.retrieve = function(params) {
         return $http.get(urlService.apiURL('/plans'), { params: params });
+    };
+
+    this.delete = function(id) {
+        return $http.delete(urlService.apiURL('/plans/' + id));
     }
 });
