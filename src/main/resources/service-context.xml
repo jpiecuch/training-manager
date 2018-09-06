@@ -18,7 +18,7 @@
         <property name="cookiePath" value="/"/>
     </bean>
 
-    <bean id="localeService" class="pl.jakubpiecuch.trainingmanager.service.locale.cookie.ResolverLocaleService">
+    <bean id="localeService" class="pl.jakubpiecuch.gymhome.service.locale.cookie.ResolverLocaleService">
         <property name="localeResolver" ref="localeResolver"/>
         <property name="supportedLocales" value="pl,en"/>
     </bean>
@@ -49,7 +49,7 @@
         </property>
     </bean>
 
-    <bean id="emailService" class="pl.jakubpiecuch.trainingmanager.service.mail.VelocityEmailService">
+    <bean id="emailService" class="pl.jakubpiecuch.gymhome.service.mail.VelocityEmailService">
         <property name="encoding" value="UTF-8"/>
         <property name="mailSender" ref="mailSender"/>
         <property name="messageSource" ref="emailMessageSource"/>
@@ -58,12 +58,12 @@
         <property name="velocityEngine" ref="velocityEngine"/>
     </bean>
 
-    <bean id="imageResource" class="pl.jakubpiecuch.trainingmanager.service.resource.image.ImageResource">
+    <bean id="imageResource" class="pl.jakubpiecuch.gymhome.service.resource.image.ImageResource">
         <property name="root" value="${resource.directory}/images/"/>
         <property name="cryptService" ref="cryptService"/>
     </bean>
 
-    <bean id="cryptService" class="pl.jakubpiecuch.trainingmanager.service.crypt.SymmetricCryptService">
+    <bean id="cryptService" class="pl.jakubpiecuch.gymhome.service.crypt.SymmetricCryptService">
         <property name="decryptService" ref="decryptService"/>
         <property name="encryptService" ref="encryptService"/>
     </bean>
@@ -72,7 +72,7 @@
     <crypt:b64SymmetricCipherer id="decryptService" mode="DECRYPT"/>
 
     <bean id="authenticationService"
-          class="pl.jakubpiecuch.trainingmanager.service.user.authentication.AuthenticationServiceImpl">
+          class="pl.jakubpiecuch.gymhome.service.user.authentication.AuthenticationServiceImpl">
         <property name="repository" ref="accountRepository"/>
         <property name="userServices">
             <map>
@@ -85,23 +85,23 @@
     </bean>
 
     <bean id="constantsDictionary"
-          class="pl.jakubpiecuch.trainingmanager.service.dictionary.constants.ConstantsDictionary">
+          class="pl.jakubpiecuch.gymhome.service.dictionary.constants.ConstantsDictionary">
         <property name="langs" value="${app.langs}"/>
         <property name="socialSupportService" ref="supportService"/>
         <property name="securedDictionary" ref="securedConstantsDictionary"/>
     </bean>
 
     <bean id="securedConstantsDictionary"
-          class="pl.jakubpiecuch.trainingmanager.service.dictionary.constants.SecuredConstantsDictionary"
+          class="pl.jakubpiecuch.gymhome.service.dictionary.constants.SecuredConstantsDictionary"
           parent="constantsDictionary"/>
 
-    <bean id="sessionUserPlanStarter" class="pl.jakubpiecuch.trainingmanager.service.user.plan.SessionUserPlanStarter">
+    <bean id="sessionUserPlanStarter" class="pl.jakubpiecuch.gymhome.service.user.plan.SessionUserPlanStarter">
         <property name="executionDao" ref="executionDao"/>
         <property name="userWorkoutDao" ref="userWorkoutDao"/>
         <property name="planRepository" ref="planRepository"/>
     </bean>
 
-    <bean id="passwordService" class="pl.jakubpiecuch.trainingmanager.service.password.StaticPasswordService">
+    <bean id="passwordService" class="pl.jakubpiecuch.gymhome.service.password.StaticPasswordService">
         <property name="passwords" ref="passwords"></property>
     </bean>
 

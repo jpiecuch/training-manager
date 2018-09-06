@@ -4,7 +4,7 @@
         <appender type="Console" name="console">
             <layout type="PatternLayout" pattern="%d %-5p %c - %m%n"/>
         </appender>
-        <appender type="File" name="file" fileName="${sys:catalina.base}/logs/training.log">
+        <appender type="File" name="file" fileName="/logs/training.log">
             <layout type="PatternLayout">
                 <pattern>%d %-5p %c - %m%n</pattern>
             </layout>

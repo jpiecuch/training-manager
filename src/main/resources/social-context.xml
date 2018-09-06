@@ -5,9 +5,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <bean id="supportService" class="pl.jakubpiecuch.trainingmanager.service.support.social.SocialSupportService"/>
+    <bean id="supportService" class="pl.jakubpiecuch.gymhome.service.support.social.SocialSupportService"/>
 
-    <bean id="socialSignOnAdapter" class="pl.jakubpiecuch.trainingmanager.service.user.social.SocialSignOnAdapter">
+    <bean id="socialSignOnAdapter" class="pl.jakubpiecuch.gymhome.service.user.social.SocialSignOnAdapter">
         <property name="repository" ref="accountRepository"/>
         <property name="userService" ref="socialUserService"/>
     </bean>
@@ -53,7 +53,7 @@
         <constructor-arg index="0" ref="connectionFactoryLocator"/>
         <constructor-arg index="1" ref="usersConnectionRepository"/>
         <constructor-arg index="2">
-            <bean class="pl.jakubpiecuch.trainingmanager.service.user.social.SocialSignInAdapter">
+            <bean class="pl.jakubpiecuch.gymhome.service.user.social.SocialSignInAdapter">
                 <property name="repository" ref="accountRepository"/>
             </bean>
         </constructor-arg>
@@ -64,7 +64,7 @@
 
     <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" factory-method="noOpText"/>
 
-    <bean id="abstractSocialService" class="pl.jakubpiecuch.trainingmanager.service.social.AbstractSocialService"
+    <bean id="abstractSocialService" class="pl.jakubpiecuch.gymhome.service.social.AbstractSocialService"
           abstract="true">
         <property name="connectionFactoryRegistry" ref="connectionFactoryLocator"/>
         <property name="connectionRepository" ref="connectionRepository"/>
@@ -72,16 +72,16 @@
         <property name="userService" ref="socialUserService"/>
         <property name="url" value="http://www.gym-home.com/result/%s"/>
     </bean>
-    <bean id="facebookService" class="pl.jakubpiecuch.trainingmanager.service.social.facebook.FacebookService"
+    <bean id="facebookService" class="pl.jakubpiecuch.gymhome.service.social.facebook.FacebookService"
           parent="abstractSocialService"/>
 
-    <bean id="googleService" class="pl.jakubpiecuch.trainingmanager.service.social.google.GoogleService"
+    <bean id="googleService" class="pl.jakubpiecuch.gymhome.service.social.google.GoogleService"
           parent="abstractSocialService"/>
 
-    <bean id="twitterService" class="pl.jakubpiecuch.trainingmanager.service.social.twitter.TwitterService"
+    <bean id="twitterService" class="pl.jakubpiecuch.gymhome.service.social.twitter.TwitterService"
           parent="abstractSocialService"/>
 
-    <bean id="socialUserService" class="pl.jakubpiecuch.trainingmanager.service.user.social.SocialUserServiceImpl">
+    <bean id="socialUserService" class="pl.jakubpiecuch.gymhome.service.user.social.SocialUserServiceImpl">
         <property name="socialServices">
             <map>
                 <entry key="FACEBOOK" value-ref="facebookService"/>

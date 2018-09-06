@@ -3,7 +3,7 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <bean id="accountRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.CommonRepository">
+    <bean id="accountRepository" class="pl.jakubpiecuch.gymhome.service.repository.CommonRepository">
         <property name="dao" ref="accountDao"/>
         <property name="name" value="account"/>
         <property name="validators">
@@ -14,7 +14,7 @@
         </property>
     </bean>
 
-    <bean id="roleRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.role.RoleRepository">
+    <bean id="roleRepository" class="pl.jakubpiecuch.gymhome.service.repository.role.RoleRepository">
         <property name="dao" ref="roleDao"/>
         <property name="validators">
             <map>
@@ -25,7 +25,7 @@
         <property name="name" value="role"/>
     </bean>
 
-    <bean id="descriptionRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.CommonRepository">
+    <bean id="descriptionRepository" class="pl.jakubpiecuch.gymhome.service.repository.CommonRepository">
         <property name="dao" ref="descriptionDao"/>
         <property name="validators">
             <map>
@@ -37,7 +37,7 @@
     </bean>
 
     <bean id="accountRecordRepository"
-          class="pl.jakubpiecuch.trainingmanager.service.repository.accountrecord.AccountRecordRepository">
+          class="pl.jakubpiecuch.gymhome.service.repository.accountrecord.AccountRecordRepository">
         <property name="dao" ref="accountRecordDao"/>
         <property name="name" value="accountRecord"/>
         <property name="validators">
@@ -49,7 +49,7 @@
         <property name="converter" ref="accountRecordConverter"/>
     </bean>
 
-    <bean id="equipmentRepository" class="pl.jakubpiecuch.trainingmanager.service.repository.CommonRepository">
+    <bean id="equipmentRepository" class="pl.jakubpiecuch.gymhome.service.repository.CommonRepository">
         <property name="dao" ref="equipmentDao"/>
         <property name="validators">
             <map>
@@ -61,7 +61,7 @@
     </bean>
 
     <bean id="userWorkoutRepository"
-          class="pl.jakubpiecuch.trainingmanager.service.user.workout.session.SessionUserWorkoutRepository">
+          class="pl.jakubpiecuch.gymhome.service.user.workout.session.SessionUserWorkoutRepository">
         <property name="converter" ref="userWorkoutConverter"/>
         <property name="dao" ref="userWorkoutDao"/>
         <property name="validators">
@@ -73,7 +73,7 @@
         <property name="name" value="userWorkout"/>
     </bean>
 
-    <bean id="planRepository" class="pl.jakubpiecuch.trainingmanager.service.flow.plan.PlanRepository">
+    <bean id="planRepository" class="pl.jakubpiecuch.gymhome.service.flow.plan.PlanRepository">
         <property name="converter" ref="planConverter"/>
         <property name="dao" ref="planDao"/>
         <property name="validators">
@@ -86,7 +86,7 @@
     </bean>
 
     <bean id="executionRepository"
-          class="pl.jakubpiecuch.trainingmanager.service.user.workout.session.execution.ExecutionRepository">
+          class="pl.jakubpiecuch.gymhome.service.user.workout.session.execution.ExecutionRepository">
         <property name="converter" ref="executionConverter"/>
         <property name="dao" ref="executionDao"/>
         <property name="validators">

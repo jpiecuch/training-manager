@@ -3,87 +3,87 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <bean id="signInController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signin.SignInController"
+    <bean id="signInController" class="pl.jakubpiecuch.gymhome.web.controllers.api.signin.SignInController"
           parent="abstractController"/>
 
-    <bean id="signOutController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signout.SignOutController"
+    <bean id="signOutController" class="pl.jakubpiecuch.gymhome.web.controllers.api.signout.SignOutController"
           parent="abstractController"/>
 
-    <bean id="signOnController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.signon.SignOnController"
+    <bean id="signOnController" class="pl.jakubpiecuch.gymhome.web.controllers.api.signon.SignOnController"
           parent="abstractController"/>
 
-    <bean id="localeController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.locale.LocaleController"
+    <bean id="localeController" class="pl.jakubpiecuch.gymhome.web.controllers.api.locale.LocaleController"
           parent="abstractController"/>
 
     <bean id="resourceController"
-          class="pl.jakubpiecuch.trainingmanager.web.controllers.api.resource.ResourceController"
+          class="pl.jakubpiecuch.gymhome.web.controllers.api.resource.ResourceController"
           parent="abstractController"/>
 
     <bean id="languageController"
-          class="pl.jakubpiecuch.trainingmanager.web.controllers.api.language.LanguageController"
+          class="pl.jakubpiecuch.gymhome.web.controllers.api.language.LanguageController"
           parent="abstractController"/>
 
-    <bean id="planController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.plan.PlanController"
+    <bean id="planController" class="pl.jakubpiecuch.gymhome.web.controllers.api.plan.PlanController"
           parent="abstractController">
         <property name="repositoryType" value="PLAN"/>
         <property name="defaultOrderBy" value="id"/>
     </bean>
 
     <bean id="dictionaryController"
-          class="pl.jakubpiecuch.trainingmanager.web.controllers.api.dictionary.DictionaryController"
+          class="pl.jakubpiecuch.gymhome.web.controllers.api.dictionary.DictionaryController"
           parent="abstractController"/>
 
     <bean id="descriptionController"
-          class="pl.jakubpiecuch.trainingmanager.web.controllers.api.description.DescriptionController"
+          class="pl.jakubpiecuch.gymhome.web.controllers.api.description.DescriptionController"
           parent="abstractRepositoryController">
         <property name="repositoryType" value="DESCRIPTION"/>
         <property name="defaultOrderBy" value="id"/>
     </bean>
 
     <bean id="equipmentController"
-          class="pl.jakubpiecuch.trainingmanager.web.controllers.api.equipment.EquipmentController"
+          class="pl.jakubpiecuch.gymhome.web.controllers.api.equipment.EquipmentController"
           parent="abstractRepositoryController">
         <property name="repositoryType" value="EQUIPMENT"/>
         <property name="defaultOrderBy" value="id"/>
     </bean>
 
     <bean id="executionController"
-          class="pl.jakubpiecuch.trainingmanager.web.controllers.api.execution.ExecutionController"
+          class="pl.jakubpiecuch.gymhome.web.controllers.api.execution.ExecutionController"
           parent="abstractReadRepositoryController">
         <property name="repositoryType" value="EXECUTION"/>
         <property name="defaultOrderBy" value="id"/>
     </bean>
 
     <bean id="userPlansController"
-          class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.plans.UserPlansController"
+          class="pl.jakubpiecuch.gymhome.web.controllers.api.user.plans.UserPlansController"
           parent="abstractController"/>
 
     <bean id="userWorkoutsController"
-          class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.workouts.UserWorkoutsController"
+          class="pl.jakubpiecuch.gymhome.web.controllers.api.user.workouts.UserWorkoutsController"
           parent="abstractRepositoryController">
         <property name="repositoryType" value="WORKOUT"/>
         <property name="defaultOrderBy" value="date"/>
     </bean>
 
-    <bean id="roleController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.role.RoleController"
+    <bean id="roleController" class="pl.jakubpiecuch.gymhome.web.controllers.api.role.RoleController"
           parent="abstractController"/>
 
     <bean id="accountRecordController"
-          class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AccountRecordController"
+          class="pl.jakubpiecuch.gymhome.web.controllers.api.AccountRecordController"
           parent="abstractRepositoryController">
         <property name="repositoryType" value="ACCOUNT_RECORD"/>
         <property name="defaultOrderBy" value="date"/>
     </bean>
 
     <bean id="resetPasswordController"
-          class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.password.ResetPasswordController"
+          class="pl.jakubpiecuch.gymhome.web.controllers.api.user.password.ResetPasswordController"
           parent="abstractController"/>
 
     <bean id="activateUserController"
-          class="pl.jakubpiecuch.trainingmanager.web.controllers.api.user.activate.ActivateUserController"
+          class="pl.jakubpiecuch.gymhome.web.controllers.api.user.activate.ActivateUserController"
           parent="abstractController"/>
 
-    <bean id="abstractRepositoryController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractRepositoryController" abstract="true" parent="abstractReadRepositoryController"/>
+    <bean id="abstractRepositoryController" class="pl.jakubpiecuch.gymhome.web.controllers.api.AbstractRepositoryController" abstract="true" parent="abstractReadRepositoryController"/>
 
-    <bean id="abstractReadRepositoryController" class="pl.jakubpiecuch.trainingmanager.web.controllers.api.AbstractReadRepositoryController" abstract="true" parent="abstractController"/>
+    <bean id="abstractReadRepositoryController" class="pl.jakubpiecuch.gymhome.web.controllers.api.AbstractReadRepositoryController" abstract="true" parent="abstractController"/>
 </beans>
